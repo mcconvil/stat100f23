@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Summarization and Joins</title>
+    <meta charset="utf-8" />
+    <script src="libsSlides/header-attrs-2.19/header-attrs.js"></script>
+    <link href="libsSlides/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <script src="libsSlides/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libsSlides/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libsSlides/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libsSlides/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libsSlides/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="more.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Data Summarization]
+
+## .base-blue[and]
+
+## .base-blue[Data Joins]
+
+
+
+&lt;br&gt;
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 3 | Spring 2023] 
+
+]
+
+
+
+---
+
+
+
+## Announcements
+
+* Don't forget that P-Set 2 is due tomorrow by 5pm on Gradescope.  
+    + Come by office hours with questions!
+
+****************************
+
+--
+
+## Goals for Today
+
+.pull-left[
+
+* Consider measures for **summarizing** quantitative data
+    + Center
+    + Spread/variability
+
+* Consider measures for **summarizing** categorical data
+
+
+] 
+
+--
+
+.pull-right[
+
+
+* Define **data wrangling**
+
+* Learn data **joins**
+
+]
+
+---
+
+class: middle, center
+
+## But First... Server Issues
+
+--
+
+#### Try to not conflate the (so far) unreliable **FAS OnDemand Server** with `R` and `RStudio`.
+
+--
+
+#### `R` and `RStudio` are great tools for extracting knowledge from data!
+
+--
+
+#### There will be a learning curve on how to use these tools but it shouldn't have involved navigating an unstable interfacing medium.
+
+
+---
+
+&lt;img src="img/dplyr.png" width="15%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+## Load Necessary Packages
+
+`dplyr` is part of the `tidyverse` collection of data science packages.
+
+
+```r
+# Load necessary packages
+library(tidyverse)
+```
+
+
+---
+
+## Import the [Data](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
+
+
+```r
+bike_counter &lt;- read_csv("https://data.cambridgema.gov/api/views/q8v9-mcfg/rows.csv")
+
+# Inspect the data
+glimpse(bike_counter)
+```
+
+```
+## Rows: 259,393
+## Columns: 7
+## $ DateTime  &lt;chr&gt; "01/18/2022 12:00:00 AM", "01/18/2022 12:15:00 AM", "01/18/2…
+## $ Day       &lt;chr&gt; "Tuesday", "Tuesday", "Tuesday", "Tuesday", "Tuesday", "Tues…
+## $ Date      &lt;chr&gt; "01/18/2022", "01/18/2022", "01/18/2022", "01/18/2022", "01/…
+## $ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…
+## $ Total     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, …
+## $ Westbound &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Eastbound &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, …
+```
+
+
+
+---
+
+## Summarizing Data
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+* Hard to do by eyeballing a spreadsheet with many rows!
+
+---
+
+##  Summarizing Data Visually
+
+.pull-left[
+
+&lt;img src="stat100_wk03mon_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+For a quantitative variable, want to answer:
+
+
+
+* What is an **average** value?
+
+
+
+* What is the **trend/shape** of the variable?
+
+
+
+* How much **variation** is there from case to case?
+
+]
+
+---
+
+## Summarizing Quantitative Variables
+
+For a quantitative variable, want to answer:
+
+
+
+* What is an average value?
+
+
+
+* What is the trend/shape of the variable?
+
+
+* How much variation is there from case to case?
+
+--
+
+Need to learn some **summary statistics**: Numerical values computed based on the observed cases.
+
+---
+
+## Measures of Center
+
+.pull-left[
+**Mean: average of all the observations**
+
+
+* `\(n\)` = Number of cases (sample size)
+* `\(x_i\)` = value of the i-th observation
+* Denote by `\(\bar{x}\)`
+
+$$
+\bar{x}  = \frac{1}{n} \sum_{i = 1}^n x_i
+$$
+
+]
+
+.pull-right[
+
+{{content}}
+
+]
+
+--
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+{{content}}
+
+--
+
+
+```r
+# Mean
+(5 + 10 + 6 + 13 +
+   9 + 12 + 7)/7
+```
+
+```
+## [1] 8.857143
+```
+{{content}}
+
+
+---
+
+## Measures of Center
+
+.pull-left[
+#### Median: Middle value, 50% 
+
+* Denote by `\(m\)`
+* If `\(n\)` is even, then it is the average of the middle two values
+
+]
+
+.pull-right[
+
+{{content}}
+
+]
+
+--
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+{{content}}
+
+--
+
+
+```r
+# Median
+9
+```
+
+```
+## [1] 9
+```
+{{content}}
+
+
+
+---
+
+## Measures of Center
+
+.pull-left[
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+
+```r
+# Mean
+(5 + 10 + 6 + 13 +
+   9 + 12 + 7)/7
+```
+
+```
+## [1] 8.857143
+```
+
+```r
+# Median
+9
+```
+
+```
+## [1] 9
+```
+
+
+]
+
+* Suppose the 13 bikes was actually 130 bikes.  How would these summary statistics change?
+
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations will likely deviate from the mean
+
+--
+
+.pull-left[
+
+Here is my proposal:
+
+* Find how much each observation deviates from the mean.
+* Compute the average of the deviations.
+
+$$
+\frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})
+$$
+
+
+
+
+]
+
+.pull-right[
+
+.pull-left[
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Deviations &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3.57 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.57 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.57 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.43 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.43 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+]
+
+
+
+]
+
+
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations will likely deviate from the mean
+
+
+.pull-left[
+
+Here is my proposal:
+
+* Find how much each observation deviates from the mean.
+* Compute the average of the deviations.
+
+$$
+\frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})
+$$
+
+**Problem?**
+
+
+]
+
+.pull-right[
+
+.pull-left[
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Deviations &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3.57 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.57 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.57 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.43 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.43 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+]
+
+
+
+]
+
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations will likely deviate from the mean
+
+
+.pull-left[
+
+Here is my **NEW** proposal:
+
+* Find how much each observation deviates from the mean.
+* Compute the average of the **squared** deviations.
+
+$$
+\frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})^2
+$$
+
+
+
+]
+
+.pull-right[
+
+.pull-left[
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Deviations &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Dev_sqd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.76 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.47 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.90 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+]
+
+
+]
+
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations will likely deviate from the mean
+
+
+.pull-left[
+
+Here is my **NEW** proposal:
+
+* Find how much each observation deviates from the mean.
+* Compute the average of the **squared** deviations.
+
+$$
+\frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})^2
+$$
+
+
+
+]
+
+.pull-right[
+
+.pull-left[
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Deviations &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Dev_sqd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.76 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.47 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.90 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+]
+
+
+]
+
+
+```r
+# Calculate the measure of variability
+(14.88 + 8.16 + 3.45 + 0.020 + 1.31 + 9.88 + 17.16)/7
+```
+
+```
+## [1] 7.837143
+```
+
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations will likely deviate from the mean
+
+
+.pull-left[
+
+Here is the **ACTUAL**:
+
+* Find how much each observation deviates from the mean.
+* Compute the (nearly) average of the **squared** deviations.
+* Called **sample variance** `\(s^2\)`.
+
+$$
+s^2 = \frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2
+$$
+
+
+
+]
+
+.pull-right[
+
+.pull-left[
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Deviations &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Dev_sqd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.76 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.47 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.90 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+]
+
+
+]
+
+
+```r
+# Calculate the measure of variability
+(14.88 + 8.16 + 3.45 + 0.020 + 1.31 + 9.88 + 17.16)/6
+```
+
+```
+## [1] 9.143333
+```
+
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations will likely deviate from the mean
+
+
+.pull-left[
+
+
+* Find how much each observation deviates from the mean.
+* Compute the (nearly) average of the **squared** deviations.
+* Called the sample variance, `\(s^2\)`.
+* The square root of the sample variance is called the **sample standard deviation** `\(s\)`.
+
+
+$$
+s = \sqrt{\frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2}
+$$
+
+
+
+]
+
+.pull-right[
+
+.pull-left[
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:30:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:15:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13:45:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 01/25/2022 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+
+
+&lt;table class="table table-responsive table-bordered table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Deviations &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Dev_sqd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.76 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.47 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.90 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+]
+
+
+]
+
+
+```r
+# Calculate the measure of variability
+sqrt((14.88 + 8.16 + 3.45 + 0.020 + 1.31 +9.88 + 17.16)/6)
+```
+
+```
+## [1] 3.023795
+```
+
+
+---
+
+## Measures of Variability
+
+* In addition to the sample standard deviation and the sample variance, there is the Interquartile Range (IQR): 
+
+$$
+\mbox{IQR} = \mbox{Q}_3 - \mbox{Q}_1
+$$
+
+* Which is more robust to outliers, the IQR or `\(s\)`?
+
+* Which is more commonly used, the IQR or `\(s\)`?
+
+---
+
+class: center, middle, 
+
+
+
+## Now let's go through the Data Summarization handout!
+
+--
+
+## Two Minute Stretch
+
+
+
+---
+
+class: middle, center
+
+&lt;img src="img/dplyr_wrangling.png" width="750px"/&gt;
+
+
+---
+
+### Data Wrangling: Transformations done on the data
+
+--
+
+**Why wrangle the data?**
+
+--
+
+.pull-left[
+
+To **summarize** the data.
+
+]
+
+
+.pull-right[
+
+&amp;#8594; To compute the mean and standard deviation of the bike counts.
+
+]
+
+--
+
+.pull-left[
+
+To **drop** missing values.  (Need to be careful here!)
+
+]
+
+.pull-right[
+
+&amp;#8594; In your P-Set 2, `geom_histogram()` is dropping NAs before creating the graph.
+
+]
+
+
+--
+
+.pull-left[
+
+To **filter** to a particular subset of the data.
+
+]
+
+.pull-right[
+
+&amp;#8594; To subset the bike counts data to 2 days in July of 2019.
+
+]
+
+--
+
+.pull-left[
+
+To **collapse** the categories of a categorical variable.
+
+
+
+]
+
+.pull-right[
+
+&amp;#8594; To go from 86 dog breeds to just mixed or single breed.
+
+]
+
+
+--
+
+.pull-left[
+
+To **arrange** the data to make it easier to display.
+
+]
+
+.pull-right[
+
+&amp;#8594; To sort from most common dog name to least common.
+
+]
+
+--
+
+.pull-left[
+
+To fix how `R` **stores** a variable.
+
+]
+
+.pull-right[
+
+&amp;#8594; I converted `Day` from a character variable/vector to a date variable/vector.
+
+]
+
+OR, to **combine** data frames when information about your cases is stored in multiple places!
+
+
+---
+
+## Data Joins
+
+* Often in the data analysis workflow, we have more than one data source, which means more than one dataframe, and we want to combine these dataframes.
+
+--
+
+* Need principled way to combine.
+    + Need a **key** that links two dataframes together.
+
+--
+
+* These multiple dataframes are called **relational data**.
+
+    
+---
+
+
+&lt;img src="img/bls2.png" width="15%" style="float:left; padding:15px" style="display: block; margin: auto;" /&gt;
+
+
+## [US Bureau of Labor Statistics](https://www.bls.gov/bls/blsmissn.htm) Consumer Expenditure Data
+
+&gt; .mustard[BLS Mission]: "Measures labor market activity, working conditions, price changes, and productivity in the U.S. economy to support public and private decision making."
+
+--
+
+* Household survey but data are also collected on individuals
+    + fmli: household data
+    + memi: household member-level data
+
+
+```r
+#Read in data with readr package
+library(tidyverse)
+fmli &lt;- read_csv("~/shared_data/stat100/data/fmli.csv", 
+                 na = c("NA", "."))
+memi &lt;- read_csv("~/shared_data/stat100/data/memi.csv", 
+                 na = c("NA", "."))
+```
+
+* Want variables on the **principal earner** to be added to the household data
+
+---
+
+## CE Data
+
+* Key variable(s)?
+
+
+```r
+glimpse(fmli)
+```
+
+```
+## Rows: 6,301
+## Columns: 51
+## $ NEWID    &lt;chr&gt; "03324174", "03324204", "03324214", "03324244", "03324274", "…
+## $ PRINEARN &lt;chr&gt; "01", "01", "01", "01", "02", "01", "01", "01", "02", "01", "…
+## $ FINLWT21 &lt;dbl&gt; 25984.767, 6581.018, 20208.499, 18078.372, 20111.619, 19907.3…
+## $ FINCBTAX &lt;dbl&gt; 116920, 200, 117000, 0, 2000, 942, 0, 91000, 95000, 40037, 10…
+## $ BLS_URBN &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ POPSIZE  &lt;dbl&gt; 2, 3, 4, 2, 2, 2, 1, 2, 5, 2, 3, 2, 2, 3, 4, 3, 3, 1, 4, 1, 1…
+## $ EDUC_REF &lt;chr&gt; "16", "15", "16", "15", "14", "11", "10", "13", "12", "12", "…
+## $ EDUCA2   &lt;dbl&gt; 15, 15, 13, NA, NA, NA, NA, 15, 15, 14, 12, 12, NA, NA, NA, 1…
+## $ AGE_REF  &lt;dbl&gt; 63, 50, 47, 37, 51, 63, 77, 37, 51, 64, 26, 59, 81, 51, 67, 4…
+## $ AGE2     &lt;dbl&gt; 50, 47, 46, NA, NA, NA, NA, 36, 53, 67, 44, 62, NA, NA, NA, 4…
+## $ SEX_REF  &lt;dbl&gt; 1, 1, 2, 1, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1…
+## $ SEX2     &lt;dbl&gt; 2, 2, 1, NA, NA, NA, NA, 2, 2, 1, 1, 1, NA, NA, NA, 1, NA, 1,…
+## $ REF_RACE &lt;dbl&gt; 1, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1…
+## $ RACE2    &lt;dbl&gt; 1, 4, 1, NA, NA, NA, NA, 1, 1, 1, 1, 1, NA, NA, NA, 2, NA, 1,…
+## $ HISP_REF &lt;dbl&gt; 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1…
+## $ HISP2    &lt;dbl&gt; 2, 2, 1, NA, NA, NA, NA, 2, 2, 2, 2, 2, NA, NA, NA, 2, NA, 2,…
+## $ FAM_TYPE &lt;dbl&gt; 3, 4, 1, 8, 9, 9, 8, 3, 1, 1, 3, 1, 8, 9, 8, 5, 9, 4, 8, 3, 2…
+## $ MARITAL1 &lt;dbl&gt; 1, 1, 1, 5, 3, 3, 2, 1, 1, 1, 1, 1, 2, 3, 5, 1, 3, 1, 3, 1, 1…
+## $ REGION   &lt;dbl&gt; 4, 4, 3, 4, 4, 3, 4, 1, 3, 2, 1, 4, 1, 3, 3, 3, 2, 1, 2, 4, 3…
+## $ SMSASTAT &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ HIGH_EDU &lt;chr&gt; "16", "15", "16", "15", "14", "11", "10", "15", "15", "14", "…
+## $ EHOUSNGC &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ TOTEXPCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ FOODCQ   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ TRANSCQ  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ HEALTHCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ ENTERTCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ EDUCACQ  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ TOBACCCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ STUDFINX &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ IRAX     &lt;dbl&gt; 1000000, 10000, 0, NA, NA, 0, 0, 15000, NA, 477000, NA, NA, N…
+## $ CUTENURE &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 4, 1, 1, 2, 1, 2, 2, 2, 2, 4, 1, 1, 1, 4, 4…
+## $ FAM_SIZE &lt;dbl&gt; 4, 6, 2, 1, 2, 2, 1, 5, 2, 2, 4, 2, 1, 2, 1, 4, 2, 4, 1, 3, 3…
+## $ VEHQ     &lt;dbl&gt; 3, 5, 0, 4, 2, 0, 0, 2, 4, 2, 3, 2, 1, 3, 1, 2, 4, 4, 0, 2, 3…
+## $ ROOMSQ   &lt;dbl&gt; 8, 5, 6, 4, 4, 4, 7, 5, 4, 9, 6, 10, 4, 7, 5, 6, 6, 8, 18, 4,…
+## $ INC_HRS1 &lt;dbl&gt; 40, 40, 40, 44, 40, NA, NA, 40, 40, NA, 40, NA, NA, NA, NA, 4…
+## $ INC_HRS2 &lt;dbl&gt; 30, 40, 52, NA, NA, NA, NA, 40, 40, NA, 65, NA, NA, NA, NA, 6…
+## $ EARNCOMP &lt;dbl&gt; 3, 2, 2, 1, 4, 7, 8, 2, 2, 8, 2, 8, 8, 7, 8, 2, 7, 3, 1, 2, 1…
+## $ NO_EARNR &lt;dbl&gt; 4, 2, 2, 1, 2, 1, 0, 2, 2, 0, 2, 0, 0, 1, 0, 2, 1, 3, 1, 2, 1…
+## $ OCCUCOD1 &lt;chr&gt; "03", "03", "05", "03", "04", "", "", "12", "04", "", "01", "…
+## $ OCCUCOD2 &lt;chr&gt; "04", "02", "01", "", "", "", "", "02", "03", "", "11", "", "…
+## $ STATE    &lt;chr&gt; "41", "15", "48", "06", "06", "48", "06", "42", "", "27", "25…
+## $ DIVISION &lt;dbl&gt; 9, 9, 7, 9, 9, 7, 9, 2, NA, 4, 1, 8, 2, 5, 6, 7, 3, 2, 3, 9, …
+## $ TOTXEST  &lt;dbl&gt; 15452, 11459, 15738, 25978, 588, 0, 0, 7261, 9406, -1414, 141…
+## $ CREDFINX &lt;dbl&gt; 0, NA, 0, NA, 5, NA, NA, NA, NA, 0, NA, 0, NA, NA, NA, 2, 35,…
+## $ CREDITB  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ CREDITX  &lt;dbl&gt; 4000, 5000, 2000, NA, 7000, 1800, NA, 6000, NA, 719, NA, 1200…
+## $ BUILDING &lt;chr&gt; "01", "01", "01", "02", "08", "01", "01", "01", "01", "01", "…
+## $ ST_HOUS  &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
+## $ INT_PHON &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+```
+
+---
+
+
+## CE Data
+
+* Key variables?
+
+
+```r
+glimpse(memi)
+```
+
+```
+## Rows: 15,412
+## Columns: 14
+## $ NEWID    &lt;chr&gt; "03552611", "03552641", "03552641", "03552651", "03552651", "…
+## $ MEMBNO   &lt;dbl&gt; 1, 1, 2, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 1, 2, 3…
+## $ AGE      &lt;dbl&gt; 58, 54, 49, 39, 10, 32, 7, 9, 38, 34, 11, 8, 6, 3, 65, 61, 11…
+## $ SEX      &lt;dbl&gt; 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 2, 2, 2, 1, 1…
+## $ EARNER   &lt;dbl&gt; 1, 1, 2, 2, NA, 2, NA, NA, 1, 2, NA, NA, NA, NA, 1, 2, NA, NA…
+## $ EARNTYPE &lt;dbl&gt; 2, 1, NA, NA, NA, NA, NA, NA, 3, NA, NA, NA, NA, NA, 4, NA, N…
+## $ INC_HRSQ &lt;dbl&gt; 20, 56, NA, NA, NA, NA, NA, NA, 50, NA, NA, NA, NA, NA, 25, N…
+## $ INCOMEY  &lt;dbl&gt; 4, 1, NA, NA, NA, NA, NA, NA, 1, NA, NA, NA, NA, NA, 4, NA, N…
+## $ OCCUCODE &lt;chr&gt; "10", "05", "", "", "", "", "", "", "03", "", "", "", "", "",…
+## $ HISPANIC &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ MEMBRACE &lt;dbl&gt; 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1…
+## $ PAYSTUB  &lt;dbl&gt; 1, 2, NA, NA, NA, NA, NA, NA, 2, NA, NA, NA, NA, NA, 2, NA, N…
+## $ SALARYX  &lt;dbl&gt; 8982, NA, NA, NA, NA, NA, NA, NA, 280500, NA, NA, NA, NA, NA,…
+## $ WKSTATUS &lt;dbl&gt; 1, 1, NA, NA, NA, NA, NA, NA, 1, NA, NA, NA, NA, NA, 1, NA, N…
+```
+
+---
+
+## CE Data
+
+* Key variables?
+    + Problem with class?
+
+
+```r
+class(fmli$NEWID)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(memi$NEWID)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(fmli$PRINEARN)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(memi$MEMBNO)
+```
+
+```
+## [1] "numeric"
+```
+
+---
+
+## CE Data
+
+* Key variables?
+    + Problem with class?
+
+
+```r
+fmli &lt;- mutate(fmli, PRINEARN = as.integer(PRINEARN))
+class(fmli$PRINEARN)
+```
+
+```
+## [1] "integer"
+```
+
+```r
+class(memi$MEMBNO)
+```
+
+```
+## [1] "numeric"
+```
+
+---
+
+## CE Data
+
+* Want to add columns of `memi` to `fmli` that correspond to the principal earner's memi data
+    + What type of join is that?
+
+---
+
+## The World of Joins
+
+* **Mutating joins**: Add new variables to one dataset from matching observations in another.
+    + `left_join()` (and `right_join()`)
+    + `inner_join()`
+    + `full_join()`
+
+* There are also *filtering* joins but we won't cover those today.    
+
+---
+
+## Example Dataframes
+
+Here I created the data frames by hand.
+
+
+```r
+staff &lt;- data.frame(member = c("Prof McConville", "Lety", "Kate",
+                               "Thor", "Mally", "Dylan", "Nick",
+                               "Khalila"),
+                 Year = c(2006, 2024, 2023, 2025, 2025, 2025, 2025, 2025),
+                 Food = c("tikka masala", "chicken wings", "sushi",
+                          "Sun HUDS Brunch", "quesadillas",
+                          "shepards pie", "burgers", "salad"),
+                 Neighborhood = c("Somerville", "River Central", "Quad", 
+                                  "River East", "River Central",
+                                  "Quad", "River Central", 
+                                  "River West"))
+housing &lt;- data.frame(Neighborhoods = c("Yard", "River East",
+                                        "River Central", "River West",
+                                        "Quad"),
+                      Steps = c(75, 600, 450, 1100, 1200))
+```
+
+
+---
+
+## Example Dataframes
+
+
+
+```r
+staff
+```
+
+```
+##            member Year            Food  Neighborhood
+## 1 Prof McConville 2006    tikka masala    Somerville
+## 2            Lety 2024   chicken wings River Central
+## 3            Kate 2023           sushi          Quad
+## 4            Thor 2025 Sun HUDS Brunch    River East
+## 5           Mally 2025     quesadillas River Central
+## 6           Dylan 2025    shepards pie          Quad
+## 7            Nick 2025         burgers River Central
+## 8         Khalila 2025           salad    River West
+```
+
+```r
+housing
+```
+
+```
+##   Neighborhoods Steps
+## 1          Yard    75
+## 2    River East   600
+## 3 River Central   450
+## 4    River West  1100
+## 5          Quad  1200
+```
+
+---
+
+## `left_join()`
+
+
+```r
+staff_new &lt;- left_join(staff, housing)
+```
+
+```
+## Error in `left_join()`:
+## ! `by` must be supplied when `x` and `y` have no common variables.
+## ℹ use by = character()` to perform a cross-join.
+```
+
+```r
+staff_new
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'staff_new' not found
+```
+
+---
+
+## `left_join()`
+
+
+```r
+staff_new &lt;- left_join(staff, housing,
+                       by = c("Neighborhood" = "Neighborhoods"))
+staff_new
+```
+
+```
+##            member Year            Food  Neighborhood Steps
+## 1 Prof McConville 2006    tikka masala    Somerville    NA
+## 2            Lety 2024   chicken wings River Central   450
+## 3            Kate 2023           sushi          Quad  1200
+## 4            Thor 2025 Sun HUDS Brunch    River East   600
+## 5           Mally 2025     quesadillas River Central   450
+## 6           Dylan 2025    shepards pie          Quad  1200
+## 7            Nick 2025         burgers River Central   450
+## 8         Khalila 2025           salad    River West  1100
+```
+
+
+---
+
+## `inner_join()`
+
+
+```r
+staff_housing &lt;- inner_join(staff, housing, 
+                            by = c("Neighborhood" = "Neighborhoods"))
+staff_housing
+```
+
+```
+##    member Year            Food  Neighborhood Steps
+## 1    Lety 2024   chicken wings River Central   450
+## 2    Kate 2023           sushi          Quad  1200
+## 3    Thor 2025 Sun HUDS Brunch    River East   600
+## 4   Mally 2025     quesadillas River Central   450
+## 5   Dylan 2025    shepards pie          Quad  1200
+## 6    Nick 2025         burgers River Central   450
+## 7 Khalila 2025           salad    River West  1100
+```
+
+
+---
+
+## `full_join()`
+
+
+```r
+staff_housing &lt;- full_join(staff, housing, 
+                            by = c("Neighborhood" = "Neighborhoods"))
+staff_housing
+```
+
+```
+##            member Year            Food  Neighborhood Steps
+## 1 Prof McConville 2006    tikka masala    Somerville    NA
+## 2            Lety 2024   chicken wings River Central   450
+## 3            Kate 2023           sushi          Quad  1200
+## 4            Thor 2025 Sun HUDS Brunch    River East   600
+## 5           Mally 2025     quesadillas River Central   450
+## 6           Dylan 2025    shepards pie          Quad  1200
+## 7            Nick 2025         burgers River Central   450
+## 8         Khalila 2025           salad    River West  1100
+## 9            &lt;NA&gt;   NA            &lt;NA&gt;          Yard    75
+```
+
+
+---
+
+## Back to our Example
+
+* What kind of join do we want for the Consumer Expenditure data?
+    + Want to add columns of `memi` to `fmli` that correspond to the principal earner's memi data
+
+---
+
+## Look at the Possible Joins
+
+
+```r
+left_join(fmli, memi) 
+```
+
+```
+## Joining, by = "NEWID"
+```
+
+```
+## # A tibble: 15,412 × 64
+##    NEWID    PRINE…¹ FINLW…² FINCB…³ BLS_U…⁴ POPSIZE EDUC_…⁵ EDUCA2 AGE_REF  AGE2
+##    &lt;chr&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1 03324174       1  25985.  116920       1       2 16          15      63    50
+##  2 03324174       1  25985.  116920       1       2 16          15      63    50
+##  3 03324174       1  25985.  116920       1       2 16          15      63    50
+##  4 03324174       1  25985.  116920       1       2 16          15      63    50
+##  5 03324204       1   6581.     200       1       3 15          15      50    47
+##  6 03324204       1   6581.     200       1       3 15          15      50    47
+##  7 03324204       1   6581.     200       1       3 15          15      50    47
+##  8 03324204       1   6581.     200       1       3 15          15      50    47
+##  9 03324204       1   6581.     200       1       3 15          15      50    47
+## 10 03324204       1   6581.     200       1       3 15          15      50    47
+## # … with 15,402 more rows, 54 more variables: SEX_REF &lt;dbl&gt;, SEX2 &lt;dbl&gt;,
+## #   REF_RACE &lt;dbl&gt;, RACE2 &lt;dbl&gt;, HISP_REF &lt;dbl&gt;, HISP2 &lt;dbl&gt;, FAM_TYPE &lt;dbl&gt;,
+## #   MARITAL1 &lt;dbl&gt;, REGION &lt;dbl&gt;, SMSASTAT &lt;dbl&gt;, HIGH_EDU &lt;chr&gt;,
+## #   EHOUSNGC &lt;dbl&gt;, TOTEXPCQ &lt;dbl&gt;, FOODCQ &lt;dbl&gt;, TRANSCQ &lt;dbl&gt;,
+## #   HEALTHCQ &lt;dbl&gt;, ENTERTCQ &lt;dbl&gt;, EDUCACQ &lt;dbl&gt;, TOBACCCQ &lt;dbl&gt;,
+## #   STUDFINX &lt;dbl&gt;, IRAX &lt;dbl&gt;, CUTENURE &lt;dbl&gt;, FAM_SIZE &lt;dbl&gt;, VEHQ &lt;dbl&gt;,
+## #   ROOMSQ &lt;dbl&gt;, INC_HRS1 &lt;dbl&gt;, INC_HRS2 &lt;dbl&gt;, EARNCOMP &lt;dbl&gt;, …
+```
+
+---
+
+## Look at the Possible Joins
+
+* Be careful.  This erroneous example made my R crash!
+
+
+```r
+left_join(fmli, memi, by = c("PRINEARN" = "MEMBNO"))
+```
+
+.pull-left[
+
+
+```r
+count(fmli, PRINEARN)
+```
+
+```
+## # A tibble: 9 × 2
+##   PRINEARN     n
+##      &lt;int&gt; &lt;int&gt;
+## 1        1  4829
+## 2        2  1297
+## 3        3   109
+## 4        4    44
+## 5        5    13
+## 6        6     3
+## 7        7     4
+## 8        8     1
+## 9        9     1
+```
+
+]
+
+.pull-right[
+
+
+```r
+count(memi, MEMBNO)
+```
+
+```
+## # A tibble: 14 × 2
+##    MEMBNO     n
+##     &lt;dbl&gt; &lt;int&gt;
+##  1      1  6267
+##  2      2  4374
+##  3      3  2285
+##  4      4  1420
+##  5      5   635
+##  6      6   244
+##  7      7    99
+##  8      8    43
+##  9      9    20
+## 10     10    10
+## 11     11     7
+## 12     12     4
+## 13     13     2
+## 14     14     2
+```
+
+]
+
+---
+
+## Look at the Possible Joins
+
+
+```r
+left_join(fmli, memi, by = c("NEWID" = "NEWID",
+                             "PRINEARN" = "MEMBNO"))
+```
+
+```
+## # A tibble: 6,301 × 63
+##    NEWID    PRINE…¹ FINLW…² FINCB…³ BLS_U…⁴ POPSIZE EDUC_…⁵ EDUCA2 AGE_REF  AGE2
+##    &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1 03324174       1  25985.  116920       1       2 16          15      63    50
+##  2 03324204       1   6581.     200       1       3 15          15      50    47
+##  3 03324214       1  20208.  117000       1       4 16          13      47    46
+##  4 03324244       1  18078.       0       1       2 15          NA      37    NA
+##  5 03324274       2  20112.    2000       1       2 14          NA      51    NA
+##  6 03324284       1  19907.     942       1       2 11          NA      63    NA
+##  7 03324294       1  11705.       0       1       1 10          NA      77    NA
+##  8 03324304       1  24431.   91000       1       2 13          15      37    36
+##  9 03324324       2  42859.   95000       2       5 12          15      51    53
+## 10 03324334       1  17481.   40037       1       2 12          14      64    67
+## # … with 6,291 more rows, 53 more variables: SEX_REF &lt;dbl&gt;, SEX2 &lt;dbl&gt;,
+## #   REF_RACE &lt;dbl&gt;, RACE2 &lt;dbl&gt;, HISP_REF &lt;dbl&gt;, HISP2 &lt;dbl&gt;, FAM_TYPE &lt;dbl&gt;,
+## #   MARITAL1 &lt;dbl&gt;, REGION &lt;dbl&gt;, SMSASTAT &lt;dbl&gt;, HIGH_EDU &lt;chr&gt;,
+## #   EHOUSNGC &lt;dbl&gt;, TOTEXPCQ &lt;dbl&gt;, FOODCQ &lt;dbl&gt;, TRANSCQ &lt;dbl&gt;,
+## #   HEALTHCQ &lt;dbl&gt;, ENTERTCQ &lt;dbl&gt;, EDUCACQ &lt;dbl&gt;, TOBACCCQ &lt;dbl&gt;,
+## #   STUDFINX &lt;dbl&gt;, IRAX &lt;dbl&gt;, CUTENURE &lt;dbl&gt;, FAM_SIZE &lt;dbl&gt;, VEHQ &lt;dbl&gt;,
+## #   ROOMSQ &lt;dbl&gt;, INC_HRS1 &lt;dbl&gt;, INC_HRS2 &lt;dbl&gt;, EARNCOMP &lt;dbl&gt;, …
+```
+
+---
+
+## Look at the Possible Joins
+
+
+```r
+inner_join(fmli, memi, by = c("NEWID" = "NEWID",
+                              "PRINEARN" = "MEMBNO"))
+```
+
+```
+## # A tibble: 6,301 × 63
+##    NEWID    PRINE…¹ FINLW…² FINCB…³ BLS_U…⁴ POPSIZE EDUC_…⁵ EDUCA2 AGE_REF  AGE2
+##    &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1 03324174       1  25985.  116920       1       2 16          15      63    50
+##  2 03324204       1   6581.     200       1       3 15          15      50    47
+##  3 03324214       1  20208.  117000       1       4 16          13      47    46
+##  4 03324244       1  18078.       0       1       2 15          NA      37    NA
+##  5 03324274       2  20112.    2000       1       2 14          NA      51    NA
+##  6 03324284       1  19907.     942       1       2 11          NA      63    NA
+##  7 03324294       1  11705.       0       1       1 10          NA      77    NA
+##  8 03324304       1  24431.   91000       1       2 13          15      37    36
+##  9 03324324       2  42859.   95000       2       5 12          15      51    53
+## 10 03324334       1  17481.   40037       1       2 12          14      64    67
+## # … with 6,291 more rows, 53 more variables: SEX_REF &lt;dbl&gt;, SEX2 &lt;dbl&gt;,
+## #   REF_RACE &lt;dbl&gt;, RACE2 &lt;dbl&gt;, HISP_REF &lt;dbl&gt;, HISP2 &lt;dbl&gt;, FAM_TYPE &lt;dbl&gt;,
+## #   MARITAL1 &lt;dbl&gt;, REGION &lt;dbl&gt;, SMSASTAT &lt;dbl&gt;, HIGH_EDU &lt;chr&gt;,
+## #   EHOUSNGC &lt;dbl&gt;, TOTEXPCQ &lt;dbl&gt;, FOODCQ &lt;dbl&gt;, TRANSCQ &lt;dbl&gt;,
+## #   HEALTHCQ &lt;dbl&gt;, ENTERTCQ &lt;dbl&gt;, EDUCACQ &lt;dbl&gt;, TOBACCCQ &lt;dbl&gt;,
+## #   STUDFINX &lt;dbl&gt;, IRAX &lt;dbl&gt;, CUTENURE &lt;dbl&gt;, FAM_SIZE &lt;dbl&gt;, VEHQ &lt;dbl&gt;,
+## #   ROOMSQ &lt;dbl&gt;, INC_HRS1 &lt;dbl&gt;, INC_HRS2 &lt;dbl&gt;, EARNCOMP &lt;dbl&gt;, …
+```
+
+* Why does this give us the same answer as `left_join` for this situation?
+
+---
+
+## Look at the Possible Joins
+
+
+```r
+full_join(fmli, memi, by = c("NEWID" = "NEWID",
+                             "PRINEARN" = "MEMBNO"))
+```
+
+```
+## # A tibble: 15,412 × 63
+##    NEWID    PRINE…¹ FINLW…² FINCB…³ BLS_U…⁴ POPSIZE EDUC_…⁵ EDUCA2 AGE_REF  AGE2
+##    &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1 03324174       1  25985.  116920       1       2 16          15      63    50
+##  2 03324204       1   6581.     200       1       3 15          15      50    47
+##  3 03324214       1  20208.  117000       1       4 16          13      47    46
+##  4 03324244       1  18078.       0       1       2 15          NA      37    NA
+##  5 03324274       2  20112.    2000       1       2 14          NA      51    NA
+##  6 03324284       1  19907.     942       1       2 11          NA      63    NA
+##  7 03324294       1  11705.       0       1       1 10          NA      77    NA
+##  8 03324304       1  24431.   91000       1       2 13          15      37    36
+##  9 03324324       2  42859.   95000       2       5 12          15      51    53
+## 10 03324334       1  17481.   40037       1       2 12          14      64    67
+## # … with 15,402 more rows, 53 more variables: SEX_REF &lt;dbl&gt;, SEX2 &lt;dbl&gt;,
+## #   REF_RACE &lt;dbl&gt;, RACE2 &lt;dbl&gt;, HISP_REF &lt;dbl&gt;, HISP2 &lt;dbl&gt;, FAM_TYPE &lt;dbl&gt;,
+## #   MARITAL1 &lt;dbl&gt;, REGION &lt;dbl&gt;, SMSASTAT &lt;dbl&gt;, HIGH_EDU &lt;chr&gt;,
+## #   EHOUSNGC &lt;dbl&gt;, TOTEXPCQ &lt;dbl&gt;, FOODCQ &lt;dbl&gt;, TRANSCQ &lt;dbl&gt;,
+## #   HEALTHCQ &lt;dbl&gt;, ENTERTCQ &lt;dbl&gt;, EDUCACQ &lt;dbl&gt;, TOBACCCQ &lt;dbl&gt;,
+## #   STUDFINX &lt;dbl&gt;, IRAX &lt;dbl&gt;, CUTENURE &lt;dbl&gt;, FAM_SIZE &lt;dbl&gt;, VEHQ &lt;dbl&gt;,
+## #   ROOMSQ &lt;dbl&gt;, INC_HRS1 &lt;dbl&gt;, INC_HRS2 &lt;dbl&gt;, EARNCOMP &lt;dbl&gt;, …
+```
+
+---
+
+## Joining Tips
+
+
+```r
+fmli &lt;- left_join(fmli, memi, by = c("NEWID" = "NEWID",
+                                     "PRINEARN" = "MEMBNO"))
+```
+
+* FIRST: conceptualize for yourself what you think you want the final dataset to look like!
+* Check initial dimensions and final dimensions.
+* Use variable names when joining even if they are the same.  
+
+
+
+
+---
+
+class: middle, center
+
+&lt;img src="img/DAW.png" width="750px"/&gt;
+
+
+
+---
+
+class: center, middle
+
+.pull-left[
+
+## Data Viz
+
+
+&lt;iframe src="https://giphy.com/embed/d31vTpVi1LAcDvdm" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/netflix-d31vTpVi1LAcDvdm"&gt;via GIPHY&lt;/a&gt;&lt;/p&gt;
+
+]
+
+--
+
+.pull-right[
+
+## Data Wrangling
+
+&lt;iframe src="https://giphy.com/embed/DbaUtl1DcLyrdwhzGJ" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/Amalgia-DbaUtl1DcLyrdwhzGJ"&gt;via GIPHY&lt;/a&gt;&lt;/p&gt;
+
+]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

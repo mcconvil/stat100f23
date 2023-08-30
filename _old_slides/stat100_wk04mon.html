@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Collection</title>
+    <meta charset="utf-8" />
+    <script src="libsSlides/header-attrs-2.19/header-attrs.js"></script>
+    <link href="libsSlides/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <script src="libsSlides/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libsSlides/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libsSlides/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link rel="stylesheet" href="more.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Data Collection]
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 4 | Spring 2023] 
+
+]
+
+
+
+---
+
+## Announcements
+
+* Keep up the good work! 
+* **Participation/Engagement:**
+    + In class and section
+    + By March 7th, must:
+        + Attend at least one office hour and then fill out [this form](https://forms.gle/jZS7C7Nu36uHYwYy7) once.
+        + Post at least two messages on Slack.
+
+
+****************************
+
+--
+
+## Goals for Today
+
+.pull-left[
+
+* Finish up data wrangling with `dplyr` discussion.
+
+] 
+
+--
+
+.pull-right[
+
+
+* Cover data collection/acquisition.
+
+]
+
+
+
+---
+
+###  When to Get Help
+
+😢 *"I have no idea how to do this problem."* 
+
+--
+
+&amp;rarr; Ask us to point you to an similar example from the lecture, handouts, and guides.
+
+--
+
+&amp;rarr; Talk it through with someone on the Teaching Team so we can verbalize the process of going from Q to A.
+
+--
+
+😡 *"I am getting a weird error but really think my code is correct/on the right track/matches the examples from class."*
+
+--
+
+
+&amp;rarr; It is time for a second pair of eyes.  Don't stare at the error for over 10 minutes.
+
+--
+
+🤩 And lots of other times too! 😬 
+
+---
+
+###  When to Get Help
+
+
+Remember:
+
+&amp;rarr; Struggling is part of learning.
+
+--
+
+&amp;rarr; But let us help you ensure it is a **productive** struggle.
+
+--
+
+&amp;rarr; Struggling does NOT mean you are bad at stats!
+
+
+---
+
+class: , middle, center
+
+
+## Data Collection
+
+
+&lt;img src="img/twitter-study-design.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+##  Who are the data supposed to represent?
+
+&lt;img src="img/week4.002.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+--
+
+**Key questions:**
+
++ What evidence is there that the data are **representative**?
++ Who is present?  Who is absent?
++ Who is overrepresented?  Who is underrepresented?
+
+---
+
+##  Who are the data supposed to represent?
+
+&lt;img src="img/week4.003.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+--
+
+**Census**: We have data on the whole population!
+
+---
+
+##  Who are the data supposed to represent?
+
+&lt;img src="img/sampling.002.jpeg" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##  Who are the data supposed to represent?
+
+&lt;img src="img/week4.005.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+--
+
+
+**Key questions:**
+
++ What evidence is there that the **sample** is **representative** of the **population**?
++ Who is present?  Who is absent?
++ Who is overrepresented?  Who is underrepresented?
+
+---
+
+## Sampling Bias
+
+&lt;img src="img/sampling.001.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+**Sampling bias**: When the sampled units are **systematically different** from the non-sampled units on the variables of interest.
+
+---
+
+### Sampling Bias Example
+
+The **Literary Digest** was a political magazine that correctly predicted the presidential outcomes from 1916 to 1932.  In 1936, they conducted the most extensive (to that date) public opinion poll.  They mailed questionnaires to over **10 million people** (about 1/3 of US households) whose names and addresses they obtained from telephone books and vehicle registration lists. 
+
+--
+
+**Population of Interest**:
+
+&lt;br&gt;
+
+**Sample**:
+
+&lt;br&gt;
+
+
+
+**Sampling bias**:
+
+
+---
+
+## Random Sampling
+
+Use random sampling (a random mechanism for selecting cases from the population) to remove sampling bias.
+
+
+#### Types of random sampling
+
+* Simple random sampling
+
+* Cluster sampling
+
+* Stratified random sampling
+
+* Systematic sampling
+
+--
+
+Why aren't all samples generated using simple random sampling?
+
+---
+
+&lt;img src="img/fs.png" width="12%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+###  [US Forest Inventory and Analysis Program](https://www.fia.fs.fed.us/about/about_us/)
+
+&gt; Mission: "Make and keep current a comprehensive inventory and analysis of the present and prospective conditions of and requirements for the renewable resources of the forest and rangelands of the US."
+
+Need a **random sample** of ground plots to say something about the state of our nation's forests!
+
+
+---
+
+### FIA: Simple Random Sampling
+
+.pull-left[
+
+- Break the landscape up into equally sized plots (~1 acre).
+- Number each plot from 1 to 6,755,200.
+- Use a **random** mechanism to sample a plot for about every 6,000 acres.
+
+
+
+
+```r
+sample(x = 1:6755200, size = 1126) %&gt;%
+  head()
+```
+
+```
+## [1] 6447526 3789023 6367844  787543 2795793 3823640
+```
+
+
+]
+
+
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+Thoughts on this sampling design?
+
+---
+
+### FIA: Cluster Random Sampling
+
+
+.pull-left[
+
+- Break the landscape up into equally sized plots (~1 acre).
+- Put each plot in a cluster.
+    + For our example: cluster = county.
+- Number each cluster.
+- Use a **random** mechanism to sample 2 clusters.
+- Sample **all** plots in those 2 clusters.
+
+
+
+```r
+sample(x = 1:14, size = 2) 
+```
+
+```
+## [1] 13 11
+```
+
+
+]
+
+
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+Thoughts on this sampling design?
+
+---
+
+### FIA: Cluster Random Sampling
+
+
+.pull-left[
+
+- Break the landscape up into equally sized plots (~1 acre).
+- Put each plot in a cluster.
+    + For our example: cluster = county.
+- Number each cluster.
+- Use a **random** mechanism to sample 2 clusters.
+- Take a **simple random sample** within the sampled clusters.
+
+
+
+```r
+sample(x = 1:14, size = 2) 
+```
+
+```
+## [1]  3 11
+```
+
+
+```r
+sample(x = 1:---, size = ---)
+```
+
+
+]
+
+
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+Thoughts on this sampling design?
+
+
+---
+
+### FIA: Cluster Random Sampling
+
+
+
+.pull-left[
+
+&lt;img src="img/mass_forests.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+- Are our clusters based on counties **homogeneous**?
+
+- Why is **homogeneity** important for cluster sampling?
+
+
+---
+
+### FIA: Stratified Random Sampling
+
+
+.pull-left[
+
+- Break the landscape up into equally sized plots (~1 acre).
+- Put each plot in a stratum.
+    + For our example: stratum = county.
+- Take a **simple random sample** within every stratum.
+    + Don't have to be equally sized!
+
+
+
+```r
+# Do this for each stratum
+sample(x = 1:---, size = ---)
+```
+
+
+]
+
+
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+Thoughts on this sampling design?
+
+---
+
+### FIA: Systematic Random Sampling
+
+.pull-left[
+
+
+This is FIA's **actual** sampling design (okay, slightly simplified).
+
+- Break the landscape up into equally sized plots (~1 acre).
+- Number each plot from 1 to 6,755,200.
+- Use a **random** mechanism to pick starting point.  Then sample about once every 6000 acres.
+
+
+
+
+```r
+sample(x = 1:6755200, size = 1) 
+```
+
+```
+## [1] 2577472
+```
+
+
+]
+
+
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+Why is this design **better** than simple random sampling?
+
+
+---
+
+&lt;img src="img/nhanes_logo.jpg" width="15%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+
+### National Health and Nutrition Examination Survey
+
+&lt;br&gt;
+
+Why are these data collected?
+
+--
+
+&amp;rarr; To assess the health of people in the US.
+
+--
+
+How are these data collected?
+
+--
+
+&amp;rarr; **Stage 1**: US is stratified by geography and distribution of minority populations.  Counties are randomly selected within each stratum.
+
+--
+
+&amp;rarr; **Stage 2**: From the sampled counties, city blocks are randomly selected. (City blocks are clusters.)
+
+--
+
+&amp;rarr; **Stage 3**: From sampled city blocks, households are randomly selected. (Household are clusters.)
+
+--
+
+&amp;rarr; **Stage 4**: From sampled households, people are randomly selected.  For the sampled households, a mobile health vehicle goes to the house and medical professionals take the necessary measurements.
+
+--
+
+**Why don't they use simple random sampling?**
+
+---
+
+### Careful Using Non-Simple Random Sample Data
+
+.pull-left[
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+--
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+* If you are dealing with data collected using a complex sampling design, I'd recommend taking an additional stats course, like Stat 160: Sample Surveys!
+
+---
+
+class: middle, center, 
+
+## Detour: Data Ethics
+
+---
+
+### Data Ethics
+
+&gt; "Good statistical practice is fundamentally based on transparent assumptions, reproducible results, and valid interpretations." -- Committee on Professional Ethics of the American Statistical Association (ASA)
+
+--
+
+The ASA have created ["Ethical Guidelines for Statistical Practice"](https://www.amstat.org/ASA/Your-Career/Ethical-Guidelines-for-Statistical-Practice.aspx)
+
+--
+
+&amp;rarr; These guidelines are for EVERYONE doing statistical work. 
+
+--
+
+&amp;rarr; There are ethical decisions at all steps of the Data Analysis Process.
+
+--
+
+&amp;rarr; We will periodically refer to specific guidelines throughout this class.
+
+--
+
+&gt; "Above all, professionalism in statistical practice presumes the goal of advancing knowledge while avoiding harm; using statistics in pursuit of unethical ends is inherently unethical."
+
+---
+
+class: , center, middle
+
+##  Responsibilities to Research Subjects
+
+
+&gt; "The ethical statistician protects and respects the rights and interests of human and animal subjects at all stages of their involvement in a project. This includes respondents to the census or to surveys, those whose data are contained in administrative records, and subjects of physically or psychologically invasive research."
+
+---
+
+###  Responsibilities to Research Subjects
+
+
+&gt; "Protects the privacy and confidentiality of research subjects and data concerning them, whether obtained from the subjects directly, other persons, or existing records."
+
+
+&lt;img src="stat100_wk04mon_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+Why does the `Age` variable max out at 80?
+
+---
+
+## Detour from Our Detour
+
+--
+
+.pull-left[
+
+
+```r
+library(tidyverse)
+library(NHANES)
+
+ggplot(data = NHANES, 
+       mapping = aes(x = Age,
+                     y = Height)) +
+  geom_point(alpha = 0.1) +
+  stat_smooth(color = "blue")
+```
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/points-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+
+---
+
+## Detour from Our Detour
+
+
+.pull-left[
+
+
+```r
+library(tidyverse)
+library(NHANES)
+library(emojifont)
+
+NHANES &lt;- mutate(NHANES, 
+          heart = fontawesome("fa-heart"))
+
+ggplot(data = NHANES, 
+       mapping = aes(x = Age,
+                     y = Height,
+                     label = heart)) +
+  geom_text(alpha = 0.1, color = "red",
+            family='fontawesome-webfont',
+            size = 8) +
+  stat_smooth(color = "deeppink") +
+  labs(title = "Happy (Almost) Valentine's Day")
+```
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk04mon_files/figure-html/hearts-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+class: middle, center, 
+
+## Back to Data Collection
+
+---
+
+###  Who are the data supposed to represent?
+
+&lt;img src="img/sampling.002.jpeg" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+###  Who are the data supposed to represent?
+
+&lt;img src="img/week4.006.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+**Key questions:**
+
++ What evidence is there that the **respondents** are **representative** of the **population**?
++ Who is present?  Who is absent?
++ Who is overrepresented?  Who is underrepresented?
+
+---
+
+## Nonresponse bias
+
+
+&lt;img src="img/sampling.003.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+**Nonresponse bias**: The respondents are **systematically** different from the non-respondents for the variables of interest.
+
+
+---
+
+### Come Back to Literary Digest Example
+
+Of the 10 million people surveyed, more than 2.4 million responded with 57% indicating that they would vote for Republican Alf Landon in the upcoming presidential election instead of the current President Franklin Delano Roosevelt.
+
+&lt;br&gt;
+
+**Non-response bias**?
+
+
+---
+
+## Tackling Nonresponse bias
+
+
+&lt;img src="img/sampling.003.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&amp;rarr; Use **multiple modes** (mail, phone, in-person) and **multiple attempts** for reaching sampled cases.
+
+--
+
+&amp;rarr; Explore key demographic variables to see how respondents and non-respondents vary.
+
+---
+
+## Is Bigger Always Better?
+
+--
+
+&lt;img src="img/sampling.004.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+--
+
+For our **Literary Digest Example**, Gallup predicted Roosevelt would win based on a survey of **50,000** people, (instead of 2.4 million).
+
+---
+
+### Big Data Paradox
+
+
+&lt;img src="img/meng.jpg" width="10%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+*"Without taking data quality into account, population inferences with Big Data are subject to a Big Data Paradox: the more the data, the surer we fool ourselves."* -- Xiao-Li Meng
+
+
+--
+
+**Example:** 
+
+* During Spring of 2021, Delphi-Facebook estimated  vaccine uptake at 70% and U.S. Census estimated it at 67%.
+
+--
+
+* The CDC reported it to be 53%.
+
+--
+
+And, once we learn about **quantifying uncertainty**, we will see that large sample sizes produce very small measures of uncertainty.
+
+--
+
+*"If you have the resources, invest in data quality far more than you invest in data quantity. Bad-quality data is essentially wiping out the power you think you have. That’s always been a problem, but it’s magnified now because we have big data."* -- Xiao-Li Meng
+
+---
+
+
+## Thoughts on Data Collection: Sampling
+
+
+**Random** sampling is important to ensure the sample is **representative** of the population.
+
+--
+
+Representativeness isn't about size.
+
++ Small random samples will tend to be more representative than large non-random samples.
+
+--
+
+But I bet most samples you will encounter won't have arisen from a random mechanism.
+
+
+--
+
+How do we draw conclusions about the population from **non-random samples**?
+
+--
+
+&amp;rarr; Determinee if your sampled cases (and respondents) are systematically different from the non-sampled cases (and non-respondents) for the variables you care about.
+
+--
+
+&amp;rarr; Adjust your population of interest.
+
+--
+
+&amp;rarr; Take a survey stats course to learn how to adjust the sample to make it more representative.
+
+
+---
+
+class: center, middle
+
+## Now let's shift the discussion.
+
+--
+
+### Suppose we have our sample and have determined the population it represents.
+
+--
+
+### What kind of conclusions can we draw?
+
+
+---
+
+### Typical Analysis Goals
+
+--
+
+**Descriptive**: Want to estimate quantities related to the population.
+
+&amp;rarr; *How many trees are in Alaska?*
+
+--
+
+**Predictive**: Want to predict the value of a variable.
+
+&amp;rarr; *Can I use remotely sensed data to predict forest types in Alaska?*
+
+--
+
+**Causal**: Want to determine if changes in a variable cause changes in another variable.
+
+&amp;rarr; *Are insects causing the increased mortality rates for pinyon-juniper woodlands?*
+
+
+---
+
+### Typical Analysis Goals
+
+
+For these goals will differentiate between variables:
+
+* **Response variable**: Variable I want to better understand
+
+* **Explanatory/predictor variables**: Variables I think might explain/predict the response variable
+
+--
+
+&amp;rarr; *How many trees are in Alaska?*
+
+&amp;rarr; *Can I use remotely sensed data to predict forest types in Alaska?*
+
+&amp;rarr; *Are insects causing the increased mortality rates for pinyon-juniper woodlands?*
+
+---
+
+### Key Mechanism for Causal Goal
+
+
+**Random assignment**: Cases are randomly assigned to categories of the **explanatory variable**
+
+--
+
+&amp;rarr; If the data were collected using **random assignment**, then I can determine if the explanatory variable **causes** changes in the response variable.
+
+--
+
+**Example**: [COVID Vaccine Trials](https://www.nih.gov/news-events/nih-research-matters/experimental-coronavirus-vaccine-highly-effective)
+
+To study the effectiveness of the Moderna vaccine (mRNA-1273), researchers carried out a study on over 30,000 adult volunteers with no known previous COVID-19 infection.  Volunteers were randomly assigned to either receive two doses of the vaccine or two shots of saline.  The incidence of symptomatic COVID-19 was 94% lower in those who received the vaccine than those who did not.
+
+
+--
+
+**Why does random assignment allow us to conclude that this vaccine was effective at preventing (early strains of) COVID-19?**
+
+---
+
+## Causal Inference
+
+Often want to conclude that an explanatory variable causes changes in a response variable but you did not randomly assign the explanatory variable.
+
+--
+
+**Confounding variable**: When the explanatory variable and response variable vary, so does the confounder.
+
+&amp;rarr; Unclear if the explanatory variable or the confounder (or some other variable) is causing changes in the response.
+
+
+&lt;img src="img/confound.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Causal Inference
+
+Often want to conclude that an explanatory variable causes changes in a response variable but you did not randomly assign the explanatory variable.
+
+
+
+**Confounding variable**: When the explanatory variable and response variable vary, so does the confounder.
+
+&amp;rarr; Unclear if the explanatory variable or the confounder (or some other variable) is causing changes in the response.
+
+
+&lt;img src="img/confound2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Causal Inference
+
+* **Spurious relationship**: Two variables are associated but not causally related
+    + In the age of big data, lots of good examples [out there](https://tylervigen.com/spurious-correlations).
+
+--
+
+&amp;rarr; *"Correlation does not imply causation."
+
+--
+
+
+&amp;rarr; *"Correlation does not imply not causation."*
+
+--
+
+* **Causal inference**: Methods for finding causal relationships even when the data were collected without random assignment.
+
+
+---
+
+## Types of Studies
+
+
+
+**Experiment:** Interested in causal relationships so utilize random assignment.  Other key features include:
+
++ Control group
++ Placebo
++ Blinding
+
+--
+
+**Example**: COVID vaccine trials
+
+--
+
++ Control group: Those who got no vaccine.
+
+--
+
++ Placebo: The control group got saline shots so they didn't know their group.
+
+--
+
++ Blinding: Subjects and researchers interacting with subjects did not know which group they were in.
+
+
+
+---
+
+
+## Types of Studies
+
+**Observational Study:** Collect data in a way that doesn't interfere
+
+--
+
+**Example**: Hand washing study
+
+To estimate what percent of people in the US wash their hands after using a public restroom, researchers pretended to comb their hair while observing 6000 people in public restrooms throughout the United States. They found that 85% of the people who were observed washed their hands after going to the bathroom.
+
+---
+
+
+## Thoughts on Data Collection: Goals
+
+Consider your analysis goals when making conclusions.  If your goal is to show causal relationships, ask:
+
+* Do I have convincing evidence that any differences in the response aren't just do to "random chance?"
+* Do I have convincing evidence against the explanatory groups differing to begin with?
+
+--
+
+Random assignment allows you to explore **causal** relationships between your explanatory variables and the predictor variables because the randomization makes the explanatory groups roughly similar.
+
+--
+
+How do we draw causal conclusions from studies without random assignment?
+
+--
+
+&amp;rarr; With extreme care!  Try to control for all possible confounding variables.
+
+--
+
+&amp;rarr; Discuss the associations/correlations you found.  Use domain knowledge to address potentially causal links.
+
+--
+
+&amp;rarr; Take more stats to learn more about causal inference.
+
+
+--
+
+**Bottom Line:** We often have to use imperfect data to make decisions.
+
+
+
+
+---
+
+### Reminders
+
+
+* **Participation/Engagement:**
+    + In class and section
+    + By March 7th, must:
+        + Attend at least one office hour and then fill out [this form](https://forms.gle/jZS7C7Nu36uHYwYy7) once.
+        + Post at least two messages on Slack.
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

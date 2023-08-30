@@ -1,0 +1,17 @@
+knitr
+kableExtra
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+lubridate
+Lock5Data
+gridExtra
+infer
+broom
+moderndive

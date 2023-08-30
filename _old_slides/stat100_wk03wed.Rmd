@@ -1,0 +1,144 @@
+---
+title: Data Wrangling
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Data Wrangling]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 3 | Spring 2023] 
+
+]
+
+
+
+---
+
+## Announcements
+
+* Don't forget to come by [office hours](https://docs.google.com/spreadsheets/d/1xwqT5fjYSf83NDEXhq8g0vp2SCeZGnsaIBeNBzS2JGo/edit?usp=sharing) to ask questions or to work in a collaborative setting.
+* And, the Week 3 Lecture Quiz will open on Gradescope after lecture today!
+
+
+****************************
+
+--
+
+## Goals for Today
+
+
+
+* Go through the main data wrangling operations in `dplyr`.
+
+
+
+---
+
+## dplyr for Data Wrangling
+
+* Six common wrangling verbs:
+    + `select()`
+    + `mutate()`
+    + `filter()`
+    + `arrange()`
+    + `summarize()`
+    + `---_join()`
+    
+* One action:
+    + `group_by()`
+
+---
+
+## Data Setting: [BLS Consumer Expenditure Survey](https://www.bls.gov/cex/)
+
+Last quarter of the 2016 Bureau of Labor Statistics Consumer Expenditure Survey.
+
+```{r}
+library(tidyverse)
+
+ce <- read_csv("~/shared_data/stat100/data/ce.csv")
+glimpse(ce)
+```
+
+---
+
+class: , middle, center
+
+## Now let's go through the Data Wrangling handout!
+
+---
+
+## Naming Wrangled Data
+
+--
+
+Should I name my new dataframe `ce` or `ce1`?
+    
+    
++ *My* answer:
+    + Is your new dataset structurally different? If so, give it a **new name**.
+    + Are you removing values you will need for a future analysis within the same document? If so, give it a **new name**.
+    + Are you just adding to or cleaning the data?  If so, then **write over** the original.
+    
+---
+
+class: middle, center
+
+### Sage Advice from ModernDive
+
+#### "Crucial: Unless you are very confident in what you are doing, it is worthwhile not starting to code right away. Rather, first sketch out on paper all the necessary data wrangling steps not using exact code, but rather high-level pseudocode that is informal yet detailed enough to articulate what you are doing. This way you won’t confuse what you are trying to do (the algorithm) with how you are going to do it (writing dplyr code)."
+
+
+---
+
+## Reminders
+
+* Don't forget to come by [office hours](https://docs.google.com/spreadsheets/d/1xwqT5fjYSf83NDEXhq8g0vp2SCeZGnsaIBeNBzS2JGo/edit?usp=sharing) to ask questions or to work in a collaborative setting.
+* And, the Week 3 Lecture Quiz will open on Gradescope after lecture today!
+
+
+
+
+

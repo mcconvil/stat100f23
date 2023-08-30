@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Multiple Linear Regression</title>
+    <meta charset="utf-8" />
+    <script src="libsSlides/header-attrs-2.19/header-attrs.js"></script>
+    <link href="libsSlides/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <script src="libsSlides/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libsSlides/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libsSlides/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link rel="stylesheet" href="more.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+## .base-blue[Multiple Linear Regression]
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 6 | Spring 2023] 
+
+]
+
+
+
+---
+
+## Announcements
+
+* Mid-Term Exam: Wednesday, March 8th - Friday, March 10th
+    + Will post the oral exam sign-up sheet after lecture today!
+    + Will get a review sheet on Wednesday.
+    + Section this week will involve exam review.
+* On your p-sets, make sure your answers are your own for **both the coding and narrative components.**
+
+****************************
+
+--
+
+## Goals for Today
+
+.pull-left[
+
+
+* Broadening our idea of linear regression models
+
+ 
+] 
+
+
+
+.pull-right[
+
+
+* Discuss the **multiple** linear regression model
+
+* Explore interaction terms
+
+]
+
+
+---
+
+### The Importance of Problem 4 on P-Set 5
+
+
+.pull-left[
+
+
+&lt;img src="img/tukey.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+*"The best thing about being a statistician is that you get to* **play** *in everyone’s backyard."* -- John Tukey
+
+
+]
+
+
+--
+
+
+.pull-left[
+
+
+&lt;img src="img/question.001.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+*"Consider* **context**. *The bottom line for numbers is that they cannot speak for themselves."*
+
+*"Lacking this context for orientation, strangers in the data set run the risk of getting things entirely wrong or actually doing harm by filling in the missing information with their own biases and assumptions."* -- Catherine D’Ignazio and Lauren F. Klein
+
+
+]
+
+
+
+---
+
+
+### Linear Regression
+
+Linear regression is a flexible class of models that allow for:
+
+* Both quantitative and categorical explanatory variables.
+
+--
+
+* Multiple explanatory variables.
+
+--
+
+* Curved relationships between the response variable and the explanatory variable.
+
+--
+
+* BUT the **response variable is quantitative**.
+
+********************
+
+* Today's explorations:
+    + Including more than one predictor
+    + Interaction terms
+    + Handling categorical variables with more than two categories
+
+
+---
+
+
+### Multiple Linear Regression
+
+**Form of the Model:**
+
+--
+
+$$ 
+`\begin{align}
+y &amp;= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\end{align}`
+$$
+
+
+--
+
+#### How does extending to more predictors change our process?
+
+--
+
+**What doesn't change:**
+
+--
+
+&amp;rarr; Still use **Method of Least Squares** to estimate coefficients
+
+--
+
+&amp;rarr; Still use `lm()` to fit the model and `predict()` for prediction
+
+
+
+--
+
+**What does change:**
+
+--
+
+&amp;rarr; Meaning of the coefficients are more complicated and depend on other variables in the model
+
+--
+
+&amp;rarr; Need to decide which variables to include and how (linear term, squared term...)
+
+---
+
+### Multiple Linear Regression
+
+* We are going to see a few examples today and next lecture.
+
+--
+
+* We will need to return to modeling later in the course to more definitively answer questions about **model selection**.
+
+
+---
+
+## Example 
+
+Meadowfoam is a plant that grows in the Pacific Northwest and is harvested for its seed oil.  In a randomized experiment, researchers at Oregon State University looked at how two light-related factors influenced the number of flowers per meadowfoam plant, the primary measure of productivity for this plant.  The two light measures were light intensity (in mmol/ `\(m^2\)` /sec) and the timing of onset of the light (early or late in terms of photo periodic floral induction).
+
+&lt;br&gt; 
+
+
+**Response variable**: 
+
+&lt;br&gt; 
+
+**Explanatory variables**: 
+
+
+&lt;br&gt; &lt;br&gt; &lt;br&gt; 
+
+**Model Form:**
+
+---
+
+### Data Loading and Wrangling
+
+
+```r
+library(tidyverse)
+library(Sleuth3)
+data(case0901)
+
+# Recode the timing variable
+case0901 &lt;- case0901 %&gt;%
+  mutate(TimeCat = case_when(
+    Time == 1 ~ "Late",
+    Time == 2 ~ "Early"
+    )) 
+```
+
+
+---
+
+### Visualizing the Data
+
+.pull-left[
+
+
+```r
+ggplot(case0901,
+       aes(x = Intensity,
+           y = Flowers,
+           color = TimeCat)) + 
+  geom_point(size = 4)
+```
+
+Why don't I have to include `data = ` and `mapping = ` in my `ggplot()` layer?
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk06mon_files/figure-html/meadowfoam-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+
+### Building the Linear Regression Model
+
+
+Full model form:
+
+
+```r
+modFlowers &lt;- lm(Flowers ~ Intensity + TimeCat, data = case0901)
+
+library(moderndive)
+get_regression_table(modFlowers)
+```
+
+```
+## # A tibble: 3 × 7
+##   term          estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept        83.5      3.27      25.5        0   76.7      90.3 
+## 2 Intensity        -0.04     0.005     -7.89       0   -0.051    -0.03
+## 3 TimeCat: Late   -12.2      2.63      -4.62       0  -17.6      -6.69
+```
+
+* Estimated regression line for `\(x_2 = 1\)`:
+
+&lt;br&gt; &lt;br&gt;  
+
+
+* Estimated regression line for `\(x_2 = 0\)`:
+
+
+---
+
+### Appropriateness of Model Form
+
+
+.pull-left[
+
+
+```r
+ggplot(case0901, 
+       aes(x = Intensity,
+           y = Flowers,
+           color = TimeCat)) + 
+  geom_point(size = 4) + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk06mon_files/figure-html/meadowfoam2-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+&lt;br&gt; 
+--
+
+Is the assumption of **equal slopes** reasonable here?
+
+
+---
+
+### Prediction
+
+
+```r
+flowersNew &lt;- data.frame(Intensity = 700, 
+                         TimeCat = "Early")
+predict(modFlowers, newdata = flowersNew)
+```
+
+```
+##        1 
+## 55.13417
+```
+
+---
+
+### New Example
+
+For this example, we will use data collected by the website pollster.com, which aggregated 102 presidential polls from August 29th, 2008 through the end of September.  We want to determine the best model to explain the variable `Margin`, measured by the difference in preference between Barack Obama and John McCain.  Our potential predictors are `Days` (the number of days after the Democratic Convention) and `Charlie` (indicator variable on whether poll was conducted before or after the first ABC interview of Sarah Palin with Charlie Gibson). 
+
+--
+
+.pull-left[
+
+
+```r
+Pollster08 &lt;- 
+  read_csv("~/shared_data/stat100/data/Pollster08.csv")
+glimpse(Pollster08)
+```
+
+```
+## Rows: 102
+## Columns: 11
+## $ PollTaker &lt;chr&gt; "Rasmussen", "Zogby", "Diageo/Hotline", "CBS", "CNN", "Rasmu…
+## $ PollDates &lt;chr&gt; "8/28-30/08", "8/29-30/08", "8/29-31/08", "8/29-31/08", "8/2…
+## $ MidDate   &lt;chr&gt; "8/29", "8/30", "8/30", "8/30", "8/30", "8/31", "8/31", "9/1…
+## $ Days      &lt;dbl&gt; 1, 2, 2, 2, 2, 3, 3, 4, 5, 5, 5, 5, 6, 6, 8, 8, 9, 9, 9, 9, …
+## $ n         &lt;dbl&gt; 3000, 2020, 805, 781, 927, 3000, 1200, 1728, 2771, 1000, 734…
+## $ Pop       &lt;chr&gt; "LV", "LV", "RV", "RV", "RV", "LV", "LV", "RV", "RV", "A", "…
+## $ McCain    &lt;dbl&gt; 46, 47, 39, 40, 48, 45, 43, 36, 42, 39, 42, 44, 46, 40, 48, …
+## $ Obama     &lt;dbl&gt; 49, 45, 48, 48, 49, 51, 49, 40, 49, 42, 42, 49, 48, 46, 45, …
+## $ Margin    &lt;dbl&gt; 3, -2, 9, 8, 1, 6, 6, 4, 7, 3, 0, 5, 2, 6, -3, 5, -4, -1, -2…
+## $ Charlie   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Meltdown  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+```
+
+]
+
+.pull-right[
+
+**Response variable**: 
+
+&lt;br&gt; 
+
+
+
+**Explanatory variables**: 
+
+]
+
+---
+
+### Visualizing the Data
+
+.pull-left[
+
+
+```r
+ggplot(Pollster08,
+       aes(x = Days,
+           y = Margin, 
+           color = Charlie)) +
+  geom_point(size = 3)
+```
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk06mon_files/figure-html/polls-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+What is wrong with how one of the variables is mapped in the graph?
+
+
+
+---
+
+### Visualizing the Data
+
+.pull-left[
+
+
+```r
+ggplot(Pollster08, 
+       aes(x = Days,
+           y = Margin, 
+           color = factor(Charlie))) +
+  geom_point(size = 3)
+```
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk06mon_files/figure-html/polls2-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+--
+
+Is the assumption of **equal slopes** reasonable here?
+
+
+---
+
+### Model Forms
+
+**Same Slopes Model:**
+
+&lt;br&gt; &lt;br&gt; &lt;br&gt; 
+
+**Different Slopes Model:**
+
+
+* Line for `\(x_2 = 1\)`:
+
+&lt;br&gt; &lt;br&gt; &lt;br&gt; 
+
+
+* Line for `\(x_2 = 0\)`: 
+
+
+
+---
+
+### Fitting the Linear Regression Model
+
+
+```r
+modPoll &lt;- lm(Margin ~ Days*factor(Charlie), data = Pollster08)
+
+get_regression_table(modPoll)
+```
+
+```
+## # A tibble: 4 × 7
+##   term                  estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept                5.57      1.09       5.11       0    3.40     7.73 
+## 2 Days                    -0.598     0.121     -4.96       0   -0.838   -0.359
+## 3 factor(Charlie): 1     -10.1       1.92      -5.25       0  -13.9     -6.29 
+## 4 Days:factor(Charlie)1    0.921     0.136      6.75       0    0.65     1.19
+```
+
+
+* Estimated regression line for `\(x_2 = 1\)`:
+
+&lt;br&gt; &lt;br&gt; &lt;br&gt; 
+
+
+* Estimated regression line for `\(x_2 = 0\)`: 
+
+---
+
+### Adding the Regression Model to the Plot
+
+.pull-left[
+
+
+```r
+ggplot(Pollster08, 
+       aes(x = Days, 
+           y = Margin, 
+           color = factor(Charlie))) +
+  geom_point(size = 3) +
+  stat_smooth(method = lm, se = FALSE)
+```
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk06mon_files/figure-html/polls3-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+--
+
+Is our modeling goal here **predictive** or **descriptive**?
+
+
+
+---
+
+### New Example: Movies
+
+Let's model a movie's critic rating using the audience rating and the movie's genre.
+
+
+```r
+library(tidyverse)
+movies &lt;- read_csv("https://www.lock5stat.com/datasets2e/HollywoodMovies.csv")
+
+# Restrict our attention to dramas, horrors, and actions
+movies2 &lt;- movies %&gt;%
+  filter(Genre %in% c("Drama", "Horror", "Action")) %&gt;%
+  drop_na(Genre, AudienceScore, RottenTomatoes)
+glimpse(movies2)
+```
+
+```
+## Rows: 313
+## Columns: 16
+## $ Movie            &lt;chr&gt; "Spider-Man 3", "Transformers", "Pirates of the Carib…
+## $ LeadStudio       &lt;chr&gt; "Sony", "Paramount", "Disney", "Warner Bros", "Warner…
+## $ RottenTomatoes   &lt;dbl&gt; 61, 57, 45, 60, 20, 79, 35, 28, 41, 71, 95, 42, 18, 2…
+## $ AudienceScore    &lt;dbl&gt; 54, 89, 74, 90, 68, 86, 55, 56, 81, 52, 84, 55, 70, 6…
+## $ Story            &lt;chr&gt; "Metamorphosis", "Monster Force", "Rescue", "Sacrific…
+## $ Genre            &lt;chr&gt; "Action", "Action", "Action", "Action", "Action", "Ac…
+## $ TheatersOpenWeek &lt;dbl&gt; 4252, 4011, 4362, 3103, 3778, 3408, 3959, 3619, 2911,…
+## $ OpeningWeekend   &lt;dbl&gt; 151.1, 70.5, 114.7, 70.9, 49.1, 33.4, 58.0, 45.3, 19.…
+## $ BOAvgOpenWeekend &lt;dbl&gt; 35540, 17577, 26302, 22844, 12996, 9791, 14663, 12541…
+## $ DomesticGross    &lt;dbl&gt; 336.53, 319.25, 309.42, 210.61, 140.13, 134.53, 131.9…
+## $ ForeignGross     &lt;dbl&gt; 554.34, 390.46, 654.00, 245.45, 117.90, 249.00, 157.1…
+## $ WorldGross       &lt;dbl&gt; 890.87, 709.71, 963.42, 456.07, 258.02, 383.53, 289.0…
+## $ Budget           &lt;dbl&gt; 258.0, 150.0, 300.0, 65.0, 140.0, 110.0, 130.0, 110.0…
+## $ Profitability    &lt;dbl&gt; 345.30, 473.14, 321.14, 701.64, 184.30, 348.66, 222.3…
+## $ OpenProfit       &lt;dbl&gt; 58.57, 47.00, 38.23, 109.08, 35.07, 30.36, 44.62, 41.…
+## $ Year             &lt;dbl&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007,…
+```
+
+* **Response variable:**
+
+* **Explanatory variables:**
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+Let's start with what NOT to do.
+
+&lt;br&gt;
+&lt;br&gt;
+
+**Equal Slopes Model:**
+
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+What we should do instead.
+
+&lt;br&gt;
+&lt;br&gt;
+
+**Equal Slopes Model:**
+
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+**Different Slopes Model:**
+
+
+---
+
+### Exploring the Data
+
+.pull-left[
+
+
+```r
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = lm, se = FALSE) +
+  geom_abline(slope = 1, intercept = 0)
+```
+
+* Trends?
+
+* Should we include interaction terms in the model?
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk06mon_files/figure-html/mscat-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+
+### Side-bar: Identify Outliers on a Graph
+
+
+
+```r
+outliers &lt;- movies2 %&gt;%
+  mutate(DiffScore = AudienceScore - RottenTomatoes) %&gt;%
+  filter(DiffScore &gt; 50 | DiffScore &lt; -30) %&gt;%
+  select(Movie, DiffScore, AudienceScore, RottenTomatoes, Genre)
+outliers
+```
+
+```
+## # A tibble: 9 × 5
+##   Movie                               DiffScore AudienceScore RottenToma…¹ Genre
+##   &lt;chr&gt;                                   &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;
+## 1 Saw IV                                     52            70           18 Horr…
+## 2 Step Up 2: The Streets                     55            81           26 Drama
+## 3 Kit Kittredge: An American Girl           -52            26           78 Drama
+## 4 Stop-Loss                                 -38            27           65 Drama
+## 5 Transformers: Revenge of the Fallen        56            76           20 Acti…
+## 6 The Twilight Saga: New Moon                51            78           27 Drama
+## 7 Drag Me to Hell                           -31            61           92 Horr…
+## 8 The Last Exorcism                         -41            32           73 Drama
+## 9 Haywire                                   -40            40           80 Acti…
+## # … with abbreviated variable name ¹​RottenTomatoes
+```
+
+---
+
+### Side-bar: Identify Outliers on a Graph
+
+.pull-left[
+
+
+```r
+library(ggrepel)
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = lm, se = FALSE) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_text_repel(data = outliers,
+                  mapping = aes(label =
+                                  Movie),
+                  force = 10,
+                  show.legend = FALSE,
+                  size = 6)
+```
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk06mon_files/figure-html/outliers-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+
+
+### Building the Model:
+
+Full model form: 
+
+
+```r
+mod &lt;- lm(RottenTomatoes ~ AudienceScore*Genre, data = movies2)
+
+library(moderndive)
+get_regression_table(mod) 
+```
+
+```
+## # A tibble: 6 × 7
+##   term                      estimate std_error statistic p_value lower…¹ upper…²
+##   &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 intercept                  -15.0       5.27      -2.85   0.005 -25.4    -4.67 
+## 2 AudienceScore                1.01      0.085     11.8    0       0.84    1.18 
+## 3 Genre: Drama                22.8       8.94       2.55   0.011   5.23   40.4  
+## 4 Genre: Horror              -15.2      11.0       -1.39   0.165 -36.8     6.32 
+## 5 AudienceScore:GenreDrama    -0.253     0.136     -1.86   0.065  -0.522   0.015
+## 6 AudienceScore:GenreHorror    0.365     0.206      1.77   0.078  -0.04    0.771
+## # … with abbreviated variable names ¹​lower_ci, ²​upper_ci
+```
+
+Estimated model for Dramas:
+
+---
+
+class: middle, center
+
+
+##  Will consider adding curvative and get some practice on Wednesday!
+
+
+---
+
+## Reminders:
+
+* Mid-Term Exam: Wednesday, March 8th - Friday, March 10th
+    + Will post the oral exam sign-up sheet after lecture today!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

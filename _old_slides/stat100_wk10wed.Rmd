@@ -1,0 +1,733 @@
+---
+title: Probability Concepts
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20),
+             plot.title = element_text(hjust = 0.5))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Probability Concepts]
+
+
+
+
+
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 10 | Spring 2023] 
+
+]
+
+
+
+---
+
+### Announcements
+
+* `r emo::ji("tada")` We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out [this application](https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform) by **April 7th**.
+    + About 9-12 hours of work per week.  
+    + Primary responsibilities: Lead a discussion section, hold office hours, grade assessments.
+
+
+
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* Learn about conditional probabilities
+
+* Recap probability concepts
+
+
+
+
+] 
+
+
+
+.pull-right[
+
+* Cover continuous random variables
+
+* Learn important **named** random variables
+
+
+
+
+]
+
+
+
+---
+
+### Conditional Probabilities
+
+> "Conditioning is the soul of statistics." — Joe Blitzstein, Stat 110 Prof
+
+
+
+**Question**: What do we mean by "conditioning"?
+
+--
+
+Most polar bears are twins. Therefore, if you're a twin, you're probably a polar bear.
+
+--
+
+* P(twin given polar bear) $\neq$ P(polar bear given twin)
+
+
+--
+
+The p-value is a conditional probability.  
+
+--
+
+* P-value = P(data given $H_o$) ( $\neq$ P( $H_o$ given data))
+
+
+
+
+
+---
+
+### Conditional Probabilities
+
+**Other favorite examples:**
+
+* P(have COVID given wear mask) $\neq$ P(wear mask given have COVID)
+    + In a CDC study, P(wear mask given have COVID) = 0.71 while P(have COVID given wear mask) is much lower.
+    
+--
+
+* P(it is raining given there are clouds directly overhead) $\neq$ Pr(there are clouds directly overhead given it is raining)
+
+
+**Notation**: P(A given B) = P(A | B)
+
+ 
+
+
+---
+
+### Example
+
+Testing for COVID-19 was an important part of the *Keep Harvard Healthy* Program.  There are a variety of COVID-19 tests out there but for this problem let's assume the following:
+
+* The test gives a **false negative** result 13% of the time where a false negative case is a person with COVID-19 but the test says they don't have it.
+* The test gives a **false positive** result 5% of the time where a false positive case is a person who doesn't have COVID-19 but the test says they do.
+
+--
+
+Let's assume the true prevalence is 1%.  Last school year, each week they tested about 30,000 Harvard affiliates.  Use the assumed percentages to fill in the following table of potential outcomes:
+
+
+|                              | Positive Test Result | Negative Test Result | Total  |
+|------------------------------|----------------------|----------------------|--------|
+| Actually have COVID-19       |                      |                      |        |
+| Actually don't have COVID-19 |                      |                      |        |
+| Total                        |                      |                      | 30,000 |
+
+
+.pull-left[
+
+* P(test - | have COVID) = 
+
+* P(have COVID | test -) = 
+
+]
+
+.pull-right[
+
+* P(test + | don't have COVID) = 
+
+* P(don't have COVID | test +) = 
+
+
+]
+
+
+---
+
+### Example
+
+The false negative rate of COVID-19 tests have varied wildly.  One paper estimated it could be as high as 54%.
+
+Recreate the table with this new false negative rate.
+
+
+|                              | Positive Test Result | Negative Test Result | Total  |
+|------------------------------|----------------------|----------------------|--------|
+| Actually have COVID-19       |                      |                      |        |
+| Actually don't have COVID-19 |                      |                      |        |
+| Total                        |                      |                      | 30,000 |
+
+
+.pull-left[
+
+* P(test - | have COVID) = 
+
+* P(have COVID | test -) = 
+
+]
+
+.pull-right[
+
+* P(test + | don't have COVID) = 
+
+* P(don't have COVID | test +) = 
+
+
+]
+
+
+
+---
+
+### Random Variables
+
+For a **discrete** random variable, $X$, care about its:
+
+
+* **Distribution**: Probability function: 
+
+$$p(x) = P(X = x)$$
+
+
+* **Center**: Mean of a discrete RV:
+
+$$
+\mu = \sum x p(x)
+$$
+
+
+* **Spread**: Standard deviation of a discrete RV: 
+
+$$
+\sigma = \sqrt{ \sum (x - \mu)^2 p(x)}
+$$
+
+--
+
+**Example**: What is the mean and variance for $X$ = # when you roll die?
+
+**Question**: How do these measures relate to $\bar{x}$ and $s^2$?
+
+
+---
+
+### Another Example:
+
+Suppose 4 students have still not received their graded Stat 100 Midterm (yes, let's pretend we actually have hand-written work) and that I hand back the exams randomly to each student.  Let X = the number of students who get their correct exam.
+
+--
+
+**Questions:**
+
+* Let's say the student's names are A(licia), B(ob), C(olin), and D(onna) and they are sitting in a row ABCD.  One possible outcome is ABDC (1st exam goes to A, 2nd to B, 3rd to D, 4th to C).  In that case, what does X equal?
+
+* List out all possible outcomes.  And for each outcome, determine what X equals.  
+
+* Why is P(X = 3) = 0?
+
+* Write out the probability distribution for X.
+
+* Determine the mean value of X. 
+
+* Determine the standard deviation of X.
+
+* What is the probability that at least one student gets their correct exam?
+
+
+
+
+---
+
+### Random Variables
+
+If a random variable, $X$, is a **continuous** RV, then it can take on any value in an interval.
+
+* Probability function: 
+    + $P(X = x) = 0$ so
+
+--
+
+$$
+p(x) \color{orange}{\approx} P(X = x)
+$$
+
+but if $p(4) > p(2)$ that still means that X is more likely to take on values around 4 than values around 2.
+
+---
+
+
+### Random Variables: Continuous
+
+Change $\sum$ to $\color{orange}{\int}$:
+
+--
+
+* $\color{orange}{\int} p(x) dx = 1$.
+
+--
+
+* Center: Mean/Expected value:
+
+$$
+\mu = \color{orange}{\int} x p(x) dx
+$$
+
+--
+
+* Spread: Standard deviation:
+
+$$
+\sigma = \sqrt{ \color{orange}{\int} (x - \mu)^2 p(x) dx}
+$$
+
+
+---
+
+class: , middle, center
+
+
+## Why do we care about random variables?
+
+--
+
+#### We will recast our sample statistics as random variables.
+
+--
+
+#### This gives us a probability function that approximates the sampling distribution!
+
+
+
+---
+
+class: , middle, center
+
+
+
+## Specific Named Random Variables
+
+---
+
+
+### Specific Named Random Variables
+
+* There is a vast array of random variables out there.  
+
+--
+
+* But there are a few particular ones that we will find useful.
+    + Because these ones are used often, they have been given names.
+
+--
+
+* Will identify these named RVs using the following format:
+
+$$
+X \sim \mbox{Name(values of key parameters)}
+$$
+
+
+---
+
+### Specific Named Random Variables
+
+.pull-left[
+
+(1) $X \sim$ Bernoulli $(p)$ 
+
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+
+
+* Important parameter: $p$ = probability of success = $P(X = 1)$
+
+]
+
+--
+
+.pull-left[
+
+* Probability Function:
+
+| $x$    | 0   | 1 |
+|------|-----|---|
+| $p(x)$ | 1 - $p$ | $p$ |
+
+]
+
+--
+
+
+
+
+```{r, echo = FALSE, fig.asp = 0.5}
+library(tidyverse)
+dat <- data.frame(y = c(.3, .7), x = c(0, 1))
+ggplot(dat, aes(factor(x), y)) + 
+  geom_col(fill = "deeppink3") +
+  labs(title = expression(X %~% " Bernoulli(p = 0.7)"),
+       x = "x", y = "p(x)")
+```
+
+
+---
+
+### Specific Named Random Variables
+
+.pull-left[
+
+(1) $X \sim$ Bernoulli $(p)$ 
+
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+
+
+* Important parameter: $p$ = probability of success = $P(X = 1)$
+
+]
+
+
+
+.pull-left[
+
+* Probability Function:
+
+| $x$    | 0   | 1 |
+|------|-----|---|
+| $p(x)$ | 1 - $p$ | $p$ |
+
+]
+
+
+
+
+
+```{r, echo = FALSE, fig.asp = 0.5}
+library(tidyverse)
+dat <- data.frame(y = c(.5, .5), x = c(0, 1))
+ggplot(dat, aes(factor(x), y)) + 
+  geom_col(fill = "deeppink3") +
+  labs(title = expression(X %~% " Bernoulli(p = 0.5)"),
+       x = "x", y = "p(x)")
+```
+
+
+
+---
+
+### Specific Named Random Variables
+
+.pull-left[
+
+(1) $X \sim$ Bernoulli $(p)$ 
+
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+
+
+* Important parameter: $p$ = probability of success = $P(X = 1)$
+
+]
+
+
+
+.pull-left[
+
+* Probability Function:
+
+| $x$    | 0   | 1 |
+|------|-----|---|
+| $p(x)$ | 1 - $p$ | $p$ |
+
+]
+
+
+
+```{r, echo = FALSE, fig.asp = 0.5}
+library(tidyverse)
+dat <- data.frame(y = c(.95, .05), x = c(0, 1))
+ggplot(dat, aes(factor(x), y)) + 
+  geom_col(fill = "deeppink3") +
+  labs(title = expression(X %~% " Bernoulli(p = 0.05)"),
+       x = "x", y = "p(x)")
+```
+
+
+---
+
+### Specific Named Random Variables
+
+.pull-left[
+
+(1) $X \sim$ Bernoulli $(p)$ 
+
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+
+* Probability Function:
+
+| $x$    | 0   | 1 |
+|------|-----|---|
+| $p(x)$ | 1 - $p$ | $p$ |
+
+]
+
+
+--
+
+.pull-right[
+
+* Mean: $1*p + 0*(1 - p) = p$
+
+
+
+* Standard deviation: $\sqrt{(1 - p)^2*p + (0 - p)^2*(1 - p)} = \sqrt{p(1 - p)}$
+
+
+]
+
+
+
+
+---
+
+### Specific Named Random Variables
+
+.pull-left[
+
+(2) $X \sim$ Normal $(\mu, \sigma)$
+
+* Probability Function:
+
+$$
+p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp{\left(-\frac{(x - \mu)^2}{2\sigma^2} \right)}
+$$
+where $-\infty < x < \infty$
+
+* Mean: $\mu$
+
+* Standard deviation: $\sigma$
+
+]
+
+--
+
+.pull-right[
+
+
+```{r, echo = FALSE, fig.asp = 0.6}
+library(tidyverse)
+dat <- data.frame(x = seq(from = -4, to = 8, length.out = 1000)) %>%
+  mutate(X1 = dnorm(x, mean = 0, sd = 1),
+         X2 = dnorm(x, mean = 2, sd = 1),
+         X3 = dnorm(x, mean = 2, sd = 2)) %>%
+  pivot_longer(-x, names_to = "variable") %>%
+  mutate(variable = case_when(
+    variable == "X1" ~ "N(0, 1)",
+    variable == "X2" ~ "N(2, 1)",
+    TRUE ~ "N(2, 2)"
+  ))
+ggplot(dat, aes(x = x, y = value, color = variable)) + 
+  geom_line(size = 2) +
+  labs(title = expression(paste("X", "~", "N", "(", mu, ",", sigma, ")")),
+       x = "x", y = "p(x)")
+```
+
+]
+
+--
+
+.pull-left[
+
+**Notes:**
+
+
+(a) Area under the curve = 1.
+
+
+
+(b) Height $\approx$ how likely values are to occur
+
+]
+
+--
+
+.pull-right[
+
+
+(c) Super special Normal RV: $Z \sim$ Normal $(\mu = 0, \sigma = 1)$.  
+
+]
+
+
+---
+
+### Specific Named Random Variables
+
+(2) $X \sim$ Normal $(\mu, \sigma)$
+
+
+
+```{r, echo = FALSE, fig.asp = 0.6}
+library(tidyverse)
+dat <- data.frame(x = seq(from = -4, to = 8, length.out = 1000)) %>%
+  mutate(X1 = dnorm(x, mean = 0, sd = 1),
+         X2 = dnorm(x, mean = 2, sd = 1),
+         X3 = dnorm(x, mean = 2, sd = 2)) %>%
+  pivot_longer(-x, names_to = "variable") %>%
+  mutate(variable = case_when(
+    variable == "X1" ~ "N(0, 1)",
+    variable == "X2" ~ "N(2, 1)",
+    TRUE ~ "N(2, 2)"
+  ))
+ggplot(dat, aes(x = x, y = value, color = variable)) + 
+  geom_line(size = 2) +
+  labs(title = expression(paste("X", "~", "N", "(", mu, ",", sigma, ")")),
+       x = "x", y = "p(x)")
+```
+
+
+
+**Normal will be a good approximation for MANY distributions.** 
+
+
+--
+
+But sometimes its **tails** just aren't fat enough.
+---
+
+### Specific Named Random Variables
+
+.pull-left[
+
+(3) $X \sim$ t(df)
+
+
+* Probability Function:
+
+$$
+p(x) = \frac{\Gamma(\mbox{df} + 1)}{\sqrt{\mbox{df}\pi} \Gamma(2^{-1}\mbox{df})}\left(1 + \frac{x^2}{\mbox{df}} \right)^{-\frac{df + 1}{2}}
+$$
+where $-\infty < x < \infty$
+
+
+* Mean: 0
+
+
+* Standard deviation: $\sqrt{\mbox{df}/(\mbox{df} - 2)}$
+
+]
+
+--
+
+.pull-right[
+
+* Probability Function:
+
+```{r, echo = FALSE}
+library(tidyverse)
+dat <- data.frame(x = seq(from = -5, to = 5, length.out = 1000)) %>%
+  mutate(X1 = dnorm(x, mean = 0, sd = 1),
+         X2 = dt(x, df = 2),
+         X3 = dt(x, df = 8)) %>%
+  pivot_longer(-x, names_to = "variable") %>%
+  mutate(variable = case_when(
+    variable == "X1" ~ "N(0, 1)",
+    variable == "X2" ~ "t(2)",
+    TRUE ~ "t(8)"
+  ))
+ggplot(dat, aes(x = x, y = value, color = variable)) + 
+  geom_line(size = 1) +
+  labs(title = "Standard Normal versus t",
+       x = "x", y = "p(x)")
+```
+
+
+]
+
+---
+
+class: , middle, center
+
+## Time to Start Viewing Sample Statistics also as Random Variables
+
+

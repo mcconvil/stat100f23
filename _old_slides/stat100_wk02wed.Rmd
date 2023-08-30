@@ -1,0 +1,1066 @@
+---
+title: Data Viz, Day 2
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[More Data Visualization]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 2 | Spring 2023] 
+
+]
+
+
+
+---
+
+
+
+## Announcements
+
+* Remember that the Week 3 Lecture Quiz will open on Gradescope at 11:45am today. 
+    + Due by Friday at 11:45am.
+* Sections start today!
+* P-Set 1 due today at 5pm on Gradescope.
+    + Normally p-sets are due Tuesdays (not Wednesdays) at 5pm.
+
+****************************
+
+--
+
+## Goals for Today
+
+.pull-left[
+
+* Learn the general structure of `ggplot2`.
+* Learn a few standard graphs for numerical/quantitative data:
+    + **Scatterplot**: two numerical variables
+    + **Linegraph**: two numerical variables
+
+
+
+] 
+
+--
+
+.pull-right[
+
+
+* And, learn the standard graphic for categorical data 
+    + **Barplot**: one categorical variable
+    + **Segmented barplot**: two categorical variables
+
+
+* Also cover:
+    + Incorporating more variables into our plots!
+    + Adding context to our plots.
+
+
+]
+
+
+---
+
+```{r, echo = FALSE, out.width= "15%", out.extra='style="float:left; padding:10px"'}
+knitr::include_graphics("img/ggplot2.png")
+```
+
+## Load Necessary Packages
+
+`ggplot2` is part of this collection of data science packages.
+
+```{r, message=TRUE}
+# Load necessary packages
+library(tidyverse)
+```
+
+---
+
+# `ggplot2` example code
+
+**Guiding Principle**: We will map variables from the **data** to the **aes**thetic attributes (e.g. location, size, shape, color) of **geom**etric objects (e.g. points, lines, bars).
+
+```{r, eval = FALSE, tidy = FALSE}
+ggplot(data = ---, mapping = aes(---)) +
+  geom_---(---) 
+```
+
+---
+
+
+## Data Setting: [Eco-Totem Broadway Bicycle Count](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
+
+
+.pull-left[
+
+```{r  out.width = "90%", echo=FALSE, fig.align='center'}
+include_graphics("img/counter.jpg") 
+```
+
+]
+
+.pull-right[
+
+```{r  out.width = "90%", echo=FALSE, fig.align='center'}
+include_graphics("img/bike_counter_map.png") 
+```
+
+
+]
+
+
+
+---
+
+## Import the [Data](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
+
+```{r, cache = TRUE, message = FALSE, warning = FALSE}
+bike_counter <- read_csv("https://data.cambridgema.gov/api/views/q8v9-mcfg/rows.csv")
+
+# Inspect the data
+glimpse(bike_counter)
+```
+
+
+---
+
+## Data Wrangling
+
+**We haven't learned this topic yet.**
+
+**I only included this code for completeness/transparency.**
+
+```{r}
+# Fix Date column to be stored with the date class
+library(lubridate)
+bike_counter <- mutate(bike_counter, Date = mdy(Date))
+
+# Filter to only include two days in July 2019
+july_2019 <- filter(bike_counter,
+                    Date %in% c(mdy("07/04/2019"),
+                                mdy("07/11/2019")))
+# Add an Occasion column
+july_2019 <- mutate(july_2019,
+                    Occasion = if_else(Date == mdy("07/04/2019"),
+                                                    "Fourth of July",
+                                                    "Normal Thursday"))
+
+```
+
+
+
+
+---
+
+## Scatterplots
+
+.pull-left[
+
+```{r scat, fig.show = 'hide', echo = FALSE}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total)) +
+  geom_point(size = 2)
+```
+
+* Explore relationships between numerical variables.
+    + We will be especially interested in **linear** relationships.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("scat", "png"))
+```
+
+]
+
+
+---
+
+## Scatterplots
+
+.pull-left[
+
+```{r scatnot, eval = FALSE}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total)) +
+  geom_point(size = 2)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("scat", "png"))
+```
+
+]
+
+
+---
+
+## Scatterplots
+
+.pull-left[
+
+```{r scat2, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total)) +
+  geom_point(size = 2, alpha = 0.6)
+```
+
+* Fix over-plotting
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("scat2", "png"))
+```
+
+]
+
+--
+
+**Why the weird pattern?**
+
+
+---
+
+## Scatterplots
+
+.pull-left[
+
+```{r scat3, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_point(size = 2, alpha = 0.6)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("scat3", "png"))
+```
+
+]
+
+---
+
+## Linegraphs
+
+.pull-left[
+
+```{r line, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2)
+```
+
+* Also called **time series plot** when time is represented on the x axis.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line", "png"))
+```
+
+]
+
+---
+
+## Linegraphs
+
+.pull-left[
+
+```{r line2, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2) +
+  theme(legend.pos = "bottom")
+```
+
+* Also called **time series plot** when time is represented on the x axis.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line2", "png"))
+```
+
+]
+
+---
+
+## Data Setting: [Dog Names in Cambridge, MA](https://data.cambridgema.gov/General-Government/Dogs-of-Cambridge/sckh-3xyx)
+
+Based on dog license data collected by Cambridge's Animal Commission
+
+```{r}
+# Import and inspect data
+dogs <- read_csv("https://data.cambridgema.gov/api/views/sckh-3xyx/rows.csv")
+glimpse(dogs)
+```
+
+---
+
+## Data Wrangling
+
+**We haven't learned this topic yet.**
+
+**I only included this code for completeness/transparency.**
+
+```{r}
+# Create a column for Breed
+dogs <- mutate(dogs, Breed = if_else(
+                       Dog_Breed == "Mixed Breed",
+                       "Mixed", "Single"))
+
+
+# Find the 10 top most common names
+top10names <- count(dogs, Dog_Name) %>%
+  slice_max(n = 10, order_by = n) %>%
+  select(Dog_Name) %>%
+  pull()
+  
+# Filter dataset to only the 10 top most common names
+dogs_top10 <- filter(dogs,
+                     Dog_Name %in% top10names)
+
+
+```
+
+---
+
+class: , middle, center
+
+## Before we graph the data...
+
+### Any guesses on **popular** dog names?
+
+
+```{r, eval = FALSE, echo = FALSE}
+count(dogs_top10, Dog_Name, Dog_Breed) %>%
+  arrange(desc(n))
+
+count(dogs_top10, Dog_Breed) %>%
+  arrange(desc(n))
+
+count(dogs, Dog_Name, Neighborhood) %>%
+  arrange(desc(n))
+count(dogs, Neighborhood) %>%
+  arrange(desc(n))
+
+
+```
+
+---
+
+## Bar plots
+
+.pull-left[
+
+* Displays the frequency for each category.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+# Create barplot
+ggplot(data = dogs_top10, 
+    mapping = aes(x = Dog_Name)) +
+  geom_bar()
+
+```
+
+]
+
+
+
+---
+
+## Bar plots
+
+.pull-left[
+
+```{r bar, fig.show='hide'}
+# Create barplot
+ggplot(data = dogs_top10, 
+       mapping = aes(x = Dog_Name)) +
+  geom_bar()
+
+```
+
+* How could be make this graph better?
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("bar", "png"))
+```
+
+
+]
+
+
+---
+
+## Bar plots
+
+.pull-left[
+
+```{r bar2, fig.show='hide'}
+# Create barplot
+ggplot(data = dogs_top10, 
+  mapping = aes(x = fct_infreq(Dog_Name))) +
+  geom_bar()
+
+```
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("bar2", "png"))
+```
+
+
+]
+
+
+---
+
+## Segmented Barplots
+
+
+.pull-left[
+
+```{r seg, fig.show='hide'}
+# Create segmented barplot
+ggplot(data = dogs_top10, 
+       mapping = aes(x = fct_infreq(Dog_Name),
+                     fill = Breed)) +
+  geom_bar() +
+  theme(legend.pos = "bottom")
+
+```
+
+* Each bar is divided into the frequencies of the `fill` variable.
+
+* Hard to make comparisons across categories.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("seg", "png"))
+```
+
+]
+
+
+---
+
+## Segmented Barplots
+
+
+.pull-left[
+
+```{r seg2, fig.show='hide'}
+# Create segmented barplot
+ggplot(data = dogs_top10, 
+       mapping = aes(x = fct_infreq(Dog_Name),
+                     fill = Breed)) +
+  geom_bar(position = "dodge") +
+  theme(legend.pos = "bottom")
+
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("seg2", "png")) 
+```
+
+]
+
+---
+
+## Segmented Barplots
+
+
+.pull-left[
+
+```{r seg3, fig.show='hide'}
+# Create segmented barplot
+ggplot(data = dogs_top10, 
+       mapping = aes(x = fct_infreq(Dog_Name),
+                     fill = Breed)) +
+  geom_bar(position = "fill") +
+  theme(legend.pos = "bottom")
+
+```
+
+* Each bar is divided into **proportions** based on the `fill` variable.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("seg3", "png"))
+```
+
+]
+
+---
+
+
+
+## Adding More Variables
+
+* Two main approaches:
+    + Utilize other `aes`thetics of the `geom`
+    + Facet: Create multiple plots across the categories of a categorical variable.
+
+
+
+---
+
+## Utilize other `aes`thetics
+
+
+.pull-left[
+
+```{r, fig.show = 'hide', eval = FALSE}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2) +
+  theme(legend.pos = "bottom")
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line2", "png"))
+```
+
+]
+
+
+---
+
+## Utilize other `aes`thetics
+
+.pull-left[
+
+```{r all, fig.show='hide'}
+# A bit more wrangling
+# Just these three names
+some_dogs <- 
+  filter(dogs, Dog_Name %in% 
+           c("Charlie","Lucy", "Pepper"))
+
+ggplot(data = some_dogs,
+       mapping = aes(x = Longitude_masked,
+                     y = Latitude_masked,
+                     color = Dog_Name)) +
+  geom_point(size = 2)
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("all", "png"))
+```
+
+]
+
+
+
+```{r, eval = FALSE, echo = FALSE}
+ggplot(data = dogs_top10,
+       mapping = aes(x = Longitude_masked,
+                     y = Latitude_masked)) +
+  geom_point(size = 2) +
+  facet_wrap(~Dog_Name)
+
+ggplot(data = lc,
+       mapping = aes(x = Longitude_masked,
+                     y = Latitude_masked)) +
+  geom_point(size = 2) +
+  facet_grid(Breed~Dog_Name)
+```
+
+
+
+---
+
+# Facet
+
+.pull-left[
+
+```{r fac, fig.show = 'hide'}
+ggplot(data = some_dogs,
+       mapping = aes(x = Longitude_masked,
+                     y = Latitude_masked)) +
+  geom_point(size = 2) +
+  facet_wrap(~Dog_Name, ncol = 2)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("fac", "png"))
+```
+
+]
+
+---
+
+# Facet
+
+.pull-left[
+
+```{r fac2, fig.show = 'hide'}
+ggplot(data = some_dogs,
+       mapping = aes(x = Longitude_masked,
+                     y = Latitude_masked)) +
+  geom_point(size = 2) +
+  facet_grid(Breed~Dog_Name)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("fac2", "png"))
+```
+
+]
+
+
+---
+
+## Consider Doing Both!
+
+.pull-left[
+
+```{r both, fig.show = 'hide'}
+ggplot(data = some_dogs,
+       mapping = aes(x = Longitude_masked,
+                     y = Latitude_masked,
+                     color = Breed)) +
+  geom_point(size = 2) +
+  facet_wrap(~Dog_Name, ncol = 2)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("both", "png"))
+```
+
+]
+
+
+---
+
+
+
+## Context
+
+.pull-left[
+
+```{r line3, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2) +
+  theme(legend.pos = "bottom") +
+  labs(x = "Time of Day",
+       y = "Number of Passes",
+       color = "What Type of Day?",
+       caption = "Data Collected by Eco-Totem",
+       title = "Cycling Patterns at Broadway Bike Counter")
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line3", "png"))
+```
+
+]
+
+
+---
+
+# Customizing your `ggplot2` Plots
+
+* There are so **many** ways you can customize the look of your `ggplot2` plots.  
+
+* Let's look at some common changes:
+    + Fussing with labels
+    + Zooming in
+    + Using multiple `geoms`
+    + Color!
+    + Themes
+
+
+
+---
+
+# Fussing with Labels: Rotate
+
+
+.pull-left[
+
+```{r bar4, fig.show='hide'}
+# Create barplot
+ggplot(data = dogs_top10, 
+  mapping = aes(x = fct_infreq(Dog_Name))) +
+  geom_bar() + 
+  theme(axis.text.x =
+          element_text(angle = 45,
+                       vjust = 1,
+                       hjust=1))
+
+```
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("bar4", "png"))
+```
+
+
+]
+
+---
+
+## Zooming In
+
+
+
+
+.pull-left[
+
+```{r box5, fig.show = 'hide'}
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total,
+                     fill = Occasion)) +
+  geom_boxplot() +
+  guides(fill = "none")
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("box5", "png"))
+```
+
+]
+
+
+---
+
+## Zooming In
+
+
+
+
+.pull-left[
+
+```{r box6, fig.show = 'hide'}
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total,
+                     fill = Occasion)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  coord_cartesian(ylim = c(0, 40))
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("box6", "png"))
+```
+
+]
+
+---
+
+## Multiple `geom`s
+
+.pull-left[
+
+```{r box7, fig.show = 'hide'}
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total,
+                     fill = Occasion)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  coord_cartesian(ylim = c(0, 40)) +
+  geom_jitter(width = .1,
+              height = 0, 
+              alpha = 0.6)
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("box7", "png"))
+```
+
+]
+
+
+---
+
+## Multiple `geom`s
+
+.pull-left[
+
+```{r line4, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2) +
+  theme(legend.pos = "bottom") +
+  geom_point(size = 3)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line4", "png"))
+```
+
+]
+
+
+
+---
+
+
+## Change the Color
+
+```{r}
+colors()
+```
+
+
+---
+
+## Change the Color
+
+
+
+.pull-left[
+
+```{r line5, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2) +
+  theme(legend.pos = "bottom") +
+  scale_color_manual(values = c("violetred2",
+                                "steelblue3"))
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line5", "png"))
+```
+
+]
+
+---
+
+## Change the Color
+
+
+
+.pull-left[
+
+```{r line6, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2) +
+  theme(legend.pos = "bottom") +
+  scale_color_manual(values = c("#0D6759",
+                                "#E4844A"))
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line6", "png"))
+```
+
+]
+
+
+---
+
+## Use a [Different Theme](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+
+
+
+
+.pull-left[
+
+```{r line7, fig.show = 'hide'}
+ggplot(data = july_2019,
+       mapping = aes(x = Time,
+                     y = Total,
+                     color = Occasion)) +
+  geom_line(size = 2) +
+  scale_color_manual(values = c("#0D6759",
+                                "#E4844A")) +
+  theme_bw() +
+  theme(legend.pos = "bottom")
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("line7", "png"))
+```
+
+]
+
+---
+
+## Reminders
+
+* Remember that the Week 3 Lecture Quiz will open on Gradescope at 11:45am today. 
+    + Due by Friday at 11:45am.
+* Sections start today!
+* P-Set 1 due today at 5pm on Gradescope.
+    + Normally p-sets are due Tuesdays (not Wednesdays) at 5pm.
+
+

@@ -1,0 +1,520 @@
+---
+title: Sampling Distributions
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center
+
+
+.pull-right[
+
+
+## .base-blue[Sampling Distributions]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 7 | Spring 2023] 
+
+
+]
+
+
+
+---
+
+### Announcements
+
+* Mid-term exam
+    + Instructions page
+    + No OHs starting Wednesday at noon.
+    + Takehome + Oral
+    + Many forms of assessment in this course so you have many ways to showcase your understanding.
+    + Reflect
+* Remember that we won't have section this week.
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* Finish up last Wed's modeling slides.
+
+
+
+
+] 
+
+
+
+.pull-right[
+
+
+* Discuss the `r emo::ji("heart")` of statistical inference
+* **Sampling Distribution**
+    + Creation
+    + Properties
+
+
+]
+
+
+---
+
+### One Last Point on Linear Regression (for now)
+
+Linear regression is a flexible class of models that allow for:
+
+* Both quantitative and categorical explanatory variables.
+
+
+* Multiple explanatory variables.
+
+
+* Curved relationships between the response variable and the explanatory variable.
+
+
+* BUT the response variable is **quantitative**.
+
+
+
+**Form of the Model:**
+
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p \epsilon_p + \epsilon
+\end{align}
+$$
+
+#### But why is it called **linear** regression if the model also works for curved relationship??
+
+
+
+
+---
+
+### The `r emo::ji("heart")` of statistical inference is quantifying uncertainty
+
+```{r, echo = FALSE, out.width='70%'}
+knitr::include_graphics("img/week4.005.jpeg")
+```
+
+--
+
+```{r}
+library(tidyverse)
+ce <- read_csv("~/shared_data/stat100/data/ce.csv")
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```
+
+---
+
+### The `r emo::ji("heart")` of statistical inference is quantifying uncertainty
+
+```{r}
+library(tidyverse)
+ce <- read_csv("~/shared_data/stat100/data/ce.csv")
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```
+
+#### Distinguishing between the population and the sample
+
+--
+
+.pull-left[
+
+* **Parameters**: 
+    + Based on the **population**
+    + Unknown then if don't have data on the whole population
+    + EX: $\beta_o$ and $\beta_1$
+    + EX: $\mu$ = population mean
+
+]
+
+.pull-right[
+
+* **Statistics**: 
+    + Based on the **sample** data
+    + Known
+    + Usually estimate a population parameter
+    + EX: $\hat{\beta}_o$ and $\hat{\beta}_1$ 
+    + EX: $\bar{x}$ = sample mean
+
+
+]
+
+
+---
+
+### Quantifying Our Uncertainty 
+
+`R` has been giving us uncertainty estimates:
+
+.pull-left[
+
+```{r polls, fig.show = 'hide'}
+Pollster08 <- 
+  read_csv("~/shared_data/stat100/data/Pollster08.csv")
+
+ggplot(Pollster08, aes(x = Days,
+                       y = Margin, 
+                       color = factor(Charlie))) +
+  geom_point() +
+  stat_smooth(method = "lm", se = TRUE) +
+  theme(legend.position = "bottom")
+
+```
+
+
+]
+
+.pull-right[
+
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("polls", "png"))
+```
+
+]
+
+---
+
+### Quantifying Our Uncertainty 
+
+`R` has been giving us uncertainty estimates:
+
+```{r}
+modPoll <- lm(Margin ~ Days*factor(Charlie), data = Pollster08)
+library(moderndive)
+get_regression_table(modPoll)
+```
+
+
+---
+
+### Quantifying Our Uncertainty 
+
+The [news and journal articles](https://www.pewresearch.org/fact-tank/2019/12/17/more-u-s-homeowners-say-they-are-considering-home-solar-panels/) are also giving us uncertainty estimates:
+
+
+.pull-left[
+
+```{r  out.width = "65%", echo=FALSE, fig.align='center'}
+include_graphics("img/solar_panels.png") 
+```
+
+
+]
+
+--
+
+
+.pull-right[
+
+
+```{r  out.width = "85%", echo=FALSE, fig.align='center'}
+include_graphics("img/margin_of_error.png") 
+```
+
+]
+
+---
+
+### Quantifying Our Uncertainty 
+
+The [news and journal articles](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/1740-9713.01501) are also giving us uncertainty estimates:
+
+
+
+```{r  out.width = "65%", echo=FALSE, fig.align='center'}
+include_graphics("img/ci_swimming.png") 
+```
+
+
+
+
+---
+
+### Statistical Inference
+
+**Goal**: Draw conclusions about the population based on the sample.
+
+--
+
+**Main Flavors**
+
+&rarr; Estimating numerical quantities (parameters).
+
+--
+
+&rarr; Testing conjectures.
+
+---
+
+### Estimation
+
+**Goal**: Estimate a (population) parameter.  
+
+--
+
+Best guess?  
+
+&rarr; The corresponding (sample) statistic 
+
+--
+
+**Example**: Are GIFs just another way for people to share videos of their pets?
+
+<iframe src="https://giphy.com/embed/MCfhrrNN1goH6" width="280" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/easy-ear-MCfhrrNN1goH6">via GIPHY</a></p>
+
+--
+
+Want to estimate the proportion of GIFs that feature animals.
+
+---
+
+### Estimation
+
+**Key Question**: How accurate is the statistic as an estimate of the parameter?
+
+--
+
+**Helpful Sub-Question**: If we take many samples, how much would the statistic vary from sample to sample?
+
+--
+
+Need two new concepts:
+
+--
+
+* The **sampling variability** of a statistic
+
+--
+
+* The **sampling distribution** of a statistic
+
+
+---
+
+class: , center, middle
+
+## Let's learn about these ideas through an activity!
+
+## Go to [bit.ly/stat100gif](https://bit.ly/stat100gif).
+
+---
+
+## Sampling Distribution of a Statistic
+
+Steps to Construct an (Approximate) Sampling Distribution:
+
+1. Decide on a sample size, $n$.
+
+--
+
+2. Randomly select a sample of size $n$ from the population.
+
+--
+
+3. Compute the sample statistic.
+
+--
+
+4.  Put the sample back in.
+
+--
+
+5. Repeat Steps 2 - 4 many (1000+) times.
+
+
+---
+
+## Sampling Distribution of a Statistic
+
+
+```{r  out.width = "55%", echo=FALSE, fig.align='center'}
+include_graphics("img/samp_dist.png") 
+```
+
+.pull-left[
+
+* Center? Shape?
+
+* Spread?
+    + Standard error = standard deviation of the statistic
+
+
+
+]
+
+
+
+--
+
+.pull-right[
+
+**What happens to the center/spread/shape as we increase the sample size?**
+
+
+**What happens to the center/spread/shape if the true parameter changes?**
+
+]
+
+
+---
+
+
+
+
+class:  center, middle
+
+# Conceptual Review Time!
+
+---
+
+class:  center, middle
+
+# One can conclude a causal relationship between two variables if the study contains random sampling.
+
+
+
+
+## TRUE or FALSE
+
+## (1) or (2)
+
+
+---
+
+class:  center, middle
+
+# The larger the value of correlation coefficient, the stronger the linear relationship between two variables.
+
+
+
+
+## TRUE or FALSE
+
+## (1) or (2)
+
+
+---
+
+class:  center, middle
+
+# The IQR is a measure of the variability of the middle 50% of the data.  
+
+
+
+
+## TRUE or FALSE
+
+## (1) or (2)
+
+
+---
+
+class:  center, middle
+
+# A residual can only be non-negative.
+
+
+## TRUE or FALSE
+
+## (1) or (2)
+
+
+---
+
+class:  center, middle
+
+
+# A non-random sample of 10,000 individuals is better than a random sample of 1000. 
+
+
+
+
+## TRUE or FALSE
+
+## (1) or (2)
+
+
+---
+
+class:  center, middle
+
+
+# Bar graphs and histograms are the same graph since they both contain bars. 
+
+
+
+## TRUE or FALSE
+
+## (1) or (2)
+
+
+---
+
+class:  center, middle
+
+
+# When using a linear regression model to make predictions, you can only make predictions at the observed values for your explanatory variables.
+
+
+## TRUE or FALSE
+
+## (1) or (2)
+
+
+
+
+---
+
+## Reminders:
+
+* Mid-term exam
+    + Instructions page
+    + No OHs starting Wednesday at noon.
+    + Takehome + Oral
+    + Many forms of assessment in this course so you have many ways to showcase your understanding.
+    + Reflect
+* Remember that we won't have section this week.

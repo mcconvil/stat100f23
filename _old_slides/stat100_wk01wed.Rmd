@@ -1,0 +1,778 @@
+---
+title: R and RStudio
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = 'center')
+library(knitr)
+library(tidyverse)
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+background-image: url("img/slack.001.jpeg")
+background-position: left
+background-size: 18%
+class: middle, left
+
+.pull-rightish[
+
+## Before lecture begins, go to the Stat 100 Slack Workspace and answer the question in the #q-and-a channel.
+
+### The Slack Workspace can be accessed through our Canvas page.
+
+
+___________________________________________
+
+### For waitlisters only: Please go to [bit.ly/stat-100-wait](https://bit.ly/stat-100-wait) to sign-in.
+
+
+
+]
+
+
+---
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Computing in Stat 100]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 1 | Spring 2023] 
+
+]
+
+
+
+---
+
+
+## Announcements
+
+* No section and no lecture quiz this week.
+* Wrap-ups:
+    + Wednesdays, 4:30-5:30pm in Science Center 110
+    + Fridays, 10:30-11:30am in Science Center 309
+* Will post the Week 2+ office hours schedule soon.  For this week, I still have one set left:
+    + Thursday 10:30 - 11:30 am in Science Center 316 (this week only)
+* Be on the look-out for the section preference form.  
+
+
+****************************
+
+--
+
+## Goals for Today
+
+* Stat 100 structure and assessments
+* Getting up and running in `RStudio`
+* Working with `RMarkdown` documents
+
+---
+
+class: center, , middle
+
+
+## Overarching Goal:
+
+--
+
+### Learn how to .orange[extract knowledge] from data.
+
+
+---
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle
+
+
+.pull-right[
+
+###  Course Learning Objectives
+
+]
+
+
+--
+
+.pull-right[
+
+ * Learn how to **analyze** data. 
+
+]
+
+--
+
+.pull-right[
+
+* Acquire good data **habits**.
+
+]
+
+--
+
+.pull-right[
+
+* Develop **statistical thinking** and **problem-solving** skills.
+
+]
+
+---
+
+
+background-image: url("img/workflows.004.jpeg")
+background-position: contain
+background-size: 65%
+
+## Data Analysis Workflow
+
+
+---
+
+
+background-image: url("img/workflows.003.jpeg")
+background-position: contain
+background-size: 65%
+
+
+## Data Analysis Workflow
+
+---
+
+
+background-image: url("img/workflows.002.jpeg")
+background-position: contain
+background-size: 65%
+
+## Data Analysis Workflow
+
+
+---
+
+
+background-image: url("img/workflows.001.jpeg")
+background-position: contain
+background-size: 65%
+
+
+
+## Data Analysis Workflow
+
+
+---
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle
+
+
+.pull-right[
+
+###  Data Analysis Workflow
+
+]
+
+
+.pull-right[
+
+* Not a strict set of guidelines.
+
+* General structure for **extracting knowledge from data**.
+
+
+]
+
+--
+
+.pull-right[
+
+* Consider **iteration** throughout.
+
+]
+
+--
+
+.pull-right[
+
+* Consider **reproducibility** throughout.
+
+]
+
+--
+
+.pull-right[
+
+* Consider **ethics** throughout.
+
+]
+
+
+---
+
+background-image: url("img/structures.001.jpeg")
+background-position: contain
+background-size: 65%
+
+## Stat 100 Tech & Materials
+
+---
+
+## Stat 100 Weekly Flow
+
+```{r  out.width = "65%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/week_stat100s23.png")
+```
+
+* And we just added a second weekly wrap-up session on Wednesdays, 4:30 - 5:30pm.
+
+
+---
+
+## Forms of Assessment
+
+.pull-left[
+
+* **Weekly lecture quizzes:**
+    + Address important concepts covered.
+    + Find out what is still confusing.
+    + Can drop one quiz grade.
+
+]
+
+--
+
+.pull-right[
+
+* **Weekly problem sets:**
+    + Practice concepts.
+    + Time during section will be devoted to starting the next p-set.
+    + Can drop one problem set grade and get 4 extension days.
+
+]
+
+--
+
+.pull-left[
+
+* **Exams:** 
+    + Format: Takehome Exam followed by Oral Exam.
+    + Will have both a Mid-term and Final.
+
+]
+
+--
+
+.pull-right[
+
+
+* **Participation/Engagement:**
+    + In lecture and section.
+    + By March 7th, must:
+        + Attend at least one office hour.
+        + Post at least two messages on Slack.
+
+]
+
+---
+
+background-image: url("img/slack.001.jpeg")
+background-position: left
+background-size: 18%
+class: middle, left
+
+
+
+.pull-rightish[
+    
+### What Slack posts count?
+
+]
+
+--
+
+.pull-rightish[
+
++ Asking a question about course content
+
+]
+
+--
+
+.pull-rightish[
+
++ Answering someone else's question
+
+]
+
+--
+
+.pull-rightish[
+
++ Posting a useful resource and why you found it helpful
+
+]
+
+--
+
+.pull-rightish[
+
++ Creating an example that illustrates a recent concept
+
+]
+
+--
+
+.pull-rightish[
+
+If you have never used Slack before, don't worry.  We are here to help!
+
+
+    
+]    
+
+
+
+
+---
+
+## This Week's Assessments
+
+* No lecture quiz for Week 1.
+* **P-Set 1** is posted to the RStudio Server.
+    + We will access it later in class.
+    + You will need to pick up a blank postcard to start visualizing your data!
+    + Due on **Tuesday, January 31st** at 5pm on Gradescope.
+        + Let us know if you have any questions about submitting on Gradescope.
+
+---
+
+### Problem 1 of Problem Set 1: Create your own Dear Data postcard! 
+
+
+.pull-left[
+
+**Step 1**  
+
+* Collect data on some aspect of your life.
+    
+**Step 2**    
+    
+* Find a story in your data and determine your postcard recipient.
+
+
+
+* Figure out how you want to visualize the story.
+
+
+**Step 3+** 
+
+* Visualize your data on a blank postcard.
+
+]
+
+.pull-right[
+
+```{r  out.width = "60%", echo=FALSE, fig.cap = "", fig.align='center'}
+include_graphics("img/supplies.jpg") 
+```
+
+]
+
+
+
+
+
+
+---
+
+background-image: url("img/jessica-knowlden--AvRbJOVUKA-unsplash.jpg")
+background-position: contain
+background-size: 85%
+class: 
+
+
+---
+
+## Engagement
+
+.pull-left[ 
+
+<img src="img/jessica-knowlden--AvRbJOVUKA-unsplash.jpg" width="400px"/>
+
+]
+
+.pull-right[
+
+* Being **actively present** is key.
+{{content}}
+
+]
+
+--
+
+* During lecture and section, remove distractions.
+    + When we are on our computers, close email, social media, news, etc.
+    + If you will be using a computer/tablet for taking notes, please sit in the technology zone **starting next lecture** so as not to distract classmates.
+    + Hide your phone.
+{{content}}
+
+--
+
+* What you get out of Stat 100 will depend on what you put into it.
+{{content}}
+
+--
+
+* I have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them.
+{{content}}
+
+
+
+
+
+---
+
+## Identity and the Classroom
+
+* Acknowledge that my perspectives and experiences have shaped how I teach this course
+
+--
+
+* Some of my identities place me in dominant groups while others in marginalized groups
+
+
+--
+
+
+* Strive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities
+
+
+--
+
+* Strive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you
+
+--
+
+* Ask that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100
+
+---
+
+## Code of Conduct
+
+I expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.  
+
+I expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners.  You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.
+
+
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/version/2/0/code_of_conduct.html), version 2.0.
+
+
+
+---
+
+## Ways to Get Support
+
+
+* **Attend, attend, attend** when you don't feel ill
+
+--
+
+* **Participate** in the Stat 100 Slack Workspace
+
+--
+
+* **Come** to Office Hours and Wrap-up Sessions
+
+--
+
+* **Create** study groups with your classmates
+    + Don't know anyone in the course?  
+        + Use Slack or Section to each to know other students in the course!
+
+
+---
+
+class: , middle, center
+
+
+## Computation in Stat 100
+
+
+---
+
+background-image: url("img/packages.001.jpeg")
+background-position: contain
+background-size: 70%
+
+## Computation
+
+
+---
+
+background-image: url("img/packages.002.jpeg")
+background-position: contain
+background-size: 70%
+
+## Computation
+
+---
+
+background-image: url("img/packages.003.jpeg")
+background-position: contain
+background-size: 70%
+
+## Computation
+
+---
+
+### Getting Help with `R`
+
+--
+
+```{r  out.width = "80%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/rhelp.001.jpeg")
+```
+
+
+--
+
+#### .center[Novices asking the internet for `R` help = `r emo::ji("cold_sweat")`]
+
+--
+
+.pull-left[
+
+* **Get help from the Stat 100 teaching staff or classmates!**
+    + Will start p-sets in section each week.
+    + Use the Slack `#q-and-a` channel.
+
+]
+
+--
+
+.pull-left[
+
+* Get help **early** before `r emo::ji("rage")` sets in!
+    + Be prepared for missing commas and quotes, capitalization issues, etc...
+
+]
+
+--
+
+.pull-left[
+
+* Later in the semester, will learn tricks for effectively getting `R` help online.
+
+]
+
+---
+
+## Language: `R`-This, `R`-That, `R`-...
+
+Three `R` Things:
+
+--
+
+```{r, echo = FALSE, out.width= "15%", out.extra='style="float:left; padding:10px"'}
+knitr::include_graphics("img/Rlogo.png")
+```
+
+<br>
+
+`R` is the name of the programming language.
+
+
+--
+
+```{r, echo = FALSE, out.width= "15%", out.extra='style="float:left; padding:10px"'}
+knitr::include_graphics("img/RStudio.png")
+```
+
+<br>
+
+ `RStudio` is the pretty interface.
+
+<br>
+
+--
+
+```{r, echo = FALSE, out.width= "15%", out.extra='style="float:left; padding:10px"'}
+knitr::include_graphics("img/rmarkdown.png")
+```
+
+<br>
+
+`RMarkdown` is the type of file where we will record all of our work (code, output, narrative).
+
+<br>
+
+---
+
+class: , center, middle
+
+## Let's Get Started with `R`!
+
+## First step: Navigate to the class Canvas site.
+
+
+---
+
+## Accessing the RStudio Server
+
+
+
+```{r  out.width = "95%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/raccess.001.jpeg")
+```
+
+* First time may take a while.
+
+---
+
+## Main Components of RStudio Lay-Out 
+
+
+```{r  out.width = "85%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/layout.png")
+```
+
+---
+
+### Main Components of RStudio Lay-Out 
+
+
+.pull-left[.fullish-width[.content-box-yellow[
+
+**Console**
+
+* Sideways carrot called **prompt**.
+
+* Where you run code.
+
+* Let's try it:
+
+```{r}
+6 * 2/ 3
+```
+
+]]]
+
+--
+
+
+.pull-left[.fullish-width[.content-box-yellow[
+
+**Environment**
+
+* Lists items stored in your session.
+
+* Will add some items soon!
+
+]]]
+
+--
+
+
+.pull-left[.fullish-width[.content-box-yellow[
+
+**Files et. al.**
+
+* **Files**: Accesses files in your own directory and the shared directory `shared_data`.
+
+* **Plots**: Contains graphs we create.
+
+* **Packages**: Installs and loads packages.
+
+* **Help**: Displays help files.
+
+]]]
+
+
+---
+
+##Accessing Course Materials 
+
+* All `R` related course materials will be stored in the `shared_data` folder in the **Files** tab.
+
+* You can access shared files but **you must move the files to your home directory** before you edit and save them.
+
+* Let's practice that now with `introRMarkdown.Rmd` which can be found in `shared_data/stat100/handouts`.
+
+* Steps:
+    + Step 1: Click on the `shared_data`, then `stat100`, then `handouts`.
+    + Step 2: Click on "introRMarkdown".  It should open in the upper lefthand window.
+    + Step 5: Go to the top left of the window and click on File > Save as...
+    + Step 6: Click on "Home".
+    + Step 7: (Only do this once) Click on **New Folder** and call it "handouts". Hit "Ok".
+    + Step 8: Then hit Save.  Now the file is saved in your directory and you are ready to work on it.
+
+---
+
+class: , middle, center
+
+## Questions so far?
+
+--
+
+
+## Let's go through the Intro to `RMarkdown` Handout.
+
+
+---
+
+class: , middle, center
+
+## Practice: How do we access P-Set 1?
+
+--
+
+### .orange[It is okay if all things R haven't sunk in yet.  It will take the first few weeks for that to happen.]
+
+---
+
+## Reminders
+
+* No section and no lecture quiz this week.
+* Wrap-ups:
+    + Wednesdays, 4:30-5:30pm in Science Center 110
+    + Fridays, 10:30-11:30am in Science Center 309
+* Will post the Week 2+ office hours schedule soon.  For this week, I still have one set left:
+    + Thursday 10:30 - 11:30 am in Science Center 316 (this week only)
+* Be on the look-out for the section preference form.  
+

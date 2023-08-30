@@ -1,0 +1,765 @@
+---
+title: More Linear Regression
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+## .base-blue[More Linear Regression]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 6 | Spring 2023] 
+
+
+]
+
+
+
+---
+
+### Announcements
+
+* Mid-Term Exam: Wednesday, March 8th - Friday, March 10th
+    + Let's discuss the review sheet.
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* Continue discussing multiple linear regression models.
+    * Explore polynomial terms.
+    * Consider categorical explanatory variables with more than 2 categories.
+    * Consider more than two explanatory variables.
+
+
+
+] 
+
+
+
+.pull-right[
+
+* Practice interpreting model coefficients.
+
+
+
+* Discuss guiding principles for model building.
+
+
+]
+
+---
+
+class: middle, center, 
+
+# Midterm Exam
+
+## Let's go through "exam1Review.Rmd" in the "stat100/handouts" folder!
+
+
+
+
+---
+
+## Multiple Linear Regression
+
+Linear regression is a flexible class of models that allow for:
+
+* Both quantitative and categorical explanatory variables.
+
+
+* Multiple explanatory variables.
+
+
+* Curved relationships between the response variable and the explanatory variable.
+
+
+* BUT the response variable is **quantitative**.
+
+
+
+**Form of the Model:**
+
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p \epsilon_p + \epsilon
+\end{align}
+$$
+
+
+
+---
+
+### New Example: Movies
+
+Let's model a movie's critic rating using the audience rating and the movie's genre.
+
+```{r}
+library(tidyverse)
+movies <- read_csv("https://www.lock5stat.com/datasets2e/HollywoodMovies.csv")
+
+# Restrict our attention to dramas, horrors, and actions
+movies2 <- movies %>%
+  filter(Genre %in% c("Drama", "Horror", "Action")) %>%
+  drop_na(Genre, AudienceScore, RottenTomatoes)
+glimpse(movies2)
+```
+
+* **Response variable:**
+
+* **Explanatory variables:**
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+Let's start with what NOT to do.
+
+<br>
+<br>
+
+**Equal Slopes Model:**
+
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+What we should do instead.
+
+<br>
+<br>
+
+**Equal Slopes Model:**
+
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+
+
+<br>
+<br>
+
+
+**Different Slopes Model:**
+
+
+---
+
+### Exploring the Data
+
+.pull-left[
+
+```{r mscat, fig.show = 'hide'}
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = lm, se = FALSE) +
+  geom_abline(slope = 1, intercept = 0)
+```
+
+* Trends?
+
+* Should we include interaction terms in the model?
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("mscat", "png"))
+```
+
+
+]
+
+
+---
+
+### Side-bar: Identify Outliers on a Graph
+
+
+```{r}
+outliers <- movies2 %>%
+  mutate(DiffScore = AudienceScore - RottenTomatoes) %>%
+  filter(DiffScore > 50 | DiffScore < -30) %>%
+  select(Movie, DiffScore, AudienceScore, RottenTomatoes, Genre)
+outliers
+```
+
+---
+
+### Side-bar: Identify Outliers on a Graph
+
+.pull-left[
+
+```{r outliers, fig.show='hide'}
+library(ggrepel)
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = lm, se = FALSE) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_text_repel(data = outliers,
+                  mapping = aes(label =
+                                  Movie),
+                  force = 10,
+                  show.legend = FALSE,
+                  size = 6)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("outliers", "png"))
+```
+
+
+]
+
+
+---
+
+
+### Building the Model:
+
+Full model form: 
+
+```{r}
+mod <- lm(RottenTomatoes ~ AudienceScore*Genre, data = movies2)
+
+library(moderndive)
+get_regression_table(mod) 
+```
+
+---
+
+### Exploring the Data
+
+
+.pull-left[
+
+```{r mscat2, fig.show='hide'}
+library(ggrepel)
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5)
+```
+
+Evidence of **curvature**?
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("mscat2", "png"))
+```
+
+
+]
+
+
+
+---
+
+
+### Exploring the Data
+
+
+.pull-left[
+
+```{r curve, fig.show='hide'}
+library(ggrepel)
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = lm, se = FALSE, 
+        formula = y ~ poly(x, degree = 2))
+```
+
+Evidence of **curvature**?
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("curve", "png"))
+```
+
+
+]
+
+
+---
+
+### Fitting the New Model
+
+```{r}
+mod2 <- lm(RottenTomatoes ~ poly(AudienceScore, degree = 2, raw = TRUE)*Genre, 
+           data = movies2)
+get_regression_table(mod2, print = TRUE) 
+```
+
+
+
+
+
+
+---
+
+### Considering Other Explanatory Variables
+
+```{r}
+movies2 %>%
+  select(RottenTomatoes, AudienceScore, OpeningWeekend, 
+         DomesticGross, TheatersOpenWeek) %>%
+  na.omit() %>%
+  cor()
+```
+
+Also look at scatterplots!
+
+---
+
+### Considering Other Explanatory Variables
+
+```{r}
+mod3 <- lm(RottenTomatoes ~ AudienceScore + DomesticGross + TheatersOpenWeek, 
+           data = movies2)
+get_regression_table(mod3, print = TRUE) 
+```
+
+
+
+---
+
+class: center, middle, 
+
+
+### Let's Practice with the `palmerpenguins`!
+
+```{r, echo = FALSE}
+knitr::include_graphics("img/penguins.png")
+```
+
+
+
+---
+
+### Let's Practice with the `palmerpenguins`!
+
+```{r}
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+---
+
+### Let's Practice with the `palmerpenguins`!
+
+.pull-left[
+
+```{r penguins, fig.show='hide'}
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm,
+                     y = bill_length_mm,
+                     color = species)) +
+  geom_point(alpha = 0.7) +
+  stat_smooth(method = "lm", se = FALSE)
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("penguins", "png"))
+```
+
+
+]
+
+---
+
+
+```{r}
+mod1 <- lm(bill_length_mm ~ flipper_length_mm + species, data = penguins)
+get_regression_table(mod1, print = TRUE)
+```
+
+```{r}
+mod2 <- lm(bill_length_mm ~ flipper_length_mm * species, data = penguins)
+get_regression_table(mod2, print = TRUE)
+```
+
+---
+
+## Practice
+
+Determine and interpret the slope for a **Chinstrap** penguin using Model 1.
+
+<br>
+<br>
+
+Determine and interpret the slope for a **Adelie** penguin using Model 1.
+
+<br>
+<br>
+
+In Model 1, interpret $\hat{\beta}_2$.
+
+<br>
+<br>
+
+Determine and interpret the slope for a **Chinstrap** penguin using Model 2.
+
+<br>
+<br>
+
+Determine and interpret the slope for a **Adelie** penguin using Model 2.
+
+
+
+---
+
+###  Model Building Guidance
+
+We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
+
+--
+
+.pull-left[
+
+**Guiding Principle**: Capture the general trend, not the noise.
+
+$$
+\begin{align}
+y &= f(x) + \epsilon \\
+y &= \mbox{TREND} + \mbox{NOISE}
+\end{align}
+$$
+
+]
+
+--
+
+.pull-right[
+
+Returning the 2008 Election Example:
+
+```{r, echo = FALSE}
+Pollster08 <- 
+  read_csv("~/shared_data/stat100/data/Pollster08.csv")
+
+ggplot(Pollster08, aes(x = Days, y = Margin)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+]
+
+
+---
+
+###  Model Building Guidance
+
+We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
+
+
+
+.pull-left[
+
+**Guiding Principle**: Capture the general trend, not the noise.
+
+$$
+\begin{align}
+y &= f(x) + \epsilon \\
+y &= \mbox{TREND} + \mbox{NOISE}
+\end{align}
+$$
+
+]
+
+
+
+.pull-right[
+
+Returning the 2008 Election Example:
+
+```{r, echo = FALSE}
+Pollster08 <- 
+  read_csv("~/shared_data/stat100/data/Pollster08.csv")
+
+ggplot(Pollster08, aes(x = Days, y = Margin)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 2), 
+              color = "purple")
+```
+
+]
+
+
+
+---
+
+###  Model Building Guidance
+
+We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
+
+
+
+.pull-left[
+
+**Guiding Principle**: Capture the general trend, not the noise.
+
+$$
+\begin{align}
+y &= f(x) + \epsilon \\
+y &= \mbox{TREND} + \mbox{NOISE}
+\end{align}
+$$
+
+]
+
+
+
+.pull-right[
+
+Returning the 2008 Election Example:
+
+```{r, echo = FALSE}
+Pollster08 <- 
+  read_csv("~/shared_data/stat100/data/Pollster08.csv")
+
+ggplot(Pollster08, aes(x = Days, y = Margin)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 2), 
+              color = "purple") +
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 5), 
+              color = "orange") +
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 18), 
+              color = "darkgreen")
+```
+
+]
+
+---
+
+###  Model Building Guidance
+
+We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
+
+
+.pull-left[
+
+**Guiding Principle**: Occam's Razor for Modeling
+
+> "All other things being equal, simpler models are to be preferred over complex ones." -- ModernDive
+
+
+```{r mf, echo = FALSE, fig.show = 'hide'}
+library(Sleuth3)
+data(case0901)
+
+# Recode the timing variable
+case0901 <- case0901 %>%
+  mutate(TimeCat = factor(case_when(
+    Time == 1 ~ "Late",
+    Time == 2 ~ "Early"
+  )))
+
+ggplot(case0901, aes(x = Intensity, y = Flowers,
+                     color = TimeCat)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("mf", "png"))
+```
+
+]
+
+---
+
+###  Model Building Guidance
+
+We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
+
+
+**Guiding Principle**: Include explanatory variables that attempt to explain **different** aspects of the variation in the response variable.
+
+.pull-left[
+
+```{r ggpairs, fig.show = 'hide'}
+library(GGally)
+penguins %>%
+  select(bill_length_mm, flipper_length_mm,
+         bill_depth_mm, body_mass_g,
+         species) %>%
+  ggpairs(mapping = aes(color = species))
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("ggpairs", "png"))
+```
+
+
+]
+
+---
+
+###  Model Building Guidance
+
+We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
+
+
+**Guiding Principle**: Include explanatory variables that attempt to explain **different** aspects of the variation in the response variable.
+
+
+```{r}
+penguins %>%
+  select(bill_length_mm, flipper_length_mm, bill_depth_mm, body_mass_g) %>%
+  na.omit() %>%
+  cor()
+```
+
+
+
+```{r, eval = FALSE, echo = FALSE}
+load("~/shared_data/stat100/data/colleges_endow.Rdata")
+colleges %>%
+  mutate(log_endow = log(fy2016_endowment_pc), 
+         log_sal = log(avgfacsal_2013)) %>%
+  select(scorecard_netprice_2013, log_endow, avgfacsal_2013,
+         exp_instr_pc_2013) %>%
+  na.omit() %>%
+  pairs()
+```
+
+---
+
+###  Model Building Guidance
+
+We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
+
+
+**Guiding Principle**:  Use your modeling motivation to determine how much you weight **interpretability** versus **prediction accuracy** when choosing the model.
+
+
+```{r, fig.width=13, echo=FALSE, fig.asp = 0.4}
+
+Pollster08 <- 
+  read_csv("~/shared_data/stat100/data/Pollster08.csv")
+
+p1 <- ggplot(Pollster08, aes(x = Days, y = Margin, 
+                       color = factor(Charlie))) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) + theme(legend.position = "bottom")
+
+p2 <- ggplot(Pollster08, aes(x = Days, y = Margin, 
+                       color = factor(Meltdown))) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) + theme(legend.position = "bottom")
+p3 <- ggplot(Pollster08, aes(x = Days, y = Margin)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 2))
+library(cowplot)
+plot_grid(p1, p2, p3, ncol = 3)
+
+```
+
+---
+
+### Model Building
+
+* We will come back to methods for model selection.
+
+* Key ideas:
+    + Determining the **response** variable and the potential **explanatory** variable(s)
+    + Writing out the **model form** and understanding the terms
+    + **Building** and **visualizing** linear regression models in `R`
+    + **Comparing** different potential models
+
+
+
+
+---
+
+## Reminders:
+
+* Mid-Term Exam: Wednesday, March 8th - Friday, March 10th
+    + Don't forget to sign up for an oral exam slot.
+
+

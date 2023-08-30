@@ -2,17 +2,23 @@ project:
   type: website
 
 website:
-  title: "stat100f23"
+  title: "Course Materials for Stat 100 F23"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+    - text: "Homepage"
+      icon: fa-home
+      href: index.qmd
+    - text: "Slides (First Half)"
+      icon: fa-chart-area
+      menu: 
+        - text: "Week 1 Mon"
+          icon: fa-file
+          href: stat100_wk01mon.qmd
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme: yeti
+    css: ["styles.css", "more.css"]
     toc: true
 
 editor: visual

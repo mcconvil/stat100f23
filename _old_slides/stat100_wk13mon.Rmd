@@ -1,0 +1,1026 @@
+---
+title: Inference for Categorical Variables
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+theme_update(text = element_text(size = 20),
+             plot.title = element_text(hjust = 0.5))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/ggparty_s23.001.jpeg")
+background-size: 80%
+class: bottom, center, 
+
+
+    
+### If you are able to attend, please RSVP: [https://bit.ly/ggpartys23](https://bit.ly/ggpartys23)
+
+---
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Inference]
+
+## .base-blue[for]
+
+## .base-blue[Categorical Variables]
+
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 13 | Spring 2023] 
+
+]
+
+
+
+---
+
+### Announcements
+
+* Office Hours Schedule
+* Extra Credit Lecture Quiz: Due Apr 28 at noon
+    + Questions from previous lecture quizzes can be found [here](https://canvas.harvard.edu/courses/113908/files/17356992?module_item_id=1372346)
+* No sections this week!
+
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* Model selection
+
+* Inference scenarios
+
+
+] 
+
+
+
+.pull-right[
+
+
+* Inference for categorical variables with **more than** 2 categories!
+
+* Chi-Squared Random Variables
+
+]
+
+---
+
+### Comparing Models
+
+Suppose I built 4 different linear regression models. **Which is best?**
+
+--
+
+* Big question!  Take **Stat 139: Linear Models** to learn systematic model selection techniques.
+
+--
+
+* We will explore one approach.  (But there are many possible approaches!)
+
+
+---
+
+### Comparing Models
+
+Suppose I built 4 different model. **Which is best?**
+
+--
+
+&rarr; Pick the best model based on some measure of quality.
+
+--
+
+**Measure of quality**: $R^2$ (Coefficient of Determination)
+
+\begin{align*}
+R^2 &= \mbox{Percent of total variation in y explained by the model}\\
+&= 1- \frac{\sum (y - \hat{y})^2}{\sum (y - \bar{y})^2}
+\end{align*}
+
+
+--
+
+**Strategy**: Compute the $R^2$ value for each model and pick the one with the highest $R^2$.
+
+---
+
+### Comparing Models with $R^2$
+
+**Strategy**: Compute the $R^2$ value for each model and pick the one with the highest $R^2$.
+
+```{r}
+library(mosaicData)
+mod1 <- lm(price ~ centralAir, data = SaratogaHouses)
+mod2 <- lm(price ~ livingArea + bathrooms + centralAir, data = SaratogaHouses)
+mod3 <- lm(price ~ livingArea + age + bathrooms + centralAir, data = SaratogaHouses)
+mod4 <- lm(price ~ livingArea * centralAir + bathrooms, data = SaratogaHouses)
+```
+
+---
+
+**Strategy**: Compute the $R^2$ value for each model and pick the one with the highest $R^2$.
+
+```{r}
+library(broom)
+glance(mod1)
+glance(mod2)
+```
+
+
+---
+
+**Strategy**: Compute the $R^2$ value for each model and pick the one with the highest $R^2$.
+
+```{r}
+glance(mod2)
+glance(mod3)
+```
+
+
+
+**Problem:** As we add predictors, the $R^2$ value will only increase (or stay the same).  
+
+
+---
+
+### Comparing Models with $R^2$
+
+
+**Problem:** As we add predictors, the $R^2$ value will only increase (or stay the same).    
+
+
+And in [Week 6, we said](https://mcconvil.github.io/stat100s23/stat100_wk06wed.html#29):
+
+**Guiding Principle**: Occam's Razor for Modeling
+
+> "All other things being equal, simpler models are to be preferred over complex ones." -- ModernDive
+
+
+---
+
+### Comparing Models with the Adjusted $R^2$
+
+
+**New Measure of quality**: Adjusted $R^2$ (Coefficient of Determination)
+
+\begin{align*}
+\mbox{adj} R^2 &= 1- \frac{\sum (y - \hat{y})^2}{\sum (y - \bar{y})^2} \left(\frac{n - 1}{n - p - 1} \right)
+\end{align*}
+
+where $p$ is the number of explanatory variables in the model.
+
+--
+
+Now we will penalize larger models.
+
+--
+
+**Strategy**: Compute the adjusted $R^2$ value for each model and pick the one with the highest adjusted $R^2$.
+
+---
+
+**Strategy**: Compute the adjusted $R^2$ value for each model and pick the one with the highest adjusted $R^2$.
+
+```{r}
+glance(mod2)
+glance(mod4)
+```
+
+---
+
+### Inference Scenarios
+
+* Use the same framework for testing, regardless of numerical quantity of interest.
+* Use the same framework for estimation, regardless of numerical quantity of interest.
+* But, the structure of the data (i.e. variable types) impacts what numerical quantity we focus on and then the details of each step.
+
+```{r, echo = FALSE}
+symbols <- data.frame(Response = c("quantitative", "binary, categorical",
+                                   "quantitative", "binary, categorical",
+                                   "quantitative", "quantitative", "quantitative",
+                                   "categorical", "categorical"),
+                         Explanatory = c("-", "-",
+                                         "binary, categorical",
+                                         "binary, categorical",
+                                         "quantitative", "categorical", "both types",
+                                         "categorical",
+                                         "both types"),
+                         Numerical_Quantity = c("mean", 
+                                                "proportion",
+                                                "difference in means",
+                                                "difference in proportions",
+                                                "correlation", "means",
+                                                "regression coefficients", 
+                                                "proportions", 
+                                                "-"),
+                         Parameter = c("$\\mu$", "$p$", 
+                                       "$\\mu_1 - \\mu_2$",
+                                       "$p_1 - p_2$",
+                                       "$\\rho$", "$\\mu_1, \\mu_2, \\ldots, \\mu_K$",
+                                       "$\\beta_0, \\beta_1, \\ldots, \\beta_K$",
+                                       "$p_{ij}$'s", "-"),
+                                       Statistic = c("$\\bar{x}$",
+                                                     "$\\hat{p}$",
+                                                     "$\\bar{x}_1 - \\bar{x}_2$",
+                                                     "$\\hat{p}_1 - \\hat{p}_2$",
+                                                     "$r$",
+                                                     "$\\bar{x}_1, \\bar{x}_2, \\ldots, \\bar{x}_K$",
+                                       "$\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots, \\hat{\\beta}_K$",
+                                       "$\\hat{p}_{ij}$'s", "-"))
+
+symbols %>% 
+  kable()  %>%
+  kable_styling(bootstrap_options = c("responsive", "bordered")) 
+```
+
+
+---
+
+
+### Inference for Categorical Variables
+
+Consider the situation where:
+
+* Response variable: categorical
+
+* Explanatory variable: categorical
+
+--
+
+* Parameter of interest: $p_1 - p_2$
+
+--
+
+This parameter of interest only makes sense if **both** variables only have two categories.
+
+--
+
+It is time to learn how to study the relationship between two categorical variables when **at least one has more than two categories.**
+
+---
+
+### Hypotheses
+
+Consider the situation where:
+
+* Response variable: categorical
+
+* Explanatory variable: categorical
+
+--
+
+$H_o$: The two variables are independent.
+
+$H_a$: The two variables are dependent.
+
+---
+
+### Example
+
+
+Near-sightedness typically develops during the childhood years. Quinn, Shin, Maguire, and Stone (1999) explored whether there is a relationship between the type of light children were exposed to and their eye health based on questionnaires filled out by the children's parents at a university pediatric ophthalmology clinic.
+
+
+```{r}
+library(tidyverse)
+library(infer)
+
+# Import data
+eye_data <- read_csv("~/shared_data/stat100/data/eye_lighting.csv")
+
+# Contingency table
+eye_data %>%
+  count(Lighting, Eye)
+```
+
+
+
+---
+
+### Eyesight Example
+
+Does there appear to be a relationship/dependence?
+
+.pull-left[
+
+```{r eyeplot, fig.show = 'hide'}
+ggplot(data = eye_data, 
+       mapping = aes(x = Lighting,
+                     fill = Eye)) + 
+  geom_bar(position = "fill")
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("eyeplot", "png"))
+```
+
+]
+
+---
+
+### Eyesight Example
+
+Need a test statistic!
+
+--
+
+* Won't be a single sample statistic.  
+
+--
+
+* Needs to measure the discrepancy between the observed sample and the sample we'd expect to see if $H_o$ (no relationship) were true.
+
+--
+
+* Would be nice if its null distribution could be approximated by a known probability model.
+
+
+---
+
+#### Table of Observed Results
+
+```{r}
+table(eye_data$Eye, eye_data$Lighting) %>%
+  addmargins() %>%
+  kable(format = "html")
+```
+
+--
+
+
+**Question**: If $H_o$ were correct, is this the table that we'd expect to see?
+
+```{r, echo=FALSE}
+Ho_dat <- data.frame(Eye = rep(c("Far", "Near", "Normal"), times = 53*3),
+                     Lighting = rep(c("Far", "Near", "Normal"), each = 53*3))
+table(Ho_dat$Eye, Ho_dat$Lighting) %>%
+  addmargins() %>%
+  kable(format = "html")
+```
+
+---
+
+#### Table of Observed Results
+
+```{r, echo = FALSE}
+table(eye_data$Eye, eye_data$Lighting) %>%
+  addmargins() %>%
+  kable(format = "html")
+```
+
+
+
+
+**Question**: If $H_o$ were correct, what table would we expect to see?
+
+
+Want a $H_o$ table that respects the eye condition proportions:
+
+$$\hat{p}_{far} = 91/479$$
+
+$$\hat{p}_{nor} = 251/479$$
+
+$$\hat{p}_{nea} = 137/479$$
+
+
+---
+
+#### Table of Observed Results
+
+```{r, echo = FALSE}
+table(eye_data$Eye, eye_data$Lighting) %>%
+  addmargins() %>%
+  kable(format = "html")
+```
+
+
+
+
+**Question**: If $H_o$ were correct, what table would we expect to see?
+
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> dark </th>
+   <th style="text-align:right;"> night </th>
+   <th style="text-align:right;"> room </th>
+   <th style="text-align:right;"> Sum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Far </td>
+   <td style="text-align:right;"> (91/479)172 </td>
+   <td style="text-align:right;"> (91/479)232 </td>
+   <td style="text-align:right;"> (91/479)75 </td>
+   <td style="text-align:right;"> 91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Near </td>
+   <td style="text-align:right;"> (137/479)172 </td>
+   <td style="text-align:right;"> (137/479)232 </td>
+   <td style="text-align:right;"> (137/479)75 </td>
+   <td style="text-align:right;"> 137 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Normal </td>
+   <td style="text-align:right;"> (251/479)172 </td>
+   <td style="text-align:right;"> (251/479)232 </td>
+   <td style="text-align:right;"> (251/479)75 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> 172 </td>
+   <td style="text-align:right;"> 232 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 479 </td>
+  </tr>
+</tbody>
+</table>
+
+--
+
+* Still have the same totals but distributed the values differently within the table
+
+---
+
+#### Table of Observed Results
+
+```{r, echo = FALSE}
+table(eye_data$Eye, eye_data$Lighting) %>%
+  addmargins() %>%
+  kable(format = "html")
+```
+
+
+
+
+**Question**: If $H_o$ were correct, what table would we expect to see?
+
+```{r, echo = FALSE}
+round(chisq.test(table(eye_data$Eye, eye_data$Lighting))$exp, 2) %>%
+  addmargins() %>%
+  kable(format = "html")
+```
+
+---
+
+### Expected Table
+
+.pull-left[
+
+* How does this table represent $H_o$?
+
+
+```{r, echo = FALSE}
+round(chisq.test(table(eye_data$Eye, eye_data$Lighting))$exp, 2) %>%
+  addmargins() %>%
+  kable(format = "html")
+```
+
+
+]
+
+--
+
+.pull-right[
+
+```{r, echo = FALSE}
+chisq.test(table(eye_data$Eye, eye_data$Lighting))$exp %>%
+  as_tibble(rownames = "Eye") %>%
+  pivot_longer(2:4, names_to = "Lighting") %>%
+  ggplot(mapping = aes(x = Lighting, fill = Eye, y = value)) +
+  geom_col(position = "fill")
+```
+
+]
+
+---
+
+
+### Test Statistic
+
+Want the test statistic to quantify the difference between the observed table and the expected table.
+
+<table style="display: inline-block;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> dark </th>
+   <th style="text-align:right;"> night </th>
+   <th style="text-align:right;"> room </th>
+   <th style="text-align:right;"> Sum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Far </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Near </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 137 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Normal </td>
+   <td style="text-align:right;"> 114 </td>
+   <td style="text-align:right;"> 115 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> 172 </td>
+   <td style="text-align:right;"> 232 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 479 </td>
+  </tr>
+</tbody>
+</table>
+
+
+
+<table style="display: inline-block;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> dark </th>
+   <th style="text-align:right;"> night </th>
+   <th style="text-align:right;"> room </th>
+   <th style="text-align:right;"> Sum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Far </td>
+   <td style="text-align:right;"> 32.68 </td>
+   <td style="text-align:right;"> 44.08 </td>
+   <td style="text-align:right;"> 14.25 </td>
+   <td style="text-align:right;"> 91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Near </td>
+   <td style="text-align:right;"> 49.19 </td>
+   <td style="text-align:right;"> 66.35 </td>
+   <td style="text-align:right;"> 21.45 </td>
+   <td style="text-align:right;"> 137 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Normal </td>
+   <td style="text-align:right;"> 90.13 </td>
+   <td style="text-align:right;"> 121.57 </td>
+   <td style="text-align:right;"> 39.30 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> 172.00 </td>
+   <td style="text-align:right;"> 232.00 </td>
+   <td style="text-align:right;"> 75.00 </td>
+   <td style="text-align:right;"> 479 </td>
+  </tr>
+</tbody>
+</table>
+
+--
+
+For each cell: Compute a **Z-score**!
+
+--
+
+\begin{align*}
+\mbox{Z-score} &= \frac{\mbox{stat - mean}}{\mbox{SE}} \\
+& = \frac{\mbox{observed - expected}}{\sqrt{\mbox{expected}}}
+\end{align*}
+
+---
+
+### Test Statistic
+
+Want the test statistic to quantify the difference between the observed table and the expected table.
+
+<table style="display: inline-block;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> dark </th>
+   <th style="text-align:right;"> night </th>
+   <th style="text-align:right;"> room </th>
+   <th style="text-align:right;"> Sum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Far </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Near </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 137 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Normal </td>
+   <td style="text-align:right;"> 114 </td>
+   <td style="text-align:right;"> 115 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> 172 </td>
+   <td style="text-align:right;"> 232 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 479 </td>
+  </tr>
+</tbody>
+</table>
+
+
+
+<table style="display: inline-block;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> dark </th>
+   <th style="text-align:right;"> night </th>
+   <th style="text-align:right;"> room </th>
+   <th style="text-align:right;"> Sum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Far </td>
+   <td style="text-align:right;"> 32.68 </td>
+   <td style="text-align:right;"> 44.08 </td>
+   <td style="text-align:right;"> 14.25 </td>
+   <td style="text-align:right;"> 91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Near </td>
+   <td style="text-align:right;"> 49.19 </td>
+   <td style="text-align:right;"> 66.35 </td>
+   <td style="text-align:right;"> 21.45 </td>
+   <td style="text-align:right;"> 137 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Normal </td>
+   <td style="text-align:right;"> 90.13 </td>
+   <td style="text-align:right;"> 121.57 </td>
+   <td style="text-align:right;"> 39.30 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> 172.00 </td>
+   <td style="text-align:right;"> 232.00 </td>
+   <td style="text-align:right;"> 75.00 </td>
+   <td style="text-align:right;"> 479 </td>
+  </tr>
+</tbody>
+</table>
+
+
+
+
+**Test Statistic:**
+
+\begin{align*}
+\chi^2 = \sum \left(\frac{\mbox{observed - expected}}{\sqrt{\mbox{expected}}} \right)^2
+\end{align*}
+
+--
+
+&rarr; Large test statistics signify that results are unusual if $H_o$ is true.
+
+---
+
+<table style="display: inline-block;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> dark </th>
+   <th style="text-align:right;"> night </th>
+   <th style="text-align:right;"> room </th>
+   <th style="text-align:right;"> Sum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Far </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Near </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 137 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Normal </td>
+   <td style="text-align:right;"> 114 </td>
+   <td style="text-align:right;"> 115 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> 172 </td>
+   <td style="text-align:right;"> 232 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 479 </td>
+  </tr>
+</tbody>
+</table>
+
+
+
+<table style="display: inline-block;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> dark </th>
+   <th style="text-align:right;"> night </th>
+   <th style="text-align:right;"> room </th>
+   <th style="text-align:right;"> Sum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Far </td>
+   <td style="text-align:right;"> 32.68 </td>
+   <td style="text-align:right;"> 44.08 </td>
+   <td style="text-align:right;"> 14.25 </td>
+   <td style="text-align:right;"> 91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Near </td>
+   <td style="text-align:right;"> 49.19 </td>
+   <td style="text-align:right;"> 66.35 </td>
+   <td style="text-align:right;"> 21.45 </td>
+   <td style="text-align:right;"> 137 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Normal </td>
+   <td style="text-align:right;"> 90.13 </td>
+   <td style="text-align:right;"> 121.57 </td>
+   <td style="text-align:right;"> 39.30 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> 172.00 </td>
+   <td style="text-align:right;"> 232.00 </td>
+   <td style="text-align:right;"> 75.00 </td>
+   <td style="text-align:right;"> 479 </td>
+  </tr>
+</tbody>
+</table>
+
+
+
+
+```{r}
+library(infer)
+#Compute Chi-square test stat
+test_stat <- eye_data %>%
+  specify(Eye ~ Lighting) %>%
+  calculate(stat = "Chisq") 
+test_stat
+```
+
+--
+
+Is 56.5 **large**?  Is 56.5 **unusual** under $H_o$?
+
+---
+
+### Generating the Null Distribution
+
+#### Steps:
+
+1. Shuffle lighting.
+2. Compute the new observed table.  
+3. Compute the test statistic.
+4. Repeat 1 - 3 many times.
+
+```{r, echo = FALSE}
+eye_data %>%
+  sample_n(10)
+```
+
+
+
+
+
+
+---
+
+### Generating the Null Distribution
+
+
+.pull-left[
+
+```{r null, fig.show = 'hide'}
+# Construct null distribution
+null_dist <- eye_data %>%
+  specify(Eye ~ Lighting) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "Chisq")
+
+
+visualize(null_dist)
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("null", "png"))
+```
+
+]
+
+---
+
+### The Null Distribution
+
+.pull-left[
+
+**Key Observations about the distribution**:
+
+* Smallest possible value?
+
+
+* Shape?
+
+]
+
+
+.pull-right[
+
+```{r, echo = FALSE}
+visualize(null_dist)
+```
+
+]
+
+
+
+---
+
+### The Null Distribution
+
+
+.pull-left[
+
+**Key Observations about the distribution**:
+
+* Smallest possible value?
+
+
+* Shape?
+
+
+* Is our observed test statistic of 56.5 unusual?
+
+
+]
+
+
+.pull-right[
+
+```{r, echo = FALSE}
+visualize(null_dist) +
+  geom_vline(mapping = aes(xintercept = test_stat$stat), 
+             color = "deeppink")
+```
+
+]
+
+
+---
+
+### The P-value
+
+```{r}
+# Compute p-value
+null_dist %>%
+  get_pvalue(obs_stat = test_stat, direction = "greater")
+```
+
+---
+
+### Approximating the Null Distribution
+
+
+.pull-left[
+
+If there are at least 5 observations in each cell, then 
+
+$$
+\mbox{test statistic} \sim \chi^2(df = (\mbox{# of rows} - 1)(\mbox{# of columns} - 1))
+$$
+
+The $df$ controls the center and spread of the distribution.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+visualize(null_dist, method = "both", dens_color = "orange")
+```
+
+]
+
+---
+
+### The Chi-Squared Test
+
+```{r}
+chisq.test(table(eye_data$Eye, eye_data$Lighting))
+```
+
+--
+
+Conclusions?
+
+--
+
+* Causation?
+
+--
+
+* Decisions, decisions...
+
+

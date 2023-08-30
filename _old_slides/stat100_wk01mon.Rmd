@@ -1,0 +1,813 @@
+---
+pagetitle: "Statistical Thinking"
+format: revealjs
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = 'center')
+library(knitr)
+library(tidyverse)
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+class: , middle, center
+
+## What words or phrases do you think of when you hear the word .orange\["Harvard"\]?
+
+### This being a .orange\[data\] class, I'd like to collect some data related to .orange\["statistical thinking."\]
+
+### Go to [bit.ly/stat-100-think](https://bit.ly/stat-100-think) to provide the words or phrases you think of when you hear .orange\["statistical thinking."\]
+
+------------------------------------------------------------------------
+
+### For waitlisters only: Please go to [bit.ly/stat-100-wait](https://bit.ly/stat-100-wait) to sign-in.
+
+------------------------------------------------------------------------
+
+background-image: url("img/DAW.png") background-position: left background-size: 50% class: middle, center,
+
+.pull-right\[
+
+## .blue[Statistical Thinking]
+
+<br>
+
+<br>
+
+### .purple\[Kelly McConville\]
+
+#### .purple\[ Stat 100 \| Week 1 \| Spring 2023\]
+
+\]
+
+------------------------------------------------------------------------
+
+class:
+
+## Getting Started in Stat 100
+
+#### Step 1: Getting Started Module in Canvas
+
+```{r  out.width = "85%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/Canvas_getting_started.png")
+```
+
+------------------------------------------------------------------------
+
+## Announcements
+
+-   Lecture slide decks will always be posted and linked to a Canvas Module the day before lecture.
+    -   These are HTML files but you can print them to PDF.
+    -   Will also bring printed versions for those who prefer paper copies.
+-   No section and no lecture quiz this week.
+-   Only I will be running office hours this week at the following times:
+    -   Today 1:30 - 3:00 pm in Science Center 316
+    -   Tuesday 10:30 am - noon in Science Center 316
+    -   Thursday 10:30 - 11:30 am in Science Center 316 (this week only)
+-   Be on the look-out for the section preference form.\
+-   **If able, please bring a laptop or tablet to Wednesday's lecture.**
+
+------------------------------------------------------------------------
+
+## Week 1 Goals
+
+.pull-left\[
+
+**Day 1 Lecture**
+
+-   Statistical thinking
+-   Introduction to data
+-   Hand-drawn data visualizations
+-   Hop into the RStudio Server using FAS OnDemand
+
+\]
+
+--
+
+.pull-right\[
+
+**Day 2 Lecture**
+
+-   Discuss course structure
+-   Getting up and running in `RStudio`
+-   Working with `RMarkdown` documents
+
+\]
+
+------------------------------------------------------------------------
+
+class: center, middle,
+
+## But first, let me quickly introduce myself...
+
+------------------------------------------------------------------------
+
+class: center, middle,
+
+### Let's start with my path to Harvard...
+
+```{r, echo = FALSE, dev.args = list(bg = 'transparent'), fig.asp = .6, out.width = '80%'}
+library(tidyverse)
+library(shadowtext)
+
+MainStates <- map_data("state")
+ggplot() +
+  geom_polygon( data=MainStates, aes(x=long, y=lat, group=group),
+                color="white", fill = "#1F2041",  size = 1.25) +
+  theme_void() +
+  geom_shadowtext(aes(x = -118.343018 + 2, y = 46.064583 + 0.5,
+                      label = "Whitman College"),
+                  color = "white", size = 5, bg.color = "#1F2041") +
+  geom_shadowtext(aes(x = -75.34991, y = 39.90206 + 0.2,
+                      label = "Swarthmore College"),
+                  color = "white", size = 5, bg.color = "#1F2041") +
+    geom_shadowtext(aes(y = 45.523064 - 0.5, x = -122.676483 + 1,
+                        label = "Reed College"),
+                  color = "white", size = 5, bg.color = "#1F2041") +
+    geom_shadowtext(aes(y = 42.374443, x = -71.116943 - 1,
+                        label = "Harvard University"),
+                  color = "white", size = 5, bg.color = "#1F2041")  
+
+```
+
+------------------------------------------------------------------------
+
+class: center,
+
+## Research Interests
+
+### Survey statistics and collaborate with
+
+```{r, echo = FALSE, out.width= "50%"}
+knitr::include_graphics("img/logos.jpeg")
+```
+
+------------------------------------------------------------------------
+
+class: center,
+
+## Research Interests
+
+### Where survey statistics meets data science
+
+--
+
+```{r, echo = FALSE}
+knitr::include_graphics("img/data.jpeg")
+```
+
+------------------------------------------------------------------------
+
+class: center,
+
+### Advising Undergraduate Forestry Data Science Research
+
+<!-- ![](img/fds_crew.jpg) ![](img/Forest_and_IceCream_Lovers.jpg) -->
+
+```{r, echo = FALSE, fig.align='center', fig.show = 'hold', eval = TRUE, out.width='59%', out.height='25%'}
+# knitr::include_graphics(c("img/fds_crew.jpg", "img/Forest_and_IceCream_Lovers.jpg"))
+knitr::include_graphics(c("img/Forest_and_IceCream_Lovers.jpg"))
+```
+
+------------------------------------------------------------------------
+
+class: middle background-image: url("img/seedlings.jpg") background-position: left background-size: contain
+
+.pull-right\[
+
+-   I **love** teaching stats and coding.
+
+\]
+
+--
+
+.pull-right\[
+
+-   But, learning stats and coding is **hard**.
+
+\]
+
+--
+
+.pull-right\[
+
+-   With the **right scaffolding**, **good strategies**, and **sustained effort**, you can excel at both!
+
+\]
+
+--
+
+.pull-right\[
+
+-   And mistakes are part of the learning process. They don't imply that you are bad at stats.
+
+\]
+
+------------------------------------------------------------------------
+
+class: , center, middle
+
+.left-column\[
+
+## The Stat 100 Teaching Team
+
+#### These folks are excited to support your learning!
+
+\]
+
+.right-column\[
+
+```{r  out.width = "105%", echo=FALSE, fig.align='center', eval = TRUE}
+knitr::include_graphics("img/team.032.jpeg")
+```
+
+\]
+
+------------------------------------------------------------------------
+
+background-image: url("img/structures.001.jpeg") background-position: contain background-size: 65%
+
+## Stat 100 Tech & Materials
+
+------------------------------------------------------------------------
+
+class: , middle, center
+
+## Stat 100 is about developing our .orange[statistical thinking] skills.
+
+### What is .orange[statistical thinking]?
+
+--
+
+### It is not the same as mathematical thinking.
+
+--
+
+### Let's discover what .orange[statistical thinking] is through some examples.
+
+------------------------------------------------------------------------
+
+## Data in Stat 100
+
+Will use a wide-range of **real** and **relevant** data examples
+
+.pull-left\[
+
+```{r, echo = FALSE, fig.align='center', out.width='110%'}
+knitr::include_graphics('img/nytimes_access.png')
+```
+
+\]
+
+--
+
+.pull-right\[
+
+```{r, echo = FALSE, fig.align='center', out.width='50%'}
+knitr::include_graphics('img/nytimes_labor_force.png')
+```
+
+\]
+
+------------------------------------------------------------------------
+
+## Data in Stat 100
+
+.pull-left\[
+
+```{r, echo = FALSE, fig.align='center', out.width='100%'}
+knitr::include_graphics('img/covid_govt.png')
+```
+
+\]
+
+--
+
+.pull-right\[
+
+```{r, echo = FALSE, fig.align='center', out.width='100%'}
+knitr::include_graphics('img/traffic_stops.jpg')
+```
+
+\]
+
+--
+
+-   I understand that some of these topics have likely had profound impacts on your lives.
+
+--
+
+-   We will focus class time on the key course objectives but will use these current topics to empower ourselves and to see how we can productively participate with data.
+
+------------------------------------------------------------------------
+
+class: , middle, center
+
+## Example: Visualizing COVID Prevalence
+
+------------------------------------------------------------------------
+
+### Example: Visualizing COVID Prevalence
+
+-   In May of 2020, the Georgia Department of Public Health posted the following graph:
+
+```{r  out.width = "60%", echo=FALSE, fig.align='center'}
+include_graphics("img/GAcovid.jpg") 
+```
+
+-   At a quick first glance, what story does the Georgia Department of Public Health graph appear to be telling?
+
+--
+
+-   What is misleading about the Georgia Department of Public Health graph? How could we fix this issue?
+
+------------------------------------------------------------------------
+
+### Example: Visualizing COVID Prevalence
+
+-   After public outcry, the Georgia Department of Public Health said they made a mistake and posted the following updated graph:
+
+```{r  out.width = "55%", echo=FALSE, fig.align='center'}
+include_graphics("img/GAcovid2.jpg") 
+```
+
+-   How do your conclusions about COVID-19 cases in Georgia change when now interpreting this new graph?
+
+------------------------------------------------------------------------
+
+### Example: Visualizing COVID Prevalence
+
+-   Alberto Cairo, a journalist and designer, created the second graph of the Georgia COVID-19 data:
+
+<img src="img/GAcovid2.jpg" width="45%"/> <img src="img/GAcovid_cairo.png" width="49%"/>
+
+--
+
+-   A key principle of data visualization is to "help the viewer make meaningful comparisons".
+
+--
+
+-   What comparisons are made easy by the lefthand graph? What about by the righthand graph?
+
+--
+
+-   From these graphs, can we get an accurate estimate of the COVID prevalence in these Georgian counties over this two week period?
+
+------------------------------------------------------------------------
+
+### Example: Visualizing COVID Prevalence
+
+-   The [Massachusetts Water Resources Authority (MWRA) graph](https://www.mwra.com/biobot/biobotdata.htm) tracks the presence of COVID-19 in the Boston-area wastewater.
+
+```{r, echo = FALSE, fig.width= 9, fig.asp= .5}
+library(tidyverse)
+# Setting theme to the black and white theme
+theme_set(theme_bw())
+# Updating theme so that the font is size 20 or larger
+theme_update(text = element_text(size = 15),
+             plot.title = element_text(hjust = 0.5),
+             plot.subtitle = element_text(hjust = 0.5))
+
+# Load the data
+wastewater <- read_csv("data/MWRAData20220125-data.csv")
+
+# Clean up the column names
+library(janitor)
+wastewater <- clean_names(wastewater)
+
+# Fix column types
+# (Don't worry about the scary warning message)
+library(lubridate)
+wastewater <- mutate(wastewater, 
+                     sample_date = mdy(sample_date),
+                     northern_copies_m_l =
+                       as.numeric(northern_copies_m_l),
+                     southern_copies_m_l =
+                       as.numeric(southern_copies_m_l)
+)
+
+wastewater_long <- wastewater %>%
+  select(sample_date, northern_copies_m_l, southern_copies_m_l) %>%
+  pivot_longer(cols = c("northern_copies_m_l", "southern_copies_m_l"),
+               names_to = "station",
+               names_pattern = "(.*)_copies_m_l",
+               values_to = "copies_m_l")
+
+wastewater_long2 <- wastewater %>%
+  select(sample_date, northern_7_day_avg, southern_7_day_avg) %>%
+  pivot_longer(cols = c("northern_7_day_avg", "southern_7_day_avg"),
+               names_to = "station",
+               names_pattern = "(.*)_7_day_avg",
+               values_to = "seven_day_avg")
+
+wastewater_long_low <- wastewater %>%
+  select(sample_date, northern_low_confidence_interval,
+         southern_low_confidence_interval) %>%
+  pivot_longer(cols = c("northern_low_confidence_interval",
+                        "southern_low_confidence_interval"),
+               names_to = "station",
+               names_pattern = "(.*)_low_confidence_interval",
+               values_to = "low_confidence_interval")
+
+wastewater_long_high <- wastewater %>%
+  select(sample_date, northern_high_confidence_interval,
+         southern_high_confidence_interval) %>%
+  pivot_longer(cols = c("northern_high_confidence_interval",
+                        "southern_high_confidence_interval"),
+               names_to = "station",
+               names_pattern = "(.*)_high_confidence_interval",
+               values_to = "high_confidence_interval")
+
+wastewater_long <- wastewater_long %>%
+  inner_join(wastewater_long2) %>%
+  inner_join(wastewater_long_low)  %>%
+  inner_join(wastewater_long_high)
+
+
+wastewater_long %>%
+  filter(sample_date >= as_date("2021-11-01"), sample_date <= as_date("2022-02-01")) %>%
+ggplot(
+       mapping = aes(x = sample_date, 
+                     y = copies_m_l,
+                     color = station)) +
+  geom_errorbar(mapping = aes(ymin = copies_m_l - low_confidence_interval,
+                              ymax = copies_m_l + high_confidence_interval),
+                alpha = 0.4) +
+  geom_point(alpha = 0.3, size = 3) +
+  scale_color_manual(values = c("forestgreen", "orange"))  +
+  labs(y = "RNA copies/mL", x = "Date", color = "Station",
+       caption = "Data from the Massachusetts Water Resources Authority",
+       title = "DITP Viral RNA Signal By Date",
+       subtitle = "Lines provide seven day average") +
+  geom_line(mapping = aes(y = seven_day_avg), size = 2) #+
+  #theme(legend.position = "bottom") 
+```
+
+-   What are the pros of using wastewater over nasal swabs to assess COVID prevalence? What are the cons?
+
+--
+
+-   One more note: The graph also incorporates **uncertainty measures**, a key statistical thinking idea that we will learn more about later in the semester!
+
+------------------------------------------------------------------------
+
+class: middle, , center
+
+## What is "Statistical Thinking?"
+
+------------------------------------------------------------------------
+
+## Statistical Thinking
+
+.pull-left\[
+
+-   Understanding the importance of **context**.
+
+\]
+
+--
+
+.pull-right\[
+
+→ Context explained the Monday jumps in the COVID counts.
+
+\]
+
+--
+
+.pull-left\[
+
+-   How we **encode** information in a graph should be driven by our research question.
+
+\]
+
+--
+
+.pull-right\[
+
+→ **Design choices** impact the conclusions the viewer draws.
+
+\]
+
+--
+
+.pull-left\[
+
+-   How the data were **collected** impacts the conclusions we can make.
+
+\]
+
+--
+
+.pull-right\[
+
+→ Voluntary COVID test results don't likely provide good estimates of COVID prevalence.
+
+\]
+
+--
+
+.pull-left\[
+
+-   Often we are using a **sample** of data to say something about a larger group. In this case, we should measure how certain our estimates are!
+
+\]
+
+--
+
+.pull-right\[
+
+→ We will learn to **compute** and **interpret** certainty estimates like those in the wastewater graph later in the course!
+
+\]
+
+--
+
+Developing our statistical thinking skills will allow us to soundly **extract knowledge from data**!
+
+------------------------------------------------------------------------
+
+class: middle, , center
+
+## What are data?
+
+------------------------------------------------------------------------
+
+-   The dictionary definition:
+
+> "data: factual information (such as measurements or statistics) used as a basis for reasoning, discussion, or calculation" -- Merriam-Webster
+
+--
+
+-   Wikipedia:
+
+> "Data are characteristics or information, usually numerical, that are collected through observation. In a more technical sense, data are a set of values of qualitative or quantitative variables about one or more persons or objects, while a datum (singular of data) is a single value of a single variable."
+
+------------------------------------------------------------------------
+
+-   Our textbook definition:
+
+> "Data comes to us in a variety of formats, from pictures to text to numbers." -- ModernDive
+
+--
+
+-   Data Feminism:
+
+> "... by the time that information becomes data, it's already been classified in some way. Data after all, is information made *tractable*." -- D'Ignazio and Klein
+
+------------------------------------------------------------------------
+
+## Data Frames
+
+```{r, echo = FALSE}
+library(pdxTrees)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+pdxTrees_parks <- get_pdxTrees_parks()
+
+pdxTrees_parks[1:6, ] %>%
+  select(UserID, Tree_Height, Common_Name, Park,
+         DBH,
+         Species_Factoid) %>%
+  kable() %>%   kable_styling(bootstrap_options = c("responsive", "bordered", "striped", "compact"),
+                              font_size = 12)
+  
+
+```
+
+Data in spreadsheet-like format where:
+
+--
+
+-   Rows = Observations/cases
+
+--
+
+-   Columns = Variables
+
+------------------------------------------------------------------------
+
+## Data Frames
+
+```{r, echo = FALSE}
+library(pdxTrees)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+pdxTrees_parks <- get_pdxTrees_parks()
+
+pdxTrees_parks[1:6, ] %>%
+  select(UserID, Tree_Height, Common_Name, Park,
+         DBH,
+         Species_Factoid) %>%
+  kable() %>%   kable_styling(bootstrap_options = c("responsive", "bordered", "striped", "compact"),
+                              font_size = 12)
+  
+
+```
+
+Rows = Observations/cases
+
+**What are the cases? What does each row represent?**
+
+------------------------------------------------------------------------
+
+## Data Frames
+
+```{r, echo = FALSE}
+library(pdxTrees)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+pdxTrees_parks <- get_pdxTrees_parks()
+
+pdxTrees_parks[1:6, ] %>%
+  select(UserID, Tree_Height, Common_Name, Park,
+         DBH,
+         Species_Factoid) %>%
+  kable() %>%   kable_styling(bootstrap_options = c("responsive", "bordered", "striped", "compact"),
+                              font_size = 12)
+  
+
+```
+
+Columns = Variables
+
+**Variables**: Describe characteristics of the observations
+
+--
+
+-   **Quantitative**: Numerical in nature
+
+--
+
+-   **Categorical**: Values are categories
+
+--
+
+-   **Identification**: Uniquely identify each case
+
+------------------------------------------------------------------------
+
+## Data Frames
+
+```{r, echo = FALSE}
+library(pdxTrees)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+pdxTrees_parks <- get_pdxTrees_parks()
+
+pdxTrees_parks[1:6, ] %>%
+  select(UserID, Tree_Height, Common_Name, Park,
+         DBH,
+         Species_Factoid) %>%
+  kable() %>%   kable_styling(bootstrap_options = c("responsive", "bordered", "striped", "compact"),
+                              font_size = 12)
+  
+
+```
+
+**Important to understand what each variable represents and the units of measurement.**
+
+--
+
+Example questions:
+
+-   For categorical variables, what are the categories? Do those categories adequately represent the data represented by that variable?
+
+--
+
+-   For quantitative variables, what values are possible? Were the data rounded or binned? Are those values actually encoding categories?
+
+------------------------------------------------------------------------
+
+class: middle, center,
+
+## Goal: Over the next few days, collect data on your world so that you can visualize it on P-Set 1.
+
+------------------------------------------------------------------------
+
+## Hand-Drawn Data Viz
+
+-   Two key aspects of data visualization:
+    -   Determining how you want to display the data.
+    -   Figuring out how to tell the computer to do that mapping.
+
+--
+
+-   Hand-drawn data visualizations allow us to focus on the first part and with full control over the creative process!
+
+------------------------------------------------------------------------
+
+## Hand-Drawn Data Viz Examples
+
+-   [Dear Data](http://www.dear-data.com/theproject)
+
+> "Each week, and for a year, we collected and measured a particular type of data about our lives, used this data to make a drawing on a postcard-sized sheet of paper, and then dropped the postcard in an English "postbox" (Stefanie) or an American "mailbox" (Giorgia)!"
+
+------------------------------------------------------------------------
+
+### Dear Data Examples
+
+```{r  out.width = "100%", echo=FALSE, fig.cap = "", fig.align='center'}
+include_graphics("img/complaints.png") 
+```
+
+-   What would the data frame for this visualization look like?
+
+------------------------------------------------------------------------
+
+### Dear Data Examples
+
+```{r  out.width = "100%", echo=FALSE, fig.cap = "", fig.align='center'}
+include_graphics("img/time.png") 
+```
+
+-   What would the data frame for this visualization look like?
+
+------------------------------------------------------------------------
+
+### Mapping Manhattan
+
+-   Becky Cooper handed out hand-drawn maps of Manhattan to strangers and asked them to ["map their Manhattan."](https://www.goodreads.com/book/show/15842664-mapping-manhattan?from_search=true)
+
+```{r  out.width = "95%", echo=FALSE, fig.cap = "Map drawn by New Yorker staff writer Patricia Marx", fig.align='center'}
+include_graphics("img/mapmanhattan.png") 
+```
+
+-   What would the data frame for this visualization look like?
+
+------------------------------------------------------------------------
+
+### More Dear Data Examples
+
+```{r  out.width = "90%", echo=FALSE, fig.cap = "", fig.align='center', fig.pos = 'hold'}
+include_graphics("img/postcards_stat100s22.001.jpeg") 
+```
+
+-   What would the data frame for this visualization look like?
+
+------------------------------------------------------------------------
+
+### More Dear Data Examples
+
+```{r  out.width = "80%", echo=FALSE, fig.cap = "", fig.align='center', fig.pos = 'hold'}
+include_graphics("img/postcards_stat100s22.002.jpeg") 
+```
+
+-   What would the data frame for this visualization look like?
+
+------------------------------------------------------------------------
+
+## Goal: Over the next few days, collect data on your world so that you can visualize it on P-Set 1.
+
+#### Recommendations
+
+-   Store the data in your favorite spreadsheet program (Google Sheets, Numbers, Excel).
+-   Determine what your cases/observations will be.\
+-   Collect data on **more** variables than you will likely graph. It is hard to know at the on-set what the interesting relationships will be.
+
+--
+
+#### In Wednesday's Lecture
+
+-   Will get a blank postcard and further guidance on the visualization with P-Set 1.
+
+------------------------------------------------------------------------
+
+class: middle, center,
+
+## To Try Before Next Lecture:
+
+### Accessing the RStudio Server
+
+------------------------------------------------------------------------
+
+## Accessing the RStudio Server
+
+```{r  out.width = "95%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/raccess.001.jpeg")
+```
+
+-   First time may take a while.
+
+------------------------------------------------------------------------
+
+## Reminders
+
+-   No section and no lecture quiz this week.
+-   Make sure to go through the syllabus, which can be found in the Getting Started Module on Canvas.
+    -   Will discuss assessments (p-sets, project, exams, quizzes, engagement) in the Wed lecture.
+-   Only I will be running office hours this week at the following times:
+    -   Today 1:30 - 3:00 pm in Science Center 316
+    -   Tuesday 10:30 am - noon in Science Center 316
+    -   Thursday 10:30 - 11:30 am in Science Center 316 (this week only)
+-   Try to access the RStudio Server through FAS OnDemand between now and next lecture.
+    -   I will demo now and come back to the recording if need help with the steps.
+-   Be on the look-out for the section preference form.

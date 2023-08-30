@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R and RStudio</title>
+    <meta charset="utf-8" />
+    <script src="libsSlides/header-attrs-2.19/header-attrs.js"></script>
+    <link href="libsSlides/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <script src="libsSlides/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libsSlides/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libsSlides/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link rel="stylesheet" href="more.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+background-image: url("img/slack.001.jpeg")
+background-position: left
+background-size: 18%
+class: middle, left
+
+.pull-rightish[
+
+## Before lecture begins, go to the Stat 100 Slack Workspace and answer the question in the #q-and-a channel.
+
+### The Slack Workspace can be accessed through our Canvas page.
+
+
+___________________________________________
+
+### For waitlisters only: Please go to [bit.ly/stat-100-wait](https://bit.ly/stat-100-wait) to sign-in.
+
+
+
+]
+
+
+---
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Computing in Stat 100]
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 1 | Spring 2023] 
+
+]
+
+
+
+---
+
+
+## Announcements
+
+* No section and no lecture quiz this week.
+* Wrap-ups:
+    + Wednesdays, 4:30-5:30pm in Science Center 110
+    + Fridays, 10:30-11:30am in Science Center 309
+* Will post the Week 2+ office hours schedule soon.  For this week, I still have one set left:
+    + Thursday 10:30 - 11:30 am in Science Center 316 (this week only)
+* Be on the look-out for the section preference form.  
+
+
+****************************
+
+--
+
+## Goals for Today
+
+* Stat 100 structure and assessments
+* Getting up and running in `RStudio`
+* Working with `RMarkdown` documents
+
+---
+
+class: center, , middle
+
+
+## Overarching Goal:
+
+--
+
+### Learn how to .orange[extract knowledge] from data.
+
+
+---
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle
+
+
+.pull-right[
+
+###  Course Learning Objectives
+
+]
+
+
+--
+
+.pull-right[
+
+ * Learn how to **analyze** data. 
+
+]
+
+--
+
+.pull-right[
+
+* Acquire good data **habits**.
+
+]
+
+--
+
+.pull-right[
+
+* Develop **statistical thinking** and **problem-solving** skills.
+
+]
+
+---
+
+
+background-image: url("img/workflows.004.jpeg")
+background-position: contain
+background-size: 65%
+
+## Data Analysis Workflow
+
+
+---
+
+
+background-image: url("img/workflows.003.jpeg")
+background-position: contain
+background-size: 65%
+
+
+## Data Analysis Workflow
+
+---
+
+
+background-image: url("img/workflows.002.jpeg")
+background-position: contain
+background-size: 65%
+
+## Data Analysis Workflow
+
+
+---
+
+
+background-image: url("img/workflows.001.jpeg")
+background-position: contain
+background-size: 65%
+
+
+
+## Data Analysis Workflow
+
+
+---
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle
+
+
+.pull-right[
+
+###  Data Analysis Workflow
+
+]
+
+
+.pull-right[
+
+* Not a strict set of guidelines.
+
+* General structure for **extracting knowledge from data**.
+
+
+]
+
+--
+
+.pull-right[
+
+* Consider **iteration** throughout.
+
+]
+
+--
+
+.pull-right[
+
+* Consider **reproducibility** throughout.
+
+]
+
+--
+
+.pull-right[
+
+* Consider **ethics** throughout.
+
+]
+
+
+---
+
+background-image: url("img/structures.001.jpeg")
+background-position: contain
+background-size: 65%
+
+## Stat 100 Tech &amp; Materials
+
+---
+
+## Stat 100 Weekly Flow
+
+&lt;img src="img/week_stat100s23.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+* And we just added a second weekly wrap-up session on Wednesdays, 4:30 - 5:30pm.
+
+
+---
+
+## Forms of Assessment
+
+.pull-left[
+
+* **Weekly lecture quizzes:**
+    + Address important concepts covered.
+    + Find out what is still confusing.
+    + Can drop one quiz grade.
+
+]
+
+--
+
+.pull-right[
+
+* **Weekly problem sets:**
+    + Practice concepts.
+    + Time during section will be devoted to starting the next p-set.
+    + Can drop one problem set grade and get 4 extension days.
+
+]
+
+--
+
+.pull-left[
+
+* **Exams:** 
+    + Format: Takehome Exam followed by Oral Exam.
+    + Will have both a Mid-term and Final.
+
+]
+
+--
+
+.pull-right[
+
+
+* **Participation/Engagement:**
+    + In lecture and section.
+    + By March 7th, must:
+        + Attend at least one office hour.
+        + Post at least two messages on Slack.
+
+]
+
+---
+
+background-image: url("img/slack.001.jpeg")
+background-position: left
+background-size: 18%
+class: middle, left
+
+
+
+.pull-rightish[
+    
+### What Slack posts count?
+
+]
+
+--
+
+.pull-rightish[
+
++ Asking a question about course content
+
+]
+
+--
+
+.pull-rightish[
+
++ Answering someone else's question
+
+]
+
+--
+
+.pull-rightish[
+
++ Posting a useful resource and why you found it helpful
+
+]
+
+--
+
+.pull-rightish[
+
++ Creating an example that illustrates a recent concept
+
+]
+
+--
+
+.pull-rightish[
+
+If you have never used Slack before, don't worry.  We are here to help!
+
+
+    
+]    
+
+
+
+
+---
+
+## This Week's Assessments
+
+* No lecture quiz for Week 1.
+* **P-Set 1** is posted to the RStudio Server.
+    + We will access it later in class.
+    + You will need to pick up a blank postcard to start visualizing your data!
+    + Due on **Tuesday, January 31st** at 5pm on Gradescope.
+        + Let us know if you have any questions about submitting on Gradescope.
+
+---
+
+### Problem 1 of Problem Set 1: Create your own Dear Data postcard! 
+
+
+.pull-left[
+
+**Step 1**  
+
+* Collect data on some aspect of your life.
+    
+**Step 2**    
+    
+* Find a story in your data and determine your postcard recipient.
+
+
+
+* Figure out how you want to visualize the story.
+
+
+**Step 3+** 
+
+* Visualize your data on a blank postcard.
+
+]
+
+.pull-right[
+
+&lt;img src="img/supplies.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+
+
+
+---
+
+background-image: url("img/jessica-knowlden--AvRbJOVUKA-unsplash.jpg")
+background-position: contain
+background-size: 85%
+class: 
+
+
+---
+
+## Engagement
+
+.pull-left[ 
+
+&lt;img src="img/jessica-knowlden--AvRbJOVUKA-unsplash.jpg" width="400px"/&gt;
+
+]
+
+.pull-right[
+
+* Being **actively present** is key.
+{{content}}
+
+]
+
+--
+
+* During lecture and section, remove distractions.
+    + When we are on our computers, close email, social media, news, etc.
+    + If you will be using a computer/tablet for taking notes, please sit in the technology zone **starting next lecture** so as not to distract classmates.
+    + Hide your phone.
+{{content}}
+
+--
+
+* What you get out of Stat 100 will depend on what you put into it.
+{{content}}
+
+--
+
+* I have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them.
+{{content}}
+
+
+
+
+
+---
+
+## Identity and the Classroom
+
+* Acknowledge that my perspectives and experiences have shaped how I teach this course
+
+--
+
+* Some of my identities place me in dominant groups while others in marginalized groups
+
+
+--
+
+
+* Strive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities
+
+
+--
+
+* Strive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you
+
+--
+
+* Ask that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100
+
+---
+
+## Code of Conduct
+
+I expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.  
+
+I expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners.  You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.
+
+
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/version/2/0/code_of_conduct.html), version 2.0.
+
+
+
+---
+
+## Ways to Get Support
+
+
+* **Attend, attend, attend** when you don't feel ill
+
+--
+
+* **Participate** in the Stat 100 Slack Workspace
+
+--
+
+* **Come** to Office Hours and Wrap-up Sessions
+
+--
+
+* **Create** study groups with your classmates
+    + Don't know anyone in the course?  
+        + Use Slack or Section to each to know other students in the course!
+
+
+---
+
+class: , middle, center
+
+
+## Computation in Stat 100
+
+
+---
+
+background-image: url("img/packages.001.jpeg")
+background-position: contain
+background-size: 70%
+
+## Computation
+
+
+---
+
+background-image: url("img/packages.002.jpeg")
+background-position: contain
+background-size: 70%
+
+## Computation
+
+---
+
+background-image: url("img/packages.003.jpeg")
+background-position: contain
+background-size: 70%
+
+## Computation
+
+---
+
+### Getting Help with `R`
+
+--
+
+&lt;img src="img/rhelp.001.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+--
+
+#### .center[Novices asking the internet for `R` help = 😰]
+
+--
+
+.pull-left[
+
+* **Get help from the Stat 100 teaching staff or classmates!**
+    + Will start p-sets in section each week.
+    + Use the Slack `#q-and-a` channel.
+
+]
+
+--
+
+.pull-left[
+
+* Get help **early** before 😡 sets in!
+    + Be prepared for missing commas and quotes, capitalization issues, etc...
+
+]
+
+--
+
+.pull-left[
+
+* Later in the semester, will learn tricks for effectively getting `R` help online.
+
+]
+
+---
+
+## Language: `R`-This, `R`-That, `R`-...
+
+Three `R` Things:
+
+--
+
+&lt;img src="img/Rlogo.png" width="15%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+
+`R` is the name of the programming language.
+
+
+--
+
+&lt;img src="img/RStudio.png" width="15%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+
+ `RStudio` is the pretty interface.
+
+&lt;br&gt;
+
+--
+
+&lt;img src="img/rmarkdown.png" width="15%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+
+`RMarkdown` is the type of file where we will record all of our work (code, output, narrative).
+
+&lt;br&gt;
+
+---
+
+class: , center, middle
+
+## Let's Get Started with `R`!
+
+## First step: Navigate to the class Canvas site.
+
+
+---
+
+## Accessing the RStudio Server
+
+
+
+&lt;img src="img/raccess.001.jpeg" width="95%" style="display: block; margin: auto;" /&gt;
+
+* First time may take a while.
+
+---
+
+## Main Components of RStudio Lay-Out 
+
+
+&lt;img src="img/layout.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Main Components of RStudio Lay-Out 
+
+
+.pull-left[.fullish-width[.content-box-yellow[
+
+**Console**
+
+* Sideways carrot called **prompt**.
+
+* Where you run code.
+
+* Let's try it:
+
+
+```r
+6 * 2/ 3
+```
+
+```
+## [1] 4
+```
+
+]]]
+
+--
+
+
+.pull-left[.fullish-width[.content-box-yellow[
+
+**Environment**
+
+* Lists items stored in your session.
+
+* Will add some items soon!
+
+]]]
+
+--
+
+
+.pull-left[.fullish-width[.content-box-yellow[
+
+**Files et. al.**
+
+* **Files**: Accesses files in your own directory and the shared directory `shared_data`.
+
+* **Plots**: Contains graphs we create.
+
+* **Packages**: Installs and loads packages.
+
+* **Help**: Displays help files.
+
+]]]
+
+
+---
+
+##Accessing Course Materials 
+
+* All `R` related course materials will be stored in the `shared_data` folder in the **Files** tab.
+
+* You can access shared files but **you must move the files to your home directory** before you edit and save them.
+
+* Let's practice that now with `introRMarkdown.Rmd` which can be found in `shared_data/stat100/handouts`.
+
+* Steps:
+    + Step 1: Click on the `shared_data`, then `stat100`, then `handouts`.
+    + Step 2: Click on "introRMarkdown".  It should open in the upper lefthand window.
+    + Step 5: Go to the top left of the window and click on File &gt; Save as...
+    + Step 6: Click on "Home".
+    + Step 7: (Only do this once) Click on **New Folder** and call it "handouts". Hit "Ok".
+    + Step 8: Then hit Save.  Now the file is saved in your directory and you are ready to work on it.
+
+---
+
+class: , middle, center
+
+## Questions so far?
+
+--
+
+
+## Let's go through the Intro to `RMarkdown` Handout.
+
+
+---
+
+class: , middle, center
+
+## Practice: How do we access P-Set 1?
+
+--
+
+### .orange[It is okay if all things R haven't sunk in yet.  It will take the first few weeks for that to happen.]
+
+---
+
+## Reminders
+
+* No section and no lecture quiz this week.
+* Wrap-ups:
+    + Wednesdays, 4:30-5:30pm in Science Center 110
+    + Fridays, 10:30-11:30am in Science Center 309
+* Will post the Week 2+ office hours schedule soon.  For this week, I still have one set left:
+    + Thursday 10:30 - 11:30 am in Science Center 316 (this week only)
+* Be on the look-out for the section preference form.  
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

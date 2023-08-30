@@ -1,0 +1,575 @@
+---
+title: Start Hypothesis Testing
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+
+## .base-blue[Hypothesis Testing]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 10 | Fall 2022] 
+
+]
+
+
+---
+
+background-image: url("img/stat_applied_probability.png")
+background-position: contain
+background-size: 80%
+
+
+---
+
+### Announcements
+
+* Get P-Set 6 in section this week.  Due at the usual time: Tuesday at 5pm.
+
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* Finish up Monday's CI handout
+* Meaning of the word **confidence**
+
+
+] 
+
+
+
+.pull-right[
+
+
+* Set-up the structure of **hypothesis testing**
+
+
+
+]
+
+
+---
+
+class: , middle, center
+
+
+## `r emo::ji("thinking")` The second half of Stat 100 is more conceptually difficult. `r emo::ji("thinking")`
+
+### So keep coming to lecture, to section, to office hours, and get your questions answered!
+
+
+---
+
+class: , center, middle
+
+### Let's go through the confidenceIntervals.Rmd handout.
+
+
+```{r, echo = FALSE, fig.align='center', out.width='20%'}
+knitr::include_graphics("img/infer.png")
+```
+
+
+---
+
+.pull-left[
+
+
+
+```{r,  out.width = "60%", echo=FALSE, fig.align='center', fig.cap = "", fig.pos="h"}
+library(knitr)
+include_graphics("img/cis.png") 
+```
+
+
+]
+
+.pull-right[
+
+### [What do we mean by confidence?](http://www.rossmanchance.com/applets/2021/confsim/ConfSim.html)
+
+
+* Confidence level = success rate of the method under **repeated sampling**
+
+
+
+* How do I know if my ONE CI successfully contains the true value of the parameter?
+
+
+
+* As we increase the **confidence level**, what happens to the width of the interval?
+
+
+
+* As we increase the **sample size**, what happens to the width of the interval?
+
+
+
+* As we increase the **number of bootstrap samples** we take, what happens to the width of the interval?
+
+
+
+
+]
+
+
+
+---
+
+
+## Interpreting Confidence Intervals
+
+#### Example: Estimating average household income before taxes in the US
+
+.pull-left[
+
+SE Method Formula: 
+
+$$
+\mbox{statistic} \pm{\mbox{ME}}
+$$
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(infer)
+ce <- read_csv("~/shared_data/stat100/data/ce.csv")
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+bootstrap_dist <- ce %>%
+  specify(response = FINCBTAX) %>%
+  generate(reps =  1000, type = "bootstrap") %>%
+  calculate(stat = "mean")
+summarize(bootstrap_dist, ME = 2*sd(stat), lower = 62480 - ME, upper = 62480 + ME)
+```
+
+]
+
+--
+
+.pull-right[
+
+*"The margin of [sampling] error can be described as the 'penalty' in precision for not talking to everyone in a given population. It describes the range that an answer likely falls between if the survey had reached everyone in a population, instead of just a sample of that population."* -- Courtney Kennedy, Director of Survey Research at Pew Research Center
+
+
+CI = interval of **plausible** values for the **parameter**
+
+]
+
+--
+
+#### Safe interpretation:
+
+
+I am P% confident that {insert what the parameter represents in context}  is between {insert lower bound} and {insert upper bound}.
+
+---
+
+## Caution: Confidence intervals in the wild
+
+Statement in [an article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1255808/) for The BMJ (British Medical Journal):
+
+
+
+```{r, echo = FALSE, fig.align='center', out.width='90%'}
+knitr::include_graphics("img/bmj.png")
+```
+
+
+
+
+---
+
+## Statistical Inference
+
+.pull-left[
+
+```{r, echo = FALSE, out.width='90%'}
+knitr::include_graphics("img/week4.005.jpeg")
+```
+
+
+]
+
+
+
+.pull-right[
+
+**Goal**: Draw conclusions about the population based on a sample.
+{{content}}
+
+
+]
+
+
+
+--
+
+**Main Flavors**:
+{{content}}
+
+
+
+--
+
+&rarr; Estimating numerical quantities.
+{{content}}
+
+--
+
+&rarr; Testing conjectures.
+{{content}}
+
+
+---
+
+## Example: Does Extrasensory Perception (ESP) exist?
+
+.pull-left[
+
+```{r, echo = FALSE, out.width='80%', fig.cap = "Daryl Bem and Ben Honorton"}
+knitr::include_graphics("img/Bem_Honorton.png")
+```
+
+]
+
+--
+
+.pull-right[
+
+Bem and Honorton conducted extrasensory perception  studies:
+
+
+
+* A "sender" randomly chooses an object out of 4 possible objects and sends that information to a "receiver".
+* The "receiver" is then given a set of 4 possible objects and they must decide which one most resembles the object sent to them.
+
+Out of 329 trials, the "receivers" correctly identified the object 106 times.
+
+]
+
+---
+
+## ESP Example
+
+Let's consider the following questions:
+
+--
+
+a. If ESP does not exist and the "receivers" are guessing, how often would we expect them to be correct?
+
+--
+
+<br> <br>
+
+b. For each sample (set of 329 trials), do we expect the proportion of correct guesses to be equal?  Why or why not?
+
+--
+
+
+
+<br> <br>
+
+c. Is it possible to randomly guess correctly 106 out of 329 times (i.e., 32% of the time)?
+
+--
+
+<br> <br>
+
+
+
+d. How unusual is it to guess correctly 106 out of 329 times if ESP doesn't exist?
+
+--
+
+To help us answer d., we need a **sampling distribution** for the sample proportion where **we assume the "receivers" were purely guessing!**
+
+---
+
+
+## Sampling Distribution of a Statistic
+
+.pull-left[
+
+**Steps for (Approximate) Distribution:**
+
+(1) Decide on a sample size, $n$.
+
+(2) Randomly select a sample of size $n$ from the population.
+
+(3) Compute the sample statistic.
+
+(4)  Put the sample back in.
+
+(5) Repeat Steps (2) - (4) many (1000+) times.
+
+]
+
+--
+
+.pull-right[
+
+
+<iframe src="https://giphy.com/embed/MCfhrrNN1goH6" width="280" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+<center><p> via GIPHY</a></p></center>
+
+]
+
+
+---
+
+
+## Sampling Distribution of a Statistic
+
+.pull-left[
+
+**Steps for (Approximate) Distribution:**
+
+(1) Decide on a sample size, $n$.
+
+(2) Randomly select a sample of size $n$ from the population.
+
+(3) Compute the sample statistic.
+
+(4)  Put the sample back in.
+
+(5) Repeat Steps (2) - (4) many (1000+) times.
+
+]
+
+
+
+.pull-right[
+
+```{r  out.width = "95%", echo=FALSE, fig.align='center'}
+include_graphics("img/stat100f22_sampling_distribution.png") 
+```
+
+
+]
+
+
+
+---
+
+
+## Sampling Distribution Under No ESP
+
+
+
+**Steps for (Approximate) Distribution:**
+
+
+--
+
+(1) Decide on a sample size, $n$. 
+
+
+--
+
+(2) Randomly select a sample of size $n$ from the population. 
+
+
+--
+
+
+
+```{r}
+library(mosaic)
+rflip(n = 329, prob = 0.25)
+```
+
+
+---
+
+
+## Sampling Distribution Under No ESP
+
+
+(3) Compute the sample statistic.
+
+
+
+
+```{r}
+rflip(n = 329, prob = 0.25, summarize = TRUE)
+```
+
+
+--
+
+(4)  Put the sample back in.
+
+
+(5) Repeat Steps (2) - (4) many (1000+) times.
+
+
+
+
+```{r}
+guess_sampling_dist <- do(1000)*rflip(n = 329, prob = 0.25)
+guess_sampling_dist
+```
+
+
+---
+
+## Sampling Distribution Under No ESP
+
+.pull-left[
+
+```{r null, fig.show='hide'}
+ggplot(data = guess_sampling_dist,
+       mapping = aes(x = prop)) +
+  geom_histogram(color = "white",
+                 bins = 20)
+```
+
+* What value should our sampling distribution be centered around if the receivers are just guessing? 
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("null", "png"))
+```
+
+
+]
+
+
+
+
+---
+
+## Sampling Distribution Under No ESP
+
+.pull-left[
+
+* How do the study results compare to the sampling distribution under no ESP?
+    + How unusual is it to guess correctly 106 out of 329 times if ESP doesn't exist?
+
+
+
+```{r phat, fig.show='hide'}
+p_hat <- 106/329
+ggplot(data = guess_sampling_dist,
+       mapping = aes(x = prop)) +
+  geom_histogram(color = "white",
+                 bins = 20) +
+  geom_vline(xintercept = p_hat,
+             color = "orange",
+             size = 2)
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("phat", "png"))
+```
+
+
+]
+
+--
+
+
+* Do Bem and Honorton have evidence that ESP exists?
+
+---
+
+## Do Harvardians Have ESP?
+
+--
+
+
+.pull-left[
+
+In pairs:
+
+* Decide who is going to be the sender and who is going to be the receiver.
+
+* **Sender:** Think of one of these images.
+
+* **Receiver:** Guess which image the sender was thinking of.  
+
+* Now switch roles and do it again!  
+
+* Once you have both played each role, each person should add a tally mark on the chalkboard.
+
+]
+
+
+.pull-right[
+
+```{r, echo = FALSE, fig.align='center', out.width='95%'}
+knitr::include_graphics("img/four_images.png")
+```
+]
+
+---
+
+## Do Harvardians Have ESP?
+
+What do we need to modify in the code to answer the question?
+
+```{r, eval = FALSE}
+guess_sampling_dist <- do(1000)*rflip(n = 329, prob = 0.25)
+p_hat <- 106/329
+ggplot(data = guess_sampling_dist, mapping = aes(x = prop)) +
+  geom_histogram(color = "white", bins = 20) +
+  geom_vline(xintercept = p_hat, color = "orange", size = 2)
+```
+
+

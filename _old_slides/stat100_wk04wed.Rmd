@@ -1,0 +1,428 @@
+---
+title: Modeling
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center,
+
+
+.pull-right[
+
+
+
+## .base-blue[Introduction to Modeling]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 |  Week 4 | Spring 2023] 
+
+]
+
+
+
+---
+
+## Announcements
+
+* No lecture on Monday -- University Holiday.
+* Some Monday Office Hours will also be cancelled.  Make sure to check [the schedule](https://docs.google.com/spreadsheets/d/1xwqT5fjYSf83NDEXhq8g0vp2SCeZGnsaIBeNBzS2JGo/edit?usp=sharing).
+* Don't forget to complete the lecture quiz by 11:45am on Friday!
+
+
+****************************
+
+--
+
+## Goals for Today
+
+.pull-left[
+
+ 
+* Introduce statistical modeling
+
+* Simple linear regression model
+
+ 
+] 
+
+
+
+.pull-right[
+
+* Measuring correlation
+
+]
+
+---
+
+## Conclusions, Conclusions
+
+```{r, echo = FALSE, out.width='80%'}
+knitr::include_graphics("img/week4.005.jpeg")
+```
+
+
+
+---
+
+.left-column[
+
+## Recap
+
+]
+
+.right-column[
+
+```{r, echo = FALSE, out.width = '70%'}
+knitr::include_graphics("img/DAW.jpeg")
+```
+
+
+]
+
+---
+
+### Typical Analysis Goals
+
+
+**Descriptive**: Want to estimate quantities related to the population.
+
+&rarr; How many trees are in Alaska?
+
+
+**Predictive**: Want to predict the value of a variable.
+
+&rarr; Can I use remotely sensed data to predict forest types in Alaska?
+
+
+**Causal**: Want to determine if changes in a variable cause changes in another variable.
+
+&rarr; Are insects causing the increased mortality rates for pinyon-juniper woodlands?
+
+--
+
+
+We will focus mainly on **descriptive/causal modeling** in this course.  If you want to learn more about **predictive modeling**, take Stat 121A: Data Science 1 + Stat 121B: Data Science 2.
+
+---
+
+## Form of the Model
+
+<br><br><br>
+
+--
+
+$$
+y = f(x) + \epsilon
+$$
+
+<br><br><br> 
+
+--
+
+**Goal:**
+
+&rarr; Determine a reasonable form for $f()$. (Ex: Line, curve, ...)
+
+--
+
+&rarr; Estimate $f()$ with $\hat{f}()$ using the data.
+
+--
+
+&rarr; Generate predicted values: $\hat{y} = \hat{f}(x)$.
+
+---
+
+### Simple Linear Regression Model
+
+Consider this model when:
+
+--
+
+* Response variable $(y)$: quantitative
+
+--
+
+* Explanatory variable $(x)$: quantitative
+    + Have only ONE explanatory variable.
+
+--
+    
+* AND, $f()$ can be approximated by a line.
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+"The social contract of Halloween is simple: Provide adequate treats to costumed masses, or be prepared for late-night tricks from those dissatisfied with your offer. To help you avoid that type of vengeance, and to help you make good decisions at the supermarket this weekend, we wanted to figure out what Halloween candy people most prefer. So we devised an experiment: Pit dozens of fun-sized candy varietals against one another, and let the wisdom of the crowd decide which one was best." -- Walt Hickey
+
+--
+
+"While we don’t know who exactly voted, we do know this: 8,371 different IP addresses voted on about 269,000 randomly generated matchups.2 So, not a scientific survey or anything, but a good sample of what candy people like. "
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+```{r, echo = FALSE, out.width='80%'}
+knitr::include_graphics("img/candy_ex.png")
+```
+
+
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+
+
+```{r}
+candy <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv")
+
+glimpse(candy)
+
+```
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+.pull-left[
+
+```{r candy, fig.show = 'hide', echo = FALSE}
+library(ggrepel)
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4")
+```
+
+* Linear trend? 
+
+* Direction of trend?
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("candy", "png"))
+```
+
+]
+
+
+
+
+
+---
+
+
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+.pull-left[
+
+```{r candy2, fig.show = 'hide', echo = FALSE}
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  stat_smooth(method = "lm", se = FALSE,
+              color = "deeppink2")
+```
+
+**A simple linear regression model would be suitable for these data.**
+
+* But first, let's describe more plots!
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("candy2", "png"))
+```
+
+]
+
+
+
+
+
+
+---
+
+```{r, echo = FALSE, fig.height=6, fig.width=8, fig.align='center'}
+set.seed(4119)
+x <- runif(50, 0, 10)
+y1 <- 3 + 1*x + rnorm(50, 0 , 3)
+y2 <- runif(50, 0, 10)
+y3 <- 1 - .5*x + rnorm(50, 0, 1)
+y4 <- 3 + -40*x +  4*x^2 + rnorm(50, 0, 20)
+dat <- data_frame(x, y1, y2, y3, y4)  
+
+library(cowplot)
+# Create scatterplots and place in a grid
+p1 <- ggplot(dat, aes(x, y1)) + geom_point()
+p2 <- ggplot(dat, aes(x, y2)) + geom_point()
+p3 <- ggplot(dat, aes(x, y3)) + geom_point()
+p4 <- ggplot(dat, aes(x, y4)) + geom_point()
+plot_grid(p1, p2, p3, p4, ncol=2, labels = c("A", "B", "C", "D"))
+
+```
+
+--
+
+#### Need a summary statistics that quantifies the strength and relationship of the linear trend!
+
+
+
+
+---
+
+## (Sample) Correlation Coefficient
+
+* Measures the **strength** and **direction** of **linear** relationship between two quantitative variables
+
+--
+
+* Symbol: $r$
+
+--
+
+* Always between -1 and 1
+
+--
+
+* Sign indicates the direction of the relationship 
+
+--
+
+* Magnitude indicates the strength of the linear relationship
+
+--
+
+```{r}
+candy %>%
+  summarize(cor = cor(pricepercent, winpercent))
+```
+
+
+---
+
+.pull-left[
+
+```{r, echo = FALSE, fig.height=5, fig.width=7.5, fig.align='center'}
+
+plot_grid(p1, p2, p3, p4, ncol=2, labels = c("A", "B", "C", "D"))
+
+```
+
+]
+
+.pull-right[
+
+Any guesses on the correlations for A, B, C, or D?
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+dat %>%
+  summarize(A = cor(x, y1), B = cor(x, y2),
+            C = cor(x, y3), D = cor(x, y4))
+```
+
+]
+
+---
+
+## New Example
+
+```{r, echo = FALSE}
+# Load new dataset
+dat2 <- read_csv("~/shared_data/stat100/data/datasaurus.csv")
+```
+
+
+.pull-left[
+
+```{r}
+# Correlation coefficients
+dat2 %>%
+  group_by(dataset) %>%
+  summarize(cor = cor(x, y))
+```
+
+]
+
+--
+
+.pull-right[
+
+* Conclude that $x$ and $y$ have the same relationship across these different datasets because the correlation is the same?
+
+]
+
+---
+
+###  Always graph the data when exploring relationships!
+
+```{r, echo = FALSE, fig.height=6, fig.width=8, fig.align='center'}
+# Scatterplots
+ggplot(data = dat2, mapping = aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(~ dataset, ncol = 3)
+```
+
+---
+
+class: middle, center
+
+### Up next: Formalizing the linear regression model!
+
+$$
+y = f(x) + \epsilon
+$$

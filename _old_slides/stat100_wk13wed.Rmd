@@ -1,0 +1,1284 @@
+---
+title: Wrap-Up
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+theme_update(text = element_text(size = 20),
+             plot.title = element_text(hjust = 0.5))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/ggparty_s23.001.jpeg")
+background-size: 80%
+class: bottom, center, 
+
+
+    
+### If you are able to attend, please RSVP: [https://bit.ly/ggpartys23](https://bit.ly/ggpartys23)
+
+---
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Stat 100]
+
+## .base-blue[Wrap-Up]
+
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 13 | Spring 2023] 
+
+]
+
+
+
+---
+
+### Announcements
+
+* Discuss the final exam.
+* Last lecture quiz: Week 13 lecture quiz.
+* Extra Credit Lecture Quiz: Due Apr 28 at noon
+    + Questions from previous lecture quizzes can be found [here](https://canvas.harvard.edu/courses/113908/files/17356992?module_item_id=1372346)
+* No sections or Wed wrap-up this week.
+    + Will have Fri wrap-up!
+
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* Inference for a categorical response variable when you have 1+ explanatory variables
+    + Logistic regression
+    + Classification trees
+
+
+] 
+
+
+
+.pull-right[
+
+
+* Wrap-up
+
+* Practice Problem
+
+* Check-list of To Dos
+
+]
+
+
+---
+
+
+### Comparing Models with the Adjusted $R^2$
+
+
+**Strategy**: Compute the adjusted $R^2$ value for each model and pick the one with the highest adjusted $R^2$.
+
+\begin{align*}
+\mbox{adj} R^2 &= 1- \frac{\sum (y - \hat{y})^2}{\sum (y - \bar{y})^2} \left(\frac{n - 1}{n - p - 1} \right)
+\end{align*}
+
+--
+
+Let's look at one more example.
+
+---
+
+### Comparing Models with the Adjusted $R^2$
+
+
+```{r, fig.width=14, echo=FALSE, fig.asp= .5}
+Pollster08 <- 
+  read_csv("~/shared_data/stat100/data/Pollster08.csv")
+p1 <- ggplot(Pollster08, aes(x = Days, y = Margin, 
+                       color = factor(Charlie))) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) + theme(legend.position = "bottom")
+p2 <- ggplot(Pollster08, aes(x = Days, y = Margin, 
+                       color = factor(Meltdown))) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) + theme(legend.position = "bottom")
+p3 <- ggplot(Pollster08, aes(x = Days, y = Margin)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 2)) +
+  stat_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 20),
+              color = "deeppink")
+library(cowplot)
+plot_grid(p1, p2, p3, ncol = 3)
+```
+
+---
+
+### Comparing Models with the Adjusted $R^2$
+
+```{r}
+mod1 <- lm(Margin ~ Days*factor(Charlie), data = Pollster08)
+mod2 <- lm(Margin ~ Days*factor(Meltdown), data = Pollster08)
+mod3 <- lm(Margin ~ poly(Days, degree = 2, 
+                         raw = TRUE), data = Pollster08)
+mod4 <- lm(Margin ~ poly(Days, degree = 20, 
+                         raw = TRUE), data = Pollster08)
+```
+
+\begin{align*}
+\mbox{adj} R^2 &= 1- \frac{\sum (y - \hat{y})^2}{\sum (y - \bar{y})^2} \left(\frac{n - 1}{n - p - 1} \right)
+\end{align*}
+
+Which of these 4 models likely has the highest adjusted R2?  Which likely has the lowest?
+
+
+---
+
+
+```{r}
+library(broom)
+glance(mod1)
+glance(mod2)
+```
+
+
+
+---
+
+```{r}
+glance(mod3)
+glance(mod4)
+```
+
+
+
+
+---
+
+### Logistic Regression
+
+**Response variable**: A **categorical** variable with **two** categories
+
+--
+
+\begin{align*}
+Y =   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+--
+
+$Y \sim$ Bernoulli $(p)$ where $p = P(Y = 1) = P(\mbox{success})$. 
+
+
+--
+
+**Explanatory variables**: Can be a mix of categorical and quantitative
+
+--
+
+**Goal**: Build a model for $P(Y = 1)$.
+
+---
+
+### Why can't we use linear regression?
+
+.pull-left[
+
+
+* Regression line = estimated **probability** of success
+
+* For valid values of $x$, we are predicting the probability is less than 0 or greater than 1.
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE}
+set.seed(40)
+x <- c(runif(20, 0, .6), runif(20, 0.4, 1))
+y <- c(rep(0, 20), rep(1, 20))
+dat <- data.frame(x, y)
+ggplot(dat, aes(x, y)) +
+  geom_point(alpha = 0.5, size = 3) +
+  geom_smooth(method = lm, se = FALSE) + 
+  labs(y = "P(Y = 1)")
+```
+
+]
+
+
+
+---
+
+### Why can't we use linear regression?
+
+
+.pull-left[
+
+
+* Regression line = estimated **probability** of success
+
+* For valid values of $x$, we are predicting the probability is less than 0 or greater than 1.
+
+
+* The estimated probabilities based on the logistic regression model are bounded between 0 and 1.
+
+
+]
+
+
+.pull-right[
+
+```{r, echo=FALSE}
+set.seed(40)
+x <- c(runif(20, 0, .6), runif(20, 0.4, 1))
+y <- c(rep(0, 20), rep(1, 20))
+dat <- data.frame(x, y)
+ggplot(dat, aes(x, y)) +
+  geom_point(alpha = 0.5, size = 3) +
+  geom_smooth(method = lm, se = FALSE) + 
+  labs(y = "P(Y = 1)") +
+  geom_smooth(method = 'glm', method.args = list(family = "binomial"), se = FALSE, color = "deeppink")
+```
+
+]
+
+--
+
+What does the **logistic regression model** look like?
+
+
+---
+
+### Logistic Regression Model
+
+\begin{align*}
+\log\left(\frac{P(Y = 1)}{1  - P(Y = 1)}  \right) &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p 
+\end{align*}
+
+--
+
+Left hand side has many interpretations:
+
+--
+
+\begin{align*}
+\mbox{LHS} &= \log\left(\frac{P(Y = 1)}{1  - P(Y = 1)}  \right)\\ 
+&= \log \left( \mbox{odds (of success)}  \right)\\
+&= \mbox{logit}(P(Y = 1))
+\end{align*}
+
+
+Note: 
+
+$$ 
+\mbox{odds} = \frac{\mbox{prob of success}}{\mbox{prob of failure}}
+$$
+
+
+---
+
+### Example
+
+Let's return to the `PASeniors` dataset and ask the question: Can we build a model to predict whether or not a student will select "happy" as the answer to the question "When you grow up, would you prefer to be famous, happy, healthy, or rich?"
+
+.pull-left[
+
+```{r}
+library(Lock5Data)
+data(PASeniors)
+
+PASeniors <- PASeniors %>%
+  drop_na(WorkHours, Preference) %>%
+  filter(Preference != "") %>%
+  mutate(PreferenceH = case_when(
+    Preference == "Happy" ~ "Picked Happy", 
+    Preference != "Happy" ~ "Something Else"
+  ),
+  PreferenceH_num = case_when(
+    Preference == "Happy" ~ 1,
+    Preference != "Happy" ~ 0
+  ))
+```
+
+]
+
+.pull-right[
+
+```{r}
+count(PASeniors, PreferenceH)
+```
+
+]
+
+
+---
+
+### Example
+
+.pull-left[
+
+```{r glm, fig.show = 'hide'}
+ggplot(data = PASeniors, 
+       mapping = aes(x = Sleep1,
+                     y = PreferenceH_num)) +
+  geom_jitter(size = 3, alpha = 0.1,
+              width = 0, height = 0.05) + 
+  labs(y = "P(Y = 1)") +
+  geom_smooth(method = 'glm',
+              method.args = 
+                list(family = "binomial"))
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("glm", "png"))
+```
+
+]
+
+---
+
+### Example
+
+.pull-left[
+
+This is what an helpful explanatory variable looks like!
+
+```{r, echo=FALSE}
+set.seed(40)
+x <- c(runif(20, 0, .6), runif(20, 0.4, 1))
+y <- c(rep(0, 20), rep(1, 20))
+dat <- data.frame(x, y)
+ggplot(dat, aes(x, y)) +
+  geom_point(alpha = 0.5, size = 3) +
+  labs(y = "P(Y = 1)") +
+  geom_smooth(method = 'glm', method.args = list(family = "binomial"), se = FALSE, color = "deeppink")
+```
+
+]
+
+.pull-right[
+
+This is what an unhelpful explanatory variable looks like!
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("glm", "png"))
+```
+
+]
+
+---
+
+### Logistic Regression Table
+
+
+```{r}
+happy_mod <- glm(PreferenceH_num ~ Sleep1, data = PASeniors)
+library(broom)
+tidy(happy_mod)
+```
+
+* I tried several variables and struggled to build a useful logistic regression model.
+
+---
+
+class: middle, center
+
+
+## There are LOTS of models out there beyond regression!
+
+---
+
+### Classification Trees
+
+
+
+* Recursively split sample into two groups based on a predictor.
+    + Trying at each split to make the groups as homogeneous as possible (in terms of the response variable).
+* **Stop** splitting when it is no longer very predictively useful to do so.
+
+
+
+```{r, echo = FALSE, fig.width = 12, fig.asp = 0.5}
+library(rpart)
+happy_tree <- rpart(PreferenceH ~ Sleep1 + GetToSchool +
+                      TextsSent + VideoGameHours + Gender,
+                    data = PASeniors)
+
+library(rattle)
+fancyRpartPlot(happy_tree, cex  =  .8, caption = "", type = 2)
+```
+
+---
+
+```{r, fig.width = 12, fig.asp = 0.5}
+library(rpart)
+happy_tree <- rpart(PreferenceH ~ Sleep1 + GetToSchool + TextsSent + VideoGameHours + Gender,
+                    data = PASeniors)
+
+library(rattle)
+fancyRpartPlot(happy_tree, cex  =  .8, caption = "", type = 2)
+```
+
+---
+
+Can handle more than two categories for the response variable!
+
+```{r, fig.width = 12, fig.asp = 0.5}
+pref_tree <- rpart(Preference ~ Sleep1 + GetToSchool + TextsSent + VideoGameHours + Gender,
+                   data = PASeniors)
+
+fancyRpartPlot(pref_tree, cex  =  .8, caption = "", type = 2)
+```
+
+
+
+
+
+
+---
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle
+
+.pull-right[
+
+## Before talking about what else there is to study...
+
+]
+
+--
+
+.pull-right[
+
+## Let's acknowledge that we actually learned a lot this semester!
+
+]
+
+---
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle
+
+
+.pull-right[
+
+####  (Some of the) Course Learning Objectives
+
+]
+
+
+--
+
+.pull-right[
+
+ * Learn how to **analyze** data in `R`.
+ 
+]
+
+--
+
+.pull-right[
+
+* Master **creating** graphs with `ggplot2`.
+
+]
+
+--
+
+.pull-right[
+
+* Apply data wrangling operations with `dplyr`.
+]
+
+--
+
+.pull-right[
+
+* Translate a research problem into a set of relevant questions that can be answered with data. 
+
+]
+
+
+--
+
+.pull-right[
+
+* Reflect on how **sample design structures** impact potential conclusions.
+
+
+]
+
+--
+
+.pull-right[
+
+
+* Appropriately apply and draw inferences from a statistical model, including **quantifying and interpreting the uncertainty** in model estimates.
+
+]
+
+
+--
+
+.pull-right[
+
+* Develop a **reproducible** workflow using `R` Markdown documents.
+
+
+]
+
+
+
+
+---
+
+class: middle, center
+
+## What else should we learn?
+
+
+---
+
+name: acquisition
+background-image: url("img/data_acquisition.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+.pull-rightish[
+
+### Data Acquisition
+
+* How to handle data that were collected using a **non-simple random sampling design**
+
+
+```{r, echo = FALSE, fig.width = 7}
+library(NHANES)
+library(tidyverse)
+ggplot(data = NHANESraw, mapping = aes(x = fct_infreq(Race1),
+                                    fill = Race1)) +
+  geom_bar() + labs(x = "Race of Respondents", 
+                    y = "Count",
+                    title = "The Non-SRS NHANES Data") +
+  guides(fill = 'none')
+```
+
+
+
+]
+
+---
+
+name: acquisition
+background-image: url("img/data_acquisition.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+.pull-rightish[
+
+### Data Acquisition
+
+* How to handle data that were collected using a **non-simple random sampling design**
+
+
+```{r, echo = FALSE, fig.width = 7}
+library(NHANES)
+library(tidyverse)
+ggplot(data = NHANESraw, mapping = aes(x = fct_infreq(Race1),
+                                    fill = Race1)) +
+  geom_bar() + labs(x = "Race of Respondents", 
+                    y = "Count",
+                    title = "The Non-SRS NHANES Data") +
+  guides(fill = 'none')
+```
+
+* Consider:
+    + Stat 160: Introduction to Survey Sampling and Estimation
+    + Gov 1010: Survey Research Methods
+    + SOCIOL 157: Qualitative Methods in Sociology
+
+
+]
+
+---
+
+name: acquisition
+background-image: url("img/data_acquisition.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+.pull-rightish[
+
+### Data Acquisition
+
+* How to draw **causation** from observational data (i.e. data collect not using **random assignment**)
+
+
+```{r, echo = FALSE}
+knitr::include_graphics("img/correlation_xkcd.png")
+```
+
+]
+
+--
+
+.pull-rightish[
+
+* Consider:
+    + Any class that mentions "**causal inference**" in the description.
+    + Stat 186: Introduction to Causal Inference
+    
+]
+
+
+---
+
+background-image: url("img/exploration_visualization.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Data Visualization
+
+* How to fully customize your `ggplots`
+
+```{r, echo = FALSE}
+# Load libraries
+library(mosaicData)
+library(tidyverse)
+# Grab data
+data(Births2015)
+```
+
+```{r, echo=FALSE}
+ggplot(data = Births2015, mapping = aes(x = date, y = births, 
+                                        color = wday)) + 
+  geom_point()
+```
+
+
+
+]
+
+
+
+---
+
+background-image: url("img/exploration_visualization.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Data Visualization
+
+* How to fully customize your `ggplots`
+
+```{r, echo=FALSE}
+library(ggimage)
+library(lubridate)
+# Create a story label
+label_data <- data.frame(date = ymd("2015-01-01"), 
+                         births = max(Births2015$births),
+label = "The frequency of births on holidays \nfollows weekend \ntrends.")
+# Create holidays dataset
+library(lubridate)
+holidays <- 
+  data.frame(date = ymd("2015-01-01","2015-05-25", "2015-07-04",
+                        "2015-12-25", "2015-11-26", "2015-12-24",
+                        "2015-09-07"), 
+            occasion = c("New Year", "Memorial Day", 
+                         "Independence Day", "Christmas",
+                         "Thanksgiving", "Christmas Eve", 
+                         "Labor Day"),
+            emoji = c("1f389", "1f396", "1f386", "1f384", 
+                      "1f983", "1f381", "1f477"))
+
+holidays <- left_join(holidays, Births2015)
+library(ggimage)
+ggplot(data = Births2015,
+       mapping = aes(x = date, y = births,
+                     color = wday)) +
+  geom_point() +
+  geom_text(mapping = aes(label = label),
+            data = label_data, 
+            color = "black", vjust = "top",
+            hjust = "left") + 
+  geom_emoji(data = holidays,
+             mapping = aes(image = emoji, 
+                           x = date,
+                           y = births),
+             inherit.aes = FALSE)
+```
+
+
+
+]
+
+---
+
+background-image: url("img/exploration_visualization.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Data Visualization
+
+* How to create graphs we haven't seen in Stat 100
+
+.pull-left[
+
+```{r, echo = FALSE}
+library(tidyverse)
+library(wordcloud)
+library(viridis)
+library(tidytext)
+think <- read_csv("~/stat100s23/stat_thinking - Sheet1.csv") %>%
+  mutate(keyword = str_to_lower(keyword, locale = "en")) %>%
+  drop_na(keyword)
+Beginning <- think %>%
+  filter(when == "Beginning") %>%
+  count(keyword)
+Beginning_tokenized <- think %>%
+  filter(when == "Beginning") %>%
+  unnest_tokens(word, keyword)  %>%
+  anti_join(stop_words) %>%
+  count(word) 
+Beginning_tokenized2 <- think %>%
+  filter(when == "Beginning") %>%
+  unnest_tokens(bigram, keyword)  %>%
+#  anti_join(stop_words) %>%
+  count(bigram) 
+#Palette
+pal <- viridis_pal(alpha = 1, begin = 0, end = .7, direction = 1,
+                   option = "D")(10)
+wordcloud(Beginning$keyword,
+          Beginning$n, scale = c(5, 2.5),
+          rot.per = .3,
+          colors = pal, min.freq = 2)
+```
+
+]
+
+.pull-right[
+
+
+
+```{r, echo = FALSE}
+End <- think %>%
+  filter(when == "End") %>%
+  count(keyword)
+End_tokenized <- think %>%
+  filter(when == "End") %>%
+  unnest_tokens(word, keyword)  %>%
+  anti_join(stop_words) %>%
+  count(word) 
+End_tokenized2 <- think %>%
+  filter(when == "End") %>%
+  unnest_tokens(bigram, keyword)  %>%
+#  anti_join(stop_words) %>%
+  count(bigram) 
+#Palette
+pal <- viridis_pal(alpha = 1, begin = 0, end = .7, direction = 1,
+                   option = "D")(10)
+wordcloud(End_tokenized$word,
+          End_tokenized$n, scale = c(5, 2.5),
+          rot.per = .3,
+          colors = pal, min.freq = 2)
+```
+
+
+]
+
+]
+
+
+
+---
+
+background-image: url("img/exploration_visualization.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Data Visualization
+
+* How to graph **spatial** data
+
+
+```{r, echo = FALSE}
+Eruptions <- read_csv("~/shared_data/stat100/data/GVP_Eruption_Results.csv")
+eruption_count <- count(Eruptions, VolcanoName, 
+                        Latitude, Longitude) %>%
+  filter(Longitude > -172.164, Longitude < -157.1507, 
+         Latitude > 50.977, Latitude < 59.5617) 
+library(leaflet)
+volcano  <- makeIcon(
+  iconUrl = "https://openclipart.org/image/800px/svg_to_png/168263/volcano-mountain.png",
+  iconWidth = 10, iconHeight = 20)
+content <- paste("<b>", eruption_count$VolcanoName, 
+                 "</b></br>", "Number of eruptions:",
+                 eruption_count$n)
+leaflet() %>% 
+  setView(lng = -160, lat = 55, zoom = 4) %>%
+  addTiles() %>%
+  addMarkers(lng = ~Longitude, lat = ~Latitude, 
+             data = eruption_count, 
+             popup = content, icon = volcano)
+```
+
+]
+
+
+
+---
+
+background-image: url("img/exploration_visualization.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Data Visualization
+
+* How to create [fancy dashboards](https://ncasi-shiny-tools.shinyapps.io/Counties/) with the `R` package `shiny`
+
+* Consider:
+    + Stat 108: Introduction to Statistical Computing in R
+    + Stat 109A: Data Science 1: Introduction to Data Science
+    + A GIS course
+    + COMPSCI 171: Visualization
+
+
+]
+
+
+---
+name: inference
+background-image: url("img/modeling_inference.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Modeling and Inference
+
+* How to conduct more sophisticated **model selection**
+
+
+```{r, echo = FALSE, out.width= "25%", out.extra='style="float:left; padding:10px"'}
+knitr::include_graphics("img/fs.png")
+```
+
+**Mission**: "Make and keep current a comprehensive inventory and analysis of the present and prospective conditions of and requirements for the renewable resources of the forest and rangelands of the US."
+
+
+**Goal**: Estimate number of trees per acre for a given plot of land.
+
+
+]
+
+
+
+---
+name: inference
+background-image: url("img/modeling_inference.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Modeling and Inference
+
+* How to conduct more sophisticated **model selection**
+
+
+
+
+```{r, echo = FALSE}
+knitr::include_graphics("img/FIA_EDA.jpeg")
+```
+
+
+]
+
+
+---
+name: inference
+background-image: url("img/modeling_inference.jpeg")
+background-position: left
+background-size: 15%
+
+
+
+
+.pull-rightish[
+
+## Modeling and Inference
+
+* How to conduct more sophisticated **model selection**
+
+
+* **LASSO Method**:  Find $\hat{\beta}$'s based on the following criteria:
+
+\begin{aligned}
+\boldsymbol{\hat{\beta}} &= \underset{\boldsymbol{\beta}}{\arg\min}  \left\{ \sum_{i \in s} (y_i - \boldsymbol{x}_i^T \boldsymbol{\beta})^2 + \lambda \sum_{j=1}^p \left|\beta_j\right|\right\}
+\end{aligned}
+
+**Selected Predictors**:
+
+* Normalized Difference Vegetation Index
+* Slope
+* Normalized Burn Ratio
+* Elevation
+* Slope : Forest/Non-Forest
+
+]
+
+
+
+---
+
+background-image: url("img/modeling_inference.jpeg")
+background-position: left
+background-size: 15%
+
+
+.pull-rightish[
+
+## Modeling and Inference
+
+* For a deep dive into regression, consider Stat 139: Linear Models and Stat 149: Generalized Linear Models
+
+* For exposure to predictive models, try
+    + Data Science 1: Introduction to Data Science
+    + Data Science 2: Advanced Topics in Data Science
+
+* Good keywords to search for:
+    + Statistical learning or machine learning
+    + Supervised learning
+    
+]
+
+---
+
+background-image: url("img/modeling_inference.jpeg")
+background-position: left
+background-size: 15%
+
+
+.pull-rightish[
+
+## Modeling and Inference
+
+* Why do some test statistics follow a standard normal or a t distribution?
+
+* What other random variables are out there?
+
+* Why is the Central Limit Theorem true?
+
+]
+
+
+.pull-rightish[
+
+* For a deep dive into the beautiful theory behind our data analysis, consider:
+    + Stat 110: Introduction to Probability
+    + Stat 111: Introduction to Statistical Inference
+
+]
+
+
+---
+
+class: middle, center
+
+## Review Time!
+
+
+---
+
+class: middle, center
+
+##  One of the most challenging inferential ideas:
+
+--
+
+###  Understanding the **many roles of the sample statistic**:
+
+--
+
+.pull-left[
+
+As a number
+
+]
+
+--
+
+.pull-right[
+
+As a random variable
+
+]
+
+--
+
+.pull-left[
+
+As a point estimate
+
+]
+
+--
+
+.pull-right[
+
+As a test statistic
+
+]
+
+
+
+---
+
+### Practice Problem
+
+#### Identify the different roles of a statistic in the following example:
+
+Researchers presented young children (aged 5 to 8 years) with a choice between two toy characters who were offering stickers.  One character was described as mean, and the other was described as nice.  The mean character offered two stickers, and the nice character offered one sticker.  Researchers wanted to investigate whether children would tend to select the nice character over the mean character, despite receiving fewer stickers.  
+
+
+They found that 80% of the 20 children in the study selected the nice character.  If the children had no preference, the probability that 80% or more would select the nice character is approximately equal to 0.0036.  My best guess for the true proportion of children who would select the nice character is 0.8 (with a margin of error of 0.19 for a 95% CI).
+
+
+
+.pull-left[
+
+* As a number
+
+]
+
+
+
+.pull-right[
+
+* As a random variable
+
+]
+
+
+.pull-left[
+
+* As a point estimate
+
+]
+
+
+
+.pull-right[
+
+* As a test statistic
+
+]
+
+
+---
+
+### Practice Problem
+
+I generated the following distributions but don't remember if I generated a **sampling**, **bootstrap**, or **null** distribution.
+
+
+What are each of these?  Justify your answer.
+
+.pull-left[
+
+```{r, echo = FALSE}
+dat <- data.frame(selection = c(rep("nice", 16), rep("mean", 4)))
+library(infer)
+dat %>%
+  specify(response = selection, success = "nice") %>%
+  hypothesize(null = "point", p = 0.5) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  ggplot(mapping = aes(x = stat)) +
+  geom_histogram()
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+dat %>%
+  specify(response = selection, success = "nice") %>%
+  generate(reps = 1000, type = "bootstrap") %>%
+  calculate(stat = "prop") %>%
+  ggplot(mapping = aes(x = stat)) +
+  geom_histogram()
+```
+
+]
+
+---
+
+### Practice Problem
+
+Researchers presented young children (aged 5 to 8 years) with a choice between two toy characters who were offering stickers.  One character was described as mean, and the other was described as nice.  The mean character offered two stickers, and the nice character offered one sticker.  Researchers wanted to investigate whether children would tend to select the nice character over the mean character, despite receiving fewer stickers.  
+
+
+They found that 80% of the 20 children in the study selected the nice character.  If the children had no preference, the probability that 80% or more would select the nice character is approximately equal to 0.0036.  My best guess for the true proportion of children who would select the nice character is 0.8 (with a margin of error of 0.19 for a 95% CI).
+
+
+
+#### For this example, would you recommend using theory-based methods to compute the p-value and construct the confidence interval?  Why or why not?
+
+---
+
+### Practice Problem
+
+Researchers presented young children (aged 5 to 8 years) with a choice between two toy characters who were offering stickers.  One character was described as mean, and the other was described as nice.  The mean character offered two stickers, and the nice character offered one sticker.  Researchers wanted to investigate whether children would tend to select the nice character over the mean character, despite receiving fewer stickers.  
+
+
+They found that 80% of the 20 children in the study selected the nice character.  If the children had no preference, the probability that 80% or more would select the nice character is approximately equal to 0.0036.  My best guess for the true proportion of children who would select the nice character is 0.8 (with a margin of error of 0.19 for a 95% CI).
+
+
+
+#### Suppose we increased the sample size to 40 and still got 80%.  How would the p-value change?  How about the confidence interval?
+
+---
+
+### Practice Problem
+
+Researchers presented young children (aged 5 to 8 years) with a choice between two toy characters who were offering stickers.  One character was described as mean, and the other was described as nice.  The mean character offered two stickers, and the nice character offered one sticker.  Researchers wanted to investigate whether children would tend to select the nice character over the mean character, despite receiving fewer stickers.  
+
+
+They found that 80% of the 20 children in the study selected the nice character.  If the children had no preference, the probability that 80% or more would select the nice character is approximately equal to 0.0036.  My best guess for the true proportion of children who would select the nice character is 0.8 (with a margin of error of 0.19 for a 95% CI).
+
+
+
+#### What is the probability that the confidence interval contains the sample statistic?
+
+--
+
+#### What is the actual purpose of a CI?
+
+---
+
+### Checklist of Remaining Stat 100 Items
+
+.pull-left[
+
+`r emo::ji("talk")` Sign up for an oral exam slot right after class.
+
+`r emo::ji("star")` Complete the Week 13 Lecture Quiz & Extra Credit Lecture Quiz by noon on Friday.
+
+`r emo::ji("question")` Come by office hours with any questions while studying for the final exam.
+
+`r emo::ji("bangbang")` Complete the takehome exam and then oral exam between May 4th and 7th.
+
+
+]
+
+.pull-right[
+
+`r emo::ji("tada")` Attend the `ggparty` on Friday at 4pm!
+
+`r emo::ji("bar_chart")` Consider what other stats classes to take now that I am 25% of the way to a stats secondary.
+
+`r emo::ji("evergreen_tree")` Add a calendar note to email Prof McConville on 4/26/33 to show her I still know how to interpret a p-value. 
+
+]
+
+---
+
+class: middle, center
+
+# Thanks for a wonderful semester!  
+
+## Hope to see you on Friday at the ggparty!

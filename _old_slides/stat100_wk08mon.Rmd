@@ -1,0 +1,349 @@
+---
+title: Estimation
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+class: inverse, center, middle
+
+# Grab 30 notecards!
+
+## It is okay if they already have markings on them.
+
+## And, please return the notecards to the same spot after class.
+
+
+---
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Estimation: Confidence Intervals]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 8 | Spring 2023] 
+
+]
+
+
+
+---
+
+### Announcements
+
+* Midterm exam
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* Estimation
+* Bootstrap distributions
+
+
+] 
+
+
+
+.pull-right[
+
+
+* Bootstrapped confidence intervals
+
+
+]
+
+
+---
+
+class: middle, center
+
+.pull-left[
+### Question: How do sampling distributions help us **quantify uncertainty**?
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+library(knitr)
+include_graphics("img/stat_inf_amoeba.png") 
+```
+
+]
+
+---
+
+## Estimation
+
+**Goal**: Estimate the value of a population parameter using data from the sample.
+
+
+
+**Point Estimate**: The corresponding statistic
+
+*  Single best guess for the parameter
+
+```{r}
+library(tidyverse)
+ce <- read_csv("~/shared_data/stat100/data/ce.csv")
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```    
+    
+
+
+---
+
+## Confidence Intervals
+
+.pull-left[
+
+It is time to move **beyond** just point estimates to interval estimates that quantify our uncertainty.
+
+]
+
+.pull-right[
+
+```{r}
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```
+
+]
+
+--
+
+**Confidence Interval (CI)**: Interval of **plausible** values for a parameter
+
+--
+
+**Form of a 95% Confidence Interval**: 
+
+\begin{align*}
+\mbox{statistic} &\pm \mbox{Margin of Error}\\
+\mbox{statistic} &\pm 2\mbox{SE}
+\end{align*}
+
+--
+
+**Question**: Why is the margin of error (ME) equal to 2 standard errors?
+
+---
+
+
+## Confidence Intervals
+
+.pull-left[
+
+**Question**: Why is the margin of error (ME) equal to 2 standard errors?
+
+&rarr; **Answer**: If the sampling distribution of the statistic is approximately bell-shaped and symmetric, then a statistic will be within 2 SEs of the parameter for 95% of the samples.
+
+Let's draw a picture.
+
+]
+
+---
+
+## Confidence Intervals
+
+**95% CI Form**: 
+
+$$
+\mbox{statistic} \pm 2\mbox{SE}
+$$
+
+Let's use the `ce` data to produce a CI for the average household income before taxes of all households in the US.
+
+```{r}
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```
+
+What else do we need to construct the CI?
+
+--
+
+**Problem**: To compute the SE, we need many samples from the population.  We have 1 sample.
+
+--
+
+**Solution**: Approximate the sampling distribution using **ONLY OUR ONE SAMPLE!**
+
+
+---
+
+### Bootstrap Distribution
+
+How do we approximate the sampling distribution?
+
+.pull-left[
+
+**Bootstrap Distribution of a Sample Statistic**:
+
+1. Take a sample of size $n$ **with replacement** from the sample.
+    + Called a bootstrap sample.
+
+2. Compute the statistic on the bootstrap sample.
+
+
+3. Repeat 1 and 2 many (1000+) times.
+ 
+]
+
+---
+
+### Let's Practice Generating Bootstrap Samples!
+
+
+**Example:** In a recent study, 23 rats showed compassion that surprised scientists. Twenty-three of the 30 rats in the study freed another trapped rat in their cage, even when chocolate served as a distraction and even when the rats would then have to share the chocolate with their freed companion. (Rats, it turns out, love chocolate.) Rats did not open the cage when it was empty or when there was a stuffed animal inside, only when a fellow rat was trapped. We wish to use the sample to estimate the proportion of rats that show empathy in this way.
+
+**Parameter**:
+
+**Statistic**:
+
+You have 30 cards.  How can you use these to take a bootstrap sample?
+
+* For each sample, compute the bootstrap statistic and put it on the class dotplot.
+
+
+
+(Will use these data for one of the problems in P-Set 6.)
+
+---
+
+### Sampling Distribution Versus Bootstrap Distribution
+
+* Data needed:
+
+<br> <br> <br>
+
+--
+
+* Center:
+
+<br> <br> <br>
+
+--
+
+* Spread:
+
+
+
+---
+
+
+### (Bootstrapped) Confidence Intervals
+
+
+**95% CI Form**: 
+
+$$
+\mbox{statistic} \pm 2\mbox{SE}
+$$
+
+--
+
+We approximate $\mbox{SE}$ with $\widehat{\mbox{SE}}$ = the standard deviation of the bootstrapped statistics.
+
+
+Caveats:
+
+* Assuming a random sample
+
+--
+
+* Even with random samples, sometimes we get non-representative samples.  Bootstrapping can't fix that.
+
+--
+
+* Assuming the bootstrap distribution is bell-shaped and symmetric
+
+
+
+
+---
+
+### Bootstrapped Confidence Intervals
+
+#### Two Methods
+
+
+Assuming random sample and roughly bell-shaped and symmetric bootstrap distribution for both methods.
+
+**SE Method 95% CI**:
+
+$$
+\mbox{statistic} \pm 2\widehat{\mbox{SE}}
+$$
+
+We approximate $\mbox{SE}$ with $\widehat{\mbox{SE}}$ = the standard deviation of the bootstrapped statistics.
+
+
+**Percentile Method CI:**
+
+If I want a P% confidence interval, I find the bounds of the middle P% of the bootstrap distribution.
+
+---
+
+class: , center, middle
+
+### Let's go through the confidenceIntervals.Rmd handout.
+
+
+```{r, echo = FALSE, fig.align='center', out.width='20%'}
+knitr::include_graphics("img/infer.png")
+```
+
+
+
+---
+
+class: , middle, center
+
+
+## `r emo::ji("thinking")` The second half of Stat 100 is more conceptually difficult. `r emo::ji("thinking")`
+
+### So keep coming to lecture, to section, to office hours, and get your questions answered!
+

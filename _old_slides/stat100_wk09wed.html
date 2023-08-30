@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Decisions, Decisions</title>
+    <meta charset="utf-8" />
+    <script src="libsSlides/header-attrs-2.20/header-attrs.js"></script>
+    <link href="libsSlides/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <script src="libsSlides/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libsSlides/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libsSlides/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link rel="stylesheet" href="more.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Decisions, Decisions]
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 11 | Fall 2022] 
+
+]
+
+
+
+---
+
+### Announcements
+
+* 🎉 We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out [this application](https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform) by **April 7th**.
+    + About 9-12 hours of work per week.  
+    + Primary responsibilities: Lead a discussion section, hold office hours, grade assessments.
+
+
+
+### Goals for Today
+
+.pull-left[
+
+* Undergraduate research
+
+* Hypothesis testing with `infer`
+
+
+
+] 
+
+
+
+.pull-right[
+
+
+* **Decisions** in a hypothesis test
+    + Types of errors
+
+* Statistical inference zoom out
+
+]
+
+---
+
+class: middle, center
+
+## Let's talk about Undergraduate Research.
+
+--
+
+#### *"an inquiry or investigation conducted by an undergraduate student that makes an original intellectual or creative contribution to the discipline."* -- Council for Undergraduate Research
+
+--
+
+Let's look at some specific examples of undergraduate research in **statistics/data science**.
+
+---
+
+### Example 1: Estimator Comparison
+
+My team has developed a new estimator of a population parameter.  How does it compare to the usual suspects?
+
+.pull-left[
+
+&lt;img src="img/minions.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="img/purple_minion.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+
+### [Example 1: Estimator Comparison](https://www.frontiersin.org/articles/10.3389/ffgc.2021.763414/full)
+
+My team has developed a new estimator of **the population mean**.  How does it compare to the usual suspects?
+
+.pull-left[
+
+&lt;img src="img/minions.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+Usual suspects:
+
+* Sample mean
+* Post-stratified estimator
+* Generalized regression estimator (GREG)
+
+]
+
+
+
+.pull-right[
+
+&lt;img src="img/purple_minion.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+New estimator:
+
+* Generalized regression estimator over resolutions of Y (GREGORY)
+
+]
+
+---
+
+### [Example 1: Estimator Comparison](https://www.frontiersin.org/articles/10.3389/ffgc.2021.763414/full)
+
+
+My team has developed a new estimator of the population mean.  How does it compare to the usual suspects?
+
+.pull-left[
+
+
+&lt;img src="img/tree_amigos.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+.pull-right[
+
+
+&lt;img src="img/gregory.png" width="110%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+
+---
+
+### [Example 2: Science Question Answered with Stat Modeling](https://www.mdpi.com/1999-4907/11/8/856)
+
+Can we estimate the loss of forested lands in North Central Georgia?
+
+
+.pull-left[
+
+
+&lt;img src="img/fia_data.gif" width="95%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+.pull-right[
+
+
+&lt;img src="img/net_FIA5yr_TS1yr_TS_5yr.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+class: 
+background-image: url("img/mases.001.png")
+background-position: left
+background-size: contain
+
+.pull-right2[
+
+### [Example 3: Software Creation](https://cran.r-project.org/web/packages/mase/index.html)
+
+&lt;img src="img/mase_code.png" width="120%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### [Example 4: (Data) Science Communication](https://mjdvl.shinyapps.io/NCASI_APP/)
+
+How can we help forest managers understand the climate risks for their forests?
+
+&lt;img src="img/climate_dash.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Debunking Myths about Research
+
+**Myth**: *I should only consider engaging in undergraduate research if I want to go into academia.*
+
+--
+
+* Conducting undergraduate research has **lots** of benefits:
+    + Clarity on career goals
+    + Deeper exposure to field
+    + Increased sense of belonging
+    + Skill development (communication, problem-solving)
+
+--
+
+**Myth**: *I am behind if I didn't start doing undergraduate research early in my undergraduate career.*
+
+--
+
+* Pick the time that makes sense for you.  
+
+* Common moments: senior thesis, summer after sophomore or junior year
+
+*********************************
+
+--
+
+* Happy to chat about undergraduate research during Stat 100 OHs!
+
+* Check out our [TF Mally Shan's article](https://www.hodp.org/project/a-data-driven-way-to-find-your-perfect-research-opportunity-on-campus) to learn about finding UR opportunities on-campus.
+
+---
+
+class: middle, center
+
+## Back to Hypothesis Testing
+
+
+---
+
+###  Example
+
+In 2005, the researchers Antonioli and Reveley posed the question "Does swimming with the dolphins help depression?" To investigate, they recruited 30 US subjects diagnosed with mild to moderate depression. Participants were randomly assigned to either the treatment group or the control group. Those in the treatment group went swimming with dolphins, while those in the control group went swimming without dolphins. After two weeks, each subject was categorized as “showed substantial improvement” or “did not show substantial improvement”.
+
+
+
+Here's a contingency table of `improve` and `group`.
+
+.pull-left[
+
+
+```r
+dolphins %&gt;%
+  count(group, improve)
+```
+
+```
+##       group improve  n
+## 1   Control      no 12
+## 2   Control     yes  3
+## 3 Treatment      no  5
+## 4 Treatment     yes 10
+```
+
+]
+
+.pull-right[
+
+Ho:
+
+Ha:
+
+]
+
+
+
+
+
+---
+
+### Dolphins Example
+
+.pull-left[
+
+Steps we took to get the null distribution for the difference in sample proportions:
+
+]
+
+.pull-right[
+
+&lt;img src="img/stat100_nulldist.jpeg" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+
+---
+
+
+## Another Hypothesis Testing Example
+
+
+Let's return to the palmer penguins and ask if flipper length varies, on average, by the sex of the penguin.
+
+--
+
+`\(H_o: \mu_F - \mu_M = 0\)` 
+
+`\(H_a: \mu_F - \mu_M \neq 0\)` 
+
+--
+
+Need a null distribution for the difference in sample means.
+
+--
+
+**Question**: If I shuffle (permute) the `sex` column and then compute the difference in sample means, what do you expect the difference in sample means to equal?
+
+
+```
+## # A tibble: 333 × 2
+##    flipper_length_mm sex   
+##                &lt;int&gt; &lt;fct&gt; 
+##  1               181 male  
+##  2               186 female
+##  3               195 female
+##  4               193 female
+##  5               190 male  
+##  6               181 female
+##  7               195 male  
+##  8               182 female
+##  9               191 male  
+## 10               198 male  
+## # … with 323 more rows
+```
+
+---
+
+## Generating a Null Distribution
+
+Let's return to the penguins and ask if flipper length varies, on average, by the sex of the penguin.
+
+
+
+`\(H_o: \mu_F - \mu_M = 0\)` 
+
+`\(H_a: \mu_F - \mu_M \neq 0\)` 
+
+
+
+Need a null distribution for the difference in sample means.
+
+Steps:
+
+1. Permute/shuffle the `sex` column.
+2. Compute the difference in sample means.
+3. Repeat 1 and 2 many times.
+
+* This process is the same as our process for the dolphins scenario.  
+    + Only key difference: Different statistic!
+
+---
+
+class: center, middle, 
+
+
+### Let's see how to use `infer` to do hypothesis testing.
+
+
+#### The "hypothesisTesting.Rmd" file can be found in the Handouts folder on the RStudio Server and on our Canvas site.
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+Once you get to the end of a hypothesis test you make one of two decisions:
+
+--
+
+(1) P-value is small.
+
+&amp;rarr; I have evidence for `\(H_a\)`. Reject `\(H_o\)`.
+
+
+--
+
+(2) P-value is not small.
+
+&amp;rarr; I don't have evidence for `\(H_a\)`. Fail to reject `\(H_o\)`.
+
+--
+
+Sometimes we make the correct decision.  Sometimes we make a mistake.  
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+Let's create a table of potential outcomes.
+
+&lt;br&gt; &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt;
+
+
+--
+
+`\(\alpha\)` = prob of Type I error **under repeated sampling** = prob reject `\(H_o\)` when it is true
+
+--
+
+`\(\beta\)` = prob of Type II error **under repeated sampling** = prob fail to reject `\(H_o\)` when `\(H_a\)` is true.
+
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+Typically set `\(\alpha\)` level beforehand.
+
+--
+
+Use `\(\alpha\)` to determine "small" for a p-value.
+
+
+--
+
+(1) P-value ~~is~~ ~~small~~  `\(&lt; \alpha\)`.
+
+&amp;rarr; I have evidence for `\(H_a\)`. Reject `\(H_o\)`.
+
+
+(2) P-value ~~is~~ ~~not~~ ~~small~~  `\(\geq \alpha\)`.
+
+&amp;rarr; I don't have evidence for `\(H_a\)`. Fail to reject `\(H_o\)`.
+
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+**Question**: How do I select `\(\alpha\)`?
+
+--
+
+* Will depend on the convention in your field.
+
+--
+
+* Want a small `\(\alpha\)` and a small `\(\beta\)`. But they are related.  
+    + How?
+
+--
+
+**The smaller `\(\alpha\)` is the larger `\(\beta\)` will be.**
+
+--
+
+&amp;rarr; Choose a lower `\(\alpha\)` (e.g., 0.01, 0.001) when the Type I error is worse and a higher `\(\alpha\)` (e.g., 0.1) when the Type II error is worse.
+
+--
+
+* Note: Can't easily compute `\(\beta\)`.  Why?
+
+
+* One more important term:
+    + **Power** = probability reject `\(H_o\)` when the alternative is true.
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a 0.333 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in 20 at-bats.
+
+.pull-left[
+
+#### Ho:
+
+]
+
+.pull-right[
+
+#### Ha: 
+
+]
+
+
+--
+
+.pull-left[
+&lt;img src="stat100_wk09wed_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+* When `\(\alpha\)` is set to `\(0.05\)`, he needs to hit 9 or more (showcase a hitting average of at least 0.45) to get a small enough p-value to reject `\(H_o\)`.
+
+* When `\(\alpha\)` is set to `\(0.05\)`, the power of this test is 0.2.
+
+* Why is the power **so low**?  
+
+* What aspects of the test could the baseball player change to **increase the power** of the test?
+
+
+]
+
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a 0.333 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in ~~20~~ 100 at-bats.
+
+**What will happen to the power of the test if we increase the sample size?**
+
+
+--
+
+.pull-left[
+
+&lt;img src="stat100_wk09wed_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+* Increasing the sample size increases the power.
+
+* When `\(\alpha\)` is set to `\(0.05\)` and the sample size is now 100, the power of this test is 0.56.
+
+
+]
+
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a 0.333 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in ~~20~~ 100 at-bats.
+
+**What will happen to the power of the test if we increase `\(\alpha\)` to 0.1?**
+
+
+--
+
+.pull-left[
+
+&lt;img src="stat100_wk09wed_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+* Increasing `\(\alpha\)` increases the power.
+    + Decreases `\(\beta\)`.
+
+* When `\(\alpha\)` is set to `\(0.1\)` and the sample size is  100, the power of this test is 0.63.
+
+
+]
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a ~~0.333~~ 0.400 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in ~~20~~ 100 at-bats.
+
+**What will happen to the power of the test if he is an even better player?**
+
+
+--
+
+.pull-left[
+
+&lt;img src="stat100_wk09wed_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+* **Effect size**: Difference between true value of the parameter and null value.
+    + Often standardized.
+
+* Increasing the effect size increases the power.
+
+* When `\(\alpha\)` is set to `\(0.1\)`, the sample size is 100, and the true probability of hitting the ball is 0.4, the power of this test is 0.95.
+
+
+]
+
+---
+
+## Thoughts on Power
+
+* What aspects of the test did the player actually have control over?
+
+--
+
+* Why is it easier to set `\(\alpha\)` than to set `\(\beta\)` or power?
+
+--
+
+* Considering power before collecting data is very important!
+
+
+---
+
+### Reporting Results in Journal Articles
+
+&lt;img src="img/bem_honorton_1994_results.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

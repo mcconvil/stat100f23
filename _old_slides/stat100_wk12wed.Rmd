@@ -1,0 +1,1368 @@
+---
+title: Inference for Regression
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+theme_update(text = element_text(size = 20),
+             plot.title = element_text(hjust = 0.5))
+
+library(Sleuth3)
+data(case0901)
+
+# Recode the timing variable
+case0901 <- case0901 %>%
+  mutate(TimeCat = factor(case_when(
+    Time == 1 ~ "Late",
+    Time == 2 ~ "Early"
+  )))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Inference]
+
+## .base-blue[for]
+
+## .base-blue[Linear Regression]
+
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 12 | Spring 2023] 
+
+]
+
+
+---
+
+background-image: url("img/ggparty_s23.001.jpeg")
+background-size: 80%
+class: bottom, center, 
+
+
+    
+### If you are able to attend, please RSVP: [https://bit.ly/ggpartys23](https://bit.ly/ggpartys23)
+
+
+
+---
+
+### Announcements
+
+* Lecture Quizzes
+    + This week and next
+    + Plus Extra Credit Lecture Quiz: Due Apr 28 at noon
+* Last section this week!
+    + Receive the last p-set.
+    + The material for next week will be on the final and so we will include relevant practice problems on the review sheet.
+* The regular OH Schedule will end on Apr 26th.  We are currently working on an updated schedule for Apr 27th - May 3rd.
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+* **Sim-based** versus **theory-based** inference
+
+* Recap **multiple linear regression**
+
+* Check **assumptions** for linear regression
+
+
+
+] 
+
+
+
+.pull-right[
+
+* **Hypothesis testing** for linear regression
+
+* **Estimation** and **prediction** inference for linear regression
+
+]
+
+
+---
+
+class: , middle, center
+
+## Please make sure to fill out the Stat 100 Course Evaluations.
+
+### We appreciate constructive feedback.
+
+### For all of your course evaluations be mindful of [unconscious and unintentional biases](https://benschmidt.org/profGender).
+
+
+---
+
+### One more ANOVA Note...
+
+#### Many ANOVA Tests Out There!
+
+* We learned the **One-Way** ANOVA test.
+
+--
+
+* **Two-Way**: Have two categorical, explanatory variables.
+
+--
+
+* **Repeated Measures ANOVA**: Have multiple observations on each case.
+    + All the tests we have focused (beyond paired data) assumed independent observations.
+    
+--
+
+* **ANOVA Tests for Regression**: Allow comparisons of various subsets of a multiple linear regression model.
+
+
+---
+
+background-image: url("img/hyp_testing_diagram.png")
+background-position: contain
+background-size: 80%
+
+### Have Learned Two Routes to Statistical Inference
+
+--
+
+Which is **better**?
+
+---
+
+## Is Simulation-Based Inference or Theory-Based Inference better?
+
+--
+
+Depends on how you define **better**.
+
+.pull-left[
+
+* If **better** = Leads to better understanding:
+
+
+]
+
+--
+
+.pull-right[
+
+&#8594; Research tends to show students have a better understanding of **p-values** and **confidence** from learning simulation-based methods.
+
+]
+
+--
+
+.pull-left[
+
+* If **better** = More flexible/robust to assumptions:
+
+
+]
+
+--
+
+.pull-right[
+
+&#8594; The simulation-based methods tend to be more flexible but that generally requires learning extensions beyond what we've seen in Stat 100.  
+
+]
+
+--
+
+.pull-left[
+
+* If **better** = More commonly used:
+
+
+]
+
+--
+
+.pull-right[
+
+&#8594; Definitely the theory-based methods but the simulation-based methods are becoming more **common.
+
+]
+
+
+Good to be comfortable with both as you will find both approaches used in journal and news articles!
+
+
+---
+
+class: center, middle
+
+## What does statistical inference (estimation and hypothesis testing) look like when I have more than 0 or 1 explanatory variables?
+
+
+--
+
+### One route: Multiple Linear Regression!
+
+
+---
+
+## Multiple Linear Regression
+
+Linear regression is a flexible class of models that allow for:
+
+* Both quantitative and categorical explanatory variables.
+
+
+* Multiple explanatory variables.
+
+
+* Curved relationships between the response variable and the explanatory variable.
+
+--
+
+* BUT the response variable is quantitative.
+
+
+**In this week's p-set** you will explore the importance of controlling for other explanatory variable when you try to make inferences about relationships.
+
+
+---
+
+
+### Multiple Linear Regression
+
+**Form of the Model:**
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\end{align}
+$$
+
+--
+
+**Fitted Model:** Using the Method of Least Squares,
+
+
+
+$$ 
+\begin{align}
+\hat{y} &= \hat{\beta}_o + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 + \cdots + \hat{\beta}_p x_p 
+\end{align}
+$$
+
+--
+
+#### Typical Inferential Questions:
+
+(1) Should $x_2$ be in the model that already contains $x_1$ and $x_3$?  Also often asked as "Controlling for $x_1$ and $x_3$, is there evidence that $x_2$ has a relationship with $y$?"
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \epsilon
+\end{align}
+$$
+
+In other words, should $\beta_2 = 0$?
+
+---
+
+
+### Multiple Linear Regression
+
+**Form of the Model:**
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\end{align}
+$$
+
+
+
+**Fitted Model:** Using the Method of Least Squares,
+
+
+
+$$ 
+\begin{align}
+\hat{y} &= \hat{\beta}_o + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 + \cdots + \hat{\beta}_p x_p 
+\end{align}
+$$
+
+
+#### Typical Inferential Questions:
+
+(2) After controlling for the other explanatory variables, what is the range of plausible values for $\beta_3$ (which summarizes the relationship between $y$ and $x_3$)?
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \epsilon
+\end{align}
+$$
+
+---
+
+
+### Multiple Linear Regression
+
+**Form of the Model:**
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\end{align}
+$$
+
+
+
+**Fitted Model:** Using the Method of Least Squares,
+
+
+
+$$ 
+\begin{align}
+\hat{y} &= \hat{\beta}_o + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 + \cdots + \hat{\beta}_p x_p 
+\end{align}
+$$
+
+
+
+#### Typical Inferential Questions:
+
+(3) While $\hat{y}$ is a point estimate for $y$, can we also get an interval estimate for $y$?  In other words, can we get a range of plausible **predictions** for $y$?
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \epsilon
+\end{align}
+$$
+
+
+--
+
+To answer these questions, we need to add some **assumptions** to our linear regression model.
+
+---
+
+
+### Multiple Linear Regression
+
+**Form of the Model:**
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\end{align}
+$$
+
+**Additional Assumptions:**
+
+$$
+\epsilon \overset{\mbox{ind}}{\sim} N (\mu = 0, \sigma = \sigma_{\epsilon})
+$$
+
+$\sigma_{\epsilon}$ = typical deviations from the model
+
+--
+
+Let's unpack these assumptions!
+
+
+---
+
+### Assumptions
+
+For ease of visualization, let's assume a simple linear model:
+
+
+\begin{align*}
+y = \beta_o + \beta_1 x_1 + \epsilon \quad \mbox{   where   } \quad \epsilon \overset{\color{orange}{\mbox{ind}}}{\sim}N\left(0, \sigma_{\epsilon} \right)
+\end{align*}
+
+--
+
+**Assumption**: The cases are independent of each other.
+
+
+--
+
+**Question**: How do we check this assumption? 
+
+--
+
+Look at how the data were collected.  
+
+---
+
+### Assumptions
+
+For ease of visualization, let's assume a simple linear model:
+
+
+\begin{align*}
+y = \beta_o + \beta_1 x_1 + \epsilon \quad \mbox{   where   } \quad \epsilon \overset{\mbox{ind}}{\sim}\color{orange}{N}\left(0, \sigma_{\epsilon} \right)
+\end{align*}
+
+--
+
+**Assumption**: The errors are normally distributed.
+
+
+--
+
+.pull-left[
+
+**Question**: How do we check this assumption? 
+
+]
+
+--
+
+.pull-right[
+
+Recall the residual: $e = y - \hat{y}$
+
+]
+
+--
+
+**QQ-plot:** Plot the residuals against the quantiles of a normal distribution!
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+set.seed(11131)
+dat <- data.frame(res1 = rnorm(50),
+                  res2 = rf(50, df1 = 5, df2 = 7))
+ggplot(data = dat , mapping = aes(sample = res1)) + 
+  stat_qq() + 
+  stat_qq_line()
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+ggplot(data = dat , mapping = aes(sample = res2)) + 
+  stat_qq() + 
+  stat_qq_line()
+```
+
+
+
+]
+
+
+---
+
+### Assumptions
+
+For ease of visualization, let's assume a simple linear model:
+
+
+\begin{align*}
+y = \beta_o + \beta_1 x_1 + \epsilon \quad \mbox{   where   } \quad \epsilon \overset{\mbox{ind}}{\sim}N\left(\color{orange}{0}, \sigma_{\epsilon} \right)
+\end{align*}
+
+--
+
+**Assumption**: The points will, on average, fall on the line.
+
+
+--
+
+**Question**: How do we check this assumption? 
+
+--
+
+If you use the Method of Least Squares, then you don't have to check.
+
+It will be true by construction:
+
+
+$$
+\sum e = 0
+$$
+
+---
+
+### Assumptions
+
+For ease of visualization, let's assume a simple linear model:
+
+
+\begin{align*}
+y = \beta_o + \beta_1 x_1 + \epsilon \quad \mbox{   where   } \quad \epsilon \overset{\mbox{ind}}{\sim}N\left(0, \color{orange}{\sigma_{\epsilon}} \right)
+\end{align*}
+
+--
+
+**Assumption**: The variability in the errors is constant.
+
+
+--
+
+**Question**: How do we check this assumption? 
+
+--
+
+**One option**: Scatterplot
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+set.seed(21)
+dat <- data.frame(x = rnorm(50, mean = 4)) 
+set.seed(443)
+dat <- dat %>%
+  mutate(y1 = 1 + 2*x + rnorm(50, sd = 2))
+
+set.seed(4154)
+dat <- dat %>%
+  mutate(y2 = 1 + 2*x + rnorm(50, sd = 1)*x)
+
+ggplot(data = dat , mapping = aes(x = x,
+                                  y = y1)) + 
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+ggplot(data = dat , mapping = aes(x = x,
+                                  y = y2)) + 
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+
+
+
+]
+
+---
+
+### Assumptions
+
+For ease of visualization, let's assume a simple linear model:
+
+
+\begin{align*}
+y = \beta_o + \beta_1 x_1 + \epsilon \quad \mbox{   where   } \quad \epsilon \overset{\mbox{ind}}{\sim}N\left(0, \color{orange}{\sigma_{\epsilon}} \right)
+\end{align*}
+
+
+
+**Assumption**: The variability in the errors is constant.
+
+
+
+
+**Question**: How do we check this assumption? 
+
+
+
+**Better option** (especially when have more than 1 explanatory variable): **Residual Plot** 
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+set.seed(21)
+dat <- data.frame(x = rnorm(50, mean = 4)) 
+set.seed(443)
+dat <- dat %>%
+  mutate(y1 = 1 + 2*x + rnorm(50, sd = 2))
+
+set.seed(4154)
+dat <- dat %>%
+  mutate(y2 = 1 + 2*x + rnorm(50, sd = 1)*x) 
+
+mod1 <- lm(y1 ~ x, data = dat)
+mod2 <- lm(y2 ~ x, data = dat)
+
+
+library(gglm)
+ggplot(data = mod1) +
+  stat_fitted_resid()
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+ggplot(data = mod2) +
+  stat_fitted_resid()
+```
+
+
+
+]
+
+
+---
+
+### Assumptions
+
+For ease of visualization, let's assume a simple linear model:
+
+
+\begin{align*}
+y = \color{orange}{\beta_o + \beta_1 x_1} + \epsilon \quad \mbox{   where   } \quad \epsilon \overset{\mbox{ind}}{\sim}N\left(0, \sigma_{\epsilon} \right)
+\end{align*}
+
+--
+
+**Assumption**: The model form is appropriate.
+
+--
+
+**Question**: How do we check this assumption? 
+
+--
+
+**One option**: Scatterplot(s)
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+set.seed(21)
+dat <- data.frame(x = rnorm(50, mean = 4)) 
+set.seed(443)
+dat <- dat %>%
+  mutate(y1 = 1 + 2*x + rnorm(50, sd = 2))
+
+set.seed(4154)
+dat <- dat %>%
+  mutate(y2 = 1 + 3*(x-3)^2 + rnorm(50, sd = 3))
+
+ggplot(data = dat , mapping = aes(x = x,
+                                  y = y1)) + 
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+ggplot(data = dat , mapping = aes(x = x,
+                                  y = y2)) + 
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+
+
+
+]
+
+---
+
+### Assumptions
+
+For ease of visualization, let's assume a simple linear model:
+
+\begin{align*}
+y = \color{orange}{\beta_o + \beta_1 x_1} + \epsilon \quad \mbox{   where   } \quad \epsilon \overset{\mbox{ind}}{\sim}N\left(0, \sigma_{\epsilon} \right)
+\end{align*}
+
+
+
+**Assumption**: The model form is appropriate.
+
+
+
+
+**Question**: How do we check this assumption? 
+
+
+
+**Better option** (especially when have more than 1 explanatory variable): **Residual Plot**
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+
+
+mod1 <- lm(y1 ~ x, data = dat)
+mod2 <- lm(y2 ~ x, data = dat)
+
+
+ggplot(data = mod1) +
+  stat_fitted_resid()
+```
+
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE, fig.asp = .6, fig.width = 6}
+ggplot(data = mod2) +
+  stat_fitted_resid()
+```
+
+
+
+]
+
+
+
+---
+
+### Assumptions
+
+**Question**: What if the assumptions aren't all satisfied?
+
+--
+
+&rarr; Try transforming the data and building the model again.
+
+--
+
+&rarr; Use a modeling technique beyond linear regression.
+
+--
+
+**Question**: What if the assumptions are all (roughly) satisfied?
+
+--
+
+&rarr; Can now start answering your inference questions!
+
+***********************************
+
+### Let's now look at an example and learn how to create qq-plots and residual plots in `R`.
+
+---
+
+### Example: COVID and Candle Ratings
+
+[Kate Petrova created a dataset](https://twitter.com/kate_ptrv/status/1332398768659050496) that made the rounds on Twitter:
+
+
+<img src="img/kate_petrova_candles.jpg" width="600px"/>
+
+
+---
+
+### COVID and Candle Ratings
+
+She posted all her data and code to GitHub and I did some light wrangling so that we could answer the question:
+
+&rarr; Early on in the pandemic, do we have evidence that the association between time and Amazon rating varies by whether or not a candle is scented and in particular, that scented candles have a steeper decline in ratings over time?
+
+--
+
+In other words, do we have evidence that we should allow the slopes to vary?
+
+
+```{r, echo = FALSE}
+library(tidyverse)
+library(moderndive)
+library(readxl)
+Scented_All <- read_excel("~/shared_data/stat100/data/Scented_all.xlsx")
+Unscented_All <- read_excel("~/shared_data/stat100/data/Unscented_all.xlsx")
+
+
+s <- Scented_All %>%
+  filter(Date >= "2017-01-01") %>%
+  filter(CandleID <= 3) %>%
+  group_by(Date) %>%
+  summarise(Rating=mean(Rating)) %>%
+  mutate(Type = "scented")
+
+
+#### UNSCENTED CANDLES ####
+
+us <- Unscented_All %>%
+  filter(Date >= "2017-01-01") %>%
+  group_by(Date) %>%
+  summarise(Rating = mean(Rating)) %>%
+  mutate(Type = "unscented")
+
+all <- bind_rows(s, us) %>%
+  filter(Date >= "2020-01-20") %>%
+  mutate(Date = as.Date(Date))
+```
+
+
+
+.pull-left[
+
+```{r candles, fig.show = 'hide'}
+ggplot(data = all,
+       mapping = aes(x = Date,
+                     y = Rating,
+                     color = Type)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = lm) +
+  theme(legend.position = "bottom")
+```
+
+#### Checking assumptions:
+
+**Assumption**: The cases are independent of each other.
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("candles", "png"))
+```
+
+]
+
+---
+
+## Assumption Checking in `R`
+
+The `R` package we will use to check model assumptions is called `gglm` and was written by one of my former Reed students, Grayson White.
+
+
+```{r, echo = FALSE, out.width= "15%", out.extra='style="float:left; padding:10px"'}
+knitr::include_graphics("https://raw.githubusercontent.com/graysonwhite/gglm/master/figs/gglm.gif")
+```
+
+```{r}
+library(gglm)
+```
+
+
+First need to fit the model:
+
+```{r}
+glimpse(all)
+mod <- lm(Rating ~ Date * Type, data = all)
+```
+
+---
+
+### qq-plot 
+
+**Assumption**: The errors are normally distributed.
+
+.pull-left[
+
+```{r qqplot, fig.show = 'hide'}
+# Normal qq plot
+ggplot(data = mod) + 
+  stat_normal_qq() 
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("qqplot", "png"))
+```
+
+]
+
+---
+
+### Residual Plot
+
+**Assumption**: The variability in the errors is constant.
+
+
+**Assumption**: The model form is appropriate.
+
+
+.pull-left[
+
+```{r residual, fig.show = 'hide'}
+# Residual plot
+ggplot(data = mod) + 
+  stat_fitted_resid()
+
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("residual", "png"))
+```
+
+]
+
+
+---
+
+### Hypothesis Testing 
+
+**Question**: What tests is `get_regression_table()` conducting?
+
+For the moment, let's focus on the equal slopes model.
+
+```{r}
+mod <- lm(Rating ~ Date + Type, data = all)
+get_regression_table(mod)
+```
+
+--
+
+**In General**:
+
+$$
+H_o: \beta_j = 0 \quad \mbox{assuming all other predictors are in the model}
+$$
+$$
+H_a: \beta_j \neq 0 \quad \mbox{assuming all other predictors are in the model}
+$$
+
+
+
+
+---
+
+### Hypothesis Testing 
+
+**Question**: What tests is `get_regression_table()` conducting?
+
+```{r}
+mod <- lm(Rating ~ Date + Type, data = all)
+get_regression_table(mod)
+```
+
+
+**For our Example**:
+
+**Row 2**:
+
+$$
+H_o: \beta_1 = 0 \quad \mbox{given Type is already in the model}
+$$
+$$
+H_a: \beta_1 \neq 0 \quad \mbox{given Type is already in the model}
+$$
+
+
+
+---
+
+### Hypothesis Testing 
+
+**Question**: What tests is `get_regression_table()` conducting?
+
+```{r}
+mod <- lm(Rating ~ Date + Type, data = all)
+get_regression_table(mod)
+```
+
+
+**For our Example**:
+
+**Row 3**:
+
+$$
+H_o: \beta_2 = 0 \quad \mbox{given Date is already in the model}
+$$
+$$
+H_a: \beta_2 \neq 0 \quad \mbox{given Date is already in the model}
+$$
+
+---
+
+### Hypothesis Testing 
+
+**Question**: What tests is `get_regression_table()` conducting?
+
+
+**In General**:
+
+$$
+H_o: \beta_j = 0 \quad \mbox{assuming all other predictors are in the model}
+$$
+$$
+H_a: \beta_j \neq 0 \quad \mbox{assuming all other predictors are in the model}
+$$
+
+Test Statistic:
+
+--
+
+$$
+t = \frac{\hat{\beta}_j - 0}{SE(\hat{\beta}_j)} \sim t(df = n - \mbox{# of predictors})
+$$
+
+when $H_o$ is true and the model assumptions are met.
+
+
+---
+
+**For our Example**:
+
+```{r}
+get_regression_table(mod)
+```
+
+**Row 3**:
+
+$$
+H_o: \beta_2 = 0 \quad \mbox{given Date is already in the model}
+$$
+$$
+H_a: \beta_2 \neq 0 \quad \mbox{given Date is already in the model}
+$$
+
+Test Statistic:
+
+--
+
+$$
+t = \frac{\hat{\beta}_2 - 0}{SE(\hat{\beta}_2)} = \frac{0.831 - 0}{0.063} = 13.2
+$$
+
+with p-value $= P(t \leq -13.2) + P(t \geq 13.2) \approx 0.$
+
+--
+
+There is evidence that including whether or not the candle is scented adds useful information to the linear regression model for Amazon ratings that already controls for date.
+
+---
+
+### Example
+
+Early on in the pandemic, do we have evidence that the association between time and Amazon rating varies by whether or not a candle is scented and in particular, that scented candles have a steeper decline in ratings over time?
+
+```{r, echo = FALSE}
+ggplot(data = all, mapping = aes(x = as.Date(Date), y = Rating,
+                                 color = Type)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = lm)
+```
+
+
+---
+
+### Example
+
+Early on in the pandemic, do we have evidence that the association between time and Amazon rating varies by whether or not a candle is scented and in particular, that scented candles have a steeper decline in ratings over time?
+
+```{r}
+mod <- lm(Rating ~ Date * Type, data = all)
+get_regression_table(mod)
+```
+
+---
+
+### One More Example -- Prices of Houses in Saratoga Springs, NY
+
+* Does whether or not a house has central air conditioning relate to its price?
+
+
+```{r}
+library(mosaicData)
+mod1 <- lm(price ~ centralAir, data = SaratogaHouses)
+get_regression_table(mod1)
+```
+
+---
+
+### One More Example -- Prices of Houses in Saratoga Springs, NY
+
+* Want to **control for** many explanatory variables
+    + Notice that you generally don't include interaction terms for the control variables.
+
+```{r}
+get_regression_table(mod1)
+mod2 <- lm(price ~ livingArea + age + bathrooms + centralAir, data = SaratogaHouses)
+get_regression_table(mod2)
+```
+
+
+---
+
+class: , middle, center
+
+
+## Now let's shift our focus to estimation and prediction!
+
+
+---
+
+### Estimation
+
+#### Typical Inferential Questions:
+
+(2) After controlling for the other explanatory variables, what is the range of plausible values for $\beta_j$ (which summarizes the relationship between $y$ and $x_j$)?
+
+--
+
+Confidence Interval Formula:
+
+--
+
+\begin{align*}
+\mbox{statistic} & \pm ME \\
+\hat{\beta}_j & \pm t^* SE(\hat{\beta}_j)
+\end{align*}
+
+--
+
+
+```{r}
+get_regression_table(mod2)
+```
+
+---
+
+### Prediction
+
+#### Typical Inferential Questions:
+
+(3) While $\hat{y}$ is a point estimate for $y$, can we also get an interval estimate for $y$?  In other words, can we get a range of plausible **predictions** for $y$?
+
+#### Two Types:
+
+--
+
+.pull-left[
+
+**Confidence Interval for the Mean Response**
+
+&rarr; Defined at given values of the explanatory variables
+
+&rarr; Estimates the <span style="color: orange;">average</span> response
+
+&rarr; Centered at $\hat{y}$
+
+&rarr; <span style="color: orange;">Smaller</span> SE
+
+]
+
+
+.pull-right[
+
+**Prediction Interval for an Individual Response**
+
+&rarr; Defined at given values of the explanatory variables
+
+&rarr; Predicts the response of a <span style="color: orange;">single, </span> new observation
+
+&rarr; Centered at $\hat{y}$
+
+&rarr; <span style="color: orange;">Larger</span> SE
+
+
+]
+
+---
+
+### CI for mean response at a given level of X:
+
+We want to construct a 95% CI for the average price of Saratoga Houses (in 2006!) where the houses meet the following conditions: 1500 square feet, 20 years old, 2 bathrooms, and have central air.
+
+--
+
+```{r}
+house_of_interest <- data.frame(livingArea = 1500, age = 20,
+                                 bathrooms = 2, centralAir = "No")
+predict(mod2, house_of_interest, interval = "confidence", level = 0.95)
+
+```
+
+--
+
+**Interpretation**:  We are 95% confident that the average price of 20 year old, 1500 square feet Saratoga houses with central air and 2 bathrooms is between \$177,191 and \$186,923.
+
+
+
+---
+
+### PI for a new Y at a given level of X:
+
+
+Say we want to construct a 95% PI for the price of an **individual** house that meets the following conditions: 1500 square feet, 20 years old, 2 bathrooms, and have central air.
+
+* Predicting for a new observation not the mean!
+
+
+```{r}
+predict(mod2, house_of_interest, interval = "prediction", level = 0.95)
+```
+
+**Interpretation**: For a 20 year old, 1500 square feet Saratoga house with central air and 2 bathrooms, we predict, with 95% confidence, that the price will be between \$50,109 and \$314,004.
+
+
+
+---
+
+### Comparing Models
+
+Suppose I built 4 different model. **Which is best?**
+
+--
+
+* Big question!  Take **Stat 139: Linear Models** to learn systematic model selection techniques.
+
+--
+
+* We will explore one approach.  (But there are many possible approaches!)
+
+
+---
+
+### Comparing Models
+
+Suppose I built 4 different model. **Which is best?**
+
+--
+
+&rarr; Pick the best model based on some measure of quality.
+
+--
+
+**Measure of quality**: $R^2$ (Coefficient of Determination)
+
+\begin{align*}
+R^2 &= \mbox{Percent of total variation in y explained by the model}\\
+&= 1- \frac{\sum (y - \hat{y})^2}{\sum (y - \bar{y})^2}
+\end{align*}
+
+
+--
+
+**Strategy**: Compute the $R^2$ value for each model and pick the one with the highest $R^2$.
+
+---
+
+### Comparing Models with $R^2$
+
+**Strategy**: Compute the $R^2$ value for each model and pick the one with the highest $R^2$.
+
+```{r}
+mod1 <- lm(price ~ centralAir, data = SaratogaHouses)
+mod2 <- lm(price ~ livingArea + age + bathrooms + centralAir, data = SaratogaHouses)
+mod3 <- lm(price ~ livingArea + bathrooms + centralAir, data = SaratogaHouses)
+mod4 <- lm(price ~ livingArea * centralAir + bathrooms, data = SaratogaHouses)
+```
+
+---
+
+**Strategy**: Compute the $R^2$ value for each model and pick the one with the highest $R^2$.
+
+```{r}
+library(broom)
+glance(mod1)
+glance(mod2)
+glance(mod3)
+```
+
+---
+
+```{r}
+glance(mod2)
+glance(mod4)
+```
+
+
+
+**Problem:** As we add predictors, the $R^2$ value will only increase.  
+
+
+---
+
+### Comparing Models with $R^2$
+
+
+**Problem:** As we add predictors, the $R^2$ value will only increase.  
+
+
+And in [Week 6, we said](https://mcconvil.github.io/stat100s23/stat100_wk06wed.html#29):
+
+**Guiding Principle**: Occam's Razor for Modeling
+
+> "All other things being equal, simpler models are to be preferred over complex ones." -- ModernDive
+
+
+---
+
+### Comparing Models with the Adjusted $R^2$
+
+
+**New Measure of quality**: Adjusted $R^2$ (Coefficient of Determination)
+
+\begin{align*}
+\mbox{adj} R^2 &= 1- \frac{\sum (y - \hat{y})^2}{\sum (y - \bar{y})^2} \left(\frac{n - 1}{n - p - 1} \right)
+\end{align*}
+
+where $p$ is the number of explanatory variables in the model.
+
+--
+
+Now we will penalize larger models.
+
+--
+
+**Strategy**: Compute the adjusted $R^2$ value for each model and pick the one with the highest adjusted $R^2$.
+
+---
+
+**Strategy**: Compute the adjusted $R^2$ value for each model and pick the one with the highest adjusted $R^2$.
+
+```{r}
+glance(mod2)
+glance(mod4)
+```

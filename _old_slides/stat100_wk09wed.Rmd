@@ -1,0 +1,811 @@
+---
+title: Decisions, Decisions
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8, cache = TRUE)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Decisions, Decisions]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 11 | Fall 2022] 
+
+]
+
+
+
+---
+
+### Announcements
+
+* `r emo::ji("tada")` We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out [this application](https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform) by **April 7th**.
+    + About 9-12 hours of work per week.  
+    + Primary responsibilities: Lead a discussion section, hold office hours, grade assessments.
+
+
+
+### Goals for Today
+
+.pull-left[
+
+* Undergraduate research
+
+* Hypothesis testing with `infer`
+
+
+
+] 
+
+
+
+.pull-right[
+
+
+* **Decisions** in a hypothesis test
+    + Types of errors
+
+* Statistical inference zoom out
+
+]
+
+---
+
+class: middle, center
+
+## Let's talk about Undergraduate Research.
+
+--
+
+#### *"an inquiry or investigation conducted by an undergraduate student that makes an original intellectual or creative contribution to the discipline."* -- Council for Undergraduate Research
+
+--
+
+Let's look at some specific examples of undergraduate research in **statistics/data science**.
+
+---
+
+### Example 1: Estimator Comparison
+
+My team has developed a new estimator of a population parameter.  How does it compare to the usual suspects?
+
+.pull-left[
+
+```{r  out.width = "85%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/minions.png")
+```
+
+
+]
+
+--
+
+.pull-right[
+
+```{r  out.width = "55%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/purple_minion.png")
+```
+
+]
+
+
+
+---
+
+### [Example 1: Estimator Comparison](https://www.frontiersin.org/articles/10.3389/ffgc.2021.763414/full)
+
+My team has developed a new estimator of **the population mean**.  How does it compare to the usual suspects?
+
+.pull-left[
+
+```{r  out.width = "85%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/minions.png")
+```
+
+Usual suspects:
+
+* Sample mean
+* Post-stratified estimator
+* Generalized regression estimator (GREG)
+
+]
+
+
+
+.pull-right[
+
+```{r  out.width = "55%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/purple_minion.png")
+```
+
+New estimator:
+
+* Generalized regression estimator over resolutions of Y (GREGORY)
+
+]
+
+---
+
+### [Example 1: Estimator Comparison](https://www.frontiersin.org/articles/10.3389/ffgc.2021.763414/full)
+
+
+My team has developed a new estimator of the population mean.  How does it compare to the usual suspects?
+
+.pull-left[
+
+
+```{r  out.width = "85%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/tree_amigos.png")
+```
+
+]
+
+
+
+.pull-right[
+
+
+```{r  out.width = "110%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/gregory.png")
+```
+
+]
+
+
+
+
+---
+
+### [Example 2: Science Question Answered with Stat Modeling](https://www.mdpi.com/1999-4907/11/8/856)
+
+Can we estimate the loss of forested lands in North Central Georgia?
+
+
+.pull-left[
+
+
+```{r  out.width = "95%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/fia_data.gif")
+```
+
+]
+
+
+
+.pull-right[
+
+
+```{r  out.width = "90%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/net_FIA5yr_TS1yr_TS_5yr.jpg")
+```
+
+]
+
+---
+
+class: 
+background-image: url("img/mases.001.png")
+background-position: left
+background-size: contain
+
+.pull-right2[
+
+### [Example 3: Software Creation](https://cran.r-project.org/web/packages/mase/index.html)
+
+```{r  out.width = "120%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/mase_code.png")
+```
+
+]
+
+---
+
+### [Example 4: (Data) Science Communication](https://mjdvl.shinyapps.io/NCASI_APP/)
+
+How can we help forest managers understand the climate risks for their forests?
+
+```{r  out.width = "60%", echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("img/climate_dash.png")
+```
+
+---
+
+## Debunking Myths about Research
+
+**Myth**: *I should only consider engaging in undergraduate research if I want to go into academia.*
+
+--
+
+* Conducting undergraduate research has **lots** of benefits:
+    + Clarity on career goals
+    + Deeper exposure to field
+    + Increased sense of belonging
+    + Skill development (communication, problem-solving)
+
+--
+
+**Myth**: *I am behind if I didn't start doing undergraduate research early in my undergraduate career.*
+
+--
+
+* Pick the time that makes sense for you.  
+
+* Common moments: senior thesis, summer after sophomore or junior year
+
+*********************************
+
+--
+
+* Happy to chat about undergraduate research during Stat 100 OHs!
+
+* Check out our [TF Mally Shan's article](https://www.hodp.org/project/a-data-driven-way-to-find-your-perfect-research-opportunity-on-campus) to learn about finding UR opportunities on-campus.
+
+---
+
+class: middle, center
+
+## Back to Hypothesis Testing
+
+
+---
+
+###  Example
+
+In 2005, the researchers Antonioli and Reveley posed the question "Does swimming with the dolphins help depression?" To investigate, they recruited 30 US subjects diagnosed with mild to moderate depression. Participants were randomly assigned to either the treatment group or the control group. Those in the treatment group went swimming with dolphins, while those in the control group went swimming without dolphins. After two weeks, each subject was categorized as “showed substantial improvement” or “did not show substantial improvement”.
+
+```{r, message=FALSE,echo = FALSE}
+dolphins <- read.csv("~/shared_data/stat100/data/Dolphins.txt", sep="")
+```
+
+Here's a contingency table of `improve` and `group`.
+
+.pull-left[
+
+```{r}
+dolphins %>%
+  count(group, improve)
+```
+
+]
+
+.pull-right[
+
+Ho:
+
+Ha:
+
+]
+
+
+
+
+
+---
+
+### Dolphins Example
+
+.pull-left[
+
+Steps we took to get the null distribution for the difference in sample proportions:
+
+]
+
+.pull-right[
+
+```{r  out.width = "100%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/stat100_nulldist.jpeg")
+```
+
+]
+
+
+
+
+---
+
+
+## Another Hypothesis Testing Example
+
+
+Let's return to the palmer penguins and ask if flipper length varies, on average, by the sex of the penguin.
+
+--
+
+$H_o: \mu_F - \mu_M = 0$ 
+
+$H_a: \mu_F - \mu_M \neq 0$ 
+
+--
+
+Need a null distribution for the difference in sample means.
+
+--
+
+**Question**: If I shuffle (permute) the `sex` column and then compute the difference in sample means, what do you expect the difference in sample means to equal?
+
+```{r, echo = FALSE}
+library(palmerpenguins)
+library(tidyverse)
+penguins %>%
+  drop_na(sex) %>%
+  select(flipper_length_mm, sex)
+```
+
+---
+
+## Generating a Null Distribution
+
+Let's return to the penguins and ask if flipper length varies, on average, by the sex of the penguin.
+
+
+
+$H_o: \mu_F - \mu_M = 0$ 
+
+$H_a: \mu_F - \mu_M \neq 0$ 
+
+
+
+Need a null distribution for the difference in sample means.
+
+Steps:
+
+1. Permute/shuffle the `sex` column.
+2. Compute the difference in sample means.
+3. Repeat 1 and 2 many times.
+
+* This process is the same as our process for the dolphins scenario.  
+    + Only key difference: Different statistic!
+
+---
+
+class: center, middle, 
+
+
+### Let's see how to use `infer` to do hypothesis testing.
+
+
+#### The "hypothesisTesting.Rmd" file can be found in the Handouts folder on the RStudio Server and on our Canvas site.
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+Once you get to the end of a hypothesis test you make one of two decisions:
+
+--
+
+(1) P-value is small.
+
+&rarr; I have evidence for $H_a$. Reject $H_o$.
+
+
+--
+
+(2) P-value is not small.
+
+&rarr; I don't have evidence for $H_a$. Fail to reject $H_o$.
+
+--
+
+Sometimes we make the correct decision.  Sometimes we make a mistake.  
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+Let's create a table of potential outcomes.
+
+<br> <br><br><br><br><br><br><br><br> <br> <br> <br>
+
+
+--
+
+$\alpha$ = prob of Type I error **under repeated sampling** = prob reject $H_o$ when it is true
+
+--
+
+$\beta$ = prob of Type II error **under repeated sampling** = prob fail to reject $H_o$ when $H_a$ is true.
+
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+Typically set $\alpha$ level beforehand.
+
+--
+
+Use $\alpha$ to determine "small" for a p-value.
+
+
+--
+
+(1) P-value ~~is~~ ~~small~~  $< \alpha$.
+
+&rarr; I have evidence for $H_a$. Reject $H_o$.
+
+
+(2) P-value ~~is~~ ~~not~~ ~~small~~  $\geq \alpha$.
+
+&rarr; I don't have evidence for $H_a$. Fail to reject $H_o$.
+
+
+---
+
+### Hypothesis Testing: Decisions, Decisions
+
+**Question**: How do I select $\alpha$?
+
+--
+
+* Will depend on the convention in your field.
+
+--
+
+* Want a small $\alpha$ and a small $\beta$. But they are related.  
+    + How?
+
+--
+
+**The smaller $\alpha$ is the larger $\beta$ will be.**
+
+--
+
+&rarr; Choose a lower $\alpha$ (e.g., 0.01, 0.001) when the Type I error is worse and a higher $\alpha$ (e.g., 0.1) when the Type II error is worse.
+
+--
+
+* Note: Can't easily compute $\beta$.  Why?
+
+
+* One more important term:
+    + **Power** = probability reject $H_o$ when the alternative is true.
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a 0.333 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in 20 at-bats.
+
+.pull-left[
+
+#### Ho:
+
+]
+
+.pull-right[
+
+#### Ha: 
+
+]
+
+
+--
+
+.pull-left[
+```{r, echo = FALSE, fig.asp = 0.65}
+dat <- data.frame(at_bats = c(rep("hit", 8), 
+                              rep("miss", 12)))
+
+
+
+library(infer)
+library(tidyverse)
+null <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.25) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Null")
+
+alt <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.333) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Alternative")
+
+both <- bind_rows(null, alt) %>%
+  mutate(dist = fct_relevel(dist, "Null"))
+
+both %>%
+  ggplot(mapping = aes(x = stat)) +
+  geom_histogram(bins = 40, color = "white") +
+  facet_wrap(~dist, ncol = 1) +
+  geom_vline(xintercept = 0.45, size = 2,
+             color = "turquoise4")
+
+
+# mean(null$stat >= 0.45)  
+
+power <- round(mean(alt$stat >= 0.45), digits = 2)
+```
+
+]
+
+--
+
+.pull-right[
+
+* When $\alpha$ is set to $0.05$, he needs to hit 9 or more (showcase a hitting average of at least 0.45) to get a small enough p-value to reject $H_o$.
+
+* When $\alpha$ is set to $0.05$, the power of this test is `r power`.
+
+* Why is the power **so low**?  
+
+* What aspects of the test could the baseball player change to **increase the power** of the test?
+
+
+]
+
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a 0.333 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in ~~20~~ 100 at-bats.
+
+**What will happen to the power of the test if we increase the sample size?**
+
+
+--
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = 0.65}
+dat <- data.frame(at_bats = c(rep("hit", 40), 
+                              rep("miss", 60)))
+
+
+
+library(infer)
+library(tidyverse)
+null <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.25) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Null")
+
+alt <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.333) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Alternative")
+
+both <- bind_rows(null, alt) %>%
+  mutate(dist = fct_relevel(dist, "Null"))
+
+#quantile(null$stat, 0.95)
+# mean(null$stat >= 0.33)
+
+both %>%
+  ggplot(mapping = aes(x = stat)) +
+  geom_histogram(bins = 40, color = "white") +
+  facet_wrap(~dist, ncol = 1) +
+  geom_vline(xintercept = quantile(null$stat, 0.95) + .01, size = 2,
+             color = "turquoise4")
+
+
+  
+
+power <- round(mean(alt$stat >= quantile(null$stat, 0.95) + .01), digits = 2)
+```
+
+]
+
+--
+
+.pull-right[
+
+* Increasing the sample size increases the power.
+
+* When $\alpha$ is set to $0.05$ and the sample size is now 100, the power of this test is `r power`.
+
+
+]
+
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a 0.333 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in ~~20~~ 100 at-bats.
+
+**What will happen to the power of the test if we increase $\alpha$ to 0.1?**
+
+
+--
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = 0.65}
+dat <- data.frame(at_bats = c(rep("hit", 40), 
+                              rep("miss", 60)))
+
+
+
+library(infer)
+library(tidyverse)
+null <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.25) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Null")
+
+alt <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.333) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Alternative")
+
+both <- bind_rows(null, alt) %>%
+  mutate(dist = fct_relevel(dist, "Null"))
+
+#quantile(null$stat, 0.9)
+# mean(null$stat >= 0.31)
+
+both %>%
+  ggplot(mapping = aes(x = stat)) +
+  geom_histogram(bins = 40, color = "white") +
+  facet_wrap(~dist, ncol = 1) +
+  geom_vline(xintercept = quantile(null$stat, 0.9) + .01, size = 2,
+             color = "turquoise4")
+
+
+  
+
+power <- round(mean(alt$stat >= quantile(null$stat, 0.9) + .01), digits = 2)
+```
+
+]
+
+--
+
+.pull-right[
+
+* Increasing $\alpha$ increases the power.
+    + Decreases $\beta$.
+
+* When $\alpha$ is set to $0.1$ and the sample size is  100, the power of this test is `r power`.
+
+
+]
+
+---
+
+### Example
+
+Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a ~~0.333~~ 0.400 hitter.  He wants a raise but needs to convince his manager that he has genuinely improved.  The manager offers to examine his performance in ~~20~~ 100 at-bats.
+
+**What will happen to the power of the test if he is an even better player?**
+
+
+--
+
+.pull-left[
+
+```{r, echo = FALSE, fig.asp = 0.65}
+dat <- data.frame(at_bats = c(rep("hit", 40), 
+                              rep("miss", 60)))
+
+
+
+library(infer)
+library(tidyverse)
+null <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.25) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Null")
+
+alt <- dat %>%
+  specify(response = at_bats, success = "hit") %>%
+  hypothesize(null = "point", p = 0.4) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat = "prop") %>%
+  mutate(dist = "Alternative")
+
+both <- bind_rows(null, alt) %>%
+  mutate(dist = fct_relevel(dist, "Null"))
+
+#quantile(null$stat, 0.9)
+# mean(null$stat >= 0.31)
+
+both %>%
+  ggplot(mapping = aes(x = stat)) +
+  geom_histogram(bins = 40, color = "white") +
+  facet_wrap(~dist, ncol = 1) +
+  geom_vline(xintercept = quantile(null$stat, 0.9) + .01, size = 2,
+             color = "turquoise4")
+
+
+  
+
+power <- round(mean(alt$stat >= quantile(null$stat, 0.9) + .01), digits = 2)
+```
+
+]
+
+--
+
+.pull-right[
+
+* **Effect size**: Difference between true value of the parameter and null value.
+    + Often standardized.
+
+* Increasing the effect size increases the power.
+
+* When $\alpha$ is set to $0.1$, the sample size is 100, and the true probability of hitting the ball is 0.4, the power of this test is `r power`.
+
+
+]
+
+---
+
+## Thoughts on Power
+
+* What aspects of the test did the player actually have control over?
+
+--
+
+* Why is it easier to set $\alpha$ than to set $\beta$ or power?
+
+--
+
+* Considering power before collecting data is very important!
+
+
+---
+
+### Reporting Results in Journal Articles
+
+```{r, echo = FALSE, out.width= "60%"}
+knitr::include_graphics("img/bem_honorton_1994_results.png")
+```
+

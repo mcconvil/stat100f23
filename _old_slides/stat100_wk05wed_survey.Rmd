@@ -1,0 +1,680 @@
+---
+title: Modeling
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Simple Linear Regression]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 5 | Spring 2023] 
+
+]
+
+
+
+---
+
+## Announcements
+
+* Midterm will be released in two weeks. 
+    + We are working on the oral exam time options and will release those on Monday.
+
+
+
+****************************
+
+--
+
+## Goals for Today
+
+
+
+ 
+
+
+* Simple linear regression model
+    + Estimating the slope and intercept terms
+    + Prediction
+    + Consider one quantitative predictor/explantory variable
+    + Consider one categorical predictor/explanatory variable
+
+ 
+
+
+
+
+---
+
+class: center, middle
+
+### Which Are You?
+
+.pull-left[
+
+### Data Visualizer
+
+
+<iframe src="https://giphy.com/embed/d31vTpVi1LAcDvdm" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/netflix-d31vTpVi1LAcDvdm">via GIPHY</a></p>
+
+]
+
+
+.pull-right[
+
+### Data Wrangler
+
+<iframe src="https://giphy.com/embed/DbaUtl1DcLyrdwhzGJ" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/Amalgia-DbaUtl1DcLyrdwhzGJ">via GIPHY</a></p>
+
+]
+
+
+---
+
+class: center, middle
+
+### Which Are You?
+
+.pull-left[
+
+### Model Builder
+
+
+<iframe src="https://giphy.com/embed/xZsLh7B3KMMyUptD9D" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/tlceurope-xZsLh7B3KMMyUptD9D">via GIPHY</a></p>
+
+]
+
+--
+
+
+.pull-right[
+
+### A Mix!
+
+<iframe src="https://giphy.com/embed/cmzp1t3EJ87XNOaHRJ" width="260" height="350" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/giphcrawler2018-cmzp1t3EJ87XNOaHRJ">via GIPHY</a></p>
+
+]
+
+
+
+---
+
+### Simple Linear Regression
+
+
+.pull-left[
+
+```{r candy2, fig.show = 'hide', echo = FALSE}
+candy <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv") %>%
+  mutate(pricepercent = pricepercent*100)
+
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  stat_smooth(method = "lm", se = FALSE,
+              color = "deeppink2") + 
+    stat_smooth(method = "lm", se = FALSE, data = candy[1:30,], color = "purple") +
+  stat_smooth(method = "lm", se = FALSE, data = candy[40:80,], color = "orange") 
+```
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("candy2", "png"))
+```
+
+]
+
+.pull-right[
+
+Let's return to the Candy Example.
+
+
+* A line is a reasonable model form.
+
+
+
+* Where should the line be?
+    + Slope? Intercept?
+
+]
+
+
+
+---
+
+###  Form of the SLR Model
+
+$$ 
+\begin{align}
+y &= f(x) + \epsilon \\
+y &= \beta_o + \beta_1 x + \epsilon
+\end{align}
+$$
+
+#### Need to determine the best **estimates** of $\beta_o$ and $\beta_1$.
+
+--
+
+*****************************
+
+#### Distinguishing between the **population** and the **sample**
+
+--
+
+.pull-left[
+
+* Parameters: 
+    + Based on the **population**
+    + Unknown then if don't have data on the whole population
+    + EX: $\beta_o$ and $\beta_1$
+    
+]
+
+--
+
+.pull-right[
+
+* Statistics: 
+    + Based on the **sample** data
+    + Known
+    + Usually estimate a population parameter
+    + EX: $\hat{\beta}_o$ and $\hat{\beta}_1$ 
+
+]
+
+---
+
+
+### Method of Least Squares
+
+Need two key definitions:
+
+--
+
+* **Fitted value**: The *estimated* value of the $i$-th case
+
+$$
+\hat{y}_i = \hat{\beta}_o + \hat{\beta}_1 x_i
+$$
+--
+
+* **Residuals**: The *observed* error term for the $i$-th case
+
+$$
+e_i = y_i - \hat{y}_i
+$$
+
+
+**Goal**: Pick values for $\hat{\beta}_o$ and $\hat{\beta}_1$  so that the residuals are small!
+
+---
+
+### Method of Least Squares
+
+
+```{r, echo=FALSE, eval = TRUE}
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  stat_smooth(method = "lm", se = FALSE,
+              color = "deeppink2") +
+  annotate("segment", x = candy$pricepercent, 
+           xend = candy$pricepercent, 
+           y = candy$winpercent, yend = 42 + .178*candy$pricepercent, 
+           color = "darkblue", arrow = arrow(length = unit(0.03, "npc"))) + 
+  geom_point()
+  
+```
+
+--
+
+* Want residuals to be small.
+
+--
+
+* Minimize some function of the residuals.  
+
+---
+
+### Method of Least Squares
+
+Minimize:
+
+$$
+\sum_{i = 1}^n e^2_i
+$$
+
+--
+
+Get the following equations:
+
+$$ 
+\begin{align}
+\hat{\beta}_1 &= \frac{ \sum_{i = 1}^n (x_i - \bar{x}) (y_i - \bar{y})}{ \sum_{i = 1}^n (x_i - \bar{x})^2} \\
+\hat{\beta}_o &= \bar{y} - \hat{\beta}_1 \bar{x}
+\end{align}
+$$
+where 
+
+$$
+\begin{align}
+\bar{y} = \frac{1}{n} \sum_{i = 1}^n y_i \quad \mbox{and} \quad \bar{x} = \frac{1}{n} \sum_{i = 1}^n x_i
+\end{align}
+$$
+
+
+---
+
+## Method of Least Squares
+
+Once we have the estimated intercept $(\hat{\beta}_o)$ and the estimated slope $(\hat{\beta}_1)$, we can estimate the whole function:
+
+--
+
+$$
+\hat{y} = \hat{\beta}_o + \hat{\beta}_1 x
+$$
+
+
+Called the **least squares line** or the **line of best fit**.
+
+---
+
+### Method of Least Squares
+
+
+
+.pull-left[
+
+`ggplot2` will compute the line and add it to your plot using `geom_smooth(method = "lm")`
+
+```{r candy3, fig.show = 'hide', echo = TRUE}
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  stat_smooth(method = "lm", se = FALSE,
+              color = "deeppink2")
+```
+
+
+
+But what are the **exact** values of $\hat{\beta}_o$ and $\hat{\beta}_1$?
+
+
+]
+
+.pull-right[
+
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("candy3", "png"))
+```
+
+]
+
+---
+
+### Constructing the Simple Linear Regression Model in R
+
+```{r}
+mod <- lm(winpercent ~ pricepercent, data = candy)
+
+library(moderndive)
+get_regression_table(mod)
+```
+
+
+---
+
+### Interpretation
+
+Slope: 0.178
+
+
+<br><br><br> <br> <br> <br>
+
+Intercept: 42.0
+
+
+---
+
+### Prediction
+
+```{r}
+new_cases <- data.frame(pricepercent = c(25, 85, 150))
+predict(mod, newdata = new_cases)
+```
+
+We didn't have any treats in our sample with a price percentage of 85%.  Can we still make this prediction?
+
+
+--
+
+&rarr;  Called **interpolation**
+
+We didn't have any treats in our sample with a price percentage of 150%.  Can we still make this prediction?
+
+--
+
+&rarr;  Called **extrapolation**
+
+
+
+---
+
+
+### Cautions
+
+.pull-left[
+
+* Careful to only predict values within the range of $x$ values in the sample.
+
+
+
+* Make sure to investigate **influential points**.
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+set.seed(13681)
+x <- c(runif(50, 0, 10), 20)
+y1 <- c(3 + 1*x + rnorm(51, 0 , 3))
+dat0 <- data_frame(x, y1)
+x <- c(x, 20)
+y1 <- c(y1, 5)
+dat <- data_frame(x, y1) 
+ggplot(dat, aes(x, y1)) + geom_point() + 
+  stat_smooth(method = "lm", se = FALSE, color = "turquoise4", linewidth = 2) +
+  stat_smooth(method = "lm", se = FALSE, data = dat[-51,], color = "deeppink3", linewidth = 2) +
+  stat_smooth(method = "lm", se = FALSE, data = dat[-52,], color = "darkgoldenrod4", linewidth = 2)  
+```
+
+
+]
+
+---
+
+class: center, middle, 
+
+## It's Time for Trend Stretches!
+
+
+```{r, echo = FALSE, fig.height=5, fig.width=7.5, fig.align='center'}
+set.seed(4119)
+x <- runif(50, 0, 10)
+y1 <- 3 + 1*x + rnorm(50, 0 , 3)
+y2 <- runif(50, 0, 10)
+y3 <- 1 - .5*x + rnorm(50, 0, 1)
+y4 <- 3 + -40*x +  4*x^2 + rnorm(50, 0, 20)
+dat <- data_frame(x, y1, y2, y3, y4)  
+
+library(cowplot)
+# Create scatterplots and place in a grid
+p1 <- ggplot(dat, aes(x, y1)) + geom_point()
+p2 <- ggplot(dat, aes(x, y2)) + geom_point()
+p3 <- ggplot(dat, aes(x, y3)) + geom_point()
+p4 <- ggplot(dat, aes(x, y4)) + geom_point()
+plot_grid(p1, p2, p3, p4, ncol=2, labels = c("A", "B", "C", "D"))
+
+```
+
+---
+
+
+### Linear Regression
+
+Linear regression is a flexible class of models that allow for:
+
+* Both quantitative and categorical explanatory variables.
+
+--
+
+* Multiple explanatory variables.
+
+--
+
+* Curved relationships between the response variable and the explanatory variable.
+
+--
+
+* BUT the **response variable is quantitative**.
+
+********************
+
+--
+
+### What About A Categorical Explanatory Variable?
+
+--
+
+* Response variable $(y)$: quantitative
+
+--
+
+* Have 1 categorical explanatory variable $(x)$ with two categories.
+
+
+---
+
+### Example: Halloween Candy
+
+```{r}
+candy <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv")
+glimpse(candy)
+```
+
+What might be a good categorical explanatory variable of `winpercent`?
+
+
+---
+
+###  Model Form
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x + \epsilon
+\end{align}
+$$
+
+--
+
+First, need to convert the categories of $x$ to numbers.
+
+--
+
+Before building the model, let's explore and visualize the data!
+
+
+* What `dplyr` functions should I use to find the mean and sd of `winpercent` by the categories of `chocolate`?
+
+--
+
+* What graph should we use to visualize the `winpercent` scores by `chocolate`?
+
+---
+
+### Example: Halloween Candy
+
+```{r}
+# Summarize
+candy %>%
+  group_by(chocolate) %>%
+  summarize(count = n(), mean_win = mean(winpercent), 
+            sd_win = sd(winpercent))
+```
+
+
+---
+
+### Example: Halloween Candy
+
+
+.pull-left[
+
+```{r box, fig.show = 'hide'}
+# Visualize
+ggplot(candy, aes(x = factor(chocolate), 
+                   y = winpercent, 
+                  fill = factor(chocolate))) +
+  geom_boxplot() +
+    stat_summary(fun = mean,
+                 geom = "point",
+                 color = "yellow",
+                 size = 4) +
+  guides(fill = "none") +
+  scale_fill_manual(values =
+                      c("0" = "deeppink",
+                        "1" = "chocolate4")) +
+  scale_x_discrete(labels = c("No", "Yes"),
+                   name =
+          "Does the candy contain chocolate?")
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("box", "png"))
+```
+
+]
+
+
+
+---
+
+### Fit the Linear Regression Model
+
+
+Model Form:
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x + \epsilon
+\end{align}
+$$
+
+--
+
+When $x = 0$:
+
+
+<br>
+
+<br>
+
+When $x = 1$:
+
+--
+
+
+```{r}
+mod <- lm(winpercent ~ chocolate, data = candy)
+library(moderndive)
+get_regression_table(mod)
+```
+
+---
+
+### Notes 
+
+1. When the explanatory variable is categorical, $\beta_o$ and $\beta_1$ no longer represent the interceopt and slope.
+
+--
+
+2. Now $\beta_o$ represents the (population) mean of the response variable when $x = 0$.
+
+--
+
+3. And, $\beta_1$ represents the change in the (population) mean response going from $x = 0$ to $x = 1$.
+
+--
+
+4. Can also do prediction:
+
+```{r}
+new_candy <- data.frame(chocolate = c(0, 1))
+predict(mod, newdata = new_candy)
+```
+
+
+---
+
+### Turns Out Reese's Miniatures Are Under-Priced...
+
+```{r echo = FALSE}
+library(ggrepel)
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  geom_text_repel(aes(label = competitorname), size = 4,
+                  force = 2, show.legend  = FALSE,
+                  box.padding = 1)
+```
+
+
+
+
+---
+
+class: center, middle
+
+## Survey Time
+
+Someone from the teaching staff is going to give you a card with a number that was randomly generated for you.  Please use that number to take the following anonymous survey:
+
+## [bit.ly/stat-100-pigeon](https://bit.ly/stat-100-pigeon)

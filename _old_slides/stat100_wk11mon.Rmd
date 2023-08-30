@@ -1,0 +1,1153 @@
+---
+title: Theory-Based Inference
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20),
+             plot.title = element_text(hjust = 0.5))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Theory-Based Inference]
+
+## .base-blue[and the]
+
+## .base-blue[Central Limit Theorem]
+
+
+
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 11 | Spring 2023] 
+
+]
+
+
+
+---
+
+### Announcements
+
+* Final Exam: May 4th - 7th
+
+
+****************************
+
+--
+
+### Goals for Today
+
+.pull-left[
+
+
+* Start approximating sampling distributions with the **Central Limit Theorem**
+
+* Learn about theory-based inference
+
+] 
+
+
+
+.pull-right[
+
+* Introduce a new group of test statistics based on **z-scores** 
+
+* Focus on theory-based inference for a single population or a single mean
+
+
+]
+
+
+---
+
+
+class: , middle, center
+
+## Time to Start Viewing Sample Statistics also as Random Variables
+
+
+---
+
+### Sample Statistics as Random Variables
+
+Here are some of the sample statistics we've seen lately:
+
+* $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
+
+* $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
+
+* $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did yoga
+
+--
+
+Why are these all random variables?
+
+
+---
+
+### Sample Statistics as Random Variables
+
+Here are some of the sample statistics we've seen lately:
+
+* $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
+
+* $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
+
+* $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did yoga
+
+
+Why are these all random variables?
+
+--
+
+But none of these are **Bernoulli** random variables.
+
+--
+
+Nor are they **Normal** random variables.
+
+--
+
+Nor are they **t** random variables.
+
+--
+
+#### *"All models are wrong but some are useful."*  -- George Box
+
+---
+
+### Approximating These Distributions
+
+
+* $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
+
+
+.pull-left[
+
+* We generated its Null Distribution:
+
+```{r, echo = FALSE}
+library(infer)
+# Construct data frame of sample results
+esp <- data.frame(guess = c(rep("correct", 106),
+                            rep("incorrect", 329 - 106)))
+
+# Generate null distribution 
+set.seed(4111)
+null_dist <- esp %>%
+  specify(response = guess, success = "correct") %>%
+  hypothesize(null = "point", p = 0.25) %>%
+  generate(reps = 1000, type = "draw") %>%
+  calculate(stat ="prop")
+
+# Graph null distribution with test statistic
+dat <- data.frame(x = seq(16, 36, length.out = 1000)/100) %>%
+  mutate(y = dnorm(x, mean = .25, sd = sqrt(.25*.75/329)))
+ggplot(null_dist, aes(x = stat, y = ..density..)) +
+  geom_histogram(bins = 23) +
+  xlim(.16, .36) + ylim(0, 17)
+```
+
+]
+
+---
+
+
+### Approximating These Distributions
+
+
+* $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
+
+* We generated its Null Distribution:
+
+.pull-left[
+
+```{r, echo = FALSE}
+ggplot(null_dist, aes(x = stat, y = ..density..)) +
+  geom_histogram(bins = 23)  +
+  geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2) +
+  xlim(.16, .36) + ylim(0, 17)
+```
+
+]
+
+.pull-right[
+
+* Its Null Distribution is well approximated by the probability function of a N(0.25, 0.024).
+
+]
+
+---
+
+### Approximating These Distributions
+
+
+* $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
+
+
+.pull-left[
+
+* In your p-set last week, you generated this Null Distribution:
+
+```{r, echo = FALSE}
+#load the data
+load("~/shared_data/stat100/data/colleges_endow.Rdata")
+
+#create ivy_binary
+colleges <- colleges %>% 
+  mutate(ivy_binary = case_when(
+    tier_name == "Ivy Plus" ~ "Yes",
+    tier_name != "Ivy Plus" ~ "No",
+  ))
+
+# Generate null distribution 
+set.seed(4111)
+null_dist <- colleges %>% 
+  specify(scorecard_netprice_2013 ~ ivy_binary) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "diff in means", order = c("Yes", "No"))
+
+# Graph null distribution with test statistic
+# Find sd
+dat <- data.frame(x = seq(-6000, 6000, length.out = 1000)) %>%
+  mutate(y = dnorm(x, mean = 0, sd = (8395/t.test(scorecard_netprice_2013 ~ ivy_binary, data = colleges)$statistic)))
+ggplot(null_dist, aes(x = stat, y = ..density..)) +
+  geom_histogram(bins = 21) +
+  xlim(-6000, 6000) + ylim(0, .00024)
+```
+
+]
+
+---
+
+
+### Approximating These Distributions
+
+
+* $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
+
+* In your p-set last week, you generated this Null Distribution:
+
+.pull-left[
+
+```{r, echo = FALSE}
+ggplot(null_dist, aes(x = stat, y = ..density..)) +
+  geom_histogram(bins = 21) +
+  xlim(-6000, 6000) + ylim(0, .0004)  +
+  geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2)
+```
+
+]
+
+.pull-right[
+
+* Its Null Distribution is somewhat approximated by the probability function of a N(0.25, 0.024).
+
+* We will learn that a **standardized** version of the difference in sample means is **better** approximated by the probability function of a t(df = 7).
+
+]
+
+
+---
+
+### Approximating These Distributions
+
+* $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did yoga
+
+--
+
+.pull-left[
+
+* In your p-set last week, you generated this Null Distribution:
+
+
+```{r, echo = FALSE}
+dolphins <- read.csv("~/shared_data/stat100/data/Dolphins.txt", sep="")
+
+null_dist <- dolphins %>%
+  specify(improve ~ group, success = "yes") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in props", order = c("Treatment", "Control"))
+
+# Graph null distribution with test statistic
+phat1 <- 10/15
+phat2 <- 3/15
+dat <- data.frame(x = seq(-65, 65, length.out = 1000)/100) %>%
+  mutate(y = dnorm(x, mean = 0, sd = sqrt(phat1*(1-phat1)/15 + phat2*(1-phat2)/15)))
+ggplot(null_dist, aes(x = stat, y = ..density..)) +
+  geom_histogram(bins = 23) +
+  xlim(-.5, .5) + ylim(0, 7)
+```
+
+]
+
+---
+
+### Approximating These Distributions
+
+* $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did yoga
+
+.pull-left[
+
+* In your p-set last week, you generated this Null Distribution:
+
+
+```{r, echo = FALSE}
+ggplot(null_dist, aes(x = stat, y = ..density..)) +
+  geom_histogram(bins = 23)  +
+  geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2) +
+  xlim(-.5, .5) + ylim(0, 7)
+```
+
+]
+
+.pull-right[
+
+* Its Null Distribution is **kinda somewhat** approximated by the probability function of a N(0, 0.16).
+
+]
+
+
+---
+
+### Approximating These Distributions
+
+* How do I know **which** probability function is a good approximation for my sample statistic's distribution?
+
+
+--
+
+* Once I have figured out a probability function that approximates the distribution of my sample statistic, how do I **use it** to do statistical inference?
+
+
+
+---
+
+### Approximating Sampling Distributions
+
+--
+
+
+**Central Limit Theorem (CLT):** For random samples and a large sample size $(n)$, the sampling distribution of many sample statistics is approximately normal.
+
+--
+
+**Example**: Trees in Mount Tabor
+
+
+```{r, echo = FALSE, fig.asp = 0.55 }
+library(pdxTrees)
+trees_mt_tabor <- get_pdxTrees_parks(park = "Mt Tabor Park")
+# Add column for Douglas-Fir
+trees_mt_tabor <- trees_mt_tabor %>%
+  mutate(Douglas_Fir = case_when(
+    Common_Name == "Douglas-Fir"  ~ "yes",
+    Common_Name != "Douglas-Fir"  ~ "no"))
+
+# Population distribution
+p1 <- ggplot(data = trees_mt_tabor, mapping = aes(x = Douglas_Fir)) +
+  geom_bar(aes(y = ..prop.., group = 1), stat = "count")  +
+  labs(title = "The Population\n Distribution")
+
+# Construct the sampling distribution
+samp_dist <- trees_mt_tabor %>% 
+  rep_sample_n(size = 50, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarize(statistic = mean(Douglas_Fir == "yes"))
+
+# Theoretical Distribution
+dat <- data.frame(x = seq(35, 90, length.out = 1000)/100) %>%
+  mutate(y = dnorm(x, mean = .615, sd = sqrt(.615*(1 - .615)/50)))
+
+# Graph the sampling distribution
+p2 <- ggplot(data = samp_dist) + geom_blank() + theme_minimal()
+
+library(cowplot)
+plot_grid(p1, p2)
+```
+
+
+---
+
+### Approximating Sampling Distributions
+
+
+
+**Central Limit Theorem (CLT):** For random samples and a large sample size $(n)$, the sampling distribution of many sample statistics is approximately normal.
+
+
+
+**Example**: Trees in Mount Tabor
+
+
+```{r, echo = FALSE, fig.asp = 0.55 }
+library(pdxTrees)
+trees_mt_tabor <- get_pdxTrees_parks(park = "Mt Tabor Park")
+# Add column for Douglas-Fir
+trees_mt_tabor <- trees_mt_tabor %>%
+  mutate(Douglas_Fir = case_when(
+    Common_Name == "Douglas-Fir"  ~ "yes",
+    Common_Name != "Douglas-Fir"  ~ "no"))
+
+# Population distribution
+p1 <- ggplot(data = trees_mt_tabor, mapping = aes(x = Douglas_Fir)) +
+  geom_bar(aes(y = ..prop.., group = 1), stat = "count")  +
+  labs(title = "The Population\n Distribution")
+
+# Construct the sampling distribution
+samp_dist <- trees_mt_tabor %>% 
+  rep_sample_n(size = 50, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarize(statistic = mean(Douglas_Fir == "yes"))
+
+# Theoretical Distribution
+dat <- data.frame(x = seq(35, 90, length.out = 1000)/100) %>%
+  mutate(y = dnorm(x, mean = .615, sd = sqrt(.615*(1 - .615)/50)))
+
+# Graph the sampling distribution
+p2 <- ggplot(data = samp_dist, mapping = , aes(x = statistic, y = ..density..)) +
+  geom_histogram(bins = 15) +
+  geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2) + labs(title = "The Sampling\n Distribution")
+
+library(cowplot)
+plot_grid(p1, p2)
+```
+
+--
+
+But **which** Normal?  (What is the value of $\mu$ and $\sigma$?)
+
+
+---
+
+### Approximating Sampling Distributions
+
+**Question**: But **which** normal?  (What is the value of $\mu$ and $\sigma$?)
+
+
+--
+
+* The sampling distribution of a statistic is always centered around: 
+
+--
+
+* The CLT also provides formula estimates of the standard error.
+    + The formula varies based on the statistic.
+
+---
+
+### Approximating the Sampling Distribution of a Sample Proportion
+
+CLT says: For large $n$ (At least 10 successes and 10 failures),
+
+--
+
+$$
+\hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+$$
+
+
+--
+
+**Example**: Trees in Mount Tabor
+
+--
+
+* Parameter: $p$ = proportion of Douglas Fir = 0.615
+
+
+--
+
+* Statistic: $\hat{p}$ = proportion of Douglas Fir in a sample of 50 trees
+
+--
+
+
+$$
+\hat{p} \sim N \left(0.615, \sqrt{\frac{0.615(1-0.615)}{50}} \right)
+$$
+--
+
+**NOTE**: Can plug in the true parameter here because we had data on the whole population.
+
+---
+
+### Approximating the Sampling Distribution of a Sample Proportion
+
+**Question**: What do we do when we don't have access to the whole population?
+
+--
+
+* Have:
+
+$$
+\hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+$$
+
+--
+
+**Answer**: We will have to estimate the SE.
+
+
+---
+
+### Approximating the Sampling Distribution of a Sample Mean
+
+* There is a version of the CLT for many of our sample statistics.  
+
+
+* For the sample mean, the CLT says: For large $n$ (At least 30 observations),
+
+
+$$
+\bar{x} \sim N \left(\mu, \frac{\sigma}{\sqrt{n}} \right)
+$$
+
+---
+
+class: middle, center
+
+
+### Now we need to use the approximate distribution of the sample statistic (given by the CLT) to construct confidence intervals and to conduct hypothesis tests!
+
+#### The CLT does require the sample size to be large and the definition of large depends on the sample statistic.
+
+
+---
+
+### Z-scores
+
+* All of our **test statistics** so far have been **sample statistics**.
+
+--
+
+* Another commonly used test statistic takes the form of a **z-score**:
+
+$$
+\mbox{Z-score} = \frac{X - \mu}{\sigma}
+$$
+
+* Standardized version of the sample statistic.
+
+--
+
+* Z-score measures how many **standard deviations** the sample statistic is away from its **mean**.
+
+
+* Example: $\hat{p}$ = proportion of Douglas Fir in a sample of 50 trees
+
+$$
+\hat{p} \sim N \left(0.615, 0.069 \right)
+$$
+* Suppose we have a sample where $\hat{p} = 0.4$. Then the z-score would be:
+
+
+$$
+\mbox{Z-score} = \frac{0.4 - 0.615}{0.069} = -3.12
+$$
+
+---
+
+### Z-score Test Statistics
+
+* A Z-score test statistic is one where we take our original sample statistic and convert it to a Z-score:
+
+$$
+\mbox{Z-score test statistic} = \frac{\mbox{statistic} - \mu}{\sigma}
+$$
+
+* Allows us to quickly (but roughly) classify results as unusual or not.
+    + $|$ Z-score $|$ > 2 &rarr; results are unusual/p-value will be smallish
+
+--
+
+* Commonly used because if the sample statistic $\sim N(\mu, \sigma)$, then  
+
+$$
+\mbox{Z-score test statistic} = \frac{\mbox{statistic} - \mu}{\sigma} \sim N(0, 1)
+$$
+    
+
+---
+
+class: middle, center
+
+
+## Let's consider theory-based inference for a population proportion.
+
+---
+
+background-image: url("img/hyp_testing_diagram.png")
+background-position: contain
+background-size: 80%
+
+### Statistical Inference Zoom Out -- Testing
+
+
+---
+
+background-image: url("img/ci_diagram.png")
+background-position: contain
+background-size: 70%
+
+### Statistical Inference Zoom Out -- Estimation
+
+---
+
+### Inference for a Single Proportion -- Testing
+
+Let's consider conducting a hypothesis test for a single proportion: $p$
+--
+
+Need:
+
+* Hypotheses
+    + Same as with the simulation-based methods
+
+--
+
+* Test statistic and its null distribution
+    + Use a z-score test statistic and a standard normal distribution
+
+--
+
+* P-value 
+    + Compute from the standard normal distribution directly
+
+
+
+---
+
+### Inference for a Single Proportion -- Testing
+
+Let's consider conducting a hypothesis test for a single proportion: $p$
+
+--
+
+$H_o: p = p_o$ where $p_o$ = null value
+
+--
+
+$H_a: p > p_o$ or $H_a: p < p_o$ or $H_a: p \neq p_o$
+
+--
+
+By the CLT, under $H_o$:
+
+
+$$
+\hat{p} \sim N \left(p_o, \sqrt{\frac{p_o(1-p_o)}{n}} \right)
+$$
+--
+
+* Z-score test statistic:
+
+$$
+Z = \frac{\hat{p} - p_o}{\sqrt{\frac{p_o(1-p_o)}{n}}}
+$$
+--
+
+* Use $N(0, 1)$ to find the p-value once you have computed the test statistic.
+
+
+---
+
+
+### Inference for a Single Proportion -- Testing
+
+
+Let's consider conducting a hypothesis test for a single proportion: $p$
+
+**Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
+
+
+```{r}
+# Construct data frame of sample results
+esp <- data.frame(guess = c(rep("correct", 106),
+                            rep("incorrect", 329 - 106)))
+```
+
+
+---
+
+
+### Inference for a Single Proportion -- Testing
+
+
+Let's consider conducting a hypothesis test for a single proportion: $p$
+
+**Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
+
+.pull-left[
+
+```{r}
+library(infer)
+# Compute observed test statistic
+test_stat <- esp %>%
+  specify(response = guess,
+          success = "correct") %>%
+  hypothesize(null = "point", p = 0.25) %>%  
+  calculate(stat ="z")
+test_stat
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+# Use N(0,1) to find p-value
+pnorm(q = test_stat$stat, mean = 0, sd = 1,
+      lower.tail = FALSE)
+
+# Or 
+1 - pnorm(q = test_stat$stat,
+          mean = 0, sd = 1)
+```
+
+]
+
+---
+
+
+**Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
+
+```{r}
+# Use probability model to approximate null distribution
+prop.test(x = 106, n = 329, p = 0.25,
+          alternative = "greater", correct = FALSE)
+# This R function does first square the z-score test statistic
+sqrt(9.1439)
+```
+
+---
+
+### Theory-Based Confidence Intervals
+
+Suppose statistic $\sim N(\mu = \mbox{parameter}, \sigma = SE)$.
+
+--
+
+#### 95% CI for parameter: 
+
+$$
+\mbox{statistic} \pm 2 SE
+$$
+
+--
+
+Can generalize this formula!  
+
+--
+
+#### P% CI for parameter:
+
+$$
+\mbox{statistic} \pm z^* SE
+$$
+
+
+```{r}
+# Find z-star
+qnorm(p = 0.975, mean = 0, sd = 1)
+qnorm(p = 0.95, mean = 0, sd = 1)
+```
+
+
+---
+
+
+###  Theory-Based CIs in Action
+
+Let's consider constructing a confidence interval for a single proportion: $p$
+
+--
+
+By the CLT,
+
+
+$$
+\hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+$$
+--
+
+#### P% CI for parameter:
+
+\begin{align*}
+\mbox{statistic} \pm z^* SE
+\end{align*}
+
+---
+
+
+###  Theory-Based CIs in Action
+
+Let's consider constructing a confidence interval for a single proportion: $p$
+
+**Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
+
+
+```{r}
+# Use probability model to approximate null distribution
+prop.test(x = 106, n = 329, p = 0.25,
+          alternative = "two.sided",
+          conf.level = 0.95)
+```
+
+---
+
+### Theory-Based CIs
+
+#### P% CI for parameter:
+
+$$
+\mbox{statistic} \pm z^* SE
+$$
+
+Notes:
+
+--
+
+* Didn't construct the bootstrap distribution.
+
+--
+
+* Need to check that $n$ is large and that the sample is random/representative.
+
+--
+
+* Interpretation of the CI doesn't change.
+
+--
+
+* For some parameters, the critical value comes from a $t$ distribution.
+
+
+
+--
+
+* Now we have a formula for the Margin of Error.
+    + That will prove useful for **sample size calculations**.
+
+
+
+
+
+
+---
+
+class: , middle, center
+
+## Now let's explore how to do inference for a single mean.
+
+---
+
+### Inference for a Single Mean
+
+**Example:** *Are lakes in Florida more acidic or alkaline?* The pH of a liquid is the measure of its acidity or alkalinity where pure water has a pH of 7, a pH greater than 7 is alkaline and a pH less than 7 is acidic. The following dataset contains observations on a sample of 53 lakes in Florida. 
+
+```{r}
+library(tidyverse)
+FloridaLakes <- read_csv("https://www.lock5stat.com/datasets1e/FloridaLakes.csv")
+```
+
+* **Cases**:
+
+<br>
+
+* **Variable of interest**:
+
+<br>
+
+* **Parameter of interest:**
+
+<br>
+
+* **Hypotheses:**
+
+<br>
+
+---
+
+### Inference for a Single Mean
+
+Let's consider conducting a hypothesis test for a single mean: $\mu$
+--
+
+Need:
+
+* Hypotheses
+    + Same as with the simulation-based methods
+
+--
+
+* Test statistic and its null distribution
+    + Use a z-score test statistic and a t distribution
+
+--
+
+* P-value 
+    + Compute from the t distribution directly
+
+
+
+---
+
+### Inference for a Single Mean
+
+Let's consider conducting a hypothesis test for a single mean: $\mu$
+
+--
+
+$H_o: \mu = \mu_o$ where $\mu_o$ = null value
+
+--
+
+$H_a: \mu > \mu_o$ or $H_a: \mu < \mu_o$ or $H_a: \mu \neq \mu_o$
+
+--
+
+By the CLT, under $H_o$:
+
+
+$$
+\bar{x} \sim N \left(\mu_o, \frac{\sigma}{\sqrt{n}} \right)
+$$
+--
+
+* Z-score test statistic:
+
+$$
+Z = \frac{\bar{x} - \mu_o}{\frac{\sigma}{\sqrt{n}}}
+$$
+--
+
+* **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
+
+---
+
+### Inference for a Single Mean
+
+Let's consider conducting a hypothesis test for a single mean: $\mu$
+
+
+
+$H_o: \mu = \mu_o$ where $\mu_o$ = null value
+
+
+
+$H_a: \mu > \mu_o$ or $H_a: \mu < \mu_o$ or $H_a: \mu \neq \mu_o$
+
+
+
+
+By the CLT, under $H_o$:
+
+
+$$
+\bar{x} \sim N \left(\mu_o, \frac{\sigma}{\sqrt{n}} \right)
+$$
+
+
+* Z-score test statistic:
+
+$$
+t = \frac{\bar{x} - \mu_o}{\frac{s}{\sqrt{n}}}
+$$
+
+
+* **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
+
+* **Solution:** Plug in $s$: the sample standard deviation of our response variable!
+
+* Use $t(\mbox{df} = n - 1)$ to find the p-value
+
+
+
+
+
+---
+
+### Inference for a Single Mean
+
+.pull-left[
+
+```{r}
+library(infer)
+
+#Compute obs stat
+t_obs <- FloridaLakes %>%
+  specify(response = pH) %>%
+  hypothesize(null = "point", mu = 7) %>%  
+  calculate(stat = "t")
+t_obs
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+# Generate null distribution
+null_dist <- FloridaLakes %>%
+ specify(response = pH) %>%
+ hypothesize(null = "point", mu = 7) %>%
+ generate(reps = 1000, type = "bootstrap") %>%
+ calculate(stat = "t")
+
+```
+
+]
+
+**Why are we using `type = "bootstrap"` when constructing a null distribution?!**
+
+---
+
+```{r}
+# Graph the null distribution
+null_dist %>%
+  visualize(bins = 30) +
+  geom_vline(xintercept = t_obs$stat, color = "deeppink",
+             size = 2) +
+  geom_vline(xintercept = abs(t_obs$stat), color = "deeppink", 
+             size = 2)
+```
+
+
+---
+
+### Inference for a Single Mean
+
+What probability function is a good approximation to the null distribution?
+
+
+```{r, echo = FALSE}
+# Graph the null distribution
+null_dist %>%
+  visualize(bins = 30) +
+  geom_vline(xintercept = t_obs$stat, color = "deeppink",
+             size = 2) +
+  geom_vline(xintercept = abs(t_obs$stat), color = "deeppink", 
+             size = 2)
+```
+
+---
+
+### Inference for a Single Mean
+
+What probability function is a good approximation to the null distribution?
+
+
+```{r, echo = FALSE}
+# Graph the null distribution
+null_dist %>%
+  visualize(bins = 30, method = "both", dens_color = "orange") +
+  geom_vline(xintercept = t_obs$stat, color = "deeppink",
+             size = 2) +
+  geom_vline(xintercept = abs(t_obs$stat), color = "deeppink", 
+             size = 2)
+```
+
+
+---
+
+.pull-left[
+
+#### P-value using the generated null distribution:
+
+```{r}
+pvalue <- null_dist %>%
+  get_p_value(obs_stat = t_obs,
+              direction = "both")
+pvalue
+
+```
+
+]
+
+--
+
+.pull-right[
+
+#### P-value using an approximate probability function:
+
+```{r}
+# Using t distribution
+pt(q = t_obs$stat, df = 52)*2
+```
+
+]
+
+--
+
+#### Do-it-all function:
+
+
+```{r}
+t.test(FloridaLakes$pH, mu = 7, conf.level = .90, alternative = "two.sided")
+```
+
+
+
+---
+
+
+### Statistical Inference using Probability Models
+
+* We went through theory-based inference for $p$ and for $\mu$. 
+
+--
+
+* There are similar results for other parameters.  But the specific named RV and its probability function change!
+
+--
+
+* Can find some common test statistics, confidence interval formulae, and useful R functions [on the course website](https://mcconvil.github.io/stat100s23/inference_procedures.html).
+    + In the next p-set, will explore inference for the correlation coefficient.
+
+

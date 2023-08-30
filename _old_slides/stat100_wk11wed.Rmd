@@ -1,0 +1,898 @@
+---
+title: More Theory-Based Inference
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8,
+                      cache = TRUE)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+theme_update(text = element_text(size = 20),
+             plot.title = element_text(hjust = 0.5))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[More Theory-Based Inference]
+
+## .base-blue[and the]
+
+## .base-blue[Sample Size Calculations]
+
+
+
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 11 | Spring 2023] 
+
+]
+
+
+
+---
+
+
+
+### Goals for Today
+
+.pull-left[
+
+
+* Finish up theory-based inference for a single proportion
+
+* Explore theory-based inference for a single mean
+
+
+
+] 
+
+
+
+.pull-right[
+
+* Sample size calculations
+* **More examples**
+
+
+
+]
+
+
+---
+
+### Recap:
+
+**Central Limit Theorem (CLT):** For random samples and a large sample size $(n)$, the sampling distribution of many sample statistics is approximately normal.
+
+--
+
+.pull-left[
+
+#### Sample Proportion Version
+
+When $n$ is large (at least 10 successes and 10 failures):
+
+$$
+\hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+$$
+
+]
+
+--
+
+.pull-right[
+
+#### Sample Mean Version
+
+When $n$ is large (at least 30):
+
+$$
+\bar{x} \sim N \left(\mu, \frac{\sigma}{\sqrt{n}} \right)
+$$
+]
+
+
+---
+
+### But There Are [Several Versions](https://mcconvil.github.io/stat100s23/inference_procedures.html) of the CLT!
+
+```{r, echo = FALSE}
+symbols <- data.frame(Response = c("quantitative", "categorical",
+                                   "quantitative", "categorical",
+                                   "quantitative"),
+                         Explanatory = c("-", "-",
+                                         "categorical",
+                                         "categorical",
+                                         "quantitative"),
+                         Numerical_Quantity = c("mean", 
+                                                "proportion",
+                                                "difference in means",
+                                                "difference in proportions",
+                                                "correlation"),
+                         Parameter = c("$\\mu$", "$p$", 
+                                       "$\\mu_1 - \\mu_2$",
+                                       "$p_1 - p_2$",
+                                       "$\\rho$"),
+                                       Statistic = c("$\\bar{x}$",
+                                                     "$\\hat{p}$",
+                                                     "$\\bar{x}_1 - \\bar{x}_2$",
+                                                     "$\\hat{p}_1 - \\hat{p}_2$",
+                                                     "$r$"))
+
+symbols %>% 
+  kable()  %>%
+  kable_styling(bootstrap_options = c("responsive", "bordered")) 
+```
+
+
+
+---
+
+### Recap:
+
+**Z-score test statistics**: 
+
+$$
+\mbox{Z-score} = \frac{\mbox{statistic} - \mu}{\sigma}
+$$
+
+--
+
+* Usually follows a **standard normal** or a **t** distribution.
+
+--
+
+* Use the approximate distribution to find the p-value.
+
+---
+
+### Recap:
+
+**Formula-Based** P*100% Confidence Intervals
+
+$$
+\mbox{statistic} \pm z^* SE
+$$
+
+where $P(-z^* \leq Z \leq z^*) = P$
+
+--
+
+Or we will see that sometimes we use a **t** critical value:
+
+$$
+\mbox{statistic} \pm t^* SE
+$$
+
+where $P(-t^* \leq t \leq t^*) = P$
+
+
+---
+
+class: , middle, center
+
+
+## How do we perform probability model calculations in `R`?
+
+
+---
+
+### Probability Calculations in R
+
+
+**Question**: How do I compute **probabilities** in R?
+
+.pull-left[
+
+```{r, echo = FALSE}
+library(tidyverse)
+dat <- data.frame(x = seq(-3, 3, length.out = 1000)) %>%
+  mutate(y = dnorm(x, mean = 0, sd = 1),
+         z = if_else(x > 1, TRUE, FALSE))
+dat2 <- dat %>%
+  filter(z)
+ggplot(data = dat, mapping = aes(x, y)) +
+  geom_ribbon(mapping = aes(ymin = 0, ymax = y, fill = z),
+              data = dat2) +
+  guides(fill = FALSE) +
+  geom_line(size = 2) +
+  scale_fill_manual(values = "deeppink")
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+pnorm(q = 1, mean = 0, sd = 1)
+pt(q = 1, df = 52)
+```
+
+]
+
+**Doesn't seem quite right**...
+
+---
+
+### Probability Calculations in R
+
+
+**Question**: How do I compute **probabilities** in R?
+
+.pull-left[
+
+```{r, echo = FALSE}
+library(tidyverse)
+dat <- data.frame(x = seq(-3, 3, length.out = 1000)) %>%
+  mutate(y = dnorm(x, mean = 0, sd = 1),
+         z = if_else(x > 1, TRUE, FALSE))
+dat2 <- dat %>%
+  filter(z)
+ggplot(data = dat, mapping = aes(x, y)) +
+  geom_ribbon(mapping = aes(ymin = 0, ymax = y, fill = z),
+              data = dat2) +
+  guides(fill = FALSE) +
+  geom_line(size = 2) +
+  scale_fill_manual(values = "deeppink")
+```
+
+]
+
+.pull-right[
+
+```{r}
+pnorm(q = 1, mean = 0, sd = 1,
+      lower.tail = FALSE)
+pt(q = 1, df = 52, lower.tail = FALSE)
+```
+
+]
+
+
+---
+
+### P*100% CI for parameter:
+
+$$
+\mbox{statistic} \pm z^* SE
+$$
+
+.pull-left[
+
+**Question**: How do I find the correct critical values $(z^* \mbox{ or } t^*)$ for the confidence interval?
+
+```{r, echo = FALSE}
+library(tidyverse)
+dat <- data.frame(x = seq(-3, 3, length.out = 1000)) %>%
+  mutate(y = dnorm(x, mean = 0, sd = 1))
+ggplot(data = dat, mapping = aes(x, y)) +
+  geom_line(size = 2) +
+  geom_vline(xintercept = -1.96, color = "deeppink", size = 2) +
+  geom_vline(xintercept = 1.96, color = "deeppink", size = 2)
+```
+
+]
+
+
+--
+
+.pull-right[
+
+```{r}
+qnorm(p = 0.975, mean = 0, sd = 1)
+qt(p = 0.975, df = 52)
+```
+
+]
+
+---
+
+### P*100% CI for parameter:
+
+$$
+\mbox{statistic} \pm z^* SE
+$$
+.pull-left[
+
+**Question**: What percentile/quantile do I need for a 90% CI?
+
+```{r, echo = FALSE}
+library(tidyverse)
+dat <- data.frame(x = seq(-3, 3, length.out = 1000)) %>%
+  mutate(y = dnorm(x, mean = 0, sd = 1))
+ggplot(data = dat, mapping = aes(x, y)) +
+  geom_line(size = 2) +
+  geom_vline(xintercept = -1.645, color = "deeppink", size = 2) +
+  geom_vline(xintercept = 1.645, color = "deeppink", size = 2)
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+qnorm(p = 0.95, mean = 0, sd = 1)
+qt(p = 0.95, df = 52)
+```
+
+]
+
+---
+
+### Probability Calculations in R
+
+**To help you remember**:
+
+Want a **P**robability? 
+
+--
+
+&rarr; use `pnorm()`, `pt()`, ...
+
+--
+
+Want a **Q**uantile (i.e. percentile)?
+
+--
+
+&rarr; use `qnorm()`, `qt()`, ...
+
+
+---
+
+### Probability Calculations in R
+
+**Question**: When might I want to do probability calculations in R?
+
+--
+    
+&rarr; Computed a test statistic that is approximated by a named random variable.  Want to compute the p-value with `p---()`
+
+--
+
+&rarr; Compute a confidence interval.  Want to find the critical value with `q---()`.
+
+--
+
+&rarr; To do a **Sample Size Calculation**. (Return to this later in lecture today.)
+
+
+---
+
+class: middle, center
+
+## Returning to where we left off on Monday...
+
+---
+
+### Theory-Based Confidence Intervals
+
+Suppose statistic $\sim N(\mu = \mbox{parameter}, \sigma = SE)$.
+
+--
+
+#### 95% CI for parameter: 
+
+$$
+\mbox{statistic} \pm 2 SE
+$$
+
+--
+
+Can generalize this formula!  
+
+--
+
+#### P% CI for parameter:
+
+$$
+\mbox{statistic} \pm z^* SE
+$$
+
+
+```{r}
+# Find z-star
+qnorm(p = 0.975, mean = 0, sd = 1)
+qnorm(p = 0.95, mean = 0, sd = 1)
+```
+
+
+---
+
+
+###  Theory-Based CIs in Action
+
+Let's consider constructing a confidence interval for a single proportion: $p$
+
+--
+
+By the CLT,
+
+
+$$
+\hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+$$
+--
+
+#### P% CI for parameter:
+
+\begin{align*}
+\mbox{statistic} \pm z^* SE
+\end{align*}
+
+---
+
+
+###  Theory-Based CIs in Action
+
+Let's consider constructing a confidence interval for a single proportion: $p$
+
+**Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
+
+
+```{r}
+# Use probability model to approximate null distribution
+prop.test(x = 106, n = 329, p = 0.25,
+          alternative = "two.sided",
+          conf.level = 0.95)
+```
+
+---
+
+### Theory-Based CIs
+
+#### P% CI for parameter:
+
+$$
+\mbox{statistic} \pm z^* SE
+$$
+
+Notes:
+
+--
+
+* Didn't construct the bootstrap distribution.
+
+--
+
+* Need to check that $n$ is large and that the sample is random/representative.
+
+--
+
+* Interpretation of the CI doesn't change.
+
+--
+
+* For some parameters, the critical value comes from a $t$ distribution.
+
+
+
+--
+
+* Now we have a formula for the Margin of Error.
+    + That will prove useful for **sample size calculations**.
+
+
+
+
+
+
+---
+
+class: , middle, center
+
+## Now let's explore how to do inference for a single mean.
+
+---
+
+### Inference for a Single Mean
+
+**Example:** *Are lakes in Florida more acidic or alkaline?* The pH of a liquid is the measure of its acidity or alkalinity where pure water has a pH of 7, a pH greater than 7 is alkaline and a pH less than 7 is acidic. The following dataset contains observations on a sample of 53 lakes in Florida. 
+
+```{r}
+library(tidyverse)
+FloridaLakes <- read_csv("https://www.lock5stat.com/datasets1e/FloridaLakes.csv")
+```
+
+* **Cases**:
+
+<br>
+
+* **Variable of interest**:
+
+<br>
+
+* **Parameter of interest:**
+
+<br>
+
+* **Hypotheses:**
+
+<br>
+
+---
+
+### Inference for a Single Mean
+
+Let's consider conducting a hypothesis test for a single mean: $\mu$
+--
+
+Need:
+
+* Hypotheses
+    + Same as with the simulation-based methods
+
+--
+
+* Test statistic and its null distribution
+    + Use a z-score test statistic and a t distribution
+
+--
+
+* P-value 
+    + Compute from the t distribution directly
+
+
+
+---
+
+### Inference for a Single Mean
+
+Let's consider conducting a hypothesis test for a single mean: $\mu$
+
+--
+
+$H_o: \mu = \mu_o$ where $\mu_o$ = null value
+
+--
+
+$H_a: \mu > \mu_o$ or $H_a: \mu < \mu_o$ or $H_a: \mu \neq \mu_o$
+
+--
+
+By the CLT, under $H_o$:
+
+
+$$
+\bar{x} \sim N \left(\mu_o, \frac{\sigma}{\sqrt{n}} \right)
+$$
+--
+
+* Z-score test statistic:
+
+$$
+Z = \frac{\bar{x} - \mu_o}{\frac{\sigma}{\sqrt{n}}}
+$$
+--
+
+* **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
+
+---
+
+### Inference for a Single Mean
+
+Let's consider conducting a hypothesis test for a single mean: $\mu$
+
+
+
+$H_o: \mu = \mu_o$ where $\mu_o$ = null value
+
+
+
+$H_a: \mu > \mu_o$ or $H_a: \mu < \mu_o$ or $H_a: \mu \neq \mu_o$
+
+
+
+
+By the CLT, under $H_o$:
+
+
+$$
+\bar{x} \sim N \left(\mu_o, \frac{\sigma}{\sqrt{n}} \right)
+$$
+
+
+* Z-score test statistic:
+
+$$
+t = \frac{\bar{x} - \mu_o}{\frac{s}{\sqrt{n}}}
+$$
+
+
+* **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
+
+* **Solution:** Plug in $s$: the sample standard deviation of our response variable!
+
+* Use $t(\mbox{df} = n - 1)$ to find the p-value
+
+
+
+
+
+---
+
+### Inference for a Single Mean
+
+.pull-left[
+
+```{r}
+library(infer)
+
+#Compute obs stat
+t_obs <- FloridaLakes %>%
+  specify(response = pH) %>%
+  hypothesize(null = "point", mu = 7) %>%  
+  calculate(stat = "t")
+t_obs
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+# Generate null distribution
+null_dist <- FloridaLakes %>%
+ specify(response = pH) %>%
+ hypothesize(null = "point", mu = 7) %>%
+ generate(reps = 1000, type = "bootstrap") %>%
+ calculate(stat = "t")
+
+```
+
+]
+
+**Why are we using `type = "bootstrap"` when constructing a null distribution?!**
+
+---
+
+```{r}
+# Graph the null distribution
+null_dist %>%
+  visualize(bins = 30) +
+  geom_vline(xintercept = t_obs$stat, color = "deeppink",
+             size = 2) +
+  geom_vline(xintercept = abs(t_obs$stat), color = "deeppink", 
+             size = 2)
+```
+
+
+---
+
+### Inference for a Single Mean
+
+What probability function is a good approximation to the null distribution?
+
+
+```{r, echo = FALSE}
+# Graph the null distribution
+null_dist %>%
+  visualize(bins = 30) +
+  geom_vline(xintercept = t_obs$stat, color = "deeppink",
+             size = 2) +
+  geom_vline(xintercept = abs(t_obs$stat), color = "deeppink", 
+             size = 2)
+```
+
+---
+
+### Inference for a Single Mean
+
+What probability function is a good approximation to the null distribution?
+
+
+```{r, echo = FALSE}
+# Graph the null distribution
+null_dist %>%
+  visualize(bins = 30, method = "both", dens_color = "orange") +
+  geom_vline(xintercept = t_obs$stat, color = "deeppink",
+             size = 2) +
+  geom_vline(xintercept = abs(t_obs$stat), color = "deeppink", 
+             size = 2)
+```
+
+
+---
+
+.pull-left[
+
+#### P-value using the generated null distribution:
+
+```{r}
+pvalue <- null_dist %>%
+  get_p_value(obs_stat = t_obs,
+              direction = "both")
+pvalue
+
+```
+
+]
+
+--
+
+.pull-right[
+
+#### P-value using an approximate probability function:
+
+```{r}
+# Using t distribution
+pt(q = t_obs$stat, df = 52)*2
+```
+
+]
+
+--
+
+#### Do-it-all function:
+
+
+```{r}
+t.test(FloridaLakes$pH, mu = 7, conf.level = .90, alternative = "two.sided")
+```
+
+
+
+---
+
+
+### Statistical Inference using Probability Models
+
+* We went through theory-based inference for $p$ and for $\mu$. 
+
+--
+
+* There are similar results for other parameters.  But the specific named RV and its probability function change!
+
+--
+
+* Can find some common test statistics, confidence interval formulae, and useful R functions [on the course website](https://mcconvil.github.io/stat100s23/inference_procedures.html).
+    + In this week's p-set, will explore inference for the correlation coefficient and for the difference in proportions.
+  
+
+
+---
+
+### Sample Size Calculations
+
+* Very important part of the data analysis process!
+
+--
+
+* Happens BEFORE you collect data.
+
+--
+
+* You determine how large your sample size needs for a desired precision in your CI.
+    + There is also a hypothesis test version that we won't be covering in Stat 100.
+    
+---
+
+### Sample Size Calculations
+
+**Question**: Why do we need sample size calculations?
+
+--
+
+**Example**: Let's return to the dolphins for treating depression example.  
+
+--
+
+With a sample size of 30 and 95% confidence, we estimate that the improvement rate for depression is between 14.5 percentage points and 75 percentage points higher if you swim with a dolphin instead of swimming without a dolphin.
+
+--
+
+With a width of 60.5 percentage points, this 95% CI is a **wide**/very imprecise interval.  
+
+--
+
+**Question**: How could we make it narrower?  How could we decrease the Margin of Error (ME)?
+
+
+---
+
+### Sample Size Calculations -- Single Proportion
+
+Let's focus on estimating a single proportion.  Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02.  **How large does our sample size need to be?**
+
+--
+
+Want 
+
+$$ 
+z^* \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}} \leq B
+$$
+
+--
+
+Need to derive a formula that looks like 
+
+$$ 
+n \geq \quad ...
+$$
+
+--
+
+**Question**: How can we isolate $n$ to be on a side by itself?
+
+
+---
+
+### Sample Size Calculations -- Single Proportion
+
+Let's focus on estimating a single proportion.  Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02. **How large does our sample size need to be?**
+
+**Sample size calculation:**
+
+$$
+n \geq \frac{\hat{p}(1 - \hat{p})z^{*2}}{B^2}
+$$
+--
+
+
+* What do we plug in for, $\hat{p}$, $z^{*}$, $B$?
+
+--
+
+* Consider sample size calculations when estimating a **mean** on this week's p-set!
+
+
+---
+
+class: , center, middle
+
+
+### Let's go through more examples in the "InferenceExamples.Rmd" handout!
+
+---
+
+background-image: url("img/hyp_testing_diagram.png")
+background-position: contain
+background-size: 80%
+
+### Have Learned Two Routes to Statistical Inference
+
+
+
+Which is **better**?  Discuss next time!
+

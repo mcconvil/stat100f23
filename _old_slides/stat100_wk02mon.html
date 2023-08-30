@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Viz</title>
+    <meta charset="utf-8" />
+    <script src="libsSlides/header-attrs-2.19/header-attrs.js"></script>
+    <link href="libsSlides/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <script src="libsSlides/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libsSlides/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libsSlides/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link rel="stylesheet" href="more.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+
+
+## .base-blue[Data Visualization]
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 2 | Spring 2023] 
+
+]
+
+
+
+
+---
+
+
+
+## Announcements
+
+* Remember that the [standard office hours schedule](https://docs.google.com/spreadsheets/d/1xwqT5fjYSf83NDEXhq8g0vp2SCeZGnsaIBeNBzS2JGo/edit#gid=1717202730) is now in full swing.
+    + Fill out [this form](https://forms.gle/fG1LruemSCBQucePA) (before March 7th) after your first visit.
+* Sections start this week!  You can find the location of your section [here](https://docs.google.com/spreadsheets/d/1_UHvfbVcTArxJ4nxpDxv6TFyS5eh8-gO6j2U-W6jHn4/edit?usp=sharing).    
+* Lecture quiz released after class on Wednesday.
+
+****************************
+
+--
+
+## Goals for Today
+
+.pull-left[
+
+First Segment:
+
+* Motivate data visualizations.
+* Develop **language** to talk about the components of a graphic.
+* Practice deconstructing graphics.
+* Discuss good graphical practices.
+
+] 
+
+--
+
+.pull-right[
+
+Second Segment:
+
+
+* Learn the general structure of `ggplot2`.
+* Learn a few standard graphs for numerical/quantitative data:
+    + **Histogram**: one numerical variable
+    + **Side-by-side boxplot**: one numerical variable and one categorical variable
+    + **Side-by-side violin plot**: one numerical variable and one categorical variable
+
+]
+
+---
+
+##  But First...
+
+--
+
+* Where do we access p-sets?  
+
+--
+
+* First step should always be saving the shared `Rmd` to your home folder.
+
+--
+
+* `RMarkdown` Workflow:
+    * Modify the Rmd file.
+    * If the modifications are code, run the code in the console to debug.
+    * Knit.
+    * Look over the output document.
+    * Repeat.
+
+
+---
+
+class: middle, , center
+
+
+# Why construct a graph?
+
+
+--
+
+
+### To **summarize** the data.
+
+--
+
+### To look for **trends** between variables and make **comparisons**.
+
+
+--
+
+### To tell a compelling **story**.
+
+
+---
+
+# Challenger
+
+* On January 27th, 1986, engineers from Morton Thiokol recommended NASA delay launch of space shuttle *Challenger* due to cold weather.
+    * Believed cold weather impacted the o-rings that held the rockets together.
+    * Used 13 charts in their argument.
+
+--
+
+* After a two hour conference call, the engineer's recommendation was overruled due to lack of persuasive evidence and the launch proceeded.
+
+--
+
+* The Challenger exploded 73 seconds into launch.
+
+---
+
+# Challenger
+
+.left-column[ 
+
+* Here's one of those charts.
+
+]
+
+.right-column[
+
+&lt;img src="img/table_o_rings.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+.left-column[
+
+# Challenger
+
+
+
+* Here's another one of those charts.
+
+]
+
+.right-column[
+
+&lt;img src="img/o_ring_rockets.jpg" width="45%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+# Challenger
+
+.left-column[
+
+* Here's a graphic I created from [Edward Tufte](https://en.wikipedia.org/wiki/Edward_Tufte)'s data.
+
+]
+
+&lt;img src="stat100_wk02mon_files/figure-html/unnamed-chunk-3-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Challenger
+
+.left-column[
+
+* This adaptation is a recreation of Edward Tufte's graphic.
+
+* For more information on this example and other examples, check out [Tufte's book](https://www.edwardtufte.com/tufte/books_visex).
+
+]
+
+
+&lt;img src="stat100_wk02mon_files/figure-html/unnamed-chunk-4-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: middle, , center
+
+
+## Now let's learn the .orange[Grammar of Graphics].
+
+--
+
+#### We will use this grammar to:
+
+--
+
+Decompose and understand existing graphs.
+
+--
+
+Create our own graphs with the `R` package `ggplot2`.
+
+---
+
+# Grammar of Graphics
+
+
+* **data**: Data frame that contains the raw data
+    + Variables
+
+* **geom**: Geometric **shape** that the data are mapped to.
+    + Point, line, bar, text, ...
+    
+* **aesthetic**: Visual properties of the **geom** 
+    + X (horizontal) position, y (vertical) position, color, fill, shape
+
+* **scale**: Controls how data are mapped to the visual values of the aesthetic.
+    + EX: particular colors
+
+* **guide**: Legend/key to help user convert visual display back to the data
+
+--
+
+For right now, we won't focus on the **names** of particular types of graphs (e.g., scatterplot) but on the **elements** of graphs.
+
+---
+
+.left-column[
+
+### Example 1
+
+
+* What are the variables here?
+* What **geom** are the variables map to?
+* What are the **aesthetic**s of the **geom**?
+* How is each variable mapped to an **aesthetic**?
+* What additional context is provided?
+* What story is the graph telling?
+
+]
+
+.right-column[
+
+&lt;img src="img/anne_hathaway.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+
+.left-column[
+
+### Example 2
+
+
+* What are the variables here?
+* What **geom** are the variables map to?
+* What are the **aesthetic**s of the **geom**?
+* How is each variable mapped to an **aesthetic**?
+* What additional context is provided?
+* What story is the graph telling?
+
+]
+
+.right-column[
+
+&lt;img src="img/harassment_graphic.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+
+.left-column[
+
+### Example 3
+
+
+* What are the variables here?
+* What **geom** are the variables map to?
+* What are the **aesthetic**s of the **geom**?
+* How is each variable mapped to an **aesthetic**?
+* What additional context is provided?
+* What story is the graph telling?
+
+]
+
+.right-column[
+
+&lt;img src="img/wastewater2023.JPG" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+
+## Best Practices: Context
+
+* Think about the **stories/questions** your visualization answers. 
+
+--
+
+* Determine what **context/background information** your viewer needs.
+
+--
+
+* For context, at a minimum include
+    + Axis labels (with units reported).
+    + Legends.
+    + Data source.
+
+--
+
+* Visualizing data involves **editorial choices**.
+    + What to highlight.
+    + What comparisons to make easy to see.
+    + What scales to use.
+    
+
+
+---
+
+.left-column[
+
+## Context Example
+
+]
+
+.right-column[
+
+&lt;img src="img/moma_size.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+.left-column[
+
+##  Best Practices: Order of perception
+
+]
+
+.right-column[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="img/visual_cues.png" alt="Yau (2013)" width="60%" /&gt;
+&lt;p class="caption"&gt;Yau (2013)&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+
+## Best Practices: Be careful with color.
+
+.left-column[
+
+* Consider color blindness
+
+]
+
+.right-column[
+
+&lt;img src="stat100_wk02mon_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+## Best Practices: Color Palettes -- Sequential
+
+.left-column[
+
+* [Dude map](https://qz.com/316906/the-dude-map-how-american-men-refer-to-their-bros/)
+
+* Note: Maps are also a great way to provide context!
+
+]
+
+.right-column[
+
+&lt;img src="img/dude.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+## Best Practices: Color Palettes -- Diverging
+
+.left-column[
+
+* [Adam Pearce's 2015 NBA Games](https://roadtolarissa.com/nba-minutes/) 
+
+]
+
+.right-column[
+
+&lt;img src="img/nba_2015.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+## Best Practices: Color Palettes -- Qualitative
+
+.left-column[
+
+* [information is beautiful's Best in Show](https://www.informationisbeautiful.net/visualizations/best-in-show-whats-the-top-data-dog/)
+
+]
+
+.right-column[
+
+&lt;img src="img/dogs.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+##   Best Practices: Aspect Ratio
+
+* Aspect ratio affects our perception of the rate of change
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="img/aspect_ratio.png" alt="http://socviz.co/lookatdata.html" width="80%" /&gt;
+&lt;p class="caption"&gt;http://socviz.co/lookatdata.html&lt;/p&gt;
+&lt;/div&gt;
+
+
+
+---
+
+## Many Ways To Visually Tell A Story
+
+Washington Post's Approach:
+
+&lt;img src="img/wp_shooter.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+[Periscopic's Approach](https://guns.periscopic.com/?year=2013)
+
+---
+
+
+## Bad Graphics    
+
+.left-column[
+
+* It is much easier to make a bad graph than a good graph.  
+
+]
+
+.right-column[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="img/pizza_pie.png" alt="YouGov" width="50%" /&gt;
+&lt;p class="caption"&gt;YouGov&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+
+## Misleading Graphics
+
+.left-column[
+
+* Ethical data viz: Be careful that your editorial choices don't make your viewer make incorrect conclusions about the data
+
+]
+
+.right-column[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="img/FLguns.jpg" alt="Modern Data Science with R" width="70%" /&gt;
+&lt;p class="caption"&gt;Modern Data Science with R&lt;/p&gt;
+&lt;/div&gt;
+
+
+]
+
+---
+
+
+## Summary Thoughts on Best Practices
+
+
+* Good graphics are one's where the findings and insights are **obvious** to the viewer.
+    + You have power over the patterns your viewer sees and the conclusions they draw.  Use that power ethically.
+
+--
+
+* Facilitate the **comparisons** that correspond to the research question.
+    + Recall the three Georgia COVID counts graphs from Day 1!
+
+--
+
+* Add information and key **context**.
+
+--
+
+* Data visualizations are **not neutral**.
+
+--
+
+* It is easier to see the differences and similarities between different types of graphics if we learn the **grammar of graphics**.  
+
+--
+
+* Practicing **decomposing** graphics should make it easier for us to **compose** our own graphics.
+
+---
+
+class: , center, middle
+
+## Two Minute Stretch
+
+
+---
+
+&lt;img src="img/ggplot2.png" width="15%" style="float:left; padding:10px" style="display: block; margin: auto;" /&gt;
+
+## Load Necessary Packages
+
+`ggplot2` is part of this collection of data science packages.
+
+
+```r
+# Load necessary packages
+library(tidyverse)
+```
+
+
+---
+
+
+## Data Setting: [Eco-Totem Broadway Bicycle Count](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
+
+
+.pull-left[
+
+&lt;img src="img/counter.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="img/bike_counter_map.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+
+---
+
+## Import the [Data](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
+
+
+```r
+bike_counter &lt;- read_csv("https://data.cambridgema.gov/api/views/q8v9-mcfg/rows.csv")
+
+# Inspect the data
+glimpse(bike_counter)
+```
+
+```
+## Rows: 258,817
+## Columns: 7
+## $ DateTime  &lt;chr&gt; "01/18/2022 12:00:00 AM", "01/18/2022 12:15:00 AM", "01/18/2…
+## $ Day       &lt;chr&gt; "Tuesday", "Tuesday", "Tuesday", "Tuesday", "Tuesday", "Tues…
+## $ Date      &lt;chr&gt; "01/18/2022", "01/18/2022", "01/18/2022", "01/18/2022", "01/…
+## $ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…
+## $ Total     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, …
+## $ Westbound &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Eastbound &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, …
+```
+
+
+
+---
+
+## Inspect the Data
+
+
+```r
+# Look at first few rows
+head(bike_counter)
+```
+
+```
+## # A tibble: 6 × 7
+##   DateTime               Day     Date       Time   Total Westbound Eastbound
+##   &lt;chr&gt;                  &lt;chr&gt;   &lt;chr&gt;      &lt;time&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 01/18/2022 12:00:00 AM Tuesday 01/18/2022 00:00      0         0         0
+## 2 01/18/2022 12:15:00 AM Tuesday 01/18/2022 00:15      0         0         0
+## 3 01/18/2022 12:30:00 AM Tuesday 01/18/2022 00:30      0         0         0
+## 4 01/18/2022 12:45:00 AM Tuesday 01/18/2022 00:45      0         0         0
+## 5 01/18/2022 01:00:00 AM Tuesday 01/18/2022 01:00      0         0         0
+## 6 01/18/2022 01:15:00 AM Tuesday 01/18/2022 01:15      0         0         0
+```
+
+What does a row represent here?
+---
+
+## Inspect the Data
+
+
+```r
+# Determine type
+# To access one variable: dataset$variable
+class(bike_counter$Day)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(bike_counter$Total)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(bike_counter)
+```
+
+```
+## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"
+```
+
+
+
+---
+
+## Data Wrangling
+
+**We haven't learned this topic yet.**
+
+**I only included this code for completeness/transparency.**
+
+
+```r
+# Fix Date column to be stored with the date class
+library(lubridate)
+bike_counter &lt;- mutate(bike_counter, Date = mdy(Date))
+
+# Filter to only include two days in July 2019
+july_2019 &lt;- filter(bike_counter,
+                    Date %in% c(mdy("07/04/2019"),
+                                mdy("07/11/2019")))
+# Add an Occasion column
+july_2019 &lt;- mutate(july_2019,
+                    Occasion = if_else(Date == mdy("07/04/2019"),
+                                                    "Fourth of July",
+                                                    "Normal Thursday"))
+```
+
+
+---
+
+# Grammar of Graphics
+
+
+* **data**: Data frame that contains the raw data
+    + Variables
+
+* **geom**: Geometric **shape** that the data are mapped to.
+    + Point, line, bar, text, ...
+    
+* **aesthetic**: Visual properties of the **geom** 
+    + X (horizontal) position, y (vertical) position, color, fill, shape
+
+* **scale**: Controls how data are mapped to the visual values of the aesthetic.
+    + EX: particular colors
+
+* **guide**: Legend/key to help user convert visual display back to the data
+
+---
+
+# `ggplot2` example code
+
+**Guiding Principle**: We will map variables from the **data** to the **aes**thetic attributes (e.g. location, size, shape, color) of **geom**etric objects (e.g. points, lines, bars).
+
+
+```r
+ggplot(data = ---, mapping = aes(---)) +
+  geom_---(---) 
+```
+
+* There are other layers, such as `scales_---_---()` and `labs()`, but we will wait on those.
+
+
+---
+
+# Histograms
+
+.left-column[
+
+* Binned counts of data.
+
+* Great for assessing shape.
+]
+
+.right-column[
+&lt;img src="stat100_wk02mon_files/figure-html/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Data Shapes
+
+&lt;img src="stat100_wk02mon_files/figure-html/unnamed-chunk-29-1.png" width="864" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Histograms
+
+.pull-left[
+
+
+```r
+# Create histogram
+ggplot(data = july_2019, 
+       mapping = aes(x = Total)) +
+  geom_histogram()
+```
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/hist-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+---
+
+# Histograms
+
+.pull-left[
+
+
+```r
+# Create histogram
+ggplot(data = july_2019, 
+       mapping = aes(x = Total)) +
+  geom_histogram(color = "white",
+                 fill = "violetred1",
+                 bins = 50)
+```
+
+#### For aesthetics:
+
+* **mapping** to a variable goes in `aes()`
+* **setting** to a specific value goes in the `geom_---()`
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/hist2-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+
+---
+
+# Boxplots
+
+.pull-left[
+
+
+
+* **Five number summary**: 
+    + Minimum
+    + First quartile (Q1)
+    + Median
+    + Third quartile (Q3)
+    + Maximum
+* Interquartile range (IQR) `\(=\)` Q3 `\(-\)` Q1
+* Outliers: **unusual** points 
+    + Boxplot defines unusual as being beyond `\(1.5*IQR\)` from `\(Q1\)` or `\(Q3\)`.
+* Whiskers: reach out to the furthest point that is NOT an outlier
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/box-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+# Boxplots
+
+.pull-left[
+
+
+```r
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total)) +
+  geom_boxplot()
+```
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/box-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Boxplots
+
+.pull-left[
+
+
+```r
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total)) +
+  geom_boxplot(fill = "springgreen1")
+```
+
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/box2-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+
+# Boxplots
+
+.pull-left[
+
+
+```r
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total,
+                     fill = Occasion)) +
+  geom_boxplot()
+```
+
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/box3-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+
+---
+
+# Boxplots
+
+
+.pull-left[
+
+
+```r
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total,
+                     fill = Occasion)) +
+  geom_boxplot() +
+  guides(fill = "none")
+```
+
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/box4-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+# Violin Plots
+
+
+.pull-left[
+
+
+```r
+ggplot(data = july_2019, 
+       mapping = aes(x = Occasion, 
+                     y = Total,
+                     fill = Occasion)) +
+  geom_violin() +
+  guides(fill = "none")
+```
+
+
+
+]
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/vio-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+# Boxplot Versus Violin Plots
+
+
+.pull-left[
+
+&lt;img src="stat100_wk02mon_files/figure-html/box4-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+.pull-right[
+
+&lt;img src="stat100_wk02mon_files/figure-html/vio-1.png" width="768" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+## Recap: `ggplot2`
+
+
+```r
+library(tidyverse)
+ggplot(data = ---, mapping = aes(---)) +
+  geom_---(---) 
+```
+
+
+****************************
+
+--
+
+## Reminders
+
+* Remember that the [standard office hours schedule](https://docs.google.com/spreadsheets/d/1xwqT5fjYSf83NDEXhq8g0vp2SCeZGnsaIBeNBzS2JGo/edit#gid=1717202730) is now in full swing.
+    + Fill out [this form](https://forms.gle/fG1LruemSCBQucePA) (before March 7th) after your first visit.
+* Sections start this week!  You can find the location of your section [here](https://docs.google.com/spreadsheets/d/1_UHvfbVcTArxJ4nxpDxv6TFyS5eh8-gO6j2U-W6jHn4/edit?usp=sharing).    
+* Lecture quiz released after class on Wednesday.
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

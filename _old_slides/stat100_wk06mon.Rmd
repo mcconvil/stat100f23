@@ -1,0 +1,690 @@
+---
+title: Multiple Linear Regression
+output:
+  xaringan::moon_reader:
+    css: ["more.css", "xaringan-themer.css", "hygge"]
+    lib_dir: libsSlides
+    self_contained: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'      
+      highlightLines: true
+      countIncrementalSlides: false
+      navigation:
+        scroll: false
+    seal: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = 'center',
+                      fig.asp = 0.75, fig.width = 8)
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+
+background-image: url("img/DAW.png")
+background-position: left
+background-size: 50%
+class: middle, center, 
+
+
+.pull-right[
+
+## .base-blue[Multiple Linear Regression]
+
+<br>
+
+<br>
+
+### .purple[Kelly McConville]
+
+#### .purple[ Stat 100 | Week 6 | Spring 2023] 
+
+]
+
+
+
+---
+
+## Announcements
+
+* Mid-Term Exam: Wednesday, March 8th - Friday, March 10th
+    + Will post the oral exam sign-up sheet after lecture today!
+    + Will get a review sheet on Wednesday.
+    + Section this week will involve exam review.
+* On your p-sets, make sure your answers are your own for **both the coding and narrative components.**
+
+****************************
+
+--
+
+## Goals for Today
+
+.pull-left[
+
+
+* Broadening our idea of linear regression models
+
+ 
+] 
+
+
+
+.pull-right[
+
+
+* Discuss the **multiple** linear regression model
+
+* Explore interaction terms
+
+]
+
+
+---
+
+### The Importance of Problem 4 on P-Set 5
+
+
+.pull-left[
+
+
+```{r, out.width="50%", echo = FALSE, fig.align='center'}
+
+knitr::include_graphics("img/tukey.png")
+
+```
+
+]
+
+.pull-right[
+
+*"The best thing about being a statistician is that you get to* **play** *in everyone’s backyard."* -- John Tukey
+
+
+]
+
+
+--
+
+
+.pull-left[
+
+
+```{r, out.width="80%", echo = FALSE, fig.align='center'}
+
+knitr::include_graphics("img/question.001.jpeg")
+
+```
+
+]
+
+.pull-right[
+
+*"Consider* **context**. *The bottom line for numbers is that they cannot speak for themselves."*
+
+*"Lacking this context for orientation, strangers in the data set run the risk of getting things entirely wrong or actually doing harm by filling in the missing information with their own biases and assumptions."* -- Catherine D’Ignazio and Lauren F. Klein
+
+
+]
+
+
+
+---
+
+
+### Linear Regression
+
+Linear regression is a flexible class of models that allow for:
+
+* Both quantitative and categorical explanatory variables.
+
+--
+
+* Multiple explanatory variables.
+
+--
+
+* Curved relationships between the response variable and the explanatory variable.
+
+--
+
+* BUT the **response variable is quantitative**.
+
+********************
+
+* Today's explorations:
+    + Including more than one predictor
+    + Interaction terms
+    + Handling categorical variables with more than two categories
+
+
+---
+
+
+### Multiple Linear Regression
+
+**Form of the Model:**
+
+--
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\end{align}
+$$
+
+
+--
+
+#### How does extending to more predictors change our process?
+
+--
+
+**What doesn't change:**
+
+--
+
+&rarr; Still use **Method of Least Squares** to estimate coefficients
+
+--
+
+&rarr; Still use `lm()` to fit the model and `predict()` for prediction
+
+
+
+--
+
+**What does change:**
+
+--
+
+&rarr; Meaning of the coefficients are more complicated and depend on other variables in the model
+
+--
+
+&rarr; Need to decide which variables to include and how (linear term, squared term...)
+
+---
+
+### Multiple Linear Regression
+
+* We are going to see a few examples today and next lecture.
+
+--
+
+* We will need to return to modeling later in the course to more definitively answer questions about **model selection**.
+
+
+---
+
+## Example 
+
+Meadowfoam is a plant that grows in the Pacific Northwest and is harvested for its seed oil.  In a randomized experiment, researchers at Oregon State University looked at how two light-related factors influenced the number of flowers per meadowfoam plant, the primary measure of productivity for this plant.  The two light measures were light intensity (in mmol/ $m^2$ /sec) and the timing of onset of the light (early or late in terms of photo periodic floral induction).
+
+<br> 
+
+
+**Response variable**: 
+
+<br> 
+
+**Explanatory variables**: 
+
+
+<br> <br> <br> 
+
+**Model Form:**
+
+---
+
+### Data Loading and Wrangling
+
+```{r}
+library(tidyverse)
+library(Sleuth3)
+data(case0901)
+
+# Recode the timing variable
+case0901 <- case0901 %>%
+  mutate(TimeCat = case_when(
+    Time == 1 ~ "Late",
+    Time == 2 ~ "Early"
+    )) 
+```
+
+
+---
+
+### Visualizing the Data
+
+.pull-left[
+
+```{r meadowfoam, fig.show = 'hide', echo = TRUE}
+ggplot(case0901,
+       aes(x = Intensity,
+           y = Flowers,
+           color = TimeCat)) + 
+  geom_point(size = 4)
+
+```
+
+Why don't I have to include `data = ` and `mapping = ` in my `ggplot()` layer?
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("meadowfoam", "png"))
+```
+
+]
+
+
+
+---
+
+### Building the Linear Regression Model
+
+
+Full model form:
+
+```{r}
+modFlowers <- lm(Flowers ~ Intensity + TimeCat, data = case0901)
+
+library(moderndive)
+get_regression_table(modFlowers)
+```
+
+* Estimated regression line for $x_2 = 1$:
+
+<br> <br>  
+
+
+* Estimated regression line for $x_2 = 0$:
+
+
+---
+
+### Appropriateness of Model Form
+
+
+.pull-left[
+
+```{r meadowfoam2, fig.show = 'hide', echo = TRUE}
+ggplot(case0901, 
+       aes(x = Intensity,
+           y = Flowers,
+           color = TimeCat)) + 
+  geom_point(size = 4) + 
+  geom_smooth(method = "lm", se = FALSE)
+
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE, fig.width=7}
+knitr::include_graphics(knitr::fig_chunk("meadowfoam2", "png"))
+```
+
+]
+
+
+
+<br> 
+--
+
+Is the assumption of **equal slopes** reasonable here?
+
+
+---
+
+### Prediction
+
+```{r}
+flowersNew <- data.frame(Intensity = 700, 
+                         TimeCat = "Early")
+predict(modFlowers, newdata = flowersNew)
+```
+
+---
+
+### New Example
+
+For this example, we will use data collected by the website pollster.com, which aggregated 102 presidential polls from August 29th, 2008 through the end of September.  We want to determine the best model to explain the variable `Margin`, measured by the difference in preference between Barack Obama and John McCain.  Our potential predictors are `Days` (the number of days after the Democratic Convention) and `Charlie` (indicator variable on whether poll was conducted before or after the first ABC interview of Sarah Palin with Charlie Gibson). 
+
+--
+
+.pull-left[
+
+```{r}
+Pollster08 <- 
+  read_csv("data/Pollster08.csv")
+glimpse(Pollster08)
+```
+
+]
+
+.pull-right[
+
+**Response variable**: 
+
+<br> 
+
+
+
+**Explanatory variables**: 
+
+]
+
+---
+
+### Visualizing the Data
+
+.pull-left[
+
+```{r polls, fig.show='hide'}
+ggplot(Pollster08,
+       aes(x = Days,
+           y = Margin, 
+           color = Charlie)) +
+  geom_point(size = 3)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("polls", "png"))
+```
+
+]
+
+
+What is wrong with how one of the variables is mapped in the graph?
+
+
+
+---
+
+### Visualizing the Data
+
+.pull-left[
+
+```{r polls2, fig.show='hide'}
+ggplot(Pollster08, 
+       aes(x = Days,
+           y = Margin, 
+           color = factor(Charlie))) +
+  geom_point(size = 3)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("polls2", "png"))
+```
+
+]
+
+
+--
+
+Is the assumption of **equal slopes** reasonable here?
+
+
+---
+
+### Model Forms
+
+**Same Slopes Model:**
+
+<br> <br> <br> 
+
+**Different Slopes Model:**
+
+
+* Line for $x_2 = 1$:
+
+<br> <br> <br> 
+
+
+* Line for $x_2 = 0$: 
+
+
+
+---
+
+### Fitting the Linear Regression Model
+
+```{r}
+modPoll <- lm(Margin ~ Days*factor(Charlie), data = Pollster08)
+
+get_regression_table(modPoll)
+```
+
+
+* Estimated regression line for $x_2 = 1$:
+
+<br> <br> <br> 
+
+
+* Estimated regression line for $x_2 = 0$: 
+
+---
+
+### Adding the Regression Model to the Plot
+
+.pull-left[
+
+```{r polls3, fig.show='hide'}
+ggplot(Pollster08, 
+       aes(x = Days, 
+           y = Margin, 
+           color = factor(Charlie))) +
+  geom_point(size = 3) +
+  stat_smooth(method = lm, se = FALSE)
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("polls3", "png"))
+```
+
+]
+
+
+--
+
+Is our modeling goal here **predictive** or **descriptive**?
+
+
+
+---
+
+### New Example: Movies
+
+Let's model a movie's critic rating using the audience rating and the movie's genre.
+
+```{r}
+library(tidyverse)
+movies <- read_csv("https://www.lock5stat.com/datasets2e/HollywoodMovies.csv")
+
+# Restrict our attention to dramas, horrors, and actions
+movies2 <- movies %>%
+  filter(Genre %in% c("Drama", "Horror", "Action")) %>%
+  drop_na(Genre, AudienceScore, RottenTomatoes)
+glimpse(movies2)
+```
+
+* **Response variable:**
+
+* **Explanatory variables:**
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+Let's start with what NOT to do.
+
+<br>
+<br>
+
+**Equal Slopes Model:**
+
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+What we should do instead.
+
+<br>
+<br>
+
+**Equal Slopes Model:**
+
+
+---
+
+#### How should we encode a categorical variable with more than 2 categories?
+
+
+
+<br>
+<br>
+
+
+**Different Slopes Model:**
+
+
+---
+
+### Exploring the Data
+
+.pull-left[
+
+```{r mscat, fig.show = 'hide'}
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = lm, se = FALSE) +
+  geom_abline(slope = 1, intercept = 0)
+```
+
+* Trends?
+
+* Should we include interaction terms in the model?
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("mscat", "png"))
+```
+
+
+]
+
+
+---
+
+### Side-bar: Identify Outliers on a Graph
+
+
+```{r}
+outliers <- movies2 %>%
+  mutate(DiffScore = AudienceScore - RottenTomatoes) %>%
+  filter(DiffScore > 50 | DiffScore < -30) %>%
+  select(Movie, DiffScore, AudienceScore, RottenTomatoes, Genre)
+outliers
+```
+
+---
+
+### Side-bar: Identify Outliers on a Graph
+
+.pull-left[
+
+```{r outliers, fig.show='hide'}
+library(ggrepel)
+ggplot(data = movies2,
+       mapping = aes(x = AudienceScore,
+                     y = RottenTomatoes,
+                     color = Genre)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = lm, se = FALSE) +
+  geom_abline(slope = 1, intercept = 0) +
+  geom_text_repel(data = outliers,
+                  mapping = aes(label =
+                                  Movie),
+                  force = 10,
+                  show.legend = FALSE,
+                  size = 6)
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+knitr::include_graphics(knitr::fig_chunk("outliers", "png"))
+```
+
+
+]
+
+
+---
+
+
+### Building the Model:
+
+Full model form: 
+
+```{r}
+mod <- lm(RottenTomatoes ~ AudienceScore*Genre, data = movies2)
+
+library(moderndive)
+get_regression_table(mod) 
+```
+
+Estimated model for Dramas:
+
+---
+
+class: middle, center
+
+
+##  Will consider adding curvative and get some practice on Wednesday!
+
+
+---
+
+## Reminders:
+
+* Mid-Term Exam: Wednesday, March 8th - Friday, March 10th
+    + Will post the oral exam sign-up sheet after lecture today!
