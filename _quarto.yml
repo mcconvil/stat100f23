@@ -1,6 +1,6 @@
 project:
   type: website
-
+  output-dir: docs
 website:
   title: "Course Materials for Stat 100 F23"
   navbar:
