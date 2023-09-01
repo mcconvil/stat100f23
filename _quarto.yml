@@ -4,6 +4,14 @@ project:
   resources: pdfs
 website:
   page-navigation: true
+  title: "Stat 100"
+  site-url: "https://mcconvil.github.io/stat100f23"
+  search: 
+    type: overlay
+  navbar:
+    background: "#D1495B" 
+    search: true
+    style: "docked"
   # navbar:
   #   left:
   #   - text: "Homepage"
