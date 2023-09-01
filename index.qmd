@@ -1,3 +1,12 @@
 ---
 title: "Stat 100: Introduction to Statistics and Data Science"
 ---
+
+The lecture slides (both in HTML and PDF) will be posted here).
+
+::: column-screen-inset-right
+| Class Period | HTML Slides | PDF Slides |
+|------|------|------|
+|   Week 1, Wed   | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk01wed.html)     |  [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/stat100_wk01wed.pdf)     |
+|      |      |      |
+:::
