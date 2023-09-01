@@ -10,6 +10,8 @@ format:
     slide-number: c
     auto-stretch: false
     callout-appearance: simple
+    pdf-max-pages-per-slide: 1
+  pdf: default
 execute:
   echo: true
   warning: false
@@ -36,11 +38,11 @@ library(tidyverse)
 What words or phrases do you think of when you hear the word ["Harvard"]{.mauve}?
 :::
 
-::: {style="margin-top: 80px; font-size: 1.5em; color: #19647E;"}
-This being a [data]{.mauve} class, I'd like to collect some data related to ["statistical thinking."]{.mauve}?
+::: {style="margin-top: 80px; font-size: 1.2em; color: #19647E;"}
+This being a [data]{.mauve} class, I'd like to collect some data related to ["statistical thinking."]{.mauve}
 :::
 
-::: {style="margin-top: 80px; font-size: 1.5em; color: #19647E;"}
+::: {style="margin-top: 80px; font-size: 1.2em; color: #19647E;"}
 Go to [bit.ly/stat-100-think](https://bit.ly/stat-100-think) to provide the words or phrases you think of when you hear ["statistical thinking."]{.mauve}
 :::
 
@@ -70,12 +72,10 @@ Go to [bit.ly/stat-100-think](https://bit.ly/stat-100-think) to provide the word
 
 #### Step 1: Getting Started Module in Canvas
 
-```{r}
-#| echo: false
-#| out-width: "85%"
-knitr::include_graphics("img/Canvas_getting_started.png")
 
-```
+![](img/Canvas_getting_started.png){width=85%}
+
+
 
 ------------------------------------------------------------------------
 
