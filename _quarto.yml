@@ -2,6 +2,7 @@ project:
   type: website
   output-dir: docs
 website:
+  page-navigation: true
   title: "Course Materials for Stat 100 F23"
   navbar:
     left:
@@ -11,9 +12,9 @@ website:
     - text: "Slides (First Half)"
       icon: fa-chart-area
       menu: 
-        - text: "Week 1 Mon"
+        - text: "Week 1 Wed"
           icon: fa-file
-          href: stat100_wk01mon.qmd
+          href: stat100_wk01wed.qmd
 
 format:
   html:
