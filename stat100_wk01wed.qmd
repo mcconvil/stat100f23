@@ -77,7 +77,6 @@ Go to [bit.ly/stat-100-think](https://bit.ly/stat-100-think) to provide the word
 
 ![](img/Canvas_getting_started.png){width="85%"}
 
-
 ------------------------------------------------------------------------
 
 ## Stat 100 Tech & Materials {.center}
@@ -231,11 +230,9 @@ knitr::include_graphics("img/data.jpeg")
 :::
 :::
 
-
 # Also, the Stat 100 Teaching Team are so excited to support your learning!
 
----
-
+------------------------------------------------------------------------
 
 ## Stat 100 is about developing our **statistical thinking** skills. {.center}
 
@@ -314,7 +311,7 @@ Will use a wide-range of **real** and **relevant** data examples
 -   After public outcry, the Georgia Department of Public Health said they made a mistake and posted the following updated graph:
 
 ::: {.fragment .midi}
-![](img/GAcovid2.jpg){width="50%" fig-align="center"}
+![](img/GAcovid2.jpg){fig-align="center" width="40%"}
 :::
 
 -   How do your conclusions about COVID-19 cases in Georgia change when now interpreting this new graph?
@@ -335,7 +332,7 @@ Alberto Cairo, a journalist and designer, created the second graph of the Georgi
 
 ------------------------------------------------------------------------
 
-### Example: Visualizing COVID Prevalence
+#### Example: Visualizing COVID Prevalence
 
 ::: nonincremental
 -   The [Massachusetts Water Resources Authority (MWRA) graph](https://www.mwra.com/biobot/biobotdata.htm) tracks the presence of COVID-19 in the Boston-area wastewater.
@@ -689,8 +686,6 @@ Example questions:
 
 -   For quantitative variables, what values are possible? Were the data rounded or binned? Are those values actually encoding categories? What are the units of measurement?
 
-
-
 # Goal: Start collecting data from your life so that you can visualize it on P-Set 1.
 
 ------------------------------------------------------------------------
@@ -707,7 +702,7 @@ Example questions:
 
 -   Hand-drawn data visualizations allow us to focus on the first part with full control over the **creative** process!
 
----
+------------------------------------------------------------------------
 
 ## Hand-Drawn Data Viz Examples
 
@@ -715,7 +710,6 @@ Example questions:
 
 ::: blockquote
 *"Each week, and for a year, we collected and measured a particular type of data about our lives, used this data to make a drawing on a postcard-sized sheet of paper, and then dropped the postcard in an English"postbox" (Stefanie) or an American "mailbox" (Giorgia)!"*
-
 :::
 
 ------------------------------------------------------------------------
@@ -778,7 +772,7 @@ Example questions:
 -   Will get a blank postcard and further guidance on the visualization with P-Set 1.
 :::
 
----
+------------------------------------------------------------------------
 
 ##  {.center data-menu-title="RStudio"}
 
@@ -786,16 +780,13 @@ Example questions:
 Demo of accessing the RStudio Server on Posit Cloud
 :::
 
-
 ::: {style="margin-top: 80px; font-size: 1.2em; color: #19647E;"}
-
 Try to access the RStudio Server between now and next lecture.
 
 Come back to the recording if need help with the steps.
-
 :::
 
----
+------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
@@ -816,5 +807,3 @@ Come back to the recording if need help with the steps.
 -   The regular office hour schedule will be posted later this week and will start next week.
 
 -   Be on the look-out for the section preference form.
-
-
