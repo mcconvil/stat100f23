@@ -148,6 +148,7 @@ library(tidyverse)
 
 ![](img/weekly_flow_f23.jpeg)
 
+
 ---
 
 ## Forms of Assessment
@@ -316,7 +317,8 @@ I will refer to ChatGPT but I generally mean the various generative AI tools.
 
 ---
 
-## ChatGPT & Stat 100
+##  {#chatgpt data-menu-title="ChatGPT"}
+
 
 ::: columns
 ::: {.column  width="50%"}
@@ -357,6 +359,23 @@ I will refer to ChatGPT but I generally mean the various generative AI tools.
 * For you to **learn** to code and to **think** statistically.
     + The Stat 100 Teaching Team will help support that learning.
 
+:::
+:::
+
+
+::: columns
+
+::: {.column  width="50%"}
+
+
+* Instantly generating written blurbs.
+
+:::
+
+
+::: {.column  width="50%"}
+
+* For you to learn how to communicate about your data work and data ethics.
 :::
 :::
 
@@ -582,7 +601,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 :::
 
 
-* Sideways carrot called **prompt**.
+* Sideways caret called **prompt**.
 
 * Where you run code.
 
