@@ -355,7 +355,7 @@ I will refer to ChatGPT but I generally mean the various generative AI tools.
 
 
 * For you to **learn** to code and to **think** statistically.
-    + The Stat 100 Teaching Team will help guide that learning without giving you the answers.
+    + The Stat 100 Teaching Team will help support that learning.
 
 :::
 :::
@@ -369,7 +369,7 @@ I will refer to ChatGPT but I generally mean the various generative AI tools.
 * **Seasoned data scientist** can/should:
     + Verify the correctness of the code.
     + Identify any assumptions or defaults ChatGPT is employing.
-    + Run the code in `R` and draw conclusions based on their data to reduce risk of perpetuating biases that exist in ChatGPT's training data.
+    + Run the code in `R` and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT's training data.
 
 
 * So, ChatGPT might be useful to you **after** Stat 100 but will be detrimental to your learning **during** Stat 100.
@@ -588,9 +588,14 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 * Let's try it:
 
+::: {.fragment}
+
+
 ```{r}
 6 * 2/ 3
 ```
+
+:::
 
 :::
 

@@ -221,14 +221,14 @@
     "href": "stat100_wk02mon.html#chatgpt-stat-100",
     "title": "Stat 100",
     "section": "ChatGPT & Stat 100",
-    "text": "ChatGPT & Stat 100\n\n\nChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help guide that learning without giving you the answers."
+    "text": "ChatGPT & Stat 100\n\n\nChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning."
   },
   {
     "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
     "href": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
     "title": "Stat 100",
     "section": "My View on the (Current) Role of ChatGPT in Data Work",
-    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on their data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
+    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
   },
   {
     "objectID": "stat100_wk02mon.html#ai-policy-for-stat-100",
