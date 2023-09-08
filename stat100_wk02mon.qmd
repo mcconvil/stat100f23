@@ -11,7 +11,7 @@ format:
     slide-number: c
     auto-stretch: false
     callout-appearance: simple
-    pdf-max-pages-per-slide: 2
+    pdf-max-pages-per-slide: 1
     menu: 
       side: right
       numbers: true
@@ -39,7 +39,7 @@ library(tidyverse)
 
 ::: columns
 ::: {.column .center width="60%"}
-![](img/DAW.png){width="100%"}
+![](img/DAW.png){width="80%"}
 :::
 
 ::: {.column .center width="40%"}
@@ -47,7 +47,7 @@ library(tidyverse)
 
 [Computing in Stat 100]{.custom-title}
 
-<br> <br> <br> <br> <br> <br>
+<br> <br> <br> <br> 
 
 [Kelly McConville]{.custom-subtitle}
 
@@ -63,7 +63,7 @@ library(tidyverse)
     + [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing): Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!
     + [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing)
     + Wrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309
-    + Lecture quiz will be released on Gradescope after class on Wednesday.
+    + Lecture quiz will be released in **Gradescope** after class on Wednesday.
 
 
 
@@ -124,12 +124,13 @@ library(tidyverse)
 
 ::: columns
 ::: {.column .center width="60%"}
-![](img/DAW.png){width="80%"}
+![](img/DAW.png){width="70%"}
 :::
 
-::: {.column   width="40%"}
+::: {.column width="40%"}
 
-###  Course Learning Objectives
+### Workflow
+
 
 * Not a strict set of guidelines.
 
@@ -146,7 +147,7 @@ library(tidyverse)
 
 ## Stat 100 Weekly Flow
 
-![](img/weekly_flow_f23.jpeg)
+![](img/weekly_flow_f23.jpeg){width="90%" fig-align="center"}
 
 
 ---
@@ -168,7 +169,7 @@ library(tidyverse)
 * **Weekly problem sets:**
     + Practice concepts.
     + Time during section will be devoted to starting the next p-set.
-    + Can drop one problem set grade and get 4 extension days.
+    + Can drop one p-set grade and get 4 extension days.
 
 :::
 :::
@@ -225,6 +226,8 @@ library(tidyverse)
 
 
 + Creating an example that illustrates a recent concept
+
++ Sharing an article and talking about the stats discussed in the article
 
 + Answering our start-of-term ice breaker!
 
@@ -485,6 +488,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 * **Create** study groups with your classmates
     + Don't know anyone in the course?  
         + Use Slack or Section to each to know other students in the course!
+        + Fill out this [Stat 100 study group matching form](https://forms.gle/GFDuVyhApDmBh4f28)
 
 
 
@@ -493,7 +497,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ---
 
-![](img/packages.003.jpeg){width="90%"}
+![](img/packages.jpeg){width="100%"}
 ---
 
 ### Getting Help with `R`
@@ -525,17 +529,17 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 :::
 
 
-## Language: `R`-This, `R`-That, `Q`-What?
+## Language: `R`-This, `R`-That, `Q`-What?{.smaller}
 
 
 ::: columns
 ::: {.column width="33%" .center}
 
-<br>
+
 
 <br>
 
-![](img/Rlogo.png)
+![](img/Rlogo.png){width="90%"}
 <br>
 
 
@@ -549,7 +553,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ::: {.column width="33%" .center}
 
-![](img/RStudio.png)
+![](img/RStudio.png){width="85%"}
 
 <br>
 
@@ -561,7 +565,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ::: {.column width="33%" .center}
 
-![](img/quarto.png)
+![](img/quarto.png){width="80%"}
 
 
 <br>
@@ -640,7 +644,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 **Files et. al.**
 
-* **Files**: Accesses files in your own directory and the shared directory `shared_data`.
+* **Files**: Accesses files in that project.
 
 * **Plots**: Contains graphs we create.
 
@@ -658,8 +662,10 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ## Reminders
 
+
 * Class in full swing:
     + [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing): Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!
     + [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing)
     + Wrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309
-    + Lecture quiz will be released on Gradescope after class on Wednesday.
+    + Lecture quiz will be released in **Gradescope** after class on Wednesday.
+

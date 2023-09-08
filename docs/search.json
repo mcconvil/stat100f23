@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed"
+    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon"
   },
   {
     "objectID": "stat100_wk01wed.html#keyword",
@@ -165,7 +165,7 @@
     "href": "stat100_wk02mon.html#announcements",
     "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released on Gradescope after class on Wednesday."
+    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
   },
   {
     "objectID": "stat100_wk02mon.html#day-2-goals",
@@ -193,7 +193,7 @@
     "href": "stat100_wk02mon.html#forms-of-assessment",
     "title": "Stat 100",
     "section": "Forms of Assessment",
-    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one problem set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
+    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one p-set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
   },
   {
     "objectID": "stat100_wk02mon.html#this-weeks-assessments",
@@ -217,11 +217,11 @@
     "text": "Professor McConville in Summer 2023\n\n\n\n\n\nRicardo IV Tamayo\n\n\n\nGenerative AI Engagements\n\nParticipated in Stats Dept reading group on generative AI\nWent to conference talks on generative AI\nTalked to ChatGPT"
   },
   {
-    "objectID": "stat100_wk02mon.html#chatgpt-stat-100",
-    "href": "stat100_wk02mon.html#chatgpt-stat-100",
+    "objectID": "stat100_wk02mon.html#chatgpt",
+    "href": "stat100_wk02mon.html#chatgpt",
     "title": "Stat 100",
-    "section": "ChatGPT & Stat 100",
-    "text": "ChatGPT & Stat 100\n\n\nChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning."
+    "section": "",
+    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
   },
   {
     "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
@@ -263,14 +263,14 @@
     "href": "stat100_wk02mon.html#ways-to-get-support",
     "title": "Stat 100",
     "section": "Ways to Get Support",
-    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!"
+    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
   },
   {
     "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
     "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
     "title": "Stat 100",
     "section": "Language: R-This, R-That, Q-What?",
-    "text": "Language: R-This, R-That, Q-What?\n\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
+    "text": "Language: R-This, R-That, Q-What?\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
   },
   {
     "objectID": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
@@ -284,13 +284,6 @@
     "href": "stat100_wk02mon.html#reminders",
     "title": "Stat 100",
     "section": "Reminders",
-    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released on Gradescope after class on Wednesday."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#chatgpt",
-    "href": "stat100_wk02mon.html#chatgpt",
-    "title": "Stat 100",
-    "section": "",
-    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
+    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
   }
 ]
