@@ -8,7 +8,7 @@
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.433">
+  <meta name="generator" content="quarto-1.3.353">
 
   <title>Data Viz</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -750,6 +750,366 @@
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load necessary packages</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-setting-eco-totem-broadway-bicycle-count" class="slide level2">
+<h2>Data Setting: <a href="https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg">Eco-Totem Broadway Bicycle Count</a></h2>
+<div class="columns">
+<div class="column" data-fig-align="center" style="width:40%;">
+<p><img data-src="img/counter.jpg" style="width:100.0%"></p>
+</div><div class="column" data-fig-align="center" style="width:60%;">
+<p><img data-src="img/bike_counter_map.png" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="import-the-data" class="slide level2">
+<h2>Import the <a href="https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg">Data</a></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>bike_counter_july <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/bike_counter_july.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>july_2019 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/july_2019.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># Inspect the data</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">glimpse</span>(bike_counter_july)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 5,952
+Columns: 7
+$ DateTime  &lt;chr&gt; "07/01/2019 12:00:00 AM", "07/01/2019 12:15:00 AM", "07/01/2…
+$ Day       &lt;chr&gt; "Monday", "Monday", "Monday", "Monday", "Monday", "Monday", …
+$ Date      &lt;date&gt; 2019-07-01, 2019-07-01, 2019-07-01, 2019-07-01, 2019-07-01,…
+$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…
+$ Total     &lt;dbl&gt; 1, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, …
+$ Westbound &lt;dbl&gt; 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, …
+$ Eastbound &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">glimpse</span>(july_2019)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 192
+Columns: 8
+$ DateTime  &lt;chr&gt; "07/04/2019 12:00:00 AM", "07/04/2019 12:15:00 AM", "07/04/2…
+$ Day       &lt;chr&gt; "Thursday", "Thursday", "Thursday", "Thursday", "Thursday", …
+$ Date      &lt;date&gt; 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04,…
+$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…
+$ Total     &lt;dbl&gt; 2, 3, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …
+$ Westbound &lt;dbl&gt; 2, 3, 1, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, …
+$ Eastbound &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …
+$ Occasion  &lt;chr&gt; "Fourth of July", "Fourth of July", "Fourth of July", "Fourt…</code></pre>
+</div>
+</div>
+</section>
+<section id="inspect-the-data" class="slide level2">
+<h2>Inspect the Data</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Look at first few rows</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">head</span>(bike_counter_july)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  DateTime               Day    Date       Time   Total Westbound Eastbound
+  &lt;chr&gt;                  &lt;chr&gt;  &lt;date&gt;     &lt;time&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 07/01/2019 12:00:00 AM Monday 2019-07-01 00:00      1         1         0
+2 07/01/2019 12:15:00 AM Monday 2019-07-01 00:15      0         0         0
+3 07/01/2019 12:30:00 AM Monday 2019-07-01 00:30      0         0         0
+4 07/01/2019 12:45:00 AM Monday 2019-07-01 00:45      0         0         0
+5 07/01/2019 01:00:00 AM Monday 2019-07-01 01:00      2         1         1
+6 07/01/2019 01:15:00 AM Monday 2019-07-01 01:15      0         0         0</code></pre>
+</div>
+</div>
+<p>What does a row represent here?</p>
+</section>
+<section id="inspect-the-data-1" class="slide level2">
+<h2>Inspect the Data</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Determine type</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># To access one variable: dataset$variable</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">class</span>(bike_counter_july<span class="sc">$</span>Day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">class</span>(bike_counter_july<span class="sc">$</span>Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">class</span>(bike_counter_july)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+</div>
+</section>
+<section id="grammar-of-graphics-1" class="slide level2">
+<h2>Grammar of Graphics</h2>
+<ul>
+<li class="fragment"><strong>data</strong>: Data frame that contains the raw data
+<ul>
+<li class="fragment">Variables</li>
+</ul></li>
+<li class="fragment"><strong>geom</strong>: Geometric <strong>shape</strong> that the data are mapped to.
+<ul>
+<li class="fragment">Point, line, bar, text, …</li>
+</ul></li>
+<li class="fragment"><strong>aesthetic</strong>: Visual properties of the <strong>geom</strong>
+<ul>
+<li class="fragment">X (horizontal) position, y (vertical) position, color, fill, shape</li>
+</ul></li>
+<li class="fragment"><strong>scale</strong>: Controls how data are mapped to the visual values of the aesthetic.
+<ul>
+<li class="fragment">EX: particular colors</li>
+</ul></li>
+<li class="fragment"><strong>guide</strong>: Legend/key to help user convert visual display back to the data</li>
+</ul>
+</section>
+<section id="ggplot2-example-code" class="slide level2">
+<h2><code>ggplot2</code> example code</h2>
+<p><strong>Guiding Principle</strong>: We will map variables from the <strong>data</strong> to the <strong>aes</strong>thetic attributes (e.g.&nbsp;location, size, shape, color) of <strong>geom</strong>etric objects (e.g.&nbsp;points, lines, bars).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="sc">---</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="sc">---</span>)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  geom_<span class="sc">---</span>(<span class="sc">---</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li class="fragment">There are other layers, such as <code>scales_---_---()</code> and <code>labs()</code>, but we will wait on those.</li>
+</ul>
+</section>
+<section id="histograms" class="slide level2">
+<h2>Histograms</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<ul>
+<li class="fragment"><p>Binned counts of data.</p></li>
+<li class="fragment"><p>Great for assessing shape.</p></li>
+</ul>
+</div><div class="column" style="width:66%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/unnamed-chunk-11-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-shapes" class="slide level2">
+<h2>Data Shapes</h2>
+<div class="cell" data-layout-align="center" data-fig.asp="0.4">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/unnamed-chunk-12-1.png" width="6000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="histograms-1" class="slide level2">
+<h2>Histograms</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Create histogram</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> july_2019, </span>
+<span id="cb15-3"><a href="#cb15-3"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/hist-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="histograms-2" class="slide level2">
+<h2>Histograms</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="4-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Create histogram</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> july_2019, </span>
+<span id="cb16-3"><a href="#cb16-3"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5"></a>                 <span class="at">fill =</span> <span class="st">"violetred1"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>                 <span class="at">bins =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/hist2-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment"><strong>mapping</strong> to a variable goes in <code>aes()</code></li>
+<li class="fragment"><strong>setting</strong> to a specific value goes in the <code>geom_---()</code></li>
+</ul>
+</section>
+<section id="boxplots" class="slide level2">
+<h2>Boxplots</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment"><strong>Five number summary</strong>:
+<ul>
+<li class="fragment">Minimum</li>
+<li class="fragment">First quartile (Q1)</li>
+<li class="fragment">Median</li>
+<li class="fragment">Third quartile (Q3)</li>
+<li class="fragment">Maximum</li>
+</ul></li>
+<li class="fragment">Interquartile range (IQR) <span class="math inline">\(=\)</span> Q3 <span class="math inline">\(-\)</span> Q1</li>
+<li class="fragment">Outliers: <strong>unusual</strong> points
+<ul>
+<li class="fragment">Boxplot defines unusual as being beyond <span class="math inline">\(1.5*IQR\)</span> from <span class="math inline">\(Q1\)</span> or <span class="math inline">\(Q3\)</span>.</li>
+</ul></li>
+<li class="fragment">Whiskers: reach out to the furthest point that is NOT an outlier</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/unnamed-chunk-13-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplots-1" class="slide level2">
+<h2>Boxplots</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Create boxplot</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> july_2019, </span>
+<span id="cb17-3"><a href="#cb17-3"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Occasion, </span>
+<span id="cb17-4"><a href="#cb17-4"></a>                     <span class="at">y =</span> Total)) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/unnamed-chunk-14-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplots-2" class="slide level2">
+<h2>Boxplots</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> july_2019, </span>
+<span id="cb18-2"><a href="#cb18-2"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Occasion, </span>
+<span id="cb18-3"><a href="#cb18-3"></a>                     <span class="at">y =</span> Total)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"springgreen3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/box2-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplots-3" class="slide level2">
+<h2>Boxplots</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> july_2019, </span>
+<span id="cb19-2"><a href="#cb19-2"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Occasion, </span>
+<span id="cb19-3"><a href="#cb19-3"></a>                     <span class="at">y =</span> Total,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>                     <span class="at">fill =</span> Occasion)) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/box3-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplots-4" class="slide level2">
+<h2>Boxplots</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> july_2019, </span>
+<span id="cb20-2"><a href="#cb20-2"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Occasion, </span>
+<span id="cb20-3"><a href="#cb20-3"></a>                     <span class="at">y =</span> Total,</span>
+<span id="cb20-4"><a href="#cb20-4"></a>                     <span class="at">fill =</span> Occasion)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/box4-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="violin-plots" class="slide level2">
+<h2>Violin Plots</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> july_2019, </span>
+<span id="cb21-2"><a href="#cb21-2"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Occasion, </span>
+<span id="cb21-3"><a href="#cb21-3"></a>                     <span class="at">y =</span> Total,</span>
+<span id="cb21-4"><a href="#cb21-4"></a>                     <span class="at">fill =</span> Occasion)) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/vio-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplot-versus-violin-plots" class="slide level2">
+<h2>Boxplot Versus Violin Plots</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/unnamed-chunk-15-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk02wed_files/figure-revealjs/unnamed-chunk-16-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-ggplot2" class="slide level2">
+<h2>Recap: <code>ggplot2</code></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="sc">---</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="sc">---</span>)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  geom_<span class="sc">---</span>(<span class="sc">---</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="reminders" class="slide level2">
