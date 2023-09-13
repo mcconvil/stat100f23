@@ -1,5 +1,383 @@
 [
   {
+    "objectID": "stat100_wk02wed.html#announcements",
+    "href": "stat100_wk02wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\n\nFill out this form after your first visit.\n\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class today."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#teachly",
+    "href": "stat100_wk02wed.html#teachly",
+    "title": "Stat 100",
+    "section": "Teachly",
+    "text": "Teachly\n\nTeachly is a platform that allows you to fill out a profile so that we can get to know you and your interests in stats/data science better.\nYou should have received two emails:\n\nThe general Teachly profile\nA couple additional Stat 100 related questions\n\nEach question is optional. You will not be assessed on its completion or your answers.\nWays we plan to use Teachly:\n\nTo get to know you better.\nTo find out what data applications you might be interested in seeing.\nTo tailor advice related to future statistical endeavors."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#goals-for-today",
+    "href": "stat100_wk02wed.html#goals-for-today",
+    "title": "Stat 100",
+    "section": "Goals for Today",
+    "text": "Goals for Today\n\n\nFirst Segment:\n\nMotivate data visualizations.\nDevelop language to talk about the components of a graphic.\nPractice deconstructing graphics.\nDiscuss good graphical practices.\n\n\nSecond Segment:\n\nLearn the general structure of ggplot2.\nLearn a few standard graphs for numerical/quantitative data:\n\nHistogram: one numerical variable\nSide-by-side boxplot: one numerical variable and one categorical variable\nSide-by-side violin plot: one numerical variable and one categorical variable"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#why-construct-a-graph",
+    "href": "stat100_wk02wed.html#why-construct-a-graph",
+    "title": "Stat 100",
+    "section": "Why construct a graph?",
+    "text": "Why construct a graph?\n\n\nTo explore the data.\n\n\nTo summarize the data.\n\n\nTo showcase trends and make comparisons.\n\n\nTo tell a compelling story."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#challenger",
+    "href": "stat100_wk02wed.html#challenger",
+    "title": "Stat 100",
+    "section": "Challenger",
+    "text": "Challenger\n\nOn January 27th, 1986, engineers from Morton Thiokol recommended NASA delay launch of space shuttle Challenger due to cold weather.\n\nBelieved cold weather impacted the o-rings that held the rockets together.\nUsed 13 charts in their argument.\n\nAfter a two hour conference call, the engineer’s recommendation was overruled due to lack of persuasive evidence and the launch proceeded.\nThe Challenger exploded 73 seconds into launch."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#challenger-1",
+    "href": "stat100_wk02wed.html#challenger-1",
+    "title": "Stat 100",
+    "section": "Challenger",
+    "text": "Challenger\nHere’s one of those charts."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#challenger-2",
+    "href": "stat100_wk02wed.html#challenger-2",
+    "title": "Stat 100",
+    "section": "Challenger",
+    "text": "Challenger\nHere’s another one of those charts."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#challenger-3",
+    "href": "stat100_wk02wed.html#challenger-3",
+    "title": "Stat 100",
+    "section": "Challenger",
+    "text": "Challenger\nHere’s a graphic I created from Edward Tufte’s data."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#challenger-4",
+    "href": "stat100_wk02wed.html#challenger-4",
+    "title": "Stat 100",
+    "section": "Challenger",
+    "text": "Challenger\nThis adaptation is a recreation of Edward Tufte’s graphic.\n\n\n\n\n\n\n\n\n\n\n\nFor more information on this example and other examples, check out Tufte’s book."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#now-lets-learn-the-grammar-of-graphics.",
+    "href": "stat100_wk02wed.html#now-lets-learn-the-grammar-of-graphics.",
+    "title": "Stat 100",
+    "section": "Now let’s learn the Grammar of Graphics.",
+    "text": "Now let’s learn the Grammar of Graphics.\n\nWe will use this grammar to:\n\n\nDecompose and understand existing graphs.\n\n\nCreate our own graphs with the R package ggplot2."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#grammar-of-graphics",
+    "href": "stat100_wk02wed.html#grammar-of-graphics",
+    "title": "Stat 100",
+    "section": "Grammar of Graphics",
+    "text": "Grammar of Graphics\n\ndata: Data frame that contains the raw data\n\nVariables used in the graph\n\ngeom: Geometric shape that the data are mapped to.\n\nEX: Point, line, bar, text, …\n\naesthetic: Visual properties of the geom\n\nEX: X (horizontal) position, y (vertical) position, color, fill, shape\n\nscale: Controls how data are mapped to the visual values of the aesthetic.\n\nEX: particular colors, log scale\n\nguide: Legend/key to help user convert visual display back to the data\n\n\nFor right now, we won’t focus on the names of particular types of graphs (e.g., scatterplot) but on the elements of graphs."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#many-ways-to-visually-tell-a-story",
+    "href": "stat100_wk02wed.html#many-ways-to-visually-tell-a-story",
+    "title": "Stat 100",
+    "section": "Many Ways To Visually Tell A Story",
+    "text": "Many Ways To Visually Tell A Story\nWashington Post’s Approach:\n\n\n\n\n\nPeriscopic’s Approach"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#bad-graphics",
+    "href": "stat100_wk02wed.html#bad-graphics",
+    "title": "Stat 100",
+    "section": "Bad Graphics",
+    "text": "Bad Graphics\nBecause of all the design choices, it is much easier to make a bad graph than a good graph."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#misleading-graphics",
+    "href": "stat100_wk02wed.html#misleading-graphics",
+    "title": "Stat 100",
+    "section": "Misleading Graphics",
+    "text": "Misleading Graphics\nBe careful that your design choices don’t cause your viewer to draw incorrect conclusions about the data:\n\n\n\n\n\n\nJust letting the software make all the design choices can still lead to misleading graphs (recall the Georgia COVID graph)."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#summary-thoughts-on-graphical-considerations",
+    "href": "stat100_wk02wed.html#summary-thoughts-on-graphical-considerations",
+    "title": "Stat 100",
+    "section": "Summary Thoughts on Graphical Considerations",
+    "text": "Summary Thoughts on Graphical Considerations\n\nGood graphics are one’s where the findings and insights are obvious to the viewer.\n\nAdd information and key context.\n\nFacilitate the comparisons that correspond to the research question.\n\nRecall the three Georgia COVID counts graphs from Day 1!\n\nData visualizations are not neutral.\nIt is easier to see the differences and similarities between different types of graphics if we learn the grammar of graphics.\nPracticing decomposing graphics should make it easier for us to compose our own graphics."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#load-necessary-packages",
+    "href": "stat100_wk02wed.html#load-necessary-packages",
+    "title": "Stat 100",
+    "section": "Load Necessary Packages",
+    "text": "Load Necessary Packages\n\n\n\n\n\nggplot2 is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#data-setting-eco-totem-broadway-bicycle-count",
+    "href": "stat100_wk02wed.html#data-setting-eco-totem-broadway-bicycle-count",
+    "title": "Stat 100",
+    "section": "Data Setting: Eco-Totem Broadway Bicycle Count",
+    "text": "Data Setting: Eco-Totem Broadway Bicycle Count"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#import-the-data",
+    "href": "stat100_wk02wed.html#import-the-data",
+    "title": "Stat 100",
+    "section": "Import the Data",
+    "text": "Import the Data\n\njuly_2019 &lt;- read_csv(\"data/july_2019.csv\")\n\n# Inspect the data\nglimpse(july_2019)\n\nRows: 192\nColumns: 8\n$ DateTime  &lt;chr&gt; \"07/04/2019 12:00:00 AM\", \"07/04/2019 12:15:00 AM\", \"07/04/2…\n$ Day       &lt;chr&gt; \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", …\n$ Date      &lt;date&gt; 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04,…\n$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…\n$ Total     &lt;dbl&gt; 2, 3, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …\n$ Westbound &lt;dbl&gt; 2, 3, 1, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, …\n$ Eastbound &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …\n$ Occasion  &lt;chr&gt; \"Fourth of July\", \"Fourth of July\", \"Fourth of July\", \"Fourt…"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#inspect-the-data",
+    "href": "stat100_wk02wed.html#inspect-the-data",
+    "title": "Stat 100",
+    "section": "Inspect the Data",
+    "text": "Inspect the Data\n\n# Look at first few rows\nhead(july_2019)\n\n# A tibble: 6 × 8\n  DateTime             Day   Date       Time  Total Westbound Eastbound Occasion\n  &lt;chr&gt;                &lt;chr&gt; &lt;date&gt;     &lt;tim&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   \n1 07/04/2019 12:00:00… Thur… 2019-07-04 00:00     2         2         0 Fourth …\n2 07/04/2019 12:15:00… Thur… 2019-07-04 00:15     3         3         0 Fourth …\n3 07/04/2019 12:30:00… Thur… 2019-07-04 00:30     2         1         1 Fourth …\n4 07/04/2019 12:45:00… Thur… 2019-07-04 00:45     0         0         0 Fourth …\n5 07/04/2019 01:00:00… Thur… 2019-07-04 01:00     3         2         1 Fourth …\n6 07/04/2019 01:15:00… Thur… 2019-07-04 01:15     2         2         0 Fourth …\n\n\nWhat does a row represent here?"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#inspect-the-data-1",
+    "href": "stat100_wk02wed.html#inspect-the-data-1",
+    "title": "Stat 100",
+    "section": "Inspect the Data",
+    "text": "Inspect the Data\n\n# Determine type\n# To access one variable: dataset$variable\nclass(july_2019$Day)\n\n[1] \"character\"\n\nclass(july_2019$Total)\n\n[1] \"numeric\"\n\nclass(july_2019)\n\n[1] \"spec_tbl_df\" \"tbl_df\"      \"tbl\"         \"data.frame\""
+  },
+  {
+    "objectID": "stat100_wk02wed.html#grammar-of-graphics-1",
+    "href": "stat100_wk02wed.html#grammar-of-graphics-1",
+    "title": "Stat 100",
+    "section": "Grammar of Graphics",
+    "text": "Grammar of Graphics\n\ndata: Data frame that contains the raw data\n\nVariables used in the graph\n\ngeom: Geometric shape that the data are mapped to.\n\nEX: Point, line, bar, text, …\n\naesthetic: Visual properties of the geom\n\nEX: X (horizontal) position, y (vertical) position, color, fill, shape\n\nscale: Controls how data are mapped to the visual values of the aesthetic.\n\nEX: particular colors, log scale\n\nguide: Legend/key to help user convert visual display back to the data"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#ggplot2-example-code",
+    "href": "stat100_wk02wed.html#ggplot2-example-code",
+    "title": "Stat 100",
+    "section": "ggplot2 example code",
+    "text": "ggplot2 example code\nGuiding Principle: We will map variables from the data to the aesthetic attributes (e.g. location, size, shape, color) of geometric objects (e.g. points, lines, bars).\n\nggplot(data = ---, mapping = aes(---)) +\n  geom_---(---) \n\n\nThere are other layers, such as scales_---_---() and labs(), but we will wait on those."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#histograms",
+    "href": "stat100_wk02wed.html#histograms",
+    "title": "Stat 100",
+    "section": "Histograms",
+    "text": "Histograms\n\n\n\nBinned counts of data.\nGreat for assessing shape."
+  },
+  {
+    "objectID": "stat100_wk02wed.html#data-shapes",
+    "href": "stat100_wk02wed.html#data-shapes",
+    "title": "Stat 100",
+    "section": "Data Shapes",
+    "text": "Data Shapes"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#histograms-1",
+    "href": "stat100_wk02wed.html#histograms-1",
+    "title": "Stat 100",
+    "section": "Histograms",
+    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram()"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#histograms-2",
+    "href": "stat100_wk02wed.html#histograms-2",
+    "title": "Stat 100",
+    "section": "Histograms",
+    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram(color = \"white\",\n                 fill = \"violetred1\",\n                 bins = 50)\n\n\n\n\n\n\n\n\n\n\n\nmapping to a variable goes in aes()\nsetting to a specific value goes in the geom_---()"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#boxplots",
+    "href": "stat100_wk02wed.html#boxplots",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\n\nFive number summary:\n\nMinimum\nFirst quartile (Q1)\nMedian\nThird quartile (Q3)\nMaximum\n\nInterquartile range (IQR) \\(=\\) Q3 \\(-\\) Q1\nOutliers: unusual points\n\nBoxplot defines unusual as being beyond \\(1.5*IQR\\) from \\(Q1\\) or \\(Q3\\).\n\nWhiskers: reach out to the furthest point that is NOT an outlier"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#boxplots-1",
+    "href": "stat100_wk02wed.html#boxplots-1",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\n# Create boxplot\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot()"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#boxplots-2",
+    "href": "stat100_wk02wed.html#boxplots-2",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot(fill = \"springgreen3\")"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#boxplots-3",
+    "href": "stat100_wk02wed.html#boxplots-3",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot()"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#boxplots-4",
+    "href": "stat100_wk02wed.html#boxplots-4",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#violin-plots",
+    "href": "stat100_wk02wed.html#violin-plots",
+    "title": "Stat 100",
+    "section": "Violin Plots",
+    "text": "Violin Plots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_violin() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#boxplot-versus-violin-plots",
+    "href": "stat100_wk02wed.html#boxplot-versus-violin-plots",
+    "title": "Stat 100",
+    "section": "Boxplot Versus Violin Plots",
+    "text": "Boxplot Versus Violin Plots"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#recap-ggplot2",
+    "href": "stat100_wk02wed.html#recap-ggplot2",
+    "title": "Stat 100",
+    "section": "Recap: ggplot2",
+    "text": "Recap: ggplot2\n\nlibrary(tidyverse)\nggplot(data = ---, mapping = aes(---)) +\n  geom_---(---)"
+  },
+  {
+    "objectID": "stat100_wk02wed.html#reminders",
+    "href": "stat100_wk02wed.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class today."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#announcements",
+    "href": "stat100_wk02mon.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#day-2-goals",
+    "href": "stat100_wk02mon.html#day-2-goals",
+    "title": "Stat 100",
+    "section": "Day 2 Goals",
+    "text": "Day 2 Goals\n\nDiscuss course structure & goals (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#data-analysis-workflow",
+    "href": "stat100_wk02mon.html#data-analysis-workflow",
+    "title": "Stat 100",
+    "section": "Data Analysis Workflow",
+    "text": "Data Analysis Workflow"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#stat-100-weekly-flow",
+    "href": "stat100_wk02mon.html#stat-100-weekly-flow",
+    "title": "Stat 100",
+    "section": "Stat 100 Weekly Flow",
+    "text": "Stat 100 Weekly Flow"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#forms-of-assessment",
+    "href": "stat100_wk02mon.html#forms-of-assessment",
+    "title": "Stat 100",
+    "section": "Forms of Assessment",
+    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one p-set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#this-weeks-assessments",
+    "href": "stat100_wk02mon.html#this-weeks-assessments",
+    "title": "Stat 100",
+    "section": "This Week’s Assessments",
+    "text": "This Week’s Assessments\n\nLecture quiz releases on Wed at 11:45am.\nP-Set 1 will be posted to Posit Cloud on Wednesday.\n\nDue the following Tuesday, September 19th at 5pm on Gradescope.\nIn section this week, you will get started on P-Set 1 and will learn how to submit to Gradescope."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
+    "href": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
+    "title": "Stat 100",
+    "section": "Professor McConville in Spring 2023",
+    "text": "Professor McConville in Spring 2023\n\n\n\nBBC Science Focus"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
+    "href": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
+    "title": "Stat 100",
+    "section": "Professor McConville in Summer 2023",
+    "text": "Professor McConville in Summer 2023\n\n\n\n\n\nRicardo IV Tamayo\n\n\n\nGenerative AI Engagements\n\nParticipated in Stats Dept reading group on generative AI\nWent to conference talks on generative AI\nTalked to ChatGPT"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#chatgpt",
+    "href": "stat100_wk02mon.html#chatgpt",
+    "title": "Stat 100",
+    "section": "",
+    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
+    "href": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
+    "title": "Stat 100",
+    "section": "My View on the (Current) Role of ChatGPT in Data Work",
+    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#ai-policy-for-stat-100",
+    "href": "stat100_wk02mon.html#ai-policy-for-stat-100",
+    "title": "Stat 100",
+    "section": "AI Policy for Stat 100",
+    "text": "AI Policy for Stat 100\n\nWhile A.I. tools, such as ChatGPT, are being used to generate code and analyze data, goals of this course are to develop your own ability to write code and to thoughtfully extract knowledge from data. Therefore, we expect that all work students submit for this course will be their own. This includes code, written work, and oral assessments. We specifically forbid the use of ChatGPT or any other generative artificial intelligence (AI) tools at all stages of the work process, including preliminary ones, unless the assignment specifically states that it is allowed. Violations of this policy will be considered academic misconduct. We draw your attention to the fact that different classes at Harvard could implement different AI policies, and it is the student’s responsibility to conform to expectations for each course.\n\n\nThe goal of this policy is not to lessen your access to support but to ensure we are achieving the learning objectives of the course. Please see the Avenues for Help section of the syllabus for ways to get support in Stat 100."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#engagement",
+    "href": "stat100_wk02mon.html#engagement",
+    "title": "Stat 100",
+    "section": "Engagement",
+    "text": "Engagement\n\n\n \n\n\n\n\n\n\nBeing actively present is key.\n\n\n\nDuring lecture and section, remove distractions.\n\nWhen we are on our computers, close email, social media, news, etc.\nIf you will be using a computer/tablet for taking notes, please sit outside the technology-free zone (first 6 rows of the middle section) starting next lecture so as not to distract classmates.\nHide your phone.\n\nI have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#identity-and-the-classroom",
+    "href": "stat100_wk02mon.html#identity-and-the-classroom",
+    "title": "Stat 100",
+    "section": "Identity and the Classroom",
+    "text": "Identity and the Classroom\n\nAcknowledge that my perspectives and experiences have shaped how I teach this course and how I approach my data work\nSome of my identities place me in dominant groups while others in marginalized groups\nStrive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities\nStrive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you\nAsk that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#code-of-conduct",
+    "href": "stat100_wk02mon.html#code-of-conduct",
+    "title": "Stat 100",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\n\nWe expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\n\n\nWe expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners. You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.\n\nThis Code of Conduct is adapted from the Contributor Covenant, version 2.0."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#ways-to-get-support",
+    "href": "stat100_wk02mon.html#ways-to-get-support",
+    "title": "Stat 100",
+    "section": "Ways to Get Support",
+    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#section",
+    "href": "stat100_wk02mon.html#section",
+    "title": "Stat 100",
+    "section": "",
+    "text": "Getting Help with R\n\n\n\n\nNovices asking the internet for R help = 😰\nGet help from the Stat 100 teaching staff or classmates!\n\nWill start p-sets in section each week.\nUse the Slack #q-and-a channel.\n\n\n\n\nGet help early before 😡 sets in!\n\nBe prepared for missing commas and quotes, capitalization issues, etc…\n\nLater in the semester, will learn tricks for effectively getting R help online."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
+    "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
+    "title": "Stat 100",
+    "section": "Language: R-This, R-That, Q-What?",
+    "text": "Language: R-This, R-That, Q-What?\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
+    "href": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
+    "title": "Stat 100",
+    "section": "Main Components of RStudio Lay-Out",
+    "text": "Main Components of RStudio Lay-Out"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#reminders",
+    "href": "stat100_wk02mon.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
+  },
+  {
     "objectID": "stat100_wk01wed.html#keyword",
     "href": "stat100_wk01wed.html#keyword",
     "title": "Stat 100",
@@ -154,381 +532,10 @@
     "text": "Reminders\n\nIf able, please bring a laptop or tablet to Mondays’s lecture.\nNo section, no wrap-ups, and no lecture quiz this week.\nMake sure to go through the syllabus, which can be found on Canvas.\n\nWill discuss assessments and course policies on Monday.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nBe on the look-out for the section preference form."
   },
   {
-    "objectID": "stat100_wk02mon.html#announcements",
-    "href": "stat100_wk02mon.html#announcements",
-    "title": "Stat 100",
-    "section": "Announcements",
-    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#day-2-goals",
-    "href": "stat100_wk02mon.html#day-2-goals",
-    "title": "Stat 100",
-    "section": "Day 2 Goals",
-    "text": "Day 2 Goals\n\nDiscuss course structure & goals (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#data-analysis-workflow",
-    "href": "stat100_wk02mon.html#data-analysis-workflow",
-    "title": "Stat 100",
-    "section": "Data Analysis Workflow",
-    "text": "Data Analysis Workflow"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#stat-100-weekly-flow",
-    "href": "stat100_wk02mon.html#stat-100-weekly-flow",
-    "title": "Stat 100",
-    "section": "Stat 100 Weekly Flow",
-    "text": "Stat 100 Weekly Flow"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#forms-of-assessment",
-    "href": "stat100_wk02mon.html#forms-of-assessment",
-    "title": "Stat 100",
-    "section": "Forms of Assessment",
-    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one p-set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#this-weeks-assessments",
-    "href": "stat100_wk02mon.html#this-weeks-assessments",
-    "title": "Stat 100",
-    "section": "This Week’s Assessments",
-    "text": "This Week’s Assessments\n\nLecture quiz releases on Wed at 11:45am.\nP-Set 1 will be posted to Posit Cloud on Wednesday.\n\nDue the following Tuesday, September 19th at 5pm on Gradescope.\nIn section this week, you will get started on P-Set 1 and will learn how to submit to Gradescope."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
-    "href": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
-    "title": "Stat 100",
-    "section": "Professor McConville in Spring 2023",
-    "text": "Professor McConville in Spring 2023\n\n\n\nBBC Science Focus"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
-    "href": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
-    "title": "Stat 100",
-    "section": "Professor McConville in Summer 2023",
-    "text": "Professor McConville in Summer 2023\n\n\n\n\n\nRicardo IV Tamayo\n\n\n\nGenerative AI Engagements\n\nParticipated in Stats Dept reading group on generative AI\nWent to conference talks on generative AI\nTalked to ChatGPT"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#chatgpt",
-    "href": "stat100_wk02mon.html#chatgpt",
-    "title": "Stat 100",
-    "section": "",
-    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
-    "href": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
-    "title": "Stat 100",
-    "section": "My View on the (Current) Role of ChatGPT in Data Work",
-    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#ai-policy-for-stat-100",
-    "href": "stat100_wk02mon.html#ai-policy-for-stat-100",
-    "title": "Stat 100",
-    "section": "AI Policy for Stat 100",
-    "text": "AI Policy for Stat 100\n\nWhile A.I. tools, such as ChatGPT, are being used to generate code and analyze data, goals of this course are to develop your own ability to write code and to thoughtfully extract knowledge from data. Therefore, we expect that all work students submit for this course will be their own. This includes code, written work, and oral assessments. We specifically forbid the use of ChatGPT or any other generative artificial intelligence (AI) tools at all stages of the work process, including preliminary ones, unless the assignment specifically states that it is allowed. Violations of this policy will be considered academic misconduct. We draw your attention to the fact that different classes at Harvard could implement different AI policies, and it is the student’s responsibility to conform to expectations for each course.\n\n\nThe goal of this policy is not to lessen your access to support but to ensure we are achieving the learning objectives of the course. Please see the Avenues for Help section of the syllabus for ways to get support in Stat 100."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#engagement",
-    "href": "stat100_wk02mon.html#engagement",
-    "title": "Stat 100",
-    "section": "Engagement",
-    "text": "Engagement\n\n\n \n\n\n\n\n\n\nBeing actively present is key.\n\n\n\nDuring lecture and section, remove distractions.\n\nWhen we are on our computers, close email, social media, news, etc.\nIf you will be using a computer/tablet for taking notes, please sit outside the technology-free zone (first 6 rows of the middle section) starting next lecture so as not to distract classmates.\nHide your phone.\n\nI have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#identity-and-the-classroom",
-    "href": "stat100_wk02mon.html#identity-and-the-classroom",
-    "title": "Stat 100",
-    "section": "Identity and the Classroom",
-    "text": "Identity and the Classroom\n\nAcknowledge that my perspectives and experiences have shaped how I teach this course and how I approach my data work\nSome of my identities place me in dominant groups while others in marginalized groups\nStrive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities\nStrive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you\nAsk that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#code-of-conduct",
-    "href": "stat100_wk02mon.html#code-of-conduct",
-    "title": "Stat 100",
-    "section": "Code of Conduct",
-    "text": "Code of Conduct\n\nWe expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\n\n\nWe expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners. You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.\n\nThis Code of Conduct is adapted from the Contributor Covenant, version 2.0."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#ways-to-get-support",
-    "href": "stat100_wk02mon.html#ways-to-get-support",
-    "title": "Stat 100",
-    "section": "Ways to Get Support",
-    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#section",
-    "href": "stat100_wk02mon.html#section",
-    "title": "Stat 100",
-    "section": "",
-    "text": "Getting Help with R\n\n\n\n\nNovices asking the internet for R help = 😰\nGet help from the Stat 100 teaching staff or classmates!\n\nWill start p-sets in section each week.\nUse the Slack #q-and-a channel.\n\n\n\n\nGet help early before 😡 sets in!\n\nBe prepared for missing commas and quotes, capitalization issues, etc…\n\nLater in the semester, will learn tricks for effectively getting R help online."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
-    "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
-    "title": "Stat 100",
-    "section": "Language: R-This, R-That, Q-What?",
-    "text": "Language: R-This, R-That, Q-What?\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
-    "href": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
-    "title": "Stat 100",
-    "section": "Main Components of RStudio Lay-Out",
-    "text": "Main Components of RStudio Lay-Out"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#reminders",
-    "href": "stat100_wk02mon.html#reminders",
-    "title": "Stat 100",
-    "section": "Reminders",
-    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#announcements",
-    "href": "stat100_wk02wed.html#announcements",
-    "title": "Stat 100",
-    "section": "Announcements",
-    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\n\nFill out this form after your first visit.\n\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class today."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#goals-for-today",
-    "href": "stat100_wk02wed.html#goals-for-today",
-    "title": "Stat 100",
-    "section": "Goals for Today",
-    "text": "Goals for Today\n\n\nFirst Segment:\n\nMotivate data visualizations.\nDevelop language to talk about the components of a graphic.\nPractice deconstructing graphics.\nDiscuss good graphical practices.\n\n\nSecond Segment:\n\nLearn the general structure of ggplot2.\nLearn a few standard graphs for numerical/quantitative data:\n\nHistogram: one numerical variable\nSide-by-side boxplot: one numerical variable and one categorical variable\nSide-by-side violin plot: one numerical variable and one categorical variable"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#why-construct-a-graph",
-    "href": "stat100_wk02wed.html#why-construct-a-graph",
-    "title": "Stat 100",
-    "section": "Why construct a graph?",
-    "text": "Why construct a graph?\n\n\nTo explore the data.\n\n\nTo summarize the data.\n\n\nTo showcase trends and make comparisons.\n\n\nTo tell a compelling story."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#challenger",
-    "href": "stat100_wk02wed.html#challenger",
-    "title": "Stat 100",
-    "section": "Challenger",
-    "text": "Challenger\n\nOn January 27th, 1986, engineers from Morton Thiokol recommended NASA delay launch of space shuttle Challenger due to cold weather.\n\nBelieved cold weather impacted the o-rings that held the rockets together.\nUsed 13 charts in their argument.\n\nAfter a two hour conference call, the engineer’s recommendation was overruled due to lack of persuasive evidence and the launch proceeded.\nThe Challenger exploded 73 seconds into launch."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#challenger-1",
-    "href": "stat100_wk02wed.html#challenger-1",
-    "title": "Stat 100",
-    "section": "Challenger",
-    "text": "Challenger\nHere’s one of those charts."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#challenger-2",
-    "href": "stat100_wk02wed.html#challenger-2",
-    "title": "Stat 100",
-    "section": "Challenger",
-    "text": "Challenger\nHere’s another one of those charts."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#challenger-3",
-    "href": "stat100_wk02wed.html#challenger-3",
-    "title": "Stat 100",
-    "section": "Challenger",
-    "text": "Challenger\nHere’s a graphic I created from Edward Tufte’s data."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#challenger-4",
-    "href": "stat100_wk02wed.html#challenger-4",
-    "title": "Stat 100",
-    "section": "Challenger",
-    "text": "Challenger\nThis adaptation is a recreation of Edward Tufte’s graphic.\n\n\n\n\n\n\n\n\n\n\n\nFor more information on this example and other examples, check out Tufte’s book."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#now-lets-learn-the-grammar-of-graphics.",
-    "href": "stat100_wk02wed.html#now-lets-learn-the-grammar-of-graphics.",
-    "title": "Stat 100",
-    "section": "Now let’s learn the Grammar of Graphics.",
-    "text": "Now let’s learn the Grammar of Graphics.\n\nWe will use this grammar to:\n\n\nDecompose and understand existing graphs.\n\n\nCreate our own graphs with the R package ggplot2."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#grammar-of-graphics",
-    "href": "stat100_wk02wed.html#grammar-of-graphics",
-    "title": "Stat 100",
-    "section": "Grammar of Graphics",
-    "text": "Grammar of Graphics\n\ndata: Data frame that contains the raw data\n\nVariables used in the graph\n\ngeom: Geometric shape that the data are mapped to.\n\nEX: Point, line, bar, text, …\n\naesthetic: Visual properties of the geom\n\nEX: X (horizontal) position, y (vertical) position, color, fill, shape\n\nscale: Controls how data are mapped to the visual values of the aesthetic.\n\nEX: particular colors, log scale\n\nguide: Legend/key to help user convert visual display back to the data\n\n\nFor right now, we won’t focus on the names of particular types of graphs (e.g., scatterplot) but on the elements of graphs."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#many-ways-to-visually-tell-a-story",
-    "href": "stat100_wk02wed.html#many-ways-to-visually-tell-a-story",
-    "title": "Stat 100",
-    "section": "Many Ways To Visually Tell A Story",
-    "text": "Many Ways To Visually Tell A Story\nWashington Post’s Approach:\n\n\n\n\n\nPeriscopic’s Approach"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#bad-graphics",
-    "href": "stat100_wk02wed.html#bad-graphics",
-    "title": "Stat 100",
-    "section": "Bad Graphics",
-    "text": "Bad Graphics\nBecause of all the design choices, it is much easier to make a bad graph than a good graph.\n]"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#misleading-graphics",
-    "href": "stat100_wk02wed.html#misleading-graphics",
-    "title": "Stat 100",
-    "section": "Misleading Graphics",
-    "text": "Misleading Graphics\nBe careful that your design choices don’t cause your viewer draw incorrect conclusions about the data:"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#summary-thoughts-on-graphical-considerations",
-    "href": "stat100_wk02wed.html#summary-thoughts-on-graphical-considerations",
-    "title": "Stat 100",
-    "section": "Summary Thoughts on Graphical Considerations",
-    "text": "Summary Thoughts on Graphical Considerations\n\nGood graphics are one’s where the findings and insights are obvious to the viewer.\n\nAdd information and key context.\n\nFacilitate the comparisons that correspond to the research question.\n\nRecall the three Georgia COVID counts graphs from Day 1!\n\nData visualizations are not neutral.\nIt is easier to see the differences and similarities between different types of graphics if we learn the grammar of graphics.\nPracticing decomposing graphics should make it easier for us to compose our own graphics."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#load-necessary-packages",
-    "href": "stat100_wk02wed.html#load-necessary-packages",
-    "title": "Stat 100",
-    "section": "Load Necessary Packages",
-    "text": "Load Necessary Packages\n\n\n\n\n\nggplot2 is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#data-setting-eco-totem-broadway-bicycle-count",
-    "href": "stat100_wk02wed.html#data-setting-eco-totem-broadway-bicycle-count",
-    "title": "Stat 100",
-    "section": "Data Setting: Eco-Totem Broadway Bicycle Count",
-    "text": "Data Setting: Eco-Totem Broadway Bicycle Count"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#import-the-data",
-    "href": "stat100_wk02wed.html#import-the-data",
-    "title": "Stat 100",
-    "section": "Import the Data",
-    "text": "Import the Data\n\nbike_counter_july &lt;- read_csv(\"data/bike_counter_july.csv\")\njuly_2019 &lt;- read_csv(\"data/july_2019.csv\")\n\n# Inspect the data\nglimpse(bike_counter_july)\n\nRows: 5,952\nColumns: 7\n$ DateTime  &lt;chr&gt; \"07/01/2019 12:00:00 AM\", \"07/01/2019 12:15:00 AM\", \"07/01/2…\n$ Day       &lt;chr&gt; \"Monday\", \"Monday\", \"Monday\", \"Monday\", \"Monday\", \"Monday\", …\n$ Date      &lt;date&gt; 2019-07-01, 2019-07-01, 2019-07-01, 2019-07-01, 2019-07-01,…\n$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…\n$ Total     &lt;dbl&gt; 1, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, …\n$ Westbound &lt;dbl&gt; 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, …\n$ Eastbound &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, …\n\nglimpse(july_2019)\n\nRows: 192\nColumns: 8\n$ DateTime  &lt;chr&gt; \"07/04/2019 12:00:00 AM\", \"07/04/2019 12:15:00 AM\", \"07/04/2…\n$ Day       &lt;chr&gt; \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", …\n$ Date      &lt;date&gt; 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04,…\n$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…\n$ Total     &lt;dbl&gt; 2, 3, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …\n$ Westbound &lt;dbl&gt; 2, 3, 1, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, …\n$ Eastbound &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …\n$ Occasion  &lt;chr&gt; \"Fourth of July\", \"Fourth of July\", \"Fourth of July\", \"Fourt…"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#inspect-the-data",
-    "href": "stat100_wk02wed.html#inspect-the-data",
-    "title": "Stat 100",
-    "section": "Inspect the Data",
-    "text": "Inspect the Data\n\n# Look at first few rows\nhead(bike_counter_july)\n\n# A tibble: 6 × 7\n  DateTime               Day    Date       Time   Total Westbound Eastbound\n  &lt;chr&gt;                  &lt;chr&gt;  &lt;date&gt;     &lt;time&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n1 07/01/2019 12:00:00 AM Monday 2019-07-01 00:00      1         1         0\n2 07/01/2019 12:15:00 AM Monday 2019-07-01 00:15      0         0         0\n3 07/01/2019 12:30:00 AM Monday 2019-07-01 00:30      0         0         0\n4 07/01/2019 12:45:00 AM Monday 2019-07-01 00:45      0         0         0\n5 07/01/2019 01:00:00 AM Monday 2019-07-01 01:00      2         1         1\n6 07/01/2019 01:15:00 AM Monday 2019-07-01 01:15      0         0         0\n\n\nWhat does a row represent here?"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#inspect-the-data-1",
-    "href": "stat100_wk02wed.html#inspect-the-data-1",
-    "title": "Stat 100",
-    "section": "Inspect the Data",
-    "text": "Inspect the Data\n\n# Determine type\n# To access one variable: dataset$variable\nclass(bike_counter_july$Day)\n\n[1] \"character\"\n\nclass(bike_counter_july$Total)\n\n[1] \"numeric\"\n\nclass(bike_counter_july)\n\n[1] \"spec_tbl_df\" \"tbl_df\"      \"tbl\"         \"data.frame\""
-  },
-  {
-    "objectID": "stat100_wk02wed.html#grammar-of-graphics-1",
-    "href": "stat100_wk02wed.html#grammar-of-graphics-1",
-    "title": "Stat 100",
-    "section": "Grammar of Graphics",
-    "text": "Grammar of Graphics\n\ndata: Data frame that contains the raw data\n\nVariables\n\ngeom: Geometric shape that the data are mapped to.\n\nPoint, line, bar, text, …\n\naesthetic: Visual properties of the geom\n\nX (horizontal) position, y (vertical) position, color, fill, shape\n\nscale: Controls how data are mapped to the visual values of the aesthetic.\n\nEX: particular colors\n\nguide: Legend/key to help user convert visual display back to the data"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#ggplot2-example-code",
-    "href": "stat100_wk02wed.html#ggplot2-example-code",
-    "title": "Stat 100",
-    "section": "ggplot2 example code",
-    "text": "ggplot2 example code\nGuiding Principle: We will map variables from the data to the aesthetic attributes (e.g. location, size, shape, color) of geometric objects (e.g. points, lines, bars).\n\nggplot(data = ---, mapping = aes(---)) +\n  geom_---(---) \n\n\nThere are other layers, such as scales_---_---() and labs(), but we will wait on those."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#histograms",
-    "href": "stat100_wk02wed.html#histograms",
-    "title": "Stat 100",
-    "section": "Histograms",
-    "text": "Histograms\n\n\n\nBinned counts of data.\nGreat for assessing shape."
-  },
-  {
-    "objectID": "stat100_wk02wed.html#data-shapes",
-    "href": "stat100_wk02wed.html#data-shapes",
-    "title": "Stat 100",
-    "section": "Data Shapes",
-    "text": "Data Shapes"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#histograms-1",
-    "href": "stat100_wk02wed.html#histograms-1",
-    "title": "Stat 100",
-    "section": "Histograms",
-    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram()"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#histograms-2",
-    "href": "stat100_wk02wed.html#histograms-2",
-    "title": "Stat 100",
-    "section": "Histograms",
-    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram(color = \"white\",\n                 fill = \"violetred1\",\n                 bins = 50)\n\n\n\n\n\n\n\n\n\n\n\nmapping to a variable goes in aes()\nsetting to a specific value goes in the geom_---()"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#boxplots",
-    "href": "stat100_wk02wed.html#boxplots",
-    "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\n\nFive number summary:\n\nMinimum\nFirst quartile (Q1)\nMedian\nThird quartile (Q3)\nMaximum\n\nInterquartile range (IQR) \\(=\\) Q3 \\(-\\) Q1\nOutliers: unusual points\n\nBoxplot defines unusual as being beyond \\(1.5*IQR\\) from \\(Q1\\) or \\(Q3\\).\n\nWhiskers: reach out to the furthest point that is NOT an outlier"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#boxplots-1",
-    "href": "stat100_wk02wed.html#boxplots-1",
-    "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\n# Create boxplot\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot()"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#boxplots-2",
-    "href": "stat100_wk02wed.html#boxplots-2",
-    "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot(fill = \"springgreen3\")"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#boxplots-3",
-    "href": "stat100_wk02wed.html#boxplots-3",
-    "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot()"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#boxplots-4",
-    "href": "stat100_wk02wed.html#boxplots-4",
-    "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#violin-plots",
-    "href": "stat100_wk02wed.html#violin-plots",
-    "title": "Stat 100",
-    "section": "Violin Plots",
-    "text": "Violin Plots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_violin() +\n  guides(fill = \"none\")"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#boxplot-versus-violin-plots",
-    "href": "stat100_wk02wed.html#boxplot-versus-violin-plots",
-    "title": "Stat 100",
-    "section": "Boxplot Versus Violin Plots",
-    "text": "Boxplot Versus Violin Plots"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#recap-ggplot2",
-    "href": "stat100_wk02wed.html#recap-ggplot2",
-    "title": "Stat 100",
-    "section": "Recap: ggplot2",
-    "text": "Recap: ggplot2\n\nlibrary(tidyverse)\nggplot(data = ---, mapping = aes(---)) +\n  geom_---(---)"
-  },
-  {
-    "objectID": "stat100_wk02wed.html#reminders",
-    "href": "stat100_wk02wed.html#reminders",
-    "title": "Stat 100",
-    "section": "Reminders",
-    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class today."
+    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed"
   }
 ]

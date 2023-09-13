@@ -64,6 +64,23 @@ theme_update(text = element_text(size = 20))
     -   Wrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309
     -   Lecture quiz will be released in **Gradescope** after class today.
 
+---
+
+## Teachly
+
+* Teachly is a platform that allows you to fill out a profile so that we can get to know you and your interests in stats/data science better.
+
+* You should have received two emails:
+    + The general Teachly profile
+    + A couple additional Stat 100 related questions
+    
+* Each question is optional.  You will not be assessed on its completion or your answers. 
+
+* Ways we plan to use Teachly:
+    + To get to know you better.
+    + To find out what data applications you might be interested in seeing.
+    + To tailor advice related to future statistical endeavors.
+
 ------------------------------------------------------------------------
 
 ## Goals for Today
@@ -138,7 +155,7 @@ Here's one of those charts.
 
 Here's another one of those charts.
 
-![](img/o_ring_rockets.jpg){width="35%" fig-align="center"}
+![](img/o_ring_rockets.jpg){width="30%" fig-align="center"}
 
 ------------------------------------------------------------------------
 
@@ -342,7 +359,7 @@ Maps, like the [Dude map](https://qz.com/316906/the-dude-map-how-american-men-re
 
 Washington Post's Approach:
 
-![](img/wp_shooter.png){width="60%" fig-align="center"}
+![](img/wp_shooter.png){width="50%" fig-align="center"}
 
 [Periscopic's Approach](https://guns.periscopic.com/?year=2013)
 
@@ -352,7 +369,7 @@ Washington Post's Approach:
 
 Because of all the design choices, it is much easier to make a bad graph than a good graph.
 
-\]
+
 
 ![](img/pizza_pie.png){width="40%" fig-align="center"}
 
@@ -360,9 +377,11 @@ Because of all the design choices, it is much easier to make a bad graph than a 
 
 ## Misleading Graphics
 
-Be careful that your design choices don't cause your viewer draw incorrect conclusions about the data:
+Be careful that your design choices don't cause your viewer to draw incorrect conclusions about the data:
 
 ![](img/FLguns.jpg){width="40%" fig-align="center"}
+
+* Just letting the software make all the design choices can still lead to misleading graphs (recall the Georgia COVID graph).
 
 ------------------------------------------------------------------------
 
@@ -455,11 +474,9 @@ write_csv(bike_counter_july, "data/bike_counter_july.csv")
 ```
 
 ```{r}
-bike_counter_july <- read_csv("data/bike_counter_july.csv")
 july_2019 <- read_csv("data/july_2019.csv")
 
 # Inspect the data
-glimpse(bike_counter_july)
 glimpse(july_2019)
 ```
 
@@ -469,7 +486,7 @@ glimpse(july_2019)
 
 ```{r}
 # Look at first few rows
-head(bike_counter_july)
+head(july_2019)
 ```
 
 What does a row represent here?
@@ -481,9 +498,9 @@ What does a row represent here?
 ```{r}
 # Determine type
 # To access one variable: dataset$variable
-class(bike_counter_july$Day)
-class(bike_counter_july$Total)
-class(bike_counter_july)
+class(july_2019$Day)
+class(july_2019$Total)
+class(july_2019)
 
 ```
 
@@ -492,14 +509,15 @@ class(bike_counter_july)
 ## Grammar of Graphics
 
 -   **data**: Data frame that contains the raw data
-    -   Variables
+    -   Variables used in the graph
 -   **geom**: Geometric **shape** that the data are mapped to.
-    -   Point, line, bar, text, ...
+    -   EX: Point, line, bar, text, ...
 -   **aesthetic**: Visual properties of the **geom**
-    -   X (horizontal) position, y (vertical) position, color, fill, shape
+    -   EX: X (horizontal) position, y (vertical) position, color, fill, shape
 -   **scale**: Controls how data are mapped to the visual values of the aesthetic.
-    -   EX: particular colors
+    -   EX: particular colors, log scale
 -   **guide**: Legend/key to help user convert visual display back to the data
+
 
 ------------------------------------------------------------------------
 
@@ -663,7 +681,7 @@ ggplot(data = july_2019,
 
 ```{r box4}
 #| output-location: column-fragment
-#| code-line-numbers: "5"
+#| code-line-numbers: "6"
 ggplot(data = july_2019, 
        mapping = aes(x = Occasion, 
                      y = Total,
