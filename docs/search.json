@@ -1,5 +1,614 @@
 [
   {
+    "objectID": "stat100_wk03mon.html#announcements",
+    "href": "stat100_wk03mon.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!\nGrab a postcard and/or a stamp from SC 316 if you lost yours.\n\nWe also have markers, colored pencils, and crayons!\n\nDon’t forget that P-Set 1 due on Tuesday by 5pm in Gradescope.\nCome by office hours with any questions."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#goals-for-today",
+    "href": "stat100_wk03mon.html#goals-for-today",
+    "title": "Stat 100",
+    "section": "Goals for Today",
+    "text": "Goals for Today\n\n\n\nCome back to the general structure of ggplot2.\nLearn a few standard graphs for numerical/quantitative data:\n\nHistogram: one numerical variable\nSide-by-side boxplot: one numerical variable and one categorical variable\nSide-by-side violin plot: one numerical variable and one categorical variable\nScatterplot: two numerical variables\nLinegraph: two numerical variables\n\n\n\n\nAnd, learn the standard graphic for categorical data:\n\nBarplot: one categorical variable\nSegmented barplot: two categorical variables\n\nAlso cover some common extensions and customizations."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#load-necessary-packages",
+    "href": "stat100_wk03mon.html#load-necessary-packages",
+    "title": "Stat 100",
+    "section": "Load Necessary Packages",
+    "text": "Load Necessary Packages\n\n\n\n\n\nggplot2 is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#data-setting-eco-totem-broadway-bicycle-count",
+    "href": "stat100_wk03mon.html#data-setting-eco-totem-broadway-bicycle-count",
+    "title": "Stat 100",
+    "section": "Data Setting: Eco-Totem Broadway Bicycle Count",
+    "text": "Data Setting: Eco-Totem Broadway Bicycle Count"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#import-the-data",
+    "href": "stat100_wk03mon.html#import-the-data",
+    "title": "Stat 100",
+    "section": "Import the Data",
+    "text": "Import the Data\n\njuly_2019 &lt;- read_csv(\"data/july_2019.csv\")\n\n# Inspect the data\nglimpse(july_2019)\n\nRows: 192\nColumns: 8\n$ DateTime  &lt;chr&gt; \"07/04/2019 12:00:00 AM\", \"07/04/2019 12:15:00 AM\", \"07/04/2…\n$ Day       &lt;chr&gt; \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", …\n$ Date      &lt;date&gt; 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04,…\n$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…\n$ Total     &lt;dbl&gt; 2, 3, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …\n$ Westbound &lt;dbl&gt; 2, 3, 1, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, …\n$ Eastbound &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …\n$ Occasion  &lt;chr&gt; \"Fourth of July\", \"Fourth of July\", \"Fourth of July\", \"Fourt…"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#ggplot2-example-code",
+    "href": "stat100_wk03mon.html#ggplot2-example-code",
+    "title": "Stat 100",
+    "section": "ggplot2 example code",
+    "text": "ggplot2 example code\nGuiding Principle: We will map variables from the data to the aesthetic attributes (e.g. location, size, shape, color) of geometric objects (e.g. points, lines, bars).\n\n\nggplot(data = ---, mapping = aes(---)) +\n  geom_---(---) \n\n\nThere are other layers, such as scales_---_---() and labs(), but we will wait on those."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#histograms",
+    "href": "stat100_wk03mon.html#histograms",
+    "title": "Stat 100",
+    "section": "Histograms",
+    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#histograms-1",
+    "href": "stat100_wk03mon.html#histograms-1",
+    "title": "Stat 100",
+    "section": "Histograms",
+    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram(color = \"white\",\n                 fill = \"violetred1\",\n                 bins = 50)\n\n\n\n\n\n\n\n\n\n\n\nmapping to a variable goes in aes()\nsetting to a specific value goes in the geom_---()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots",
+    "href": "stat100_wk03mon.html#boxplots",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\n\nFive number summary:\n\nMinimum\nFirst quartile (Q1)\nMedian\nThird quartile (Q3)\nMaximum\n\nInterquartile range (IQR) \\(=\\) Q3 \\(-\\) Q1\nOutliers: unusual points\n\nBoxplot defines unusual as being beyond \\(1.5*IQR\\) from \\(Q1\\) or \\(Q3\\).\n\nWhiskers: reach out to the furthest point that is NOT an outlier"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-1",
+    "href": "stat100_wk03mon.html#boxplots-1",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\n# Create boxplot\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-2",
+    "href": "stat100_wk03mon.html#boxplots-2",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot(fill = \"springgreen3\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-3",
+    "href": "stat100_wk03mon.html#boxplots-3",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-4",
+    "href": "stat100_wk03mon.html#boxplots-4",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#violin-plots",
+    "href": "stat100_wk03mon.html#violin-plots",
+    "title": "Stat 100",
+    "section": "Violin Plots",
+    "text": "Violin Plots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_violin() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplot-versus-violin-plots",
+    "href": "stat100_wk03mon.html#boxplot-versus-violin-plots",
+    "title": "Stat 100",
+    "section": "Boxplot Versus Violin Plots",
+    "text": "Boxplot Versus Violin Plots"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#scatterplots",
+    "href": "stat100_wk03mon.html#scatterplots",
+    "title": "Stat 100",
+    "section": "Scatterplots",
+    "text": "Scatterplots\n\nExplore relationships between numerical variables.\n\nWe will be especially interested in linear relationships.\n\n\n\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total)) +\n  geom_point(size = 2)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#scatterplots-1",
+    "href": "stat100_wk03mon.html#scatterplots-1",
+    "title": "Stat 100",
+    "section": "Scatterplots",
+    "text": "Scatterplots\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total)) +\n  geom_point(size = 2, alpha = 0.6)\n\n\n\n\n\n\n\n\n\n\n\nFix over-plotting\nWhy the weird pattern??"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#scatterplots-2",
+    "href": "stat100_wk03mon.html#scatterplots-2",
+    "title": "Stat 100",
+    "section": "Scatterplots",
+    "text": "Scatterplots\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_point(size = 2, alpha = 0.6)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#linegraphs",
+    "href": "stat100_wk03mon.html#linegraphs",
+    "title": "Stat 100",
+    "section": "Linegraphs",
+    "text": "Linegraphs\nAlso called time series plot when time is represented on the x axis.\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(alpha = 0.6)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#linegraphs-1",
+    "href": "stat100_wk03mon.html#linegraphs-1",
+    "title": "Stat 100",
+    "section": "Linegraphs",
+    "text": "Linegraphs\nAlso called time series plot when time is represented on the x axis.\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(alpha = 0.6) +\n  theme(legend.pos = \"bottom\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#new-data-setting-dog-names-in-cambridge-ma",
+    "href": "stat100_wk03mon.html#new-data-setting-dog-names-in-cambridge-ma",
+    "title": "Stat 100",
+    "section": "New Data Setting: Dog Names in Cambridge, MA",
+    "text": "New Data Setting: Dog Names in Cambridge, MA\nBased on dog license data collected by Cambridge’s Animal Commission\n\n# Import and inspect data\ndogs &lt;- read_csv(\"https://data.cambridgema.gov/api/views/sckh-3xyx/rows.csv\")\nglimpse(dogs)\n\nRows: 3,942\nColumns: 6\n$ Dog_Name         &lt;chr&gt; \"Butch\", \"Baxter\", \"Bodhi\", \"Ocean\", \"Coco\", \"Brio\", …\n$ Dog_Breed        &lt;chr&gt; \"Mixed Breed\", \"Mixed Breed\", \"Golden Retriever\", \"Pu…\n$ Location_masked  &lt;chr&gt; \"POINT (-71.1328 42.3989)\", \"POINT (-71.1186 42.3814)…\n$ Latitude_masked  &lt;dbl&gt; 42.3989, 42.3814, 42.3998, 42.3726, 42.3610, 42.3892,…\n$ Longitude_masked &lt;dbl&gt; -71.1328, -71.1186, -71.1308, -71.1087, -71.1022, -71…\n$ Neighborhood     &lt;chr&gt; \"North Cambridge\", \"Neighborhood Nine\", \"North Cambri…"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#data-wrangling",
+    "href": "stat100_wk03mon.html#data-wrangling",
+    "title": "Stat 100",
+    "section": "Data Wrangling",
+    "text": "Data Wrangling\nWe haven’t learned this topic yet.\nI only included this code for completeness/transparency.\n\n# Create a column for Breed\ndogs &lt;- mutate(dogs, Breed = if_else(\n                       Dog_Breed == \"Mixed Breed\",\n                       \"Mixed\", \"Single\"))\n\n\n# Find the 5 top most common names\ntop5names &lt;- count(dogs, Dog_Name) %&gt;%\n  slice_max(n = 5, order_by = n) %&gt;%\n  select(Dog_Name) %&gt;%\n  pull()\n  \n# Filter dataset to only the 5 top most common names\ndogs_top5 &lt;- filter(dogs,\n                     Dog_Name %in% top5names)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#barplots",
+    "href": "stat100_wk03mon.html#barplots",
+    "title": "Stat 100",
+    "section": "Barplots",
+    "text": "Barplots\n\n\nDisplays the frequency for each category."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#barplots-1",
+    "href": "stat100_wk03mon.html#barplots-1",
+    "title": "Stat 100",
+    "section": "Barplots",
+    "text": "Barplots\n\n\n# Create barplot\nggplot(data = dogs_top5, \n    mapping = aes(x = Dog_Name)) +\n  geom_bar()\n\n\n\n\n\n\n\n\n\n\nHow could we make this graph better?"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#barplots-2",
+    "href": "stat100_wk03mon.html#barplots-2",
+    "title": "Stat 100",
+    "section": "Barplots",
+    "text": "Barplots\n\n\n# Create barplot\nggplot(data = dogs_top5, \n  mapping = aes(x = fct_infreq(Dog_Name))) +\n  geom_bar()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#segmented-barplots",
+    "href": "stat100_wk03mon.html#segmented-barplots",
+    "title": "Stat 100",
+    "section": "Segmented Barplots",
+    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar() +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nEach bar is divided into the frequencies of the fill variable.\nHard to make comparisons across categories."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#segmented-barplots-1",
+    "href": "stat100_wk03mon.html#segmented-barplots-1",
+    "title": "Stat 100",
+    "section": "Segmented Barplots",
+    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar(position = \"dodge\") +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nCan add the position argument into the geom_bar()."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#segmented-barplots-2",
+    "href": "stat100_wk03mon.html#segmented-barplots-2",
+    "title": "Stat 100",
+    "section": "Segmented Barplots",
+    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar(position = \"fill\") +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nNow each bar is divided into proportions based on the fill variable."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#adding-more-variables",
+    "href": "stat100_wk03mon.html#adding-more-variables",
+    "title": "Stat 100",
+    "section": "Adding More Variables",
+    "text": "Adding More Variables\n\nTwo main approaches:\n\nUtilize other aesthetics of the geom\nFacet: Create multiple plots across the categories of a categorical variable."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#utilize-other-aesthetics",
+    "href": "stat100_wk03mon.html#utilize-other-aesthetics",
+    "title": "Stat 100",
+    "section": "Utilize other aesthetics",
+    "text": "Utilize other aesthetics\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nAlready saw how to add a third variable to a line graph (and a scatterplot) via color.\n\nCan also change size or type."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#facet",
+    "href": "stat100_wk03mon.html#facet",
+    "title": "Stat 100",
+    "section": "Facet",
+    "text": "Facet\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2) +\n  facet_wrap(~Dog_Name, ncol = 2)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#facet-1",
+    "href": "stat100_wk03mon.html#facet-1",
+    "title": "Stat 100",
+    "section": "Facet",
+    "text": "Facet\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2)  +\n  facet_grid(Breed~Dog_Name)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#consider-doing-both",
+    "href": "stat100_wk03mon.html#consider-doing-both",
+    "title": "Stat 100",
+    "section": "Consider Doing Both!",
+    "text": "Consider Doing Both!\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked,\n                     color = Breed)) +\n  geom_point(size = 2) +\n  facet_wrap(~Dog_Name, ncol = 2)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#adding-some-context",
+    "href": "stat100_wk03mon.html#adding-some-context",
+    "title": "Stat 100",
+    "section": "Adding Some Context",
+    "text": "Adding Some Context\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  labs(x = \"Time of Day\",\n       y = \"Number of Passes\",\n       color = \"What Type of Day?\",\n       caption = \"Data Collected by Eco-Totem\",\n       title = \"Cycling Patterns at Broadway Bike Counter\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#customizing-your-ggplot2-plots",
+    "href": "stat100_wk03mon.html#customizing-your-ggplot2-plots",
+    "title": "Stat 100",
+    "section": "Customizing your ggplot2 Plots",
+    "text": "Customizing your ggplot2 Plots\n\nThere are so many ways you can customize the look of your ggplot2 plots.\nLet’s look at some common changes:\n\nFussing with labels\nZooming in\nUsing multiple geoms\nColor!\nThemes"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#fussing-with-labels-rotate",
+    "href": "stat100_wk03mon.html#fussing-with-labels-rotate",
+    "title": "Stat 100",
+    "section": "Fussing with Labels: Rotate",
+    "text": "Fussing with Labels: Rotate\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2)  +\n  facet_grid(Breed~Dog_Name) + \n  theme(axis.text.x =\n          element_text(angle = 45,\n                       vjust = 1,\n                       hjust = 1))"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#zooming-in",
+    "href": "stat100_wk03mon.html#zooming-in",
+    "title": "Stat 100",
+    "section": "Zooming In",
+    "text": "Zooming In\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#zooming-in-1",
+    "href": "stat100_wk03mon.html#zooming-in-1",
+    "title": "Stat 100",
+    "section": "Zooming In",
+    "text": "Zooming In\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\") +\n  coord_cartesian(ylim = c(0, 40))"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#multiple-geoms",
+    "href": "stat100_wk03mon.html#multiple-geoms",
+    "title": "Stat 100",
+    "section": "Multiple geoms",
+    "text": "Multiple geoms\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\") +\n  coord_cartesian(ylim = c(0, 40)) +\n  geom_jitter(width = .1,\n              height = 0, \n              alpha = 0.6)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#multiple-geoms-1",
+    "href": "stat100_wk03mon.html#multiple-geoms-1",
+    "title": "Stat 100",
+    "section": "Multiple geoms",
+    "text": "Multiple geoms\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  geom_point(size = 3)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#change-the-color",
+    "href": "stat100_wk03mon.html#change-the-color",
+    "title": "Stat 100",
+    "section": "Change the Color",
+    "text": "Change the Color\n\ncolors()\n\n  [1] \"white\"                \"aliceblue\"            \"antiquewhite\"        \n  [4] \"antiquewhite1\"        \"antiquewhite2\"        \"antiquewhite3\"       \n  [7] \"antiquewhite4\"        \"aquamarine\"           \"aquamarine1\"         \n [10] \"aquamarine2\"          \"aquamarine3\"          \"aquamarine4\"         \n [13] \"azure\"                \"azure1\"               \"azure2\"              \n [16] \"azure3\"               \"azure4\"               \"beige\"               \n [19] \"bisque\"               \"bisque1\"              \"bisque2\"             \n [22] \"bisque3\"              \"bisque4\"              \"black\"               \n [25] \"blanchedalmond\"       \"blue\"                 \"blue1\"               \n [28] \"blue2\"                \"blue3\"                \"blue4\"               \n [31] \"blueviolet\"           \"brown\"                \"brown1\"              \n [34] \"brown2\"               \"brown3\"               \"brown4\"              \n [37] \"burlywood\"            \"burlywood1\"           \"burlywood2\"          \n [40] \"burlywood3\"           \"burlywood4\"           \"cadetblue\"           \n [43] \"cadetblue1\"           \"cadetblue2\"           \"cadetblue3\"          \n [46] \"cadetblue4\"           \"chartreuse\"           \"chartreuse1\"         \n [49] \"chartreuse2\"          \"chartreuse3\"          \"chartreuse4\"         \n [52] \"chocolate\"            \"chocolate1\"           \"chocolate2\"          \n [55] \"chocolate3\"           \"chocolate4\"           \"coral\"               \n [58] \"coral1\"               \"coral2\"               \"coral3\"              \n [61] \"coral4\"               \"cornflowerblue\"       \"cornsilk\"            \n [64] \"cornsilk1\"            \"cornsilk2\"            \"cornsilk3\"           \n [67] \"cornsilk4\"            \"cyan\"                 \"cyan1\"               \n [70] \"cyan2\"                \"cyan3\"                \"cyan4\"               \n [73] \"darkblue\"             \"darkcyan\"             \"darkgoldenrod\"       \n [76] \"darkgoldenrod1\"       \"darkgoldenrod2\"       \"darkgoldenrod3\"      \n [79] \"darkgoldenrod4\"       \"darkgray\"             \"darkgreen\"           \n [82] \"darkgrey\"             \"darkkhaki\"            \"darkmagenta\"         \n [85] \"darkolivegreen\"       \"darkolivegreen1\"      \"darkolivegreen2\"     \n [88] \"darkolivegreen3\"      \"darkolivegreen4\"      \"darkorange\"          \n [91] \"darkorange1\"          \"darkorange2\"          \"darkorange3\"         \n [94] \"darkorange4\"          \"darkorchid\"           \"darkorchid1\"         \n [97] \"darkorchid2\"          \"darkorchid3\"          \"darkorchid4\"         \n[100] \"darkred\"              \"darksalmon\"           \"darkseagreen\"        \n[103] \"darkseagreen1\"        \"darkseagreen2\"        \"darkseagreen3\"       \n[106] \"darkseagreen4\"        \"darkslateblue\"        \"darkslategray\"       \n[109] \"darkslategray1\"       \"darkslategray2\"       \"darkslategray3\"      \n[112] \"darkslategray4\"       \"darkslategrey\"        \"darkturquoise\"       \n[115] \"darkviolet\"           \"deeppink\"             \"deeppink1\"           \n[118] \"deeppink2\"            \"deeppink3\"            \"deeppink4\"           \n[121] \"deepskyblue\"          \"deepskyblue1\"         \"deepskyblue2\"        \n[124] \"deepskyblue3\"         \"deepskyblue4\"         \"dimgray\"             \n[127] \"dimgrey\"              \"dodgerblue\"           \"dodgerblue1\"         \n[130] \"dodgerblue2\"          \"dodgerblue3\"          \"dodgerblue4\"         \n[133] \"firebrick\"            \"firebrick1\"           \"firebrick2\"          \n[136] \"firebrick3\"           \"firebrick4\"           \"floralwhite\"         \n[139] \"forestgreen\"          \"gainsboro\"            \"ghostwhite\"          \n[142] \"gold\"                 \"gold1\"                \"gold2\"               \n[145] \"gold3\"                \"gold4\"                \"goldenrod\"           \n[148] \"goldenrod1\"           \"goldenrod2\"           \"goldenrod3\"          \n[151] \"goldenrod4\"           \"gray\"                 \"gray0\"               \n[154] \"gray1\"                \"gray2\"                \"gray3\"               \n[157] \"gray4\"                \"gray5\"                \"gray6\"               \n[160] \"gray7\"                \"gray8\"                \"gray9\"               \n[163] \"gray10\"               \"gray11\"               \"gray12\"              \n[166] \"gray13\"               \"gray14\"               \"gray15\"              \n[169] \"gray16\"               \"gray17\"               \"gray18\"              \n[172] \"gray19\"               \"gray20\"               \"gray21\"              \n[175] \"gray22\"               \"gray23\"               \"gray24\"              \n[178] \"gray25\"               \"gray26\"               \"gray27\"              \n[181] \"gray28\"               \"gray29\"               \"gray30\"              \n[184] \"gray31\"               \"gray32\"               \"gray33\"              \n[187] \"gray34\"               \"gray35\"               \"gray36\"              \n[190] \"gray37\"               \"gray38\"               \"gray39\"              \n[193] \"gray40\"               \"gray41\"               \"gray42\"              \n[196] \"gray43\"               \"gray44\"               \"gray45\"              \n[199] \"gray46\"               \"gray47\"               \"gray48\"              \n[202] \"gray49\"               \"gray50\"               \"gray51\"              \n[205] \"gray52\"               \"gray53\"               \"gray54\"              \n[208] \"gray55\"               \"gray56\"               \"gray57\"              \n[211] \"gray58\"               \"gray59\"               \"gray60\"              \n[214] \"gray61\"               \"gray62\"               \"gray63\"              \n[217] \"gray64\"               \"gray65\"               \"gray66\"              \n[220] \"gray67\"               \"gray68\"               \"gray69\"              \n[223] \"gray70\"               \"gray71\"               \"gray72\"              \n[226] \"gray73\"               \"gray74\"               \"gray75\"              \n[229] \"gray76\"               \"gray77\"               \"gray78\"              \n[232] \"gray79\"               \"gray80\"               \"gray81\"              \n[235] \"gray82\"               \"gray83\"               \"gray84\"              \n[238] \"gray85\"               \"gray86\"               \"gray87\"              \n[241] \"gray88\"               \"gray89\"               \"gray90\"              \n[244] \"gray91\"               \"gray92\"               \"gray93\"              \n[247] \"gray94\"               \"gray95\"               \"gray96\"              \n[250] \"gray97\"               \"gray98\"               \"gray99\"              \n[253] \"gray100\"              \"green\"                \"green1\"              \n[256] \"green2\"               \"green3\"               \"green4\"              \n[259] \"greenyellow\"          \"grey\"                 \"grey0\"               \n[262] \"grey1\"                \"grey2\"                \"grey3\"               \n[265] \"grey4\"                \"grey5\"                \"grey6\"               \n[268] \"grey7\"                \"grey8\"                \"grey9\"               \n[271] \"grey10\"               \"grey11\"               \"grey12\"              \n[274] \"grey13\"               \"grey14\"               \"grey15\"              \n[277] \"grey16\"               \"grey17\"               \"grey18\"              \n[280] \"grey19\"               \"grey20\"               \"grey21\"              \n[283] \"grey22\"               \"grey23\"               \"grey24\"              \n[286] \"grey25\"               \"grey26\"               \"grey27\"              \n[289] \"grey28\"               \"grey29\"               \"grey30\"              \n[292] \"grey31\"               \"grey32\"               \"grey33\"              \n[295] \"grey34\"               \"grey35\"               \"grey36\"              \n[298] \"grey37\"               \"grey38\"               \"grey39\"              \n[301] \"grey40\"               \"grey41\"               \"grey42\"              \n[304] \"grey43\"               \"grey44\"               \"grey45\"              \n[307] \"grey46\"               \"grey47\"               \"grey48\"              \n[310] \"grey49\"               \"grey50\"               \"grey51\"              \n[313] \"grey52\"               \"grey53\"               \"grey54\"              \n[316] \"grey55\"               \"grey56\"               \"grey57\"              \n[319] \"grey58\"               \"grey59\"               \"grey60\"              \n[322] \"grey61\"               \"grey62\"               \"grey63\"              \n[325] \"grey64\"               \"grey65\"               \"grey66\"              \n[328] \"grey67\"               \"grey68\"               \"grey69\"              \n[331] \"grey70\"               \"grey71\"               \"grey72\"              \n[334] \"grey73\"               \"grey74\"               \"grey75\"              \n[337] \"grey76\"               \"grey77\"               \"grey78\"              \n[340] \"grey79\"               \"grey80\"               \"grey81\"              \n[343] \"grey82\"               \"grey83\"               \"grey84\"              \n[346] \"grey85\"               \"grey86\"               \"grey87\"              \n[349] \"grey88\"               \"grey89\"               \"grey90\"              \n[352] \"grey91\"               \"grey92\"               \"grey93\"              \n[355] \"grey94\"               \"grey95\"               \"grey96\"              \n[358] \"grey97\"               \"grey98\"               \"grey99\"              \n[361] \"grey100\"              \"honeydew\"             \"honeydew1\"           \n[364] \"honeydew2\"            \"honeydew3\"            \"honeydew4\"           \n[367] \"hotpink\"              \"hotpink1\"             \"hotpink2\"            \n[370] \"hotpink3\"             \"hotpink4\"             \"indianred\"           \n[373] \"indianred1\"           \"indianred2\"           \"indianred3\"          \n[376] \"indianred4\"           \"ivory\"                \"ivory1\"              \n[379] \"ivory2\"               \"ivory3\"               \"ivory4\"              \n[382] \"khaki\"                \"khaki1\"               \"khaki2\"              \n[385] \"khaki3\"               \"khaki4\"               \"lavender\"            \n[388] \"lavenderblush\"        \"lavenderblush1\"       \"lavenderblush2\"      \n[391] \"lavenderblush3\"       \"lavenderblush4\"       \"lawngreen\"           \n[394] \"lemonchiffon\"         \"lemonchiffon1\"        \"lemonchiffon2\"       \n[397] \"lemonchiffon3\"        \"lemonchiffon4\"        \"lightblue\"           \n[400] \"lightblue1\"           \"lightblue2\"           \"lightblue3\"          \n[403] \"lightblue4\"           \"lightcoral\"           \"lightcyan\"           \n[406] \"lightcyan1\"           \"lightcyan2\"           \"lightcyan3\"          \n[409] \"lightcyan4\"           \"lightgoldenrod\"       \"lightgoldenrod1\"     \n[412] \"lightgoldenrod2\"      \"lightgoldenrod3\"      \"lightgoldenrod4\"     \n[415] \"lightgoldenrodyellow\" \"lightgray\"            \"lightgreen\"          \n[418] \"lightgrey\"            \"lightpink\"            \"lightpink1\"          \n[421] \"lightpink2\"           \"lightpink3\"           \"lightpink4\"          \n[424] \"lightsalmon\"          \"lightsalmon1\"         \"lightsalmon2\"        \n[427] \"lightsalmon3\"         \"lightsalmon4\"         \"lightseagreen\"       \n[430] \"lightskyblue\"         \"lightskyblue1\"        \"lightskyblue2\"       \n[433] \"lightskyblue3\"        \"lightskyblue4\"        \"lightslateblue\"      \n[436] \"lightslategray\"       \"lightslategrey\"       \"lightsteelblue\"      \n[439] \"lightsteelblue1\"      \"lightsteelblue2\"      \"lightsteelblue3\"     \n[442] \"lightsteelblue4\"      \"lightyellow\"          \"lightyellow1\"        \n[445] \"lightyellow2\"         \"lightyellow3\"         \"lightyellow4\"        \n[448] \"limegreen\"            \"linen\"                \"magenta\"             \n[451] \"magenta1\"             \"magenta2\"             \"magenta3\"            \n[454] \"magenta4\"             \"maroon\"               \"maroon1\"             \n[457] \"maroon2\"              \"maroon3\"              \"maroon4\"             \n[460] \"mediumaquamarine\"     \"mediumblue\"           \"mediumorchid\"        \n[463] \"mediumorchid1\"        \"mediumorchid2\"        \"mediumorchid3\"       \n[466] \"mediumorchid4\"        \"mediumpurple\"         \"mediumpurple1\"       \n[469] \"mediumpurple2\"        \"mediumpurple3\"        \"mediumpurple4\"       \n[472] \"mediumseagreen\"       \"mediumslateblue\"      \"mediumspringgreen\"   \n[475] \"mediumturquoise\"      \"mediumvioletred\"      \"midnightblue\"        \n[478] \"mintcream\"            \"mistyrose\"            \"mistyrose1\"          \n[481] \"mistyrose2\"           \"mistyrose3\"           \"mistyrose4\"          \n[484] \"moccasin\"             \"navajowhite\"          \"navajowhite1\"        \n[487] \"navajowhite2\"         \"navajowhite3\"         \"navajowhite4\"        \n[490] \"navy\"                 \"navyblue\"             \"oldlace\"             \n[493] \"olivedrab\"            \"olivedrab1\"           \"olivedrab2\"          \n[496] \"olivedrab3\"           \"olivedrab4\"           \"orange\"              \n[499] \"orange1\"              \"orange2\"              \"orange3\"             \n[502] \"orange4\"              \"orangered\"            \"orangered1\"          \n[505] \"orangered2\"           \"orangered3\"           \"orangered4\"          \n[508] \"orchid\"               \"orchid1\"              \"orchid2\"             \n[511] \"orchid3\"              \"orchid4\"              \"palegoldenrod\"       \n[514] \"palegreen\"            \"palegreen1\"           \"palegreen2\"          \n[517] \"palegreen3\"           \"palegreen4\"           \"paleturquoise\"       \n[520] \"paleturquoise1\"       \"paleturquoise2\"       \"paleturquoise3\"      \n[523] \"paleturquoise4\"       \"palevioletred\"        \"palevioletred1\"      \n[526] \"palevioletred2\"       \"palevioletred3\"       \"palevioletred4\"      \n[529] \"papayawhip\"           \"peachpuff\"            \"peachpuff1\"          \n[532] \"peachpuff2\"           \"peachpuff3\"           \"peachpuff4\"          \n[535] \"peru\"                 \"pink\"                 \"pink1\"               \n[538] \"pink2\"                \"pink3\"                \"pink4\"               \n[541] \"plum\"                 \"plum1\"                \"plum2\"               \n[544] \"plum3\"                \"plum4\"                \"powderblue\"          \n[547] \"purple\"               \"purple1\"              \"purple2\"             \n[550] \"purple3\"              \"purple4\"              \"red\"                 \n[553] \"red1\"                 \"red2\"                 \"red3\"                \n[556] \"red4\"                 \"rosybrown\"            \"rosybrown1\"          \n[559] \"rosybrown2\"           \"rosybrown3\"           \"rosybrown4\"          \n[562] \"royalblue\"            \"royalblue1\"           \"royalblue2\"          \n[565] \"royalblue3\"           \"royalblue4\"           \"saddlebrown\"         \n[568] \"salmon\"               \"salmon1\"              \"salmon2\"             \n[571] \"salmon3\"              \"salmon4\"              \"sandybrown\"          \n[574] \"seagreen\"             \"seagreen1\"            \"seagreen2\"           \n[577] \"seagreen3\"            \"seagreen4\"            \"seashell\"            \n[580] \"seashell1\"            \"seashell2\"            \"seashell3\"           \n[583] \"seashell4\"            \"sienna\"               \"sienna1\"             \n[586] \"sienna2\"              \"sienna3\"              \"sienna4\"             \n[589] \"skyblue\"              \"skyblue1\"             \"skyblue2\"            \n[592] \"skyblue3\"             \"skyblue4\"             \"slateblue\"           \n[595] \"slateblue1\"           \"slateblue2\"           \"slateblue3\"          \n[598] \"slateblue4\"           \"slategray\"            \"slategray1\"          \n[601] \"slategray2\"           \"slategray3\"           \"slategray4\"          \n[604] \"slategrey\"            \"snow\"                 \"snow1\"               \n[607] \"snow2\"                \"snow3\"                \"snow4\"               \n[610] \"springgreen\"          \"springgreen1\"         \"springgreen2\"        \n[613] \"springgreen3\"         \"springgreen4\"         \"steelblue\"           \n[616] \"steelblue1\"           \"steelblue2\"           \"steelblue3\"          \n[619] \"steelblue4\"           \"tan\"                  \"tan1\"                \n[622] \"tan2\"                 \"tan3\"                 \"tan4\"                \n[625] \"thistle\"              \"thistle1\"             \"thistle2\"            \n[628] \"thistle3\"             \"thistle4\"             \"tomato\"              \n[631] \"tomato1\"              \"tomato2\"              \"tomato3\"             \n[634] \"tomato4\"              \"turquoise\"            \"turquoise1\"          \n[637] \"turquoise2\"           \"turquoise3\"           \"turquoise4\"          \n[640] \"violet\"               \"violetred\"            \"violetred1\"          \n[643] \"violetred2\"           \"violetred3\"           \"violetred4\"          \n[646] \"wheat\"                \"wheat1\"               \"wheat2\"              \n[649] \"wheat3\"               \"wheat4\"               \"whitesmoke\"          \n[652] \"yellow\"               \"yellow1\"              \"yellow2\"             \n[655] \"yellow3\"              \"yellow4\"              \"yellowgreen\""
+  },
+  {
+    "objectID": "stat100_wk03mon.html#change-the-color-1",
+    "href": "stat100_wk03mon.html#change-the-color-1",
+    "title": "Stat 100",
+    "section": "Change the Color",
+    "text": "Change the Color\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  scale_color_manual(values = c(\"violetred2\",\n                                \"steelblue4\"))"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#change-the-color-2",
+    "href": "stat100_wk03mon.html#change-the-color-2",
+    "title": "Stat 100",
+    "section": "Change the Color",
+    "text": "Change the Color\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  scale_color_manual(values = c(\"#0D6759\",\n                                \"#E4844A\"))"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#use-a-different-theme",
+    "href": "stat100_wk03mon.html#use-a-different-theme",
+    "title": "Stat 100",
+    "section": "Use a Different Theme",
+    "text": "Use a Different Theme\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  scale_color_manual(values = c(\"#0D6759\",\n                                \"#E4844A\")) +\n  theme_bw() +\n  theme(legend.pos = \"bottom\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#reminders",
+    "href": "stat100_wk03mon.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!\nGrab a postcard and/or a stamp from SC 316 if you lost yours.\n\nWe also have markers, colored pencils, and crayons!\n\nDon’t forget that P-Set 1 due on Tuesday by 5pm in Gradescope.\nCome by office hours with any questions."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 100: Introduction to Statistics and Data Science",
+    "section": "",
+    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#keyword",
+    "href": "stat100_wk01wed.html#keyword",
+    "title": "Stat 100",
+    "section": "",
+    "text": "What words or phrases do you think of when you hear the word “Harvard”?\n\n\nThis being a data class, I’d like to collect some data related to “statistical thinking.”\n\n\nGo to bit.ly/stat-100-think to provide the words or phrases you think of when you hear “statistical thinking.”"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#getting-started-in-stat-100",
+    "href": "stat100_wk01wed.html#getting-started-in-stat-100",
+    "title": "Stat 100",
+    "section": "Getting Started in Stat 100",
+    "text": "Getting Started in Stat 100\nStep 1: Getting Started Module in Canvas"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#stat-100-tech-materials",
+    "href": "stat100_wk01wed.html#stat-100-tech-materials",
+    "title": "Stat 100",
+    "section": "Stat 100 Tech & Materials",
+    "text": "Stat 100 Tech & Materials"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#announcements",
+    "href": "stat100_wk01wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nLecture slide decks will always be posted and linked to a Canvas Module the day before lecture.\n\nWill also bring printed versions for those who prefer paper copies.\n\nNo section and no lecture quiz this week.\n\nBut be on the look-out for section preference form from my.harvard.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nIf able, please bring a laptop or tablet to Mondays’s lecture."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#day-1-goals",
+    "href": "stat100_wk01wed.html#day-1-goals",
+    "title": "Stat 100",
+    "section": "Day 1 Goals",
+    "text": "Day 1 Goals\n\nStart engaging in statistical thinking\nIntroduce data\nConsider hand-drawn visualizations as a way to tell stories with data\nHop into the RStudio Server using Posit Cloud"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#looking-ahead-to-day-2",
+    "href": "stat100_wk01wed.html#looking-ahead-to-day-2",
+    "title": "Stat 100",
+    "section": "Looking Ahead to Day 2…",
+    "text": "Looking Ahead to Day 2…\n\nDiscuss course structure (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#research-interests",
+    "href": "stat100_wk01wed.html#research-interests",
+    "title": "Stat 100",
+    "section": "Research Interests",
+    "text": "Research Interests\nSurvey statistics and collaborate with"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#research-interests-1",
+    "href": "stat100_wk01wed.html#research-interests-1",
+    "title": "Stat 100",
+    "section": "Research Interests",
+    "text": "Research Interests\nWhere survey statistics meets data science"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
+    "href": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
+    "title": "Stat 100",
+    "section": "Stat 100 is about developing our statistical thinking skills.",
+    "text": "Stat 100 is about developing our statistical thinking skills.\n\n\nWhat is statistical thinking?\n\n\n\nIt is not the same as mathematical thinking.\n\n\n\nLet’s discover what statistical thinking is through some examples."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-in-stat-100",
+    "href": "stat100_wk01wed.html#data-in-stat-100",
+    "title": "Stat 100",
+    "section": "Data in Stat 100",
+    "text": "Data in Stat 100\nWill use a wide-range of real and relevant data examples"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-in-stat-100-1",
+    "href": "stat100_wk01wed.html#data-in-stat-100-1",
+    "title": "Stat 100",
+    "section": "Data in Stat 100",
+    "text": "Data in Stat 100\n\n\n\n\n\n\n\n\nI understand that some of these topics have likely had profound impacts on your lives.\nWe will focus class time on the key course objectives but will use these current topics to empower ourselves and to see how we can productively participate with data."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#statistical-thinking",
+    "href": "stat100_wk01wed.html#statistical-thinking",
+    "title": "Stat 100",
+    "section": "Statistical Thinking",
+    "text": "Statistical Thinking\n\n\n\nUnderstanding the importance of context.\n\n\n\n Context explains the Monday jumps in the COVID counts.\n\n\n\n\n\n\nHow we encode information in a graph should be driven by our research question.\n\n\n\n Design choices impact the conclusions the viewer draws.\n\n\n\n\n\n\nHow the data are collected impacts the conclusions we can draw.\n\n\n\n Voluntary COVID test results don’t likely provide good estimates of COVID prevalence.\n\n\n\n\n\n\nOften we are using a sample of data to say something about a larger group. In this case, we should measure how certain our estimates are!\n\n\n\n We will learn to compute and interpret certainty estimates (like those in the wastewater graph) later in the course!"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#statistical-thinking-1",
+    "href": "stat100_wk01wed.html#statistical-thinking-1",
+    "title": "Stat 100",
+    "section": "Statistical Thinking",
+    "text": "Statistical Thinking\n\nAbout developing reasoning (not just learning definitions and formulae).\nDeveloping our statistical thinking skills will allow us to soundly extract knowledge from data!\nStatistical thinking requires judgment that takes time to develop.\n\nWill see examples and practice applying statistical thinking throughout the course."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#what-areis-data",
+    "href": "stat100_wk01wed.html#what-areis-data",
+    "title": "Stat 100",
+    "section": "What are/is Data?",
+    "text": "What are/is Data?\n\n\n\n“‘Raw data’ is an oxymoron.” – Lisa Gitelman\n\n\n\n“Data … is information made tractable.” – Catherine D’Ignazio and Lauren Klein"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-frames",
+    "href": "stat100_wk01wed.html#data-frames",
+    "title": "Stat 100",
+    "section": "Data Frames",
+    "text": "Data Frames\nData in spreadsheet-like format where:\n\nRows = Observations/cases\nColumns = Variables\n\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\n\nData from GPT Detectors Are Biased Against Non-Native English Writers. Weixin Liang, Mert Yuksekgonul, Yining Mao, Eric Wu, James Zou. CellPress Patterns and available in the R package detectors."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-frames-1",
+    "href": "stat100_wk01wed.html#data-frames-1",
+    "title": "Stat 100",
+    "section": "Data Frames",
+    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nRows = Observations/cases\nWhat are the cases? What does each row represent?"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-frames-2",
+    "href": "stat100_wk01wed.html#data-frames-2",
+    "title": "Stat 100",
+    "section": "Data Frames",
+    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nColumns = Variables\nVariables: Describe characteristics of the observations\n\nQuantitative: Numerical in nature\nCategorical: Values are categories\nIdentification: Uniquely identify each case"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz",
+    "href": "stat100_wk01wed.html#hand-drawn-data-viz",
+    "title": "Stat 100",
+    "section": "Hand-Drawn Data Viz",
+    "text": "Hand-Drawn Data Viz\n\nOnce we have collected data, a common next step is to visualize it.\nTwo key aspects of data visualization:\n\nDetermining how you want to display the data.\nFiguring out how to tell the computer to do that mapping.\n\nHand-drawn data visualizations allow us to focus on the first part with full control over the creative process!"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
+    "href": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
+    "title": "Stat 100",
+    "section": "Hand-Drawn Data Viz Examples",
+    "text": "Hand-Drawn Data Viz Examples\nDear Data\n\n“Each week, and for a year, we collected and measured a particular type of data about our lives, used this data to make a drawing on a postcard-sized sheet of paper, and then dropped the postcard in an English”postbox” (Stefanie) or an American “mailbox” (Giorgia)!“"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
+    "href": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
+    "title": "Stat 100",
+    "section": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.",
+    "text": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.\n\n\n\nRecommendations\n\n\nStore the data in your favorite spreadsheet program (Google Sheets, Numbers, Excel).\nDetermine what your cases/observations will be.\nCollect data on more variables than you will likely visualize. It is hard to know beforehand what the interesting relationships will be.\n\n\n\nNext Week\n\nWill get a blank postcard and further guidance on the visualization with P-Set 1."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#section",
+    "href": "stat100_wk01wed.html#section",
+    "title": "Stat 100",
+    "section": "",
+    "text": "Demo of accessing the RStudio Server on Posit Cloud\n\n\nTry to access the RStudio Server between now and next lecture.\nCome back to the recording if need help with the steps."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#reminders",
+    "href": "stat100_wk01wed.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nIf able, please bring a laptop or tablet to Mondays’s lecture.\nNo section, no wrap-ups, and no lecture quiz this week.\nMake sure to go through the syllabus, which can be found on Canvas.\n\nWill discuss assessments and course policies on Monday.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nBe on the look-out for the section preference form."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#announcements",
+    "href": "stat100_wk02mon.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#day-2-goals",
+    "href": "stat100_wk02mon.html#day-2-goals",
+    "title": "Stat 100",
+    "section": "Day 2 Goals",
+    "text": "Day 2 Goals\n\nDiscuss course structure & goals (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#data-analysis-workflow",
+    "href": "stat100_wk02mon.html#data-analysis-workflow",
+    "title": "Stat 100",
+    "section": "Data Analysis Workflow",
+    "text": "Data Analysis Workflow"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#stat-100-weekly-flow",
+    "href": "stat100_wk02mon.html#stat-100-weekly-flow",
+    "title": "Stat 100",
+    "section": "Stat 100 Weekly Flow",
+    "text": "Stat 100 Weekly Flow"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#forms-of-assessment",
+    "href": "stat100_wk02mon.html#forms-of-assessment",
+    "title": "Stat 100",
+    "section": "Forms of Assessment",
+    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one p-set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#this-weeks-assessments",
+    "href": "stat100_wk02mon.html#this-weeks-assessments",
+    "title": "Stat 100",
+    "section": "This Week’s Assessments",
+    "text": "This Week’s Assessments\n\nLecture quiz releases on Wed at 11:45am.\nP-Set 1 will be posted to Posit Cloud on Wednesday.\n\nDue the following Tuesday, September 19th at 5pm on Gradescope.\nIn section this week, you will get started on P-Set 1 and will learn how to submit to Gradescope."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
+    "href": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
+    "title": "Stat 100",
+    "section": "Professor McConville in Spring 2023",
+    "text": "Professor McConville in Spring 2023\n\n\n\nBBC Science Focus"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
+    "href": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
+    "title": "Stat 100",
+    "section": "Professor McConville in Summer 2023",
+    "text": "Professor McConville in Summer 2023\n\n\n\n\n\nRicardo IV Tamayo\n\n\n\nGenerative AI Engagements\n\nParticipated in Stats Dept reading group on generative AI\nWent to conference talks on generative AI\nTalked to ChatGPT"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#chatgpt",
+    "href": "stat100_wk02mon.html#chatgpt",
+    "title": "Stat 100",
+    "section": "",
+    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
+    "href": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
+    "title": "Stat 100",
+    "section": "My View on the (Current) Role of ChatGPT in Data Work",
+    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#ai-policy-for-stat-100",
+    "href": "stat100_wk02mon.html#ai-policy-for-stat-100",
+    "title": "Stat 100",
+    "section": "AI Policy for Stat 100",
+    "text": "AI Policy for Stat 100\n\nWhile A.I. tools, such as ChatGPT, are being used to generate code and analyze data, goals of this course are to develop your own ability to write code and to thoughtfully extract knowledge from data. Therefore, we expect that all work students submit for this course will be their own. This includes code, written work, and oral assessments. We specifically forbid the use of ChatGPT or any other generative artificial intelligence (AI) tools at all stages of the work process, including preliminary ones, unless the assignment specifically states that it is allowed. Violations of this policy will be considered academic misconduct. We draw your attention to the fact that different classes at Harvard could implement different AI policies, and it is the student’s responsibility to conform to expectations for each course.\n\n\nThe goal of this policy is not to lessen your access to support but to ensure we are achieving the learning objectives of the course. Please see the Avenues for Help section of the syllabus for ways to get support in Stat 100."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#engagement",
+    "href": "stat100_wk02mon.html#engagement",
+    "title": "Stat 100",
+    "section": "Engagement",
+    "text": "Engagement\n\n\n \n\n\n\n\n\n\nBeing actively present is key.\n\n\n\nDuring lecture and section, remove distractions.\n\nWhen we are on our computers, close email, social media, news, etc.\nIf you will be using a computer/tablet for taking notes, please sit outside the technology-free zone (first 6 rows of the middle section) starting next lecture so as not to distract classmates.\nHide your phone.\n\nI have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#identity-and-the-classroom",
+    "href": "stat100_wk02mon.html#identity-and-the-classroom",
+    "title": "Stat 100",
+    "section": "Identity and the Classroom",
+    "text": "Identity and the Classroom\n\nAcknowledge that my perspectives and experiences have shaped how I teach this course and how I approach my data work\nSome of my identities place me in dominant groups while others in marginalized groups\nStrive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities\nStrive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you\nAsk that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#code-of-conduct",
+    "href": "stat100_wk02mon.html#code-of-conduct",
+    "title": "Stat 100",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\n\nWe expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\n\n\nWe expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners. You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.\n\nThis Code of Conduct is adapted from the Contributor Covenant, version 2.0."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#ways-to-get-support",
+    "href": "stat100_wk02mon.html#ways-to-get-support",
+    "title": "Stat 100",
+    "section": "Ways to Get Support",
+    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#section",
+    "href": "stat100_wk02mon.html#section",
+    "title": "Stat 100",
+    "section": "",
+    "text": "Getting Help with R\n\n\n\n\nNovices asking the internet for R help = 😰\nGet help from the Stat 100 teaching staff or classmates!\n\nWill start p-sets in section each week.\nUse the Slack #q-and-a channel.\n\n\n\n\nGet help early before 😡 sets in!\n\nBe prepared for missing commas and quotes, capitalization issues, etc…\n\nLater in the semester, will learn tricks for effectively getting R help online."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
+    "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
+    "title": "Stat 100",
+    "section": "Language: R-This, R-That, Q-What?",
+    "text": "Language: R-This, R-That, Q-What?\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
+    "href": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
+    "title": "Stat 100",
+    "section": "Main Components of RStudio Lay-Out",
+    "text": "Main Components of RStudio Lay-Out"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#reminders",
+    "href": "stat100_wk02mon.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
+  },
+  {
     "objectID": "stat100_wk02wed.html#announcements",
     "href": "stat100_wk02wed.html#announcements",
     "title": "Stat 100",
@@ -243,299 +852,5 @@
     "title": "Stat 100",
     "section": "Reminders",
     "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class today."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#announcements",
-    "href": "stat100_wk02mon.html#announcements",
-    "title": "Stat 100",
-    "section": "Announcements",
-    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#day-2-goals",
-    "href": "stat100_wk02mon.html#day-2-goals",
-    "title": "Stat 100",
-    "section": "Day 2 Goals",
-    "text": "Day 2 Goals\n\nDiscuss course structure & goals (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#data-analysis-workflow",
-    "href": "stat100_wk02mon.html#data-analysis-workflow",
-    "title": "Stat 100",
-    "section": "Data Analysis Workflow",
-    "text": "Data Analysis Workflow"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#stat-100-weekly-flow",
-    "href": "stat100_wk02mon.html#stat-100-weekly-flow",
-    "title": "Stat 100",
-    "section": "Stat 100 Weekly Flow",
-    "text": "Stat 100 Weekly Flow"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#forms-of-assessment",
-    "href": "stat100_wk02mon.html#forms-of-assessment",
-    "title": "Stat 100",
-    "section": "Forms of Assessment",
-    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one p-set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#this-weeks-assessments",
-    "href": "stat100_wk02mon.html#this-weeks-assessments",
-    "title": "Stat 100",
-    "section": "This Week’s Assessments",
-    "text": "This Week’s Assessments\n\nLecture quiz releases on Wed at 11:45am.\nP-Set 1 will be posted to Posit Cloud on Wednesday.\n\nDue the following Tuesday, September 19th at 5pm on Gradescope.\nIn section this week, you will get started on P-Set 1 and will learn how to submit to Gradescope."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
-    "href": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
-    "title": "Stat 100",
-    "section": "Professor McConville in Spring 2023",
-    "text": "Professor McConville in Spring 2023\n\n\n\nBBC Science Focus"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
-    "href": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
-    "title": "Stat 100",
-    "section": "Professor McConville in Summer 2023",
-    "text": "Professor McConville in Summer 2023\n\n\n\n\n\nRicardo IV Tamayo\n\n\n\nGenerative AI Engagements\n\nParticipated in Stats Dept reading group on generative AI\nWent to conference talks on generative AI\nTalked to ChatGPT"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#chatgpt",
-    "href": "stat100_wk02mon.html#chatgpt",
-    "title": "Stat 100",
-    "section": "",
-    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
-    "href": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
-    "title": "Stat 100",
-    "section": "My View on the (Current) Role of ChatGPT in Data Work",
-    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#ai-policy-for-stat-100",
-    "href": "stat100_wk02mon.html#ai-policy-for-stat-100",
-    "title": "Stat 100",
-    "section": "AI Policy for Stat 100",
-    "text": "AI Policy for Stat 100\n\nWhile A.I. tools, such as ChatGPT, are being used to generate code and analyze data, goals of this course are to develop your own ability to write code and to thoughtfully extract knowledge from data. Therefore, we expect that all work students submit for this course will be their own. This includes code, written work, and oral assessments. We specifically forbid the use of ChatGPT or any other generative artificial intelligence (AI) tools at all stages of the work process, including preliminary ones, unless the assignment specifically states that it is allowed. Violations of this policy will be considered academic misconduct. We draw your attention to the fact that different classes at Harvard could implement different AI policies, and it is the student’s responsibility to conform to expectations for each course.\n\n\nThe goal of this policy is not to lessen your access to support but to ensure we are achieving the learning objectives of the course. Please see the Avenues for Help section of the syllabus for ways to get support in Stat 100."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#engagement",
-    "href": "stat100_wk02mon.html#engagement",
-    "title": "Stat 100",
-    "section": "Engagement",
-    "text": "Engagement\n\n\n \n\n\n\n\n\n\nBeing actively present is key.\n\n\n\nDuring lecture and section, remove distractions.\n\nWhen we are on our computers, close email, social media, news, etc.\nIf you will be using a computer/tablet for taking notes, please sit outside the technology-free zone (first 6 rows of the middle section) starting next lecture so as not to distract classmates.\nHide your phone.\n\nI have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#identity-and-the-classroom",
-    "href": "stat100_wk02mon.html#identity-and-the-classroom",
-    "title": "Stat 100",
-    "section": "Identity and the Classroom",
-    "text": "Identity and the Classroom\n\nAcknowledge that my perspectives and experiences have shaped how I teach this course and how I approach my data work\nSome of my identities place me in dominant groups while others in marginalized groups\nStrive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities\nStrive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you\nAsk that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#code-of-conduct",
-    "href": "stat100_wk02mon.html#code-of-conduct",
-    "title": "Stat 100",
-    "section": "Code of Conduct",
-    "text": "Code of Conduct\n\nWe expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\n\n\nWe expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners. You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.\n\nThis Code of Conduct is adapted from the Contributor Covenant, version 2.0."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#ways-to-get-support",
-    "href": "stat100_wk02mon.html#ways-to-get-support",
-    "title": "Stat 100",
-    "section": "Ways to Get Support",
-    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#section",
-    "href": "stat100_wk02mon.html#section",
-    "title": "Stat 100",
-    "section": "",
-    "text": "Getting Help with R\n\n\n\n\nNovices asking the internet for R help = 😰\nGet help from the Stat 100 teaching staff or classmates!\n\nWill start p-sets in section each week.\nUse the Slack #q-and-a channel.\n\n\n\n\nGet help early before 😡 sets in!\n\nBe prepared for missing commas and quotes, capitalization issues, etc…\n\nLater in the semester, will learn tricks for effectively getting R help online."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
-    "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
-    "title": "Stat 100",
-    "section": "Language: R-This, R-That, Q-What?",
-    "text": "Language: R-This, R-That, Q-What?\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
-    "href": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
-    "title": "Stat 100",
-    "section": "Main Components of RStudio Lay-Out",
-    "text": "Main Components of RStudio Lay-Out"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#reminders",
-    "href": "stat100_wk02mon.html#reminders",
-    "title": "Stat 100",
-    "section": "Reminders",
-    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#keyword",
-    "href": "stat100_wk01wed.html#keyword",
-    "title": "Stat 100",
-    "section": "",
-    "text": "What words or phrases do you think of when you hear the word “Harvard”?\n\n\nThis being a data class, I’d like to collect some data related to “statistical thinking.”\n\n\nGo to bit.ly/stat-100-think to provide the words or phrases you think of when you hear “statistical thinking.”"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#getting-started-in-stat-100",
-    "href": "stat100_wk01wed.html#getting-started-in-stat-100",
-    "title": "Stat 100",
-    "section": "Getting Started in Stat 100",
-    "text": "Getting Started in Stat 100\nStep 1: Getting Started Module in Canvas"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#stat-100-tech-materials",
-    "href": "stat100_wk01wed.html#stat-100-tech-materials",
-    "title": "Stat 100",
-    "section": "Stat 100 Tech & Materials",
-    "text": "Stat 100 Tech & Materials"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#announcements",
-    "href": "stat100_wk01wed.html#announcements",
-    "title": "Stat 100",
-    "section": "Announcements",
-    "text": "Announcements\n\nLecture slide decks will always be posted and linked to a Canvas Module the day before lecture.\n\nWill also bring printed versions for those who prefer paper copies.\n\nNo section and no lecture quiz this week.\n\nBut be on the look-out for section preference form from my.harvard.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nIf able, please bring a laptop or tablet to Mondays’s lecture."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#day-1-goals",
-    "href": "stat100_wk01wed.html#day-1-goals",
-    "title": "Stat 100",
-    "section": "Day 1 Goals",
-    "text": "Day 1 Goals\n\nStart engaging in statistical thinking\nIntroduce data\nConsider hand-drawn visualizations as a way to tell stories with data\nHop into the RStudio Server using Posit Cloud"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#looking-ahead-to-day-2",
-    "href": "stat100_wk01wed.html#looking-ahead-to-day-2",
-    "title": "Stat 100",
-    "section": "Looking Ahead to Day 2…",
-    "text": "Looking Ahead to Day 2…\n\nDiscuss course structure (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#research-interests",
-    "href": "stat100_wk01wed.html#research-interests",
-    "title": "Stat 100",
-    "section": "Research Interests",
-    "text": "Research Interests\nSurvey statistics and collaborate with"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#research-interests-1",
-    "href": "stat100_wk01wed.html#research-interests-1",
-    "title": "Stat 100",
-    "section": "Research Interests",
-    "text": "Research Interests\nWhere survey statistics meets data science"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
-    "href": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
-    "title": "Stat 100",
-    "section": "Stat 100 is about developing our statistical thinking skills.",
-    "text": "Stat 100 is about developing our statistical thinking skills.\n\n\nWhat is statistical thinking?\n\n\n\nIt is not the same as mathematical thinking.\n\n\n\nLet’s discover what statistical thinking is through some examples."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-in-stat-100",
-    "href": "stat100_wk01wed.html#data-in-stat-100",
-    "title": "Stat 100",
-    "section": "Data in Stat 100",
-    "text": "Data in Stat 100\nWill use a wide-range of real and relevant data examples"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-in-stat-100-1",
-    "href": "stat100_wk01wed.html#data-in-stat-100-1",
-    "title": "Stat 100",
-    "section": "Data in Stat 100",
-    "text": "Data in Stat 100\n\n\n\n\n\n\n\n\nI understand that some of these topics have likely had profound impacts on your lives.\nWe will focus class time on the key course objectives but will use these current topics to empower ourselves and to see how we can productively participate with data."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#statistical-thinking",
-    "href": "stat100_wk01wed.html#statistical-thinking",
-    "title": "Stat 100",
-    "section": "Statistical Thinking",
-    "text": "Statistical Thinking\n\n\n\nUnderstanding the importance of context.\n\n\n\n Context explains the Monday jumps in the COVID counts.\n\n\n\n\n\n\nHow we encode information in a graph should be driven by our research question.\n\n\n\n Design choices impact the conclusions the viewer draws.\n\n\n\n\n\n\nHow the data are collected impacts the conclusions we can draw.\n\n\n\n Voluntary COVID test results don’t likely provide good estimates of COVID prevalence.\n\n\n\n\n\n\nOften we are using a sample of data to say something about a larger group. In this case, we should measure how certain our estimates are!\n\n\n\n We will learn to compute and interpret certainty estimates (like those in the wastewater graph) later in the course!"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#statistical-thinking-1",
-    "href": "stat100_wk01wed.html#statistical-thinking-1",
-    "title": "Stat 100",
-    "section": "Statistical Thinking",
-    "text": "Statistical Thinking\n\nAbout developing reasoning (not just learning definitions and formulae).\nDeveloping our statistical thinking skills will allow us to soundly extract knowledge from data!\nStatistical thinking requires judgment that takes time to develop.\n\nWill see examples and practice applying statistical thinking throughout the course."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#what-areis-data",
-    "href": "stat100_wk01wed.html#what-areis-data",
-    "title": "Stat 100",
-    "section": "What are/is Data?",
-    "text": "What are/is Data?\n\n\n\n“‘Raw data’ is an oxymoron.” – Lisa Gitelman\n\n\n\n“Data … is information made tractable.” – Catherine D’Ignazio and Lauren Klein"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-frames",
-    "href": "stat100_wk01wed.html#data-frames",
-    "title": "Stat 100",
-    "section": "Data Frames",
-    "text": "Data Frames\nData in spreadsheet-like format where:\n\nRows = Observations/cases\nColumns = Variables\n\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\n\nData from GPT Detectors Are Biased Against Non-Native English Writers. Weixin Liang, Mert Yuksekgonul, Yining Mao, Eric Wu, James Zou. CellPress Patterns and available in the R package detectors."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-frames-1",
-    "href": "stat100_wk01wed.html#data-frames-1",
-    "title": "Stat 100",
-    "section": "Data Frames",
-    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nRows = Observations/cases\nWhat are the cases? What does each row represent?"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-frames-2",
-    "href": "stat100_wk01wed.html#data-frames-2",
-    "title": "Stat 100",
-    "section": "Data Frames",
-    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nColumns = Variables\nVariables: Describe characteristics of the observations\n\nQuantitative: Numerical in nature\nCategorical: Values are categories\nIdentification: Uniquely identify each case"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz",
-    "href": "stat100_wk01wed.html#hand-drawn-data-viz",
-    "title": "Stat 100",
-    "section": "Hand-Drawn Data Viz",
-    "text": "Hand-Drawn Data Viz\n\nOnce we have collected data, a common next step is to visualize it.\nTwo key aspects of data visualization:\n\nDetermining how you want to display the data.\nFiguring out how to tell the computer to do that mapping.\n\nHand-drawn data visualizations allow us to focus on the first part with full control over the creative process!"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
-    "href": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
-    "title": "Stat 100",
-    "section": "Hand-Drawn Data Viz Examples",
-    "text": "Hand-Drawn Data Viz Examples\nDear Data\n\n“Each week, and for a year, we collected and measured a particular type of data about our lives, used this data to make a drawing on a postcard-sized sheet of paper, and then dropped the postcard in an English”postbox” (Stefanie) or an American “mailbox” (Giorgia)!“"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
-    "href": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
-    "title": "Stat 100",
-    "section": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.",
-    "text": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.\n\n\n\nRecommendations\n\n\nStore the data in your favorite spreadsheet program (Google Sheets, Numbers, Excel).\nDetermine what your cases/observations will be.\nCollect data on more variables than you will likely visualize. It is hard to know beforehand what the interesting relationships will be.\n\n\n\nNext Week\n\nWill get a blank postcard and further guidance on the visualization with P-Set 1."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#section",
-    "href": "stat100_wk01wed.html#section",
-    "title": "Stat 100",
-    "section": "",
-    "text": "Demo of accessing the RStudio Server on Posit Cloud\n\n\nTry to access the RStudio Server between now and next lecture.\nCome back to the recording if need help with the steps."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#reminders",
-    "href": "stat100_wk01wed.html#reminders",
-    "title": "Stat 100",
-    "section": "Reminders",
-    "text": "Reminders\n\nIf able, please bring a laptop or tablet to Mondays’s lecture.\nNo section, no wrap-ups, and no lecture quiz this week.\nMake sure to go through the syllabus, which can be found on Canvas.\n\nWill discuss assessments and course policies on Monday.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nBe on the look-out for the section preference form."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 100: Introduction to Statistics and Data Science",
-    "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed"
   }
 ]

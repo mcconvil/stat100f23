@@ -64,22 +64,24 @@ theme_update(text = element_text(size = 20))
     -   Wrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309
     -   Lecture quiz will be released in **Gradescope** after class today.
 
----
+------------------------------------------------------------------------
 
 ## Teachly
 
-* Teachly is a platform that allows you to fill out a profile so that we can get to know you and your interests in stats/data science better.
+-   Teachly is a platform that allows you to fill out a profile so that we can get to know you and your interests in stats/data science better.
 
-* You should have received two emails:
-    + The general Teachly profile
-    + A couple additional Stat 100 related questions
-    
-* Each question is optional.  You will not be assessed on its completion or your answers. 
+-   You should have received two emails:
 
-* Ways we plan to use Teachly:
-    + To get to know you better.
-    + To find out what data applications you might be interested in seeing.
-    + To tailor advice related to future statistical endeavors.
+    -   The general Teachly profile
+    -   A couple additional Stat 100 related questions
+
+-   Each question is optional. You will not be assessed on its completion or your answers.
+
+-   Ways we plan to use Teachly:
+
+    -   To get to know you better.
+    -   To find out what data applications you might be interested in seeing.
+    -   To tailor advice related to future statistical endeavors.
 
 ------------------------------------------------------------------------
 
@@ -345,7 +347,7 @@ Maps, like the [Dude map](https://qz.com/316906/the-dude-map-how-american-men-re
 
 ------------------------------------------------------------------------
 
-### Color Palettes -- Diverging
+### Color Palettes -- Qualitative
 
 ![](img/dogs.png){width="60%" fig-align="center"}
 
@@ -369,8 +371,6 @@ Washington Post's Approach:
 
 Because of all the design choices, it is much easier to make a bad graph than a good graph.
 
-
-
 ![](img/pizza_pie.png){width="40%" fig-align="center"}
 
 ------------------------------------------------------------------------
@@ -381,7 +381,7 @@ Be careful that your design choices don't cause your viewer to draw incorrect co
 
 ![](img/FLguns.jpg){width="40%" fig-align="center"}
 
-* Just letting the software make all the design choices can still lead to misleading graphs (recall the Georgia COVID graph).
+-   Just letting the software make all the design choices can still lead to misleading graphs (recall the Georgia COVID graph).
 
 ------------------------------------------------------------------------
 
@@ -420,16 +420,13 @@ library(tidyverse)
 
 ## Data Setting: [Eco-Totem Broadway Bicycle Count](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
 
-::: columns 
-
-:::{.column width="40%" fig-align="center"}
-
-![](img/counter.jpg){width="100%"} 
-
+::: columns
+::: {.column width="40%" fig-align="center"}
+![](img/counter.jpg){width="100%"}
 :::
 
-:::{.column width="60%" fig-align="center"}
-![](img/bike_counter_map.png){width="100%"} 
+::: {.column width="60%" fig-align="center"}
+![](img/bike_counter_map.png){width="100%"}
 :::
 :::
 
@@ -518,7 +515,6 @@ class(july_2019)
     -   EX: particular colors, log scale
 -   **guide**: Legend/key to help user convert visual display back to the data
 
-
 ------------------------------------------------------------------------
 
 ## `ggplot2` example code
@@ -553,7 +549,7 @@ ggplot(data = july_2019, mapping = aes(x = Total)) +
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ## Data Shapes
 
@@ -572,7 +568,7 @@ library(cowplot)
 plot_grid(p1, p2, p3, ncol = 3)
 ```
 
----
+------------------------------------------------------------------------
 
 ## Histograms
 
@@ -584,7 +580,7 @@ ggplot(data = july_2019,
   geom_histogram()
 ```
 
----
+------------------------------------------------------------------------
 
 ## Histograms
 
@@ -599,43 +595,38 @@ ggplot(data = july_2019,
                  bins = 50)
 ```
 
-* **mapping** to a variable goes in `aes()`
-* **setting** to a specific value goes in the `geom_---()`
+-   **mapping** to a variable goes in `aes()`
+-   **setting** to a specific value goes in the `geom_---()`
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
 ::: columns
 ::: {.column width="50%"}
-
-* **Five number summary**: 
-    + Minimum
-    + First quartile (Q1)
-    + Median
-    + Third quartile (Q3)
-    + Maximum
-* Interquartile range (IQR) $=$ Q3 $-$ Q1
-* Outliers: **unusual** points 
-    + Boxplot defines unusual as being beyond $1.5*IQR$ from $Q1$ or $Q3$.
-* Whiskers: reach out to the furthest point that is NOT an outlier
-
+-   **Five number summary**:
+    -   Minimum
+    -   First quartile (Q1)
+    -   Median
+    -   Third quartile (Q3)
+    -   Maximum
+-   Interquartile range (IQR) $=$ Q3 $-$ Q1
+-   Outliers: **unusual** points
+    -   Boxplot defines unusual as being beyond $1.5*IQR$ from $Q1$ or $Q3$.
+-   Whiskers: reach out to the furthest point that is NOT an outlier
 :::
 
-
 ::: {.column width="50%"}
-
 ```{r echo = FALSE}
 ggplot(data = july_2019, 
        mapping = aes(x = Occasion, 
                      y = Total)) +
   geom_boxplot()
 ```
-
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -648,7 +639,7 @@ ggplot(data = july_2019,
   geom_boxplot()
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -661,7 +652,7 @@ ggplot(data = july_2019,
   geom_boxplot(fill = "springgreen3")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -675,7 +666,7 @@ ggplot(data = july_2019,
   geom_boxplot()
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -690,10 +681,9 @@ ggplot(data = july_2019,
   guides(fill = "none")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Violin Plots
-
 
 ```{r vio}
 #| output-location: column-fragment
@@ -705,7 +695,7 @@ ggplot(data = july_2019,
   guides(fill = "none")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplot Versus Violin Plots
 
@@ -732,11 +722,10 @@ ggplot(data = july_2019,
   geom_violin() +
   guides(fill = "none")
 ```
-
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ## Recap: `ggplot2`
 
