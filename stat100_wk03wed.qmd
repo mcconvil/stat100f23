@@ -1,0 +1,544 @@
+---
+pagetitle: "Summarization & Joins"
+format: 
+  revealjs:
+    chalkboard: true
+#    incremental: true
+    theme: [default, custom.scss]
+    multiplex: true
+    height: 900
+    width: 1600
+    slide-number: c
+    auto-stretch: false
+    callout-appearance: simple
+    pdf-max-pages-per-slide: 1
+    menu: 
+      side: right
+      numbers: true
+    code-overflow: wrap
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-asp: 0.75
+  fig-width: 8
+#  fig-align: center
+  fig-dpi: 500
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+# Some global options still not available in quarto
+ knitr::opts_chunk$set(fig.align = 'center')
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 20))
+```
+
+::: columns
+::: {.column .center width="45%"}
+![](img/DAW.png){width="90%"}
+:::
+
+::: {.column .center width="55%"}
+
+
+[Data Summarization & Joins]{.custom-title}
+
+<br> 
+
+[Kelly McConville]{.custom-subtitle}
+
+[Stat 100 <br> Week 3 \| Fall 2023]{.custom-subtitle}
+:::
+:::
+
+## Announcements
+
+-   With COVID working its way through campus right now, make sure to check the  [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing) spreadsheet and the [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) spreadsheet for updates!
+
+
+
+------------------------------------------------------------------------
+
+## Goals for Today
+
+::: columns
+::: {.column width="\"50%"}
+
+* Consider measures for **summarizing** quantitative data
+    + Center
+    + Spread/variability
+
+* Consider measures for **summarizing** categorical data
+
+
+
+:::
+
+::: {.column width="\"50%"}
+
+
+* Define **data wrangling**
+
+* Learn to do data **joins**
+
+* Learn to use functions in the `dplyr` package for both data summarization and data joins!
+
+:::
+:::
+
+
+
+
+------------------------------------------------------------------------
+
+## Load Necessary Packages
+
+![](img/dplyr.png){width="15%" fig-align="center"}
+
+`dplyr` is part of this collection of data science packages.
+
+```{r}
+#| message: true
+#| warning: true
+# Load necessary packages
+library(tidyverse)
+```
+
+---
+
+## Import the [Data](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
+
+
+
+```{r}
+july_2019 <- read_csv("data/july_2019.csv")
+
+# Inspect the data
+glimpse(july_2019)
+```
+
+---
+
+## Summarizing Data
+
+```{r, echo = FALSE}
+library(kableExtra)
+knitr::kable(july_2019[25:32,]) %>%
+  kable_styling(bootstrap_options = c("responsive", "bordered", "striped")) 
+```
+
+
+* Hard to do by eyeballing a spreadsheet with many rows!
+
+---
+
+##  Summarizing Data Visually
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r, echo = FALSE}
+# Create histogram
+ggplot(data = july_2019, mapping = aes(x = Total)) + 
+  geom_histogram(fill = "slateblue4", color = "ghostwhite") +
+  facet_wrap(~Occasion, ncol = 1)
+
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+<br>
+
+For a quantitative variable, want to answer:
+
+
+
+* What is an **average** value?
+
+
+
+* What is the **trend/shape** of the variable?
+
+
+
+* How much **variation** is there from case to case?
+
+:::
+
+:::
+
+::: fragment
+
+Need to learn key **summary statistics**: Numerical values computed based on the observed cases.
+
+:::
+
+---
+
+## Measures of Center
+
+::: columns
+
+::: {.column width="50%"}
+
+**Mean**: Average of all the observations
+
+
+* $n$ = Number of cases (sample size)
+* $x_i$ = value of the i-th observation
+* Denote by $\bar{x}$
+
+$$
+\bar{x}  = \frac{1}{n} \sum_{i = 1}^n x_i
+$$
+```{r}
+# Test out on first 6 values
+head(july_2019$Total)
+```
+
+
+:::
+
+::: {.column .fragment width="50%"}
+
+Compute with a `dplyr` function:
+
+```{r}
+summarize(july_2019, mean_bikes = mean(Total))
+```
+
+
+:::
+:::
+
+
+---
+
+## Measures of Center
+
+::: columns
+
+::: {.column width="50%"}
+
+**Median**: Middle value
+
+* Half of the data falls below the median
+* Denote by $m$
+* If $n$ is even, then it is the average of the middle two values
+
+
+```{r}
+# Test out on first 6 values
+head(july_2019$Total)
+```
+
+
+:::
+
+::: {.column .fragment width="50%"}
+
+Compute with a `dplyr` function:
+
+```{r}
+summarize(july_2019, median_bikes = median(Total))
+```
+
+
+:::
+:::
+
+---
+
+## Measures of Center
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+
+Why is the mean larger than the median?
+
+```{r}
+summarize(july_2019, mean_bikes = mean(Total),
+          median_bikes = median(Total))
+```
+
+
+
+:::
+
+::: {.column .fragment width="50%"}
+
+
+```{r, echo = FALSE}
+# Create histogram
+ggplot(data = july_2019, mapping = aes(x = Total)) + 
+  geom_histogram(fill = "slateblue4", color = "ghostwhite") 
+```
+
+
+:::
+:::
+
+---
+
+## Computing Measures of Center by Groups
+
+
+
+**Question**: Were there more bikes, on average, for Fourth of July or for the normal Thursday?
+
+```{r, echo = FALSE}
+#| fig-width: 10
+
+# Create histogram
+ggplot(data = july_2019, mapping = aes(x = Total)) + 
+  geom_histogram(fill = "slateblue4", color = "ghostwhite") +
+  facet_wrap(~Occasion, ncol = 1)
+
+```
+
+---
+
+## Computing Measures of Center by Groups
+
+Handy `dplyr` function: `group_by()`
+
+```{r}
+july_2019_grouped <- group_by(july_2019, Occasion)
+july_2019_grouped
+```
+
+
+---
+
+## Computing Measures of Center by Groups
+
+::: columns
+
+::: {.column width="50%"}
+
+Compute summary statistics on the grouped data frame:
+
+```{r}
+summarize(july_2019_grouped, mean_bikes = mean(Total),
+          median_bikes = median(Total))
+```
+
+
+
+:::
+
+::: {.column width="50%"}
+
+
+```{r, echo = FALSE}
+# Create histogram
+ggplot(data = july_2019, mapping = aes(x = Total)) + 
+  geom_histogram(fill = "slateblue4", color = "ghostwhite") +
+  facet_wrap(~Occasion, ncol = 1)
+```
+
+
+:::
+:::
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations **deviate** from the mean
+
+
+::: columns
+
+::: {.column width="50%"}
+
+* Find how much each observation deviates from the mean.
+* Compute the average of the deviations.
+
+$$
+\frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})
+$$
+:::
+
+::: {.column width="50%"}
+
+```{r}
+# Test out on first 6 values
+head(july_2019$Total)
+```
+:::
+:::
+
+::: {.fragment}
+
+**Problem?**
+:::
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations **deviate** from the mean
+
+
+::: columns
+
+::: {.column width="50%"}
+
+Here is my **NEW** proposal:
+
+* Find how much each observation deviates from the mean.
+* Compute the average of the **squared** deviations.
+
+:::
+
+
+::: {.column width="50%"}
+
+```{r}
+# Test out on first 6 values
+head(july_2019$Total)
+```
+
+:::
+:::
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations **deviate** from the mean
+
+
+::: columns
+
+::: {.column width="50%"}
+
+Here is my **ACTUAL** formula:
+
+* Find how much each observation deviates from the mean.
+* Compute the (nearly) average of the **squared** deviations.
+* Called **sample variance** $s^2$.
+
+$$
+s^2 = \frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2
+$$
+
+:::
+
+
+::: {.column width="50%"}
+
+Compute with a `dplyr` function:
+
+```{r}
+summarize(july_2019, var_bikes = var(Total))
+```
+
+
+:::
+:::
+
+
+---
+
+## Measures of Variability
+
+* Want a statistic that captures how much observations **deviate** from the mean
+
+
+::: columns
+
+::: {.column width="50%"}
+
+
+* Find how much each observation deviates from the mean.
+* Compute the (nearly) average of the **squared** deviations.
+* Called **sample variance** $s^2$.
+* The square root of the sample variance is called the **sample standard deviation** $s$.
+
+$$
+s = \sqrt{\frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2}
+$$
+
+:::
+
+
+::: {.column width="50%"}
+
+Compute with a `dplyr` function:
+
+```{r}
+summarize(july_2019, var_bikes = var(Total),
+          sd_bikes = sd(Total))
+```
+
+
+:::
+:::
+
+---
+
+## Measures of Variability
+
+::: columns
+
+::: {.column width="50%"}
+
+* In addition to the sample standard deviation and the sample variance, there is the sample **interquartile range** (IQR): 
+
+$$
+\mbox{IQR} = \mbox{Q}_3 - \mbox{Q}_1
+$$
+
+:::
+
+::: {.column width="50%"}
+
+Compute with a `dplyr` function:
+
+```{r}
+summarize(july_2019, iqr_bikes = IQR(Total))
+```
+
+
+:::
+:::
+
+---
+
+## Comparing Measures of Variability
+
+* Which is more robust to outliers, the IQR or $s$?
+
+* Which is more commonly used, the IQR or $s$?
+
+```{r}
+summarize(july_2019_grouped, sd_bikes = sd(Total),
+          iqr_bikes = IQR(Total))
+```
+
+# Summarizing Categorical Variables
+
+---
+
+XXX
+
+---
+
+
+## Reminders
+
+
+-   With COVID working its way through campus right now, make sure to check the  [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing) spreadsheet and the [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) spreadsheet for updates!
+

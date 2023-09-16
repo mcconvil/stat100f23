@@ -852,5 +852,103 @@
     "title": "Stat 100",
     "section": "Reminders",
     "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class today."
+  },
+  {
+    "objectID": "stat100_wk03wed.html#announcements",
+    "href": "stat100_wk03wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#goals-for-today",
+    "href": "stat100_wk03wed.html#goals-for-today",
+    "title": "Stat 100",
+    "section": "Goals for Today",
+    "text": "Goals for Today\n\n\n\nConsider measures for summarizing quantitative data\n\nCenter\nSpread/variability\n\nConsider measures for summarizing categorical data\n\n\n\nDefine data wrangling\nLearn to do data joins\nLearn to use functions in the dplyr package for both data summarization and data joins!"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#load-necessary-packages",
+    "href": "stat100_wk03wed.html#load-necessary-packages",
+    "title": "Stat 100",
+    "section": "Load Necessary Packages",
+    "text": "Load Necessary Packages\n\n\n\n\n\ndplyr is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#import-the-data",
+    "href": "stat100_wk03wed.html#import-the-data",
+    "title": "Stat 100",
+    "section": "Import the Data",
+    "text": "Import the Data\n\njuly_2019 &lt;- read_csv(\"data/july_2019.csv\")\n\n# Inspect the data\nglimpse(july_2019)\n\nRows: 192\nColumns: 8\n$ DateTime  &lt;chr&gt; \"07/04/2019 12:00:00 AM\", \"07/04/2019 12:15:00 AM\", \"07/04/2…\n$ Day       &lt;chr&gt; \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", …\n$ Date      &lt;date&gt; 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04,…\n$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…\n$ Total     &lt;dbl&gt; 2, 3, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …\n$ Westbound &lt;dbl&gt; 2, 3, 1, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, …\n$ Eastbound &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …\n$ Occasion  &lt;chr&gt; \"Fourth of July\", \"Fourth of July\", \"Fourth of July\", \"Fourt…"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#summarizing-data",
+    "href": "stat100_wk03wed.html#summarizing-data",
+    "title": "Stat 100",
+    "section": "Summarizing Data",
+    "text": "Summarizing Data\n\n\n\n\n\n\nDateTime\nDay\nDate\nTime\nTotal\nWestbound\nEastbound\nOccasion\n\n\n\n\n07/04/2019 06:00:00 AM\nThursday\n2019-07-04\n06:00:00\n1\n1\n0\nFourth of July\n\n\n07/04/2019 06:15:00 AM\nThursday\n2019-07-04\n06:15:00\n4\n0\n4\nFourth of July\n\n\n07/04/2019 06:30:00 AM\nThursday\n2019-07-04\n06:30:00\n9\n1\n8\nFourth of July\n\n\n07/04/2019 06:45:00 AM\nThursday\n2019-07-04\n06:45:00\n5\n0\n5\nFourth of July\n\n\n07/04/2019 07:00:00 AM\nThursday\n2019-07-04\n07:00:00\n3\n3\n0\nFourth of July\n\n\n07/04/2019 07:15:00 AM\nThursday\n2019-07-04\n07:15:00\n2\n0\n2\nFourth of July\n\n\n07/04/2019 07:30:00 AM\nThursday\n2019-07-04\n07:30:00\n5\n2\n3\nFourth of July\n\n\n07/04/2019 07:45:00 AM\nThursday\n2019-07-04\n07:45:00\n2\n0\n2\nFourth of July\n\n\n\n\n\n\n\n\n\nHard to do by eyeballing a spreadsheet with many rows!"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#reminders",
+    "href": "stat100_wk03wed.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#summarizing-data-visually",
+    "href": "stat100_wk03wed.html#summarizing-data-visually",
+    "title": "Stat 100",
+    "section": "Summarizing Data Visually",
+    "text": "Summarizing Data Visually\n\n\n\n\n\n\n\n\n\n\n\n\n\nFor a quantitative variable, want to answer:\n\nWhat is an average value?\nWhat is the trend/shape of the variable?\nHow much variation is there from case to case?\n\n\n\n\nNeed to learn key summary statistics: Numerical values computed based on the observed cases."
+  },
+  {
+    "objectID": "stat100_wk03wed.html#summarizing-quantitative-variables",
+    "href": "stat100_wk03wed.html#summarizing-quantitative-variables",
+    "title": "Stat 100",
+    "section": "Summarizing Quantitative Variables",
+    "text": "Summarizing Quantitative Variables\nFor a quantitative variable, want to answer:\n\nWhat is an average value?\nWhat is the trend/shape of the variable?\nHow much variation is there from case to case?\n\n–\nNeed to learn some summary statistics: Numerical values computed based on the observed cases."
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-center",
+    "href": "stat100_wk03wed.html#measures-of-center",
+    "title": "Stat 100",
+    "section": "Measures of Center",
+    "text": "Measures of Center\n\n\nMean: Average of all the observations\n\n\\(n\\) = Number of cases (sample size)\n\\(x_i\\) = value of the i-th observation\nDenote by \\(\\bar{x}\\)\n\n\\[\n\\bar{x}  = \\frac{1}{n} \\sum_{i = 1}^n x_i\n\\]\n\n# Test out on first 6 values\nhead(july_2019$Total)\n\n[1] 2 3 2 0 3 2\n\n\n\nCompute with a dplyr function:\n\nsummarize(july_2019, mean_bikes = mean(Total))\n\n# A tibble: 1 × 1\n  mean_bikes\n       &lt;dbl&gt;\n1       17.1"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-center-1",
+    "href": "stat100_wk03wed.html#measures-of-center-1",
+    "title": "Stat 100",
+    "section": "Measures of Center",
+    "text": "Measures of Center\n\n\nMedian: Middle value\n\nHalf of the data falls below the median\nDenote by \\(m\\)\nIf \\(n\\) is even, then it is the average of the middle two values\n\n\n# Test out on first 6 values\nhead(july_2019$Total)\n\n[1] 2 3 2 0 3 2\n\n\n\nCompute with a dplyr function:\n\nsummarize(july_2019, median_bikes = median(Total))\n\n# A tibble: 1 × 1\n  median_bikes\n         &lt;dbl&gt;\n1           11"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-center-2",
+    "href": "stat100_wk03wed.html#measures-of-center-2",
+    "title": "Stat 100",
+    "section": "Measures of Center",
+    "text": "Measures of Center\n\n\nWhy is the mean larger than the median?\n\nsummarize(july_2019, mean_bikes = mean(Total),\n          median_bikes = median(Total))\n\n# A tibble: 1 × 2\n  mean_bikes median_bikes\n       &lt;dbl&gt;        &lt;dbl&gt;\n1       17.1           11"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#computing-measures-of-center-by-groups",
+    "href": "stat100_wk03wed.html#computing-measures-of-center-by-groups",
+    "title": "Stat 100",
+    "section": "Computing Measures of Center by Groups",
+    "text": "Computing Measures of Center by Groups\nQuestion: Were there more bikes, on average, for Fourth of July or for the normal Thursday?"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#computing-measures-of-center-by-groups-1",
+    "href": "stat100_wk03wed.html#computing-measures-of-center-by-groups-1",
+    "title": "Stat 100",
+    "section": "Computing Measures of Center by Groups",
+    "text": "Computing Measures of Center by Groups\nHandy dplyr function: group_by()\n\njuly_2019_grouped &lt;- group_by(july_2019, Occasion)\njuly_2019_grouped\n\n# A tibble: 192 × 8\n# Groups:   Occasion [2]\n   DateTime            Day   Date       Time  Total Westbound Eastbound Occasion\n   &lt;chr&gt;               &lt;chr&gt; &lt;date&gt;     &lt;tim&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   \n 1 07/04/2019 12:00:0… Thur… 2019-07-04 00:00     2         2         0 Fourth …\n 2 07/04/2019 12:15:0… Thur… 2019-07-04 00:15     3         3         0 Fourth …\n 3 07/04/2019 12:30:0… Thur… 2019-07-04 00:30     2         1         1 Fourth …\n 4 07/04/2019 12:45:0… Thur… 2019-07-04 00:45     0         0         0 Fourth …\n 5 07/04/2019 01:00:0… Thur… 2019-07-04 01:00     3         2         1 Fourth …\n 6 07/04/2019 01:15:0… Thur… 2019-07-04 01:15     2         2         0 Fourth …\n 7 07/04/2019 01:30:0… Thur… 2019-07-04 01:30     1         1         0 Fourth …\n 8 07/04/2019 01:45:0… Thur… 2019-07-04 01:45     0         0         0 Fourth …\n 9 07/04/2019 02:00:0… Thur… 2019-07-04 02:00     0         0         0 Fourth …\n10 07/04/2019 02:15:0… Thur… 2019-07-04 02:15     0         0         0 Fourth …\n# ℹ 182 more rows"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#computing-measures-of-center-by-groups-2",
+    "href": "stat100_wk03wed.html#computing-measures-of-center-by-groups-2",
+    "title": "Stat 100",
+    "section": "Computing Measures of Center by Groups",
+    "text": "Computing Measures of Center by Groups\n\n\nCompute summary statistics on the grouped data frame:\n\nsummarize(july_2019_grouped, mean_bikes = mean(Total),\n          median_bikes = median(Total))\n\n# A tibble: 2 × 3\n  Occasion        mean_bikes median_bikes\n  &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;\n1 Fourth of July        10.0          9  \n2 Normal Thursday       24.2         14.5"
   }
 ]
