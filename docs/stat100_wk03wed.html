@@ -411,6 +411,7 @@
 <h2>Announcements</h2>
 <ul>
 <li>With COVID working its way through campus right now, make sure to check the <a href="https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing">Sections</a> spreadsheet and the <a href="https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing">Office hours</a> spreadsheet for updates!</li>
+<li>Let’s go through up to upload the pngs of your postcards to the RStudio Server on Posit Cloud.</li>
 </ul>
 </section>
 <section id="goals-for-today" class="slide level2">
@@ -1302,7 +1303,7 @@ s = \sqrt{\frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2}
 
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/dplyr_wrangling.png" style="width:870.0%"></p>
+<p><img data-src="img/dplyr_wrangling.png" style="width:70.0%"></p>
 </figure>
 </div>
 </section>
@@ -1388,9 +1389,9 @@ s = \sqrt{\frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2}
 </section>
 <section id="return-to-mutate" class="slide level2">
 <h2>Return to <code>mutate()</code></h2>
-<p>Add new variables or modify existing variables</p>
 <div class="columns">
 <div class="column" style="width:50%;">
+<p>Add new variables</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">count</span>(dogs_top5, Dog_Name, Breed) <span class="sc">%&gt;%</span></span>
 <span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">group_by</span>(Dog_Name) <span class="sc">%&gt;%</span></span>
@@ -1413,6 +1414,7 @@ s = \sqrt{\frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2}
 </div>
 </div>
 </div><div class="column" style="width:50%;">
+<p>Modify existing variables</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">class</span>(july_2019<span class="sc">$</span>DateTime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1489,6 +1491,54 @@ s = \sqrt{\frac{1}{n - 1} \sum_{i = 1}^n (x_i - \bar{x})^2}
 3 Lucy        25
 4 Cooper      23
 5 Rosie       22</code></pre>
+</div>
+</div>
+</section>
+<section id="arrange-sort-the-cases" class="slide level2">
+<h2><code>arrange()</code>: Sort the cases</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">count</span>(dogs_top5, Dog_Name) <span class="sc">%&gt;%</span></span>
+<span id="cb72-2"><a href="#cb72-2"></a>  <span class="fu">arrange</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  Dog_Name     n
+  &lt;chr&gt;    &lt;int&gt;
+1 Rosie       22
+2 Cooper      23
+3 Lucy        25
+4 Charlie     35
+5 Luna        41</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">count</span>(dogs_top5, Dog_Name) <span class="sc">%&gt;%</span></span>
+<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  Dog_Name     n
+  &lt;chr&gt;    &lt;int&gt;
+1 Luna        41
+2 Charlie     35
+3 Lucy        25
+4 Cooper      23
+5 Rosie       22</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">count</span>(dogs_top5, Dog_Name) <span class="sc">%&gt;%</span></span>
+<span id="cb76-2"><a href="#cb76-2"></a>  <span class="fu">arrange</span>(Dog_Name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  Dog_Name     n
+  &lt;chr&gt;    &lt;int&gt;
+1 Charlie     35
+2 Cooper      23
+3 Lucy        25
+4 Luna        41
+5 Rosie       22</code></pre>
+</div>
+</div>
 </div>
 </div>
 </section></section>

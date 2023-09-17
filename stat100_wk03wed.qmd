@@ -55,10 +55,12 @@ theme_update(text = element_text(size = 20))
 :::
 :::
 
+---
+
 ## Announcements
 
 -   With COVID working its way through campus right now, make sure to check the  [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing) spreadsheet and the [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) spreadsheet for updates!
-
+- Let's go through up to upload the pngs of your postcards to the RStudio Server on Posit Cloud.
 
 
 ------------------------------------------------------------------------
@@ -806,7 +808,7 @@ How does the interpretation change based on which variable you condition on?
 
 ---
 
-![](img/dplyr_wrangling.png){width="870%" fig-align="center"}
+![](img/dplyr_wrangling.png){width="70%" fig-align="center"}
 
 
 
@@ -950,11 +952,12 @@ Will see examples of this next class!
 
 ## Return to `mutate()`
 
-Add new variables or modify existing variables
 
 ::: columns
 
 ::: {.column width="50%"}
+
+Add new variables
 
 ```{r}
 count(dogs_top5, Dog_Name, Breed) %>%
@@ -965,6 +968,8 @@ count(dogs_top5, Dog_Name, Breed) %>%
 :::
 
 ::: {.column width="50%"}
+
+Modify existing variables
 
 ```{r}
 class(july_2019$DateTime)
@@ -1004,10 +1009,40 @@ dogs_top5 <- dogs %>%
 count(dogs_top5, Dog_Name, sort = TRUE)
 ```
 
-# Will see more data wrangling next week!
+
 
 ---
 
+## `arrange()`: Sort the cases
+
+::: columns
+
+::: {.column width="50%"}
+
+
+```{r}
+count(dogs_top5, Dog_Name) %>%
+  arrange(n)
+
+count(dogs_top5, Dog_Name) %>%
+  arrange(desc(n))
+```
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name) %>%
+  arrange(Dog_Name)
+```
+
+:::
+:::
+
+# Will see more data wrangling next week!
+
+---
 
 ## Reminders
 
