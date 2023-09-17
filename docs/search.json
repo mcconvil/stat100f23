@@ -865,7 +865,7 @@
     "href": "stat100_wk03wed.html#goals-for-today",
     "title": "Stat 100",
     "section": "Goals for Today",
-    "text": "Goals for Today\n\n\n\nConsider measures for summarizing quantitative data\n\nCenter\nSpread/variability\n\nConsider measures for summarizing categorical data\n\n\n\nDefine data wrangling\nLearn to do data joins\nLearn to use functions in the dplyr package for both data summarization and data joins!"
+    "text": "Goals for Today\n\n\n\nConsider measures for summarizing quantitative data\n\nCenter\nSpread/variability\n\nConsider measures for summarizing categorical data\n\n\n\nDefine data wrangling\nLearn to use functions in the dplyr package to summarize and wrangle data"
   },
   {
     "objectID": "stat100_wk03wed.html#load-necessary-packages",
@@ -949,6 +949,153 @@
     "href": "stat100_wk03wed.html#computing-measures-of-center-by-groups-2",
     "title": "Stat 100",
     "section": "Computing Measures of Center by Groups",
-    "text": "Computing Measures of Center by Groups\n\n\nCompute summary statistics on the grouped data frame:\n\nsummarize(july_2019_grouped, mean_bikes = mean(Total),\n          median_bikes = median(Total))\n\n# A tibble: 2 × 3\n  Occasion        mean_bikes median_bikes\n  &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;\n1 Fourth of July        10.0          9  \n2 Normal Thursday       24.2         14.5"
+    "text": "Computing Measures of Center by Groups\n\n\nCompute summary statistics on the grouped data frame:\n\njuly_2019_grouped &lt;- group_by(july_2019, Occasion)\nsummarize(july_2019_grouped,\n          mean_bikes = mean(Total),\n          median_bikes = median(Total))\n\n# A tibble: 2 × 3\n  Occasion        mean_bikes median_bikes\n  &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;\n1 Fourth of July        10.0          9  \n2 Normal Thursday       24.2         14.5"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#chaining-dplyr-operations",
+    "href": "stat100_wk03wed.html#chaining-dplyr-operations",
+    "title": "Stat 100",
+    "section": "Chaining dplyr Operations",
+    "text": "Chaining dplyr Operations\n\n\nInstead of:\n\njuly_2019_grouped &lt;- group_by(july_2019, Occasion)\nsummarize(july_2019_grouped,\n          mean_bikes = mean(Total),\n          median_bikes = median(Total))\n\n# A tibble: 2 × 3\n  Occasion        mean_bikes median_bikes\n  &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;\n1 Fourth of July        10.0          9  \n2 Normal Thursday       24.2         14.5\n\n\n\nUse the pipe:\n\njuly_2019 %&gt;%\n  group_by(Occasion) %&gt;%\n  summarize(mean_bikes = mean(Total),\n          median_bikes = median(Total))\n\n# A tibble: 2 × 3\n  Occasion        mean_bikes median_bikes\n  &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;\n1 Fourth of July        10.0          9  \n2 Normal Thursday       24.2         14.5\n\n\n\n\n\n\nWhy pipe?\n\n\n\n\nYou can also use |&gt;, which is newer and often referred to as the “base R pipe.”"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-variability",
+    "href": "stat100_wk03wed.html#measures-of-variability",
+    "title": "Stat 100",
+    "section": "Measures of Variability",
+    "text": "Measures of Variability\n\nWant a statistic that captures how much observations deviate from the mean\n\n\n\n\nFind how much each observation deviates from the mean.\nCompute the average of the deviations.\n\n\\[\n\\frac{1}{n} \\sum_{i = 1}^n (x_i - \\bar{x})\n\\]\n\n\n# Test out on first 6 values\nhead(july_2019$Total)\n\n[1] 2 3 2 0 3 2\n\n\n\n\n\nProblem?"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-variability-1",
+    "href": "stat100_wk03wed.html#measures-of-variability-1",
+    "title": "Stat 100",
+    "section": "Measures of Variability",
+    "text": "Measures of Variability\n\nWant a statistic that captures how much observations deviate from the mean\n\n\n\nHere is my NEW proposal:\n\nFind how much each observation deviates from the mean.\nCompute the average of the squared deviations.\n\n\n\n# Test out on first 6 values\nhead(july_2019$Total)\n\n[1] 2 3 2 0 3 2"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-variability-2",
+    "href": "stat100_wk03wed.html#measures-of-variability-2",
+    "title": "Stat 100",
+    "section": "Measures of Variability",
+    "text": "Measures of Variability\n\nWant a statistic that captures how much observations deviate from the mean\n\n\n\nHere is my ACTUAL formula:\n\nFind how much each observation deviates from the mean.\nCompute the (nearly) average of the squared deviations.\nCalled sample variance \\(s^2\\).\n\n\\[\ns^2 = \\frac{1}{n - 1} \\sum_{i = 1}^n (x_i - \\bar{x})^2\n\\]\n\nCompute with a dplyr function:\n\nsummarize(july_2019, var_bikes = var(Total))\n\n# A tibble: 1 × 1\n  var_bikes\n      &lt;dbl&gt;\n1      454."
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-variability-3",
+    "href": "stat100_wk03wed.html#measures-of-variability-3",
+    "title": "Stat 100",
+    "section": "Measures of Variability",
+    "text": "Measures of Variability\n\nWant a statistic that captures how much observations deviate from the mean\n\n\n\n\nFind how much each observation deviates from the mean.\nCompute the (nearly) average of the squared deviations.\nCalled sample variance \\(s^2\\).\nThe square root of the sample variance is called the sample standard deviation \\(s\\).\n\n\\[\ns = \\sqrt{\\frac{1}{n - 1} \\sum_{i = 1}^n (x_i - \\bar{x})^2}\n\\]\n\nCompute with a dplyr function:\n\nsummarize(july_2019, var_bikes = var(Total),\n          sd_bikes = sd(Total))\n\n# A tibble: 1 × 2\n  var_bikes sd_bikes\n      &lt;dbl&gt;    &lt;dbl&gt;\n1      454.     21.3"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#measures-of-variability-4",
+    "href": "stat100_wk03wed.html#measures-of-variability-4",
+    "title": "Stat 100",
+    "section": "Measures of Variability",
+    "text": "Measures of Variability\n\n\n\nIn addition to the sample standard deviation and the sample variance, there is the sample interquartile range (IQR):\n\n\\[\n\\mbox{IQR} = \\mbox{Q}_3 - \\mbox{Q}_1\n\\]\n\nCompute with a dplyr function:\n\nsummarize(july_2019, iqr_bikes = IQR(Total))\n\n# A tibble: 1 × 1\n  iqr_bikes\n      &lt;dbl&gt;\n1        16"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#comparing-measures-of-variability",
+    "href": "stat100_wk03wed.html#comparing-measures-of-variability",
+    "title": "Stat 100",
+    "section": "Comparing Measures of Variability",
+    "text": "Comparing Measures of Variability\n\nWhich is more robust to outliers, the IQR or \\(s\\)?\nWhich is more commonly used, the IQR or \\(s\\)?\n\n\njuly_2019 %&gt;%\n  group_by(Occasion) %&gt;%\nsummarize(sd_bikes = sd(Total),\n          iqr_bikes = IQR(Total))\n\n# A tibble: 2 × 3\n  Occasion        sd_bikes iqr_bikes\n  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;\n1 Fourth of July      8.30      14  \n2 Normal Thursday    27.2       27.2"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#return-to-the-cambridge-dogs",
+    "href": "stat100_wk03wed.html#return-to-the-cambridge-dogs",
+    "title": "Stat 100",
+    "section": "Return to the Cambridge Dogs",
+    "text": "Return to the Cambridge Dogs\nFocus on the dogs with the 5 most common names\n\ndogs &lt;- read_csv(\"https://data.cambridgema.gov/api/views/sckh-3xyx/rows.csv\")\n\n# Useful wrangling that we will come back to\ndogs_top5 &lt;- dogs %&gt;% \n  mutate(Breed = case_when(\n                       Dog_Breed == \"Mixed Breed\" ~ \"Mixed\",\n                       Dog_Breed != \"Mixed Breed\" ~ \"Single\")) %&gt;%\n  filter(Dog_Name %in% c(\"Luna\", \"Charlie\", \"Lucy\", \"Cooper\", \"Rosie\" ))"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#frequency-table",
+    "href": "stat100_wk03wed.html#frequency-table",
+    "title": "Stat 100",
+    "section": "Frequency Table",
+    "text": "Frequency Table\n\n\n\ncount(dogs_top5, Dog_Name)\n\n# A tibble: 5 × 2\n  Dog_Name     n\n  &lt;chr&gt;    &lt;int&gt;\n1 Charlie     35\n2 Cooper      23\n3 Lucy        25\n4 Luna        41\n5 Rosie       22\n\n\n\n\nggplot(data = dogs_top5, \n    mapping = aes(x = Dog_Name)) +\n  geom_bar()"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#frequency-table-1",
+    "href": "stat100_wk03wed.html#frequency-table-1",
+    "title": "Stat 100",
+    "section": "Frequency Table",
+    "text": "Frequency Table\n\n\n\ncount(dogs_top5, Dog_Name)\n\n# A tibble: 5 × 2\n  Dog_Name     n\n  &lt;chr&gt;    &lt;int&gt;\n1 Charlie     35\n2 Cooper      23\n3 Lucy        25\n4 Luna        41\n5 Rosie       22\n\n\n\n\ncount(dogs_top5, Dog_Name, sort = TRUE)\n\n# A tibble: 5 × 2\n  Dog_Name     n\n  &lt;chr&gt;    &lt;int&gt;\n1 Luna        41\n2 Charlie     35\n3 Lucy        25\n4 Cooper      23\n5 Rosie       22"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#contingency-table",
+    "href": "stat100_wk03wed.html#contingency-table",
+    "title": "Stat 100",
+    "section": "Contingency Table",
+    "text": "Contingency Table\n\n\n\ncount(dogs_top5, Dog_Name, Breed)\n\n# A tibble: 10 × 3\n   Dog_Name Breed      n\n   &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt;\n 1 Charlie  Mixed     12\n 2 Charlie  Single    23\n 3 Cooper   Mixed      9\n 4 Cooper   Single    14\n 5 Lucy     Mixed     10\n 6 Lucy     Single    15\n 7 Luna     Mixed     16\n 8 Luna     Single    25\n 9 Rosie    Mixed      6\n10 Rosie    Single    16\n\n\n\n\nggplot(data = dogs_top5, \n    mapping = aes(x = Dog_Name, fill = Breed)) +\n  geom_bar(position = \"dodge\")"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#conditional-proportions",
+    "href": "stat100_wk03wed.html#conditional-proportions",
+    "title": "Stat 100",
+    "section": "Conditional Proportions",
+    "text": "Conditional Proportions\n\n\n\nBeyond raw counts, we often summarize categorical data with conditional proportions.\n\nEspecially when looking for relationships!\n\n\n\n\nggplot(data = dogs_top5, \n    mapping = aes(x = Dog_Name, fill = Breed)) +\n  geom_bar(position = \"fill\")"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#conditional-proportions-1",
+    "href": "stat100_wk03wed.html#conditional-proportions-1",
+    "title": "Stat 100",
+    "section": "Conditional Proportions",
+    "text": "Conditional Proportions\n\n\n\ncount(dogs_top5, Dog_Name, Breed)\n\n# A tibble: 10 × 3\n   Dog_Name Breed      n\n   &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt;\n 1 Charlie  Mixed     12\n 2 Charlie  Single    23\n 3 Cooper   Mixed      9\n 4 Cooper   Single    14\n 5 Lucy     Mixed     10\n 6 Lucy     Single    15\n 7 Luna     Mixed     16\n 8 Luna     Single    25\n 9 Rosie    Mixed      6\n10 Rosie    Single    16\n\n\n\n\ncount(dogs_top5, Dog_Name, Breed) %&gt;%\n  group_by(Dog_Name) %&gt;%\n  mutate(prop = n/sum(n))\n\n# A tibble: 10 × 4\n# Groups:   Dog_Name [5]\n   Dog_Name Breed      n  prop\n   &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt;\n 1 Charlie  Mixed     12 0.343\n 2 Charlie  Single    23 0.657\n 3 Cooper   Mixed      9 0.391\n 4 Cooper   Single    14 0.609\n 5 Lucy     Mixed     10 0.4  \n 6 Lucy     Single    15 0.6  \n 7 Luna     Mixed     16 0.390\n 8 Luna     Single    25 0.610\n 9 Rosie    Mixed      6 0.273\n10 Rosie    Single    16 0.727\n\n\n\n\n\nThe dplyr function mutate() adds new column(s) to your data frame."
+  },
+  {
+    "objectID": "stat100_wk03wed.html#conditional-proportions-2",
+    "href": "stat100_wk03wed.html#conditional-proportions-2",
+    "title": "Stat 100",
+    "section": "Conditional Proportions",
+    "text": "Conditional Proportions\n\n\n\ncount(dogs_top5, Dog_Name, Breed) %&gt;%\n  group_by(Dog_Name) %&gt;%\n  mutate(prop = n/sum(n))\n\n# A tibble: 10 × 4\n# Groups:   Dog_Name [5]\n   Dog_Name Breed      n  prop\n   &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt;\n 1 Charlie  Mixed     12 0.343\n 2 Charlie  Single    23 0.657\n 3 Cooper   Mixed      9 0.391\n 4 Cooper   Single    14 0.609\n 5 Lucy     Mixed     10 0.4  \n 6 Lucy     Single    15 0.6  \n 7 Luna     Mixed     16 0.390\n 8 Luna     Single    25 0.610\n 9 Rosie    Mixed      6 0.273\n10 Rosie    Single    16 0.727\n\n\n\n\ncount(dogs_top5, Dog_Name, Breed) %&gt;%\n  group_by(Breed) %&gt;%\n  mutate(prop = n/sum(n))\n\n# A tibble: 10 × 4\n# Groups:   Breed [2]\n   Dog_Name Breed      n  prop\n   &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt;\n 1 Charlie  Mixed     12 0.226\n 2 Charlie  Single    23 0.247\n 3 Cooper   Mixed      9 0.170\n 4 Cooper   Single    14 0.151\n 5 Lucy     Mixed     10 0.189\n 6 Lucy     Single    15 0.161\n 7 Luna     Mixed     16 0.302\n 8 Luna     Single    25 0.269\n 9 Rosie    Mixed      6 0.113\n10 Rosie    Single    16 0.172\n\n\n\n\nHow does the interpretation change based on which variable you condition on?"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#dplyr-for-data-wrangling",
+    "href": "stat100_wk03wed.html#dplyr-for-data-wrangling",
+    "title": "Stat 100",
+    "section": "dplyr for Data Wrangling",
+    "text": "dplyr for Data Wrangling\n\nSeven common wrangling verbs:\n\nsummarize()\ncount()\n\nmutate()\n\nselect()\nfilter()\narrange()\n---_join()\n\nOne action:\n\ngroup_by()"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#return-to-mutate",
+    "href": "stat100_wk03wed.html#return-to-mutate",
+    "title": "Stat 100",
+    "section": "Return to mutate()",
+    "text": "Return to mutate()\nAdd new variables or modify existing variables\n\n\n\ncount(dogs_top5, Dog_Name, Breed) %&gt;%\n  group_by(Dog_Name) %&gt;%\n  mutate(prop = n/sum(n))\n\n# A tibble: 10 × 4\n# Groups:   Dog_Name [5]\n   Dog_Name Breed      n  prop\n   &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt;\n 1 Charlie  Mixed     12 0.343\n 2 Charlie  Single    23 0.657\n 3 Cooper   Mixed      9 0.391\n 4 Cooper   Single    14 0.609\n 5 Lucy     Mixed     10 0.4  \n 6 Lucy     Single    15 0.6  \n 7 Luna     Mixed     16 0.390\n 8 Luna     Single    25 0.610\n 9 Rosie    Mixed      6 0.273\n10 Rosie    Single    16 0.727\n\n\n\n\nclass(july_2019$DateTime)\n\n[1] \"character\"\n\njuly_2019 &lt;- july_2019 %&gt;%\n  mutate(DateTime = mdy_hms(DateTime))\nclass(july_2019$DateTime)\n\n[1] \"POSIXct\" \"POSIXt\""
+  },
+  {
+    "objectID": "stat100_wk03wed.html#another-ggplot2-geom-geom_col",
+    "href": "stat100_wk03wed.html#another-ggplot2-geom-geom_col",
+    "title": "Stat 100",
+    "section": "Another ggplot2 geom: geom_col()",
+    "text": "Another ggplot2 geom: geom_col()\nIf you have already aggregated the data, you will use geom_col() instead of geom_bar().\n\ndog_counts &lt;- count(dogs_top5, Dog_Name)\ndog_counts\n\n# A tibble: 5 × 2\n  Dog_Name     n\n  &lt;chr&gt;    &lt;int&gt;\n1 Charlie     35\n2 Cooper      23\n3 Lucy        25\n4 Luna        41\n5 Rosie       22\n\n\n\n\nggplot(data = dog_counts,\n       mapping = aes(x = Dog_Name,\n                     y = n)) +\n  geom_col()"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#select-extract-variables",
+    "href": "stat100_wk03wed.html#select-extract-variables",
+    "title": "Stat 100",
+    "section": "select(): Extract variables",
+    "text": "select(): Extract variables\n\ndogs %&gt;%\n  select(Dog_Name, Dog_Breed)\n\n# A tibble: 3,942 × 2\n   Dog_Name       Dog_Breed                 \n   &lt;chr&gt;          &lt;chr&gt;                     \n 1 Butch          Mixed Breed               \n 2 Baxter         Mixed Breed               \n 3 Bodhi          Golden Retriever          \n 4 Ocean          Pug                       \n 5 Coco           Pug                       \n 6 Brio           LABRADOODLE               \n 7 Jolene Almeida German Shorthaired Pointer\n 8 Ruger          Labrador Retriever        \n 9 FLASH          Border Collie             \n10 Leo            French Bulldog            \n# ℹ 3,932 more rows"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#motivation-for-filter",
+    "href": "stat100_wk03wed.html#motivation-for-filter",
+    "title": "Stat 100",
+    "section": "Motivation for filter()",
+    "text": "Motivation for filter()\n\ncount(dogs, Dog_Name, sort = TRUE)\n\n# A tibble: 2,332 × 2\n   Dog_Name     n\n   &lt;chr&gt;    &lt;int&gt;\n 1 Luna        41\n 2 Charlie     35\n 3 Lucy        25\n 4 Cooper      23\n 5 Rosie       22\n 6 Olive       21\n 7 Pepper      20\n 8 Teddy       19\n 9 Coco        18\n10 Lola        17\n# ℹ 2,322 more rows"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#another-ggplot2-geom-geom_col-1",
+    "href": "stat100_wk03wed.html#another-ggplot2-geom-geom_col-1",
+    "title": "Stat 100",
+    "section": "Another ggplot2 geom: geom_col()",
+    "text": "Another ggplot2 geom: geom_col()\nAnd use fct_reorder() instead of fct_infreq() to reorder bars.\n\ndog_counts &lt;- count(dogs_top5, Dog_Name)\ndog_counts\n\n# A tibble: 5 × 2\n  Dog_Name     n\n  &lt;chr&gt;    &lt;int&gt;\n1 Charlie     35\n2 Cooper      23\n3 Lucy        25\n4 Luna        41\n5 Rosie       22\n\n\n\n\nggplot(data = dog_counts,\n       mapping = aes(x = fct_reorder(Dog_Name, n),\n                     y = n)) +\n  geom_col()"
+  },
+  {
+    "objectID": "stat100_wk03wed.html#filter-extract-cases",
+    "href": "stat100_wk03wed.html#filter-extract-cases",
+    "title": "Stat 100",
+    "section": "filter(): Extract cases",
+    "text": "filter(): Extract cases\n\ndogs_top5 &lt;- dogs %&gt;% \n  filter(Dog_Name %in% c(\"Luna\", \"Charlie\", \"Lucy\", \"Cooper\", \"Rosie\" ))\n\ncount(dogs_top5, Dog_Name, sort = TRUE)\n\n# A tibble: 5 × 2\n  Dog_Name     n\n  &lt;chr&gt;    &lt;int&gt;\n1 Luna        41\n2 Charlie     35\n3 Lucy        25\n4 Cooper      23\n5 Rosie       22"
   }
 ]

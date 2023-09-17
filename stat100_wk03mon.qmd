@@ -43,11 +43,9 @@ theme_update(text = element_text(size = 20))
 :::
 
 ::: {.column .center width="45%"}
-
-
 [Graphing with `ggplot2`]{.custom-title}
 
-<br> 
+<br>
 
 [Kelly McConville]{.custom-subtitle}
 
@@ -57,12 +55,11 @@ theme_update(text = element_text(size = 20))
 
 ## Announcements
 
--   With COVID working its way through campus right now, make sure to check the  [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing) spreadsheet and the [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) spreadsheet for updates!
-* Grab a **postcard** and/or a **stamp** from SC 316 if you lost yours.
-    + We also have markers, colored pencils, and crayons!
-* Don't forget that P-Set 1 due on Tuesday by 5pm in Gradescope.
-* Come by office hours with any questions.
-
+-   With COVID working its way through campus right now, make sure to check the [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing) spreadsheet and the [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) spreadsheet for updates!
+-   Grab a **postcard** and/or a **stamp** from SC 316 if you lost yours.
+    -   We also have markers, colored pencils, and crayons!
+-   Don't forget that P-Set 1 due on Tuesday by 5pm in Gradescope.
+-   Come by office hours with any questions.
 
 ------------------------------------------------------------------------
 
@@ -71,31 +68,21 @@ theme_update(text = element_text(size = 20))
 ::: columns
 ::: {.column width="\"50%"}
 -   Come back to the general structure of `ggplot2`.
-* Learn a few standard graphs for numerical/quantitative data:
-    + **Histogram**: one numerical variable
-    + **Side-by-side boxplot**: one numerical variable and one categorical variable
-    + **Side-by-side violin plot**: one numerical variable and one categorical variable
-    + **Scatterplot**: two numerical variables
-    + **Linegraph**: two numerical variables
-
+-   Learn a few standard graphs for numerical/quantitative data:
+    -   **Histogram**: one numerical variable
+    -   **Side-by-side boxplot**: one numerical variable and one categorical variable
+    -   **Side-by-side violin plot**: one numerical variable and one categorical variable
+    -   **Scatterplot**: two numerical variables
+    -   **Linegraph**: two numerical variables
 :::
 
 ::: {.column width="\"50%"}
-
-* And, learn the standard graphic for categorical data:
-    + **Barplot**: one categorical variable
-    + **Segmented barplot**: two categorical variables
-
-
-* Also cover some common extensions and customizations.
-
-
-
+-   And, learn the standard graphic for categorical data:
+    -   **Barplot**: one categorical variable
+    -   **Segmented barplot**: two categorical variables
+-   Also cover some common extensions and customizations.
 :::
 :::
-
-
-
 
 ------------------------------------------------------------------------
 
@@ -116,23 +103,19 @@ library(tidyverse)
 
 ## Data Setting: [Eco-Totem Broadway Bicycle Count](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
 
-::: columns 
-
-:::{.column width="40%" fig-align="center"}
-
-![](img/counter.jpg){width="100%"} 
-
+::: columns
+::: {.column width="40%" fig-align="center"}
+![](img/counter.jpg){width="100%"}
 :::
 
-:::{.column width="60%" fig-align="center"}
-![](img/bike_counter_map.png){width="100%"} 
+::: {.column width="60%" fig-align="center"}
+![](img/bike_counter_map.png){width="100%"}
 :::
 :::
 
 ------------------------------------------------------------------------
 
 ## Import the [Data](https://data.cambridgema.gov/Transportation-Planning/Eco-Totem-Broadway-Bicycle-Count/q8v9-mcfg)
-
 
 ```{r}
 july_2019 <- read_csv("data/july_2019.csv")
@@ -141,8 +124,7 @@ july_2019 <- read_csv("data/july_2019.csv")
 glimpse(july_2019)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## `ggplot2` example code
 
@@ -159,9 +141,7 @@ ggplot(data = ---, mapping = aes(---)) +
 
 There are other layers, such as `scales_---_---()` and `labs()`, but we will wait on those.
 
-
-
----
+------------------------------------------------------------------------
 
 ## Histograms
 
@@ -173,7 +153,7 @@ ggplot(data = july_2019,
   geom_histogram()
 ```
 
----
+------------------------------------------------------------------------
 
 ## Histograms
 
@@ -188,43 +168,38 @@ ggplot(data = july_2019,
                  bins = 50)
 ```
 
-* **mapping** to a variable goes in `aes()`
-* **setting** to a specific value goes in the `geom_---()`
+-   **mapping** to a variable goes in `aes()`
+-   **setting** to a specific value goes in the `geom_---()`
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
 ::: columns
 ::: {.column width="50%"}
-
-* **Five number summary**: 
-    + Minimum
-    + First quartile (Q1)
-    + Median
-    + Third quartile (Q3)
-    + Maximum
-* Interquartile range (IQR) $=$ Q3 $-$ Q1
-* Outliers: **unusual** points 
-    + Boxplot defines unusual as being beyond $1.5*IQR$ from $Q1$ or $Q3$.
-* Whiskers: reach out to the furthest point that is NOT an outlier
-
+-   **Five number summary**:
+    -   Minimum
+    -   First quartile (Q1)
+    -   Median
+    -   Third quartile (Q3)
+    -   Maximum
+-   Interquartile range (IQR) $=$ Q3 $-$ Q1
+-   Outliers: **unusual** points
+    -   Boxplot defines unusual as being beyond $1.5*IQR$ from $Q1$ or $Q3$.
+-   Whiskers: reach out to the furthest point that is NOT an outlier
 :::
 
-
 ::: {.column width="50%"}
-
 ```{r echo = FALSE}
 ggplot(data = july_2019, 
        mapping = aes(x = Occasion, 
                      y = Total)) +
   geom_boxplot()
 ```
-
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -237,7 +212,7 @@ ggplot(data = july_2019,
   geom_boxplot()
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -250,7 +225,7 @@ ggplot(data = july_2019,
   geom_boxplot(fill = "springgreen3")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -264,7 +239,7 @@ ggplot(data = july_2019,
   geom_boxplot()
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplots
 
@@ -279,10 +254,9 @@ ggplot(data = july_2019,
   guides(fill = "none")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Violin Plots
-
 
 ```{r vio}
 #| output-location: column
@@ -294,7 +268,7 @@ ggplot(data = july_2019,
   guides(fill = "none")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Boxplot Versus Violin Plots
 
@@ -321,20 +295,17 @@ ggplot(data = july_2019,
   geom_violin() +
   guides(fill = "none")
 ```
-
 :::
 :::
 
-
----
+------------------------------------------------------------------------
 
 ## Scatterplots
 
-* Explore relationships between numerical variables.
-    + We will be especially interested in **linear** relationships.
+-   Explore relationships between numerical variables.
+    -   We will be especially interested in **linear** relationships.
 
-::: {.fragment}
-
+::: fragment
 ```{r}
 #| output-location: column
 
@@ -343,15 +314,11 @@ ggplot(data = july_2019,
                      y = Total)) +
   geom_point(size = 2)
 ```
-
 :::
 
-
----
+------------------------------------------------------------------------
 
 ## Scatterplots
-
-
 
 ```{r}
 #| output-location: column
@@ -363,15 +330,12 @@ ggplot(data = july_2019,
   geom_point(size = 2, alpha = 0.6)
 ```
 
-* Fix over-plotting
-* Why the weird pattern??
+-   Fix over-plotting
+-   Why the weird pattern??
 
-
----
+------------------------------------------------------------------------
 
 ## Scatterplots
-
-
 
 ```{r}
 #| output-location: column
@@ -384,7 +348,7 @@ ggplot(data = july_2019,
   geom_point(size = 2, alpha = 0.6)
 ```
 
----
+------------------------------------------------------------------------
 
 ## Linegraphs
 
@@ -400,8 +364,7 @@ ggplot(data = july_2019,
   geom_line(alpha = 0.6)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Linegraphs
 
@@ -419,7 +382,7 @@ ggplot(data = july_2019,
   theme(legend.pos = "bottom")
 ```
 
----
+------------------------------------------------------------------------
 
 ## New Data Setting: [Dog Names in Cambridge, MA](https://data.cambridgema.gov/General-Government/Dogs-of-Cambridge/sckh-3xyx)
 
@@ -431,7 +394,7 @@ dogs <- read_csv("https://data.cambridgema.gov/api/views/sckh-3xyx/rows.csv")
 glimpse(dogs)
 ```
 
----
+------------------------------------------------------------------------
 
 ## Data Wrangling
 
@@ -459,23 +422,18 @@ dogs_top5 <- filter(dogs,
 
 ```
 
-
 # Before we graph the data, do we have any guesses on popular dog names?
 
----
+------------------------------------------------------------------------
 
 ## Barplots
 
 ::: columns
 ::: {.column width="50%"}
-
 Displays the frequency for each category.
-
 :::
 
-
 ::: {.column width="50%"}
-
 ```{r}
 #| echo: false
 # Create barplot
@@ -484,16 +442,12 @@ ggplot(data = dogs_top5,
   geom_bar()
 
 ```
-
 :::
 :::
 
-
----
+------------------------------------------------------------------------
 
 ## Barplots
-
-
 
 ```{r}
 #| output-location: column
@@ -506,11 +460,9 @@ ggplot(data = dogs_top5,
 
 How could we make this graph better?
 
----
+------------------------------------------------------------------------
 
 ## Barplots
-
-
 
 ```{r}
 #| output-location: column
@@ -521,10 +473,7 @@ ggplot(data = dogs_top5,
   geom_bar()
 ```
 
-
-
-
----
+------------------------------------------------------------------------
 
 ## Segmented Barplots
 
@@ -539,11 +488,11 @@ ggplot(data = dogs_top5,
   theme(legend.pos = "bottom")
 ```
 
-* Each bar is divided into the frequencies of the `fill` variable.
+-   Each bar is divided into the frequencies of the `fill` variable.
 
-* Hard to make comparisons across categories.
+-   Hard to make comparisons across categories.
 
----
+------------------------------------------------------------------------
 
 ## Segmented Barplots
 
@@ -559,9 +508,9 @@ ggplot(data = dogs_top5,
   theme(legend.pos = "bottom")
 ```
 
-* Can add the `position` argument into the `geom_bar()`.
+-   Can add the `position` argument into the `geom_bar()`.
 
----
+------------------------------------------------------------------------
 
 ## Segmented Barplots
 
@@ -577,26 +526,19 @@ ggplot(data = dogs_top5,
   theme(legend.pos = "bottom")
 ```
 
-* Now each bar is divided into **proportions** based on the `fill` variable.
+-   Now each bar is divided into **proportions** based on the `fill` variable.
 
----
-
-
+------------------------------------------------------------------------
 
 ## Adding More Variables
 
-* Two main approaches:
-    + Utilize other `aes`thetics of the `geom`
-    + Facet: Create multiple plots across the categories of a categorical variable.
+-   Two main approaches:
+    -   Utilize other `aes`thetics of the `geom`
+    -   Facet: Create multiple plots across the categories of a categorical variable.
 
-
-
----
+------------------------------------------------------------------------
 
 ## Utilize other `aes`thetics
-
-
-
 
 ```{r}
 #| output-location: column
@@ -608,14 +550,12 @@ ggplot(data = july_2019,
   theme(legend.pos = "bottom")
 ```
 
+-   Already saw how to add a third variable to a line graph (and a scatterplot) via `color`.
+    -   Can also change size or type.
 
-* Already saw how to add a third variable to a line graph (and a scatterplot) via `color`.
-    + Can also change size or type.
-
----
+------------------------------------------------------------------------
 
 ## Facet
-
 
 ```{r fac}
 #| output-location: column
@@ -626,10 +566,9 @@ ggplot(data = dogs_top5,
   facet_wrap(~Dog_Name, ncol = 2)
 ```
 
----
+------------------------------------------------------------------------
 
 ## Facet
-
 
 ```{r}
 #| output-location: column
@@ -639,11 +578,10 @@ ggplot(data = dogs_top5,
   geom_point(size = 2)  +
   facet_grid(Breed~Dog_Name)
 ```
----
+
+------------------------------------------------------------------------
 
 ## Consider Doing Both!
-
-
 
 ```{r both}
 #| output-location: column
@@ -655,13 +593,9 @@ ggplot(data = dogs_top5,
   facet_wrap(~Dog_Name, ncol = 2)
 ```
 
----
-
-
+------------------------------------------------------------------------
 
 ## Adding Some Context
-
-
 
 ```{r line3}
 #| output-location: column
@@ -678,27 +612,23 @@ ggplot(data = july_2019,
        title = "Cycling Patterns at Broadway Bike Counter")
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Customizing your `ggplot2` Plots
 
-* There are so **many** ways you can customize the look of your `ggplot2` plots.  
+-   There are so **many** ways you can customize the look of your `ggplot2` plots.
 
-* Let's look at some common changes:
-    + Fussing with labels
-    + Zooming in
-    + Using multiple `geoms`
-    + Color!
-    + Themes
+-   Let's look at some common changes:
 
+    -   Fussing with labels
+    -   Zooming in
+    -   Using multiple `geoms`
+    -   Color!
+    -   Themes
 
-
----
+------------------------------------------------------------------------
 
 ## Fussing with Labels: Rotate
-
-
 
 ```{r bar4}
 #| output-location: column
@@ -714,11 +644,9 @@ ggplot(data = dogs_top5,
 
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Zooming In
-
 
 ```{r}
 #| output-location: column
@@ -730,10 +658,9 @@ ggplot(data = july_2019,
   guides(fill = "none")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Zooming In
-
 
 ```{r box5}
 #| output-location: column
@@ -747,11 +674,9 @@ ggplot(data = july_2019,
   coord_cartesian(ylim = c(0, 40))
 ```
 
----
+------------------------------------------------------------------------
 
 ## Multiple `geom`s
-
-
 
 ```{r}
 #| output-location: column
@@ -767,12 +692,9 @@ ggplot(data = july_2019,
               alpha = 0.6)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Multiple `geom`s
-
-
 
 ```{r}
 #| output-location: column
@@ -785,8 +707,7 @@ ggplot(data = july_2019,
   geom_point(size = 3)
 ```
 
----
-
+------------------------------------------------------------------------
 
 ## Change the Color
 
@@ -794,7 +715,7 @@ ggplot(data = july_2019,
 colors()
 ```
 
----
+------------------------------------------------------------------------
 
 ## Change the Color
 
@@ -810,8 +731,7 @@ ggplot(data = july_2019,
                                 "steelblue4"))
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Change the Color
 
@@ -827,13 +747,9 @@ ggplot(data = july_2019,
                                 "#E4844A"))
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Use a [Different Theme](https://ggplot2.tidyverse.org/reference/ggtheme.html)
-
-
-
 
 ```{r}
 #| output-location: column
@@ -850,14 +766,12 @@ ggplot(data = july_2019,
 
 # What `ggplot2` questions do we have?
 
-
 ------------------------------------------------------------------------
 
 ## Reminders
 
-
--   With COVID working its way through campus right now, make sure to check the  [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing) spreadsheet and the [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) spreadsheet for updates!
-* Grab a **postcard** and/or a **stamp** from SC 316 if you lost yours.
-    + We also have markers, colored pencils, and crayons!
-* Don't forget that P-Set 1 due on Tuesday by 5pm in Gradescope.
-* Come by office hours with any questions.
+-   With COVID working its way through campus right now, make sure to check the [Sections](https://docs.google.com/spreadsheets/d/10wScs6Z7hpYK16NnmyU_q8DlKn4iF_U3dB19a-ts0g0/edit?usp=sharing) spreadsheet and the [Office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) spreadsheet for updates!
+-   Grab a **postcard** and/or a **stamp** from SC 316 if you lost yours.
+    -   We also have markers, colored pencils, and crayons!
+-   Don't forget that P-Set 1 due on Tuesday by 5pm in Gradescope.
+-   Come by office hours with any questions.

@@ -1,5 +1,5 @@
 ---
-pagetitle: "Summarization & Joins"
+pagetitle: "Data Wrangling & Summarization"
 format: 
   revealjs:
     chalkboard: true
@@ -45,7 +45,7 @@ theme_update(text = element_text(size = 20))
 ::: {.column .center width="55%"}
 
 
-[Data Summarization & Joins]{.custom-title}
+[Data Wrangling & Summarization]{.custom-title}
 
 <br> 
 
@@ -83,9 +83,8 @@ theme_update(text = element_text(size = 20))
 
 * Define **data wrangling**
 
-* Learn to do data **joins**
 
-* Learn to use functions in the `dplyr` package for both data summarization and data joins!
+* Learn to use functions in the `dplyr` package to summarize and wrangle data
 
 :::
 :::
@@ -329,7 +328,9 @@ july_2019_grouped
 Compute summary statistics on the grouped data frame:
 
 ```{r}
-summarize(july_2019_grouped, mean_bikes = mean(Total),
+july_2019_grouped <- group_by(july_2019, Occasion)
+summarize(july_2019_grouped,
+          mean_bikes = mean(Total),
           median_bikes = median(Total))
 ```
 
@@ -350,6 +351,57 @@ ggplot(data = july_2019, mapping = aes(x = Total)) +
 
 :::
 :::
+
+# And now it is time to learn the pipe: `%>%`
+
+![](img/pipe.png){width="15%" fig-align="center"}
+
+---
+
+## Chaining `dplyr` Operations
+
+::: columns
+
+::: {.column width="50%"}
+
+Instead of:
+
+```{r}
+july_2019_grouped <- group_by(july_2019, Occasion)
+summarize(july_2019_grouped,
+          mean_bikes = mean(Total),
+          median_bikes = median(Total))
+```
+
+
+:::
+
+::: {.column .fragment width="50%"}
+
+Use the pipe:
+
+```{r}
+july_2019 %>%
+  group_by(Occasion) %>%
+  summarize(mean_bikes = mean(Total),
+          median_bikes = median(Total))
+```
+
+:::
+:::
+
+::: {.fragment}
+
+* Why pipe?
+
+:::
+
+::: {.fragment}
+
+* You can also use `|>`, which is newer and often referred to as the "base `R` pipe."
+
+:::
+
 
 ---
 
@@ -524,7 +576,9 @@ summarize(july_2019, iqr_bikes = IQR(Total))
 * Which is more commonly used, the IQR or $s$?
 
 ```{r}
-summarize(july_2019_grouped, sd_bikes = sd(Total),
+july_2019 %>%
+  group_by(Occasion) %>%
+summarize(sd_bikes = sd(Total),
           iqr_bikes = IQR(Total))
 ```
 
@@ -532,7 +586,425 @@ summarize(july_2019_grouped, sd_bikes = sd(Total),
 
 ---
 
-XXX
+## Return to the Cambridge Dogs
+
+Focus on the dogs with the 5 most common names
+
+```{r}
+dogs <- read_csv("https://data.cambridgema.gov/api/views/sckh-3xyx/rows.csv")
+
+# Useful wrangling that we will come back to
+dogs_top5 <- dogs %>% 
+  mutate(Breed = case_when(
+                       Dog_Breed == "Mixed Breed" ~ "Mixed",
+                       Dog_Breed != "Mixed Breed" ~ "Single")) %>%
+  filter(Dog_Name %in% c("Luna", "Charlie", "Lucy", "Cooper", "Rosie" ))
+
+```
+
+---
+
+## Frequency Table
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(data = dogs_top5, 
+    mapping = aes(x = Dog_Name)) +
+  geom_bar()
+
+```
+
+:::
+:::
+
+
+---
+
+## Frequency Table
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name, sort = TRUE)
+
+```
+
+:::
+:::
+
+---
+
+### Another `ggplot2` `geom`: `geom_col()`
+
+If you have already aggregated the data, you will use `geom_col()` instead of `geom_bar()`.
+
+```{r}
+dog_counts <- count(dogs_top5, Dog_Name)
+dog_counts
+```
+
+```{r}
+#| output-location: column
+ggplot(data = dog_counts,
+       mapping = aes(x = Dog_Name,
+                     y = n)) +
+  geom_col()
+```
+
+
+---
+
+### Another `ggplot2` `geom`: `geom_col()`
+
+And use `fct_reorder()` instead of `fct_infreq()` to reorder bars.
+
+```{r}
+dog_counts <- count(dogs_top5, Dog_Name)
+dog_counts
+```
+
+```{r}
+#| output-location: column
+ggplot(data = dog_counts,
+       mapping = aes(x = fct_reorder(Dog_Name, n),
+                     y = n)) +
+  geom_col()
+```
+
+
+---
+
+## Contingency Table
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name, Breed)
+```
+
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(data = dogs_top5, 
+    mapping = aes(x = Dog_Name, fill = Breed)) +
+  geom_bar(position = "dodge")
+
+```
+
+:::
+:::
+
+
+
+---
+
+## Conditional Proportions
+
+::: columns
+
+::: {.column width="50%"}
+
+* Beyond raw counts, we often summarize categorical data with **conditional** proportions.
+    + Especially when looking for relationships!
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(data = dogs_top5, 
+    mapping = aes(x = Dog_Name, fill = Breed)) +
+  geom_bar(position = "fill")
+
+```
+
+:::
+:::
+
+---
+
+## Conditional Proportions
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name, Breed)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name, Breed) %>%
+  group_by(Dog_Name) %>%
+  mutate(prop = n/sum(n))
+```
+
+:::
+:::
+
+* The dplyr function `mutate()` adds new column(s) to your data frame.
+
+
+---
+
+## Conditional Proportions
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name, Breed) %>%
+  group_by(Dog_Name) %>%
+  mutate(prop = n/sum(n))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name, Breed) %>%
+  group_by(Breed) %>%
+  mutate(prop = n/sum(n))
+```
+
+:::
+:::
+
+How does the interpretation change based on which variable you condition on?
+
+---
+
+![](img/dplyr_wrangling.png){width="870%" fig-align="center"}
+
+
+
+---
+
+### Data Wrangling: Transformations done on the data
+
+**Why wrangle the data?**
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+To **summarize** the data.
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+&#8594; To compute the mean and standard deviation of the bike counts.
+
+:::
+:::
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+
+To **drop** missing values.  (Need to be careful here!)
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+&#8594; On our P-Set 2, we will see that `ggplot2` will often drop observations before creating a graph.
+
+:::
+:::
+
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+To **filter** to a particular subset of the data.
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+&#8594; To subset the bike counts data to 2 days in July of 2019.
+
+:::
+:::
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+To **collapse** the categories of a categorical variable.
+
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+&#8594; To go from 86 dog breeds to just mixed or single breed.
+
+:::
+:::
+
+---
+
+### Data Wrangling: Transformations done on the data
+
+**Why wrangle the data?**
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+To **arrange** the data to make it easier to display.
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+&#8594; To sort from most common dog name to least common.
+
+:::
+:::
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+To fix how `R` **stores** a variable.
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+&#8594; For the bike data, I converted `Day` from a character variable/vector to a date variable/vector.
+
+:::
+:::
+
+::: columns
+
+::: {.column .fragment width="50%"}
+
+&#8594; To **join** data frames when information about your cases is stored in multiple places!
+
+::: 
+
+::: {.column .fragment width="50%"}
+
+Will see examples of this next class!
+
+:::
+:::
+
+---
+
+## dplyr for Data Wrangling
+
+* Seven common wrangling verbs:
+    + `summarize()`
+    + `count()`  
+    + `mutate()`    
+    + `select()`
+    + `filter()`
+    + `arrange()`
+    + `---_join()`
+    
+* One action:
+    + `group_by()`
+
+---
+
+## Return to `mutate()`
+
+Add new variables or modify existing variables
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+count(dogs_top5, Dog_Name, Breed) %>%
+  group_by(Dog_Name) %>%
+  mutate(prop = n/sum(n))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+class(july_2019$DateTime)
+july_2019 <- july_2019 %>%
+  mutate(DateTime = mdy_hms(DateTime))
+class(july_2019$DateTime)
+```
+
+:::
+:::
+
+---
+
+## `select()`: Extract variables
+
+```{r}
+dogs %>%
+  select(Dog_Name, Dog_Breed)
+```
+
+---
+
+## Motivation for `filter()`
+
+```{r}
+count(dogs, Dog_Name, sort = TRUE)
+```
+
+---
+
+## `filter()`: Extract cases
+
+```{r}
+dogs_top5 <- dogs %>% 
+  filter(Dog_Name %in% c("Luna", "Charlie", "Lucy", "Cooper", "Rosie" ))
+
+count(dogs_top5, Dog_Name, sort = TRUE)
+```
+
+# Will see more data wrangling next week!
 
 ---
 
