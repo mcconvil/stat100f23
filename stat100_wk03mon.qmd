@@ -235,7 +235,7 @@ ggplot(data = july_2019,
 ggplot(data = july_2019, 
        mapping = aes(x = Occasion, 
                      y = Total,
-                     fill = Occasion)) +
+                     fill = Total)) +
   geom_boxplot()
 ```
 
@@ -667,11 +667,11 @@ ggplot(data = july_2019,
 #| code-line-numbers: "7|"
 ggplot(data = july_2019, 
        mapping = aes(x = Occasion, 
-                     y = Total,
-                     fill = Occasion)) +
-  geom_boxplot() +
+                     y = Total)) +
+  geom_boxplot(fill = "springgreen2") +
   guides(fill = "none") +
-  coord_cartesian(ylim = c(0, 40))
+  coord_cartesian(ylim = c(0, 40))  +
+  scale_fill_manual()
 ```
 
 ------------------------------------------------------------------------
@@ -687,7 +687,7 @@ ggplot(data = july_2019,
   geom_boxplot() +
   guides(fill = "none") +
   coord_cartesian(ylim = c(0, 40)) +
-  geom_jitter(width = .1,
+  geom_jitter(width = 0.1,
               height = 0, 
               alpha = 0.6)
 ```
