@@ -400,28 +400,28 @@
 <p><span class="custom-title">More Data Wrangling</span></p>
 <p><br></p>
 <p><span class="custom-subtitle">Kelly McConville</span></p>
-<p><span class="custom-subtitle">Stat 100 <br> Week 3 | Fall 2023</span></p>
+<p><span class="custom-subtitle">Stat 100 <br> Week 4 | Fall 2023</span></p>
 </div>
 </div>
 </section>
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li>Starting <a href="https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing">1-on-1, virtual Office Hours</a>
+<li class="fragment">Starting <a href="https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing">1-on-1, virtual Office Hours</a>
 <ul>
-<li>15 minute appointments, max 30 minutes per week</li>
-<li>For conceptual, not p-set, questions</li>
+<li class="fragment">15 minute appointments, max 30 minutes per week</li>
+<li class="fragment">For conceptual, not p-set, questions</li>
 </ul></li>
 </ul>
 <h3 id="goals-for-today">Goals for Today</h3>
 <div class="columns">
 <div class="column" style="width:&quot;50%;">
 <ul>
-<li>More data wrangling</li>
+<li class="fragment">More data wrangling</li>
 </ul>
 </div><div class="column" style="width:&quot;50%;">
 <ul>
-<li>Data joins</li>
+<li class="fragment">Data joins</li>
 </ul>
 </div>
 </div>
@@ -521,18 +521,22 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </div>
 <p><strong>Variables:</strong></p>
+<div>
 <ul>
 <li><code>NEWID</code>: ID for the household</li>
 <li><code>PRINEARN</code>: ID for which member of the household is the principal earner</li>
 <li><code>FINCBTAX</code>: Final income before taxes for the year</li>
 </ul>
+</div>
 </div><div class="column" style="width:&quot;50%;">
+<div>
 <ul>
 <li><code>BLS_URBN</code>: 1 = urban, 2 = rural</li>
 <li><code>HIGH_EDU</code>: Highest education in the household. 00 = Never attended, 10 = Grades 1-8, 11 = Grades 9-12, no degree, 12 = High school graduate, 13 = Some college, no degree, 14 = Associates degree, 15 = Bachelor’s degree, 16 = Masters, Professional/doctorate degree</li>
 <li><code>TOTEXPCQ</code> = Total household expenditures for the current quarter</li>
 <li><code>IRAX</code> = Total in retirement funds</li>
 </ul>
+</div>
 </div>
 </div>
 </section>
@@ -854,16 +858,17 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <section id="data-joins" class="slide level2">
 <h2>Data Joins</h2>
 <ul>
-<li><p>Often in the data analysis workflow, we have more than one data source, which means more than one dataframe, and we want to combine these dataframes.</p></li>
-<li><p>Need principled way to combine.</p>
+<li class="fragment"><p>Often in the data analysis workflow, we have more than one data source, which means more than one dataframe, and we want to combine these dataframes.</p></li>
+<li class="fragment"><p>Need principled way to combine.</p>
 <ul>
-<li>Need a <strong>key</strong> that links two dataframes together.</li>
+<li class="fragment">Need a <strong>key</strong> that links two dataframes together.</li>
 </ul></li>
-<li><p>These multiple dataframes are called <strong>relational data</strong>.</p></li>
+<li class="fragment"><p>These multiple dataframes are called <strong>relational data</strong>.</p></li>
 </ul>
 </section>
 <section id="ce-data" class="slide level2">
 <h2>CE Data</h2>
+<div>
 <ul>
 <li><strong>Household</strong> survey but data are also collected on <strong>individuals</strong>
 <ul>
@@ -871,6 +876,7 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <li><code>memi</code>: household member-level data</li>
 </ul></li>
 </ul>
+</div>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>fmli <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/fmli.csv"</span>, </span>
 <span id="cb35-2"><a href="#cb35-2"></a>                 <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"NA"</span>, <span class="st">"."</span>)) <span class="sc">%&gt;%</span></span>
@@ -881,7 +887,7 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <span id="cb35-7"><a href="#cb35-7"></a>  <span class="fu">select</span>(NEWID, MEMBNO, AGE, SEX, EARNTYPE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>Want to add variables on the <strong>principal earner</strong> from the member data frame to the household data frame</li>
+<li class="fragment">Want to add variables on the <strong>principal earner</strong> from the member data frame to the household data frame</li>
 </ul>
 </section>
 <section id="ce-data-1" class="slide level2">
@@ -934,9 +940,9 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <section id="ce-data-2" class="slide level2">
 <h2>CE Data</h2>
 <ul>
-<li>Key variables?
+<li class="fragment">Key variables?
 <ul>
-<li>Problem with class?</li>
+<li class="fragment">Problem with class?</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -961,9 +967,9 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <section id="ce-data-3" class="slide level2">
 <h2>CE Data</h2>
 <ul>
-<li>Key variables?
+<li class="fragment">Key variables?
 <ul>
-<li>Problem with class?</li>
+<li class="fragment">Problem with class?</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -981,22 +987,22 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <section id="ce-data-4" class="slide level2">
 <h2>CE Data</h2>
 <ul>
-<li>Want to add columns of <code>memi</code> to <code>fmli</code> that correspond to the principal earner’s memi data
+<li class="fragment">Want to add columns of <code>memi</code> to <code>fmli</code> that correspond to the principal earner’s memi data
 <ul>
-<li>What type of join is that?</li>
+<li class="fragment">What type of join is that?</li>
 </ul></li>
 </ul>
 </section>
 <section id="the-world-of-joins" class="slide level2">
 <h2>The World of Joins</h2>
 <ul>
-<li><strong>Mutating joins</strong>: Add new variables to one dataset from matching observations in another.
+<li class="fragment"><strong>Mutating joins</strong>: Add new variables to one dataset from matching observations in another.
 <ul>
-<li><code>left_join()</code> (and <code>right_join()</code>)</li>
-<li><code>inner_join()</code></li>
-<li><code>full_join()</code></li>
+<li class="fragment"><code>left_join()</code> (and <code>right_join()</code>)</li>
+<li class="fragment"><code>inner_join()</code></li>
+<li class="fragment"><code>full_join()</code></li>
 </ul></li>
-<li>There are also <em>filtering</em> joins but we won’t cover those today.</li>
+<li class="fragment">There are also <em>filtering</em> joins but we won’t cover those today.</li>
 </ul>
 </section>
 <section id="example-dataframes" class="slide level2">
@@ -1113,11 +1119,11 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <section id="back-to-our-example" class="slide level2">
 <h2>Back to our Example</h2>
 <ul>
-<li>What kind of join do we want for the Consumer Expenditure data?
+<li class="fragment">What kind of join do we want for the Consumer Expenditure data?
 <ul>
-<li>Want to add columns of <code>memi</code> to <code>fmli</code> that correspond to the principal earner’s memi data</li>
+<li class="fragment">Want to add columns of <code>memi</code> to <code>fmli</code> that correspond to the principal earner’s memi data</li>
 </ul></li>
-<li>Also going to create smaller data frames for us to play with:</li>
+<li class="fragment">Also going to create smaller data frames for us to play with:</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:&quot;50%;">
@@ -1190,7 +1196,7 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <section id="look-at-the-possible-joins-1" class="slide level2">
 <h2>Look at the Possible Joins</h2>
 <ul>
-<li>Be careful. This erroneous example made my R crash when I tried it on the full data frames.</li>
+<li class="fragment">Be careful. This erroneous example made my R crash when I tried it on the full data frames.</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:67%;">
@@ -1243,69 +1249,54 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <section id="look-at-the-possible-joins-2" class="slide level2">
 <h2>Look at the Possible Joins</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="fu">left_join</span>(fmli, memi, <span class="fu">join_by</span>(<span class="st">"NEWID"</span> <span class="sc">==</span> <span class="st">"NEWID"</span>, <span class="st">"PRINEARN"</span> <span class="sc">==</span> <span class="st">"MEMBNO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="fu">left_join</span>(fmli_small, memi_small, <span class="fu">join_by</span>(<span class="st">"NEWID"</span> <span class="sc">==</span> <span class="st">"NEWID"</span>, <span class="st">"PRINEARN"</span> <span class="sc">==</span> <span class="st">"MEMBNO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,301 × 8
-   NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU   AGE   SEX EARNTYPE
-   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
- 1 03324174        1   116920        1 16          63     1        1
- 2 03324204        1      200        1 15          50     1        1
- 3 03324214        1   117000        1 16          47     2        1
- 4 03324244        1        0        1 15          37     1        1
- 5 03324274        2     2000        1 14          20     2        4
- 6 03324284        1      942        1 11          63     1       NA
- 7 03324294        1        0        1 10          77     2       NA
- 8 03324304        1    91000        1 15          37     1        1
- 9 03324324        2    95000        2 15          53     2        1
-10 03324334        1    40037        1 14          64     2       NA
-# ℹ 6,291 more rows</code></pre>
+<pre><code># A tibble: 4 × 8
+  NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU   AGE   SEX EARNTYPE
+  &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+1 03324244        1        0        1 15          37     1        1
+2 03324324        2    95000        2 15          53     2        1
+3 03327224        1        0        1 14          28     2        3
+4 03530051        3    70000        1 11          44     1        3</code></pre>
 </div>
 </div>
 </section>
 <section id="look-at-the-possible-joins-3" class="slide level2">
 <h2>Look at the Possible Joins</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">inner_join</span>(fmli, memi, <span class="fu">join_by</span>(<span class="st">"NEWID"</span> <span class="sc">==</span> <span class="st">"NEWID"</span>, <span class="st">"PRINEARN"</span> <span class="sc">==</span> <span class="st">"MEMBNO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">inner_join</span>(fmli_small, memi_small, <span class="fu">join_by</span>(<span class="st">"NEWID"</span> <span class="sc">==</span> <span class="st">"NEWID"</span>, <span class="st">"PRINEARN"</span> <span class="sc">==</span> <span class="st">"MEMBNO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,301 × 8
-   NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU   AGE   SEX EARNTYPE
-   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
- 1 03324174        1   116920        1 16          63     1        1
- 2 03324204        1      200        1 15          50     1        1
- 3 03324214        1   117000        1 16          47     2        1
- 4 03324244        1        0        1 15          37     1        1
- 5 03324274        2     2000        1 14          20     2        4
- 6 03324284        1      942        1 11          63     1       NA
- 7 03324294        1        0        1 10          77     2       NA
- 8 03324304        1    91000        1 15          37     1        1
- 9 03324324        2    95000        2 15          53     2        1
-10 03324334        1    40037        1 14          64     2       NA
-# ℹ 6,291 more rows</code></pre>
+<pre><code># A tibble: 4 × 8
+  NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU   AGE   SEX EARNTYPE
+  &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+1 03324244        1        0        1 15          37     1        1
+2 03324324        2    95000        2 15          53     2        1
+3 03327224        1        0        1 14          28     2        3
+4 03530051        3    70000        1 11          44     1        3</code></pre>
 </div>
 </div>
 <ul>
-<li>Why does this give us the same answer as <code>left_join</code> for this situation?</li>
+<li class="fragment">Why does this give us the same answer as <code>left_join</code> for this situation?</li>
 </ul>
 </section>
 <section id="look-at-the-possible-joins-4" class="slide level2">
 <h2>Look at the Possible Joins</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">full_join</span>(fmli, memi, <span class="fu">join_by</span>(<span class="st">"NEWID"</span> <span class="sc">==</span> <span class="st">"NEWID"</span>, <span class="st">"PRINEARN"</span> <span class="sc">==</span> <span class="st">"MEMBNO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">full_join</span>(fmli_small, memi_small, <span class="fu">join_by</span>(<span class="st">"NEWID"</span> <span class="sc">==</span> <span class="st">"NEWID"</span>, <span class="st">"PRINEARN"</span> <span class="sc">==</span> <span class="st">"MEMBNO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15,412 × 8
+<pre><code># A tibble: 10 × 8
    NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU   AGE   SEX EARNTYPE
    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
- 1 03324174        1   116920        1 16          63     1        1
- 2 03324204        1      200        1 15          50     1        1
- 3 03324214        1   117000        1 16          47     2        1
- 4 03324244        1        0        1 15          37     1        1
- 5 03324274        2     2000        1 14          20     2        4
- 6 03324284        1      942        1 11          63     1       NA
- 7 03324294        1        0        1 10          77     2       NA
- 8 03324304        1    91000        1 15          37     1        1
- 9 03324324        2    95000        2 15          53     2        1
-10 03324334        1    40037        1 14          64     2       NA
-# ℹ 15,402 more rows</code></pre>
+ 1 03324244        1        0        1 15          37     1        1
+ 2 03324324        2    95000        2 15          53     2        1
+ 3 03327224        1        0        1 14          28     2        3
+ 4 03530051        3    70000        1 11          44     1        3
+ 5 03324324        1       NA       NA &lt;NA&gt;        51     1        1
+ 6 03327224        2       NA       NA &lt;NA&gt;        32     1        2
+ 7 03327224        3       NA       NA &lt;NA&gt;         1     2       NA
+ 8 03530051        1       NA       NA &lt;NA&gt;        43     1       NA
+ 9 03530051        2       NA       NA &lt;NA&gt;        16     1       NA
+10 03530051        4       NA       NA &lt;NA&gt;         5     2       NA</code></pre>
 </div>
 </div>
 </section>
@@ -1315,20 +1306,20 @@ $ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>fmli <span class="ot">&lt;-</span> <span class="fu">left_join</span>(fmli, memi, <span class="fu">join_by</span>(<span class="st">"NEWID"</span> <span class="sc">==</span> <span class="st">"NEWID"</span>, <span class="st">"PRINEARN"</span> <span class="sc">==</span> <span class="st">"MEMBNO"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>FIRST: conceptualize for yourself what you think you want the final dataset to look like!</li>
-<li>Check initial dimensions and final dimensions.</li>
-<li>Use variable names when joining even if they are the same.</li>
+<li class="fragment">FIRST: conceptualize for yourself what you think you want the final dataset to look like!</li>
+<li class="fragment">Check initial dimensions and final dimensions.</li>
+<li class="fragment">Use variable names when joining even if they are the same.</li>
 </ul>
 </section>
 <section id="naming-wrangled-data" class="slide level2">
 <h2>Naming Wrangled Data</h2>
 <p>Should I name my new dataframe <code>ce</code> or <code>ce1</code>?</p>
 <ul>
-<li><em>My</em> answer:
+<li class="fragment"><em>My</em> answer:
 <ul>
-<li>Is your new dataset structurally different? If so, give it a <strong>new name</strong>.</li>
-<li>Are you removing values you will need for a future analysis within the same document? If so, give it a <strong>new name</strong>.</li>
-<li>Are you just adding to or cleaning the data? If so, then <strong>write over</strong> the original.</li>
+<li class="fragment">Is your new dataset structurally different? If so, give it a <strong>new name</strong>.</li>
+<li class="fragment">Are you removing values you will need for a future analysis within the same document? If so, give it a <strong>new name</strong>.</li>
+<li class="fragment">Are you just adding to or cleaning the data? If so, then <strong>write over</strong> the original.</li>
 </ul></li>
 </ul>
 </section>
