@@ -387,6 +387,8 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ## ![](img/packages.jpeg){width="100%"}
 
+---
+
 ### Getting Help with `R`
 
 ![](img/rhelp.001.jpeg)
@@ -407,6 +409,8 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 -   Later in the semester, will learn tricks for effectively getting `R` help online.
 :::
 :::
+
+---
 
 ## Language: `R`-This, `R`-That, `Q`-What? {.smaller}
 

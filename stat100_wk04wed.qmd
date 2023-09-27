@@ -70,6 +70,30 @@ theme_update(text = element_text(size = 12))
 
 ---
 
+### Getting Help with `R`
+
+![](img/rhelp.001.jpeg)
+
+::: columns
+::: {.column width="50%"}
+-   Novices asking the internet for `R` help = `r emo::ji("cold_sweat")`
+
+-   **Get help from the Stat 100 teaching staff or classmates!**
+
+    -   Will start p-sets in section each week.
+    -   Use the Slack `#q-and-a` channel.
+:::
+
+::: {.column width="50%"}
+-   Get help **early** before `r emo::ji("rage")` sets in!
+    -   Be prepared for missing commas and quotes, capitalization issues, etc...
+-   Later in the semester, will learn tricks for effectively getting `R` help online.
+:::
+:::
+
+
+---
+
 ###  When to Get Help
 
 `r emo::ji("cry")` *"I have no idea how to do this problem."* 

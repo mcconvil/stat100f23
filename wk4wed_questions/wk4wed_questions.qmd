@@ -3,7 +3,7 @@ title: "Live Coding -- Data Wrangling (Week 4 Wed)"
 format: pdf
 ---
 
-Find measures of center for income based on the sex of the principal earner.
+Find measures of center for income based on the sex of the principal earner and location of the .
 
 What if we want to only focus on households where the principal earner is 40 or older?
 
