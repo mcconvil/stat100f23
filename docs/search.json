@@ -1,318 +1,115 @@
 [
   {
-    "objectID": "stat100_wk03mon.html#announcements",
-    "href": "stat100_wk03mon.html#announcements",
+    "objectID": "stat100_wk05mon.html#announcements",
+    "href": "stat100_wk05mon.html#announcements",
     "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!\nGrab a postcard and/or a stamp from SC 316 if you lost yours.\n\nWe also have markers, colored pencils, and crayons!\n\nDon’t forget that P-Set 1 due on Tuesday by 5pm in Gradescope.\nCome by office hours with any questions."
+    "text": "Announcements\n\nDiscuss exams:\n\nRegistrar’s Office posted our Final Exam time:\n\nIn-class: Fri, Dec 15th 9am - noon\nOral: Wed, Dec 13th & Thurs, Dec 14th\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:15am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!\n\n\n\nGoals for Today\n\nDiscus data ethics: responsibilities to research subjects\nFinish up data collection"
   },
   {
-    "objectID": "stat100_wk03mon.html#goals-for-today",
-    "href": "stat100_wk03mon.html#goals-for-today",
+    "objectID": "stat100_wk05mon.html#responsibilities-to-research-subjects",
+    "href": "stat100_wk05mon.html#responsibilities-to-research-subjects",
     "title": "Stat 100",
-    "section": "Goals for Today",
-    "text": "Goals for Today\n\n\n\nCome back to the general structure of ggplot2.\nLearn a few standard graphs for numerical/quantitative data:\n\nHistogram: one numerical variable\nSide-by-side boxplot: one numerical variable and one categorical variable\nSide-by-side violin plot: one numerical variable and one categorical variable\nScatterplot: two numerical variables\nLinegraph: two numerical variables\n\n\n\n\nAnd, learn the standard graphic for categorical data:\n\nBarplot: one categorical variable\nSegmented barplot: two categorical variables\n\nAlso cover some common extensions and customizations."
+    "section": "Responsibilities to Research Subjects",
+    "text": "Responsibilities to Research Subjects\n\n“The ethical statistician protects and respects the rights and interests of human and animal subjects at all stages of their involvement in a project. This includes respondents to the census or to surveys, those whose data are contained in administrative records, and subjects of physically or psychologically invasive research.”"
   },
   {
-    "objectID": "stat100_wk03mon.html#load-necessary-packages",
-    "href": "stat100_wk03mon.html#load-necessary-packages",
+    "objectID": "stat100_wk05mon.html#detour-from-our-detour",
+    "href": "stat100_wk05mon.html#detour-from-our-detour",
     "title": "Stat 100",
-    "section": "Load Necessary Packages",
-    "text": "Load Necessary Packages\n\n\n\n\n\nggplot2 is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
+    "section": "Detour from Our Detour",
+    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height)) +\n  geom_point(alpha = 0.1) +\n  geom_smooth(color = \"skyblue\")"
   },
   {
-    "objectID": "stat100_wk03mon.html#data-setting-eco-totem-broadway-bicycle-count",
-    "href": "stat100_wk03mon.html#data-setting-eco-totem-broadway-bicycle-count",
+    "objectID": "stat100_wk05mon.html#detour-from-our-detour-1",
+    "href": "stat100_wk05mon.html#detour-from-our-detour-1",
     "title": "Stat 100",
-    "section": "Data Setting: Eco-Totem Broadway Bicycle Count",
-    "text": "Data Setting: Eco-Totem Broadway Bicycle Count"
+    "section": "Detour from Our Detour",
+    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\nlibrary(emojifont)\n\nNHANES &lt;- mutate(NHANES, \n          heart = fontawesome(\"fa-heart\"))\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height,\n                     label = heart)) +\n  geom_text(alpha = 0.1, color = \"red\",\n            family='fontawesome-webfont',\n            size = 16) +\n  stat_smooth(color = \"deeppink\")"
   },
   {
-    "objectID": "stat100_wk03mon.html#import-the-data",
-    "href": "stat100_wk03mon.html#import-the-data",
+    "objectID": "stat100_wk05mon.html#who-are-the-data-supposed-to-represent",
+    "href": "stat100_wk05mon.html#who-are-the-data-supposed-to-represent",
     "title": "Stat 100",
-    "section": "Import the Data",
-    "text": "Import the Data\n\njuly_2019 &lt;- read_csv(\"data/july_2019.csv\")\n\n# Inspect the data\nglimpse(july_2019)\n\nRows: 192\nColumns: 8\n$ DateTime  &lt;chr&gt; \"07/04/2019 12:00:00 AM\", \"07/04/2019 12:15:00 AM\", \"07/04/2…\n$ Day       &lt;chr&gt; \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", …\n$ Date      &lt;date&gt; 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04,…\n$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…\n$ Total     &lt;dbl&gt; 2, 3, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …\n$ Westbound &lt;dbl&gt; 2, 3, 1, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, …\n$ Eastbound &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …\n$ Occasion  &lt;chr&gt; \"Fourth of July\", \"Fourth of July\", \"Fourth of July\", \"Fourt…"
+    "section": "Who are the data supposed to represent?",
+    "text": "Who are the data supposed to represent?"
   },
   {
-    "objectID": "stat100_wk03mon.html#ggplot2-example-code",
-    "href": "stat100_wk03mon.html#ggplot2-example-code",
+    "objectID": "stat100_wk05mon.html#who-are-the-data-supposed-to-represent-1",
+    "href": "stat100_wk05mon.html#who-are-the-data-supposed-to-represent-1",
     "title": "Stat 100",
-    "section": "ggplot2 example code",
-    "text": "ggplot2 example code\nGuiding Principle: We will map variables from the data to the aesthetic attributes (e.g. location, size, shape, color) of geometric objects (e.g. points, lines, bars).\n\n\nggplot(data = ---, mapping = aes(---)) +\n  geom_---(---) \n\n\nThere are other layers, such as scales_---_---() and labs(), but we will wait on those."
+    "section": "Who are the data supposed to represent?",
+    "text": "Who are the data supposed to represent?\n\n\n\n\n\nKey questions:\n\nWhat evidence is there that the respondents are representative of the population?\nWho is present? Who is absent?\nWho is overrepresented? Who is underrepresented?"
   },
   {
-    "objectID": "stat100_wk03mon.html#histograms",
-    "href": "stat100_wk03mon.html#histograms",
+    "objectID": "stat100_wk05mon.html#nonresponse-bias",
+    "href": "stat100_wk05mon.html#nonresponse-bias",
     "title": "Stat 100",
-    "section": "Histograms",
-    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram()"
+    "section": "Nonresponse bias",
+    "text": "Nonresponse bias\n\n\n\n\n\nNonresponse bias: The respondents are systematically different from the non-respondents for the variables of interest."
   },
   {
-    "objectID": "stat100_wk03mon.html#histograms-1",
-    "href": "stat100_wk03mon.html#histograms-1",
+    "objectID": "stat100_wk05mon.html#tackling-nonresponse-bias",
+    "href": "stat100_wk05mon.html#tackling-nonresponse-bias",
     "title": "Stat 100",
-    "section": "Histograms",
-    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram(color = \"white\",\n                 fill = \"violetred1\",\n                 bins = 50)\n\n\n\n\n\n\n\n\n\n\n\nmapping to a variable goes in aes()\nsetting to a specific value goes in the geom_---()"
+    "section": "Tackling Nonresponse bias",
+    "text": "Tackling Nonresponse bias\n\n\n\n\n\n\nUse multiple modes (mail, phone, in-person) and multiple attempts for reaching sampled cases.\nExplore key demographic variables to see how respondents and non-respondents vary.\nTake a survey stats course to learn how to create survey weights to adjust for potential nonresponse bias."
   },
   {
-    "objectID": "stat100_wk03mon.html#boxplots",
-    "href": "stat100_wk03mon.html#boxplots",
+    "objectID": "stat100_wk05mon.html#is-bigger-always-better",
+    "href": "stat100_wk05mon.html#is-bigger-always-better",
     "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\n\nFive number summary:\n\nMinimum\nFirst quartile (Q1)\nMedian\nThird quartile (Q3)\nMaximum\n\nInterquartile range (IQR) \\(=\\) Q3 \\(-\\) Q1\nOutliers: unusual points\n\nBoxplot defines unusual as being beyond \\(1.5*IQR\\) from \\(Q1\\) or \\(Q3\\).\n\nWhiskers: reach out to the furthest point that is NOT an outlier"
+    "section": "Is Bigger Always Better?",
+    "text": "Is Bigger Always Better?\n\n\n\n\n\nFor our Literary Digest Example, Gallup predicted Roosevelt would win based on a survey of 50,000 people (instead of 2.4 million)."
   },
   {
-    "objectID": "stat100_wk03mon.html#boxplots-1",
-    "href": "stat100_wk03mon.html#boxplots-1",
+    "objectID": "stat100_wk05mon.html#thoughts-on-sampling",
+    "href": "stat100_wk05mon.html#thoughts-on-sampling",
     "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\n# Create boxplot\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot()"
+    "section": "Thoughts on Sampling",
+    "text": "Thoughts on Sampling\n\nRandom sampling is important to ensure the sample is representative of the population.\n\nWord we will use: generalizability\n\nRepresentativeness isn’t about size.\n\nSmall random samples will tend to be more representative than large non-random samples.\n\nHowever, I bet most samples you will encounter won’t have arisen from a random mechanism.\nHow do we draw conclusions about the population from non-random samples?\n\nDeterminee if your sampled cases (and respondents) are systematically different from the non-sampled cases (and non-respondents) for the variables you care about.\nAdjust your population of interest.\nTake a survey stats course to learn how to adjust the sample to make it more representative."
   },
   {
-    "objectID": "stat100_wk03mon.html#boxplots-2",
-    "href": "stat100_wk03mon.html#boxplots-2",
+    "objectID": "stat100_wk05mon.html#careful-with-non-random-assignment-data",
+    "href": "stat100_wk05mon.html#careful-with-non-random-assignment-data",
     "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot(fill = \"springgreen3\")"
+    "section": "Careful with Non-Random Assignment Data",
+    "text": "Careful with Non-Random Assignment Data\n\n\nWe have data on the number of Methodist ministers in New England and the number of barrels of rum imported into Boston each year. The data range from 1860 to 1940.\n\nShould we conclude that ministers drink a lot of rum? Or maybe that rum drinking encourages church attendance?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConfounding variable: A third variable that is associated with both the explanatory variable and the response variable.\nUnclear if the explanatory variable or the confounder (or some other variable) is causing changes in the response."
   },
   {
-    "objectID": "stat100_wk03mon.html#boxplots-3",
-    "href": "stat100_wk03mon.html#boxplots-3",
+    "objectID": "stat100_wk05mon.html#causal-inference",
+    "href": "stat100_wk05mon.html#causal-inference",
     "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Total)) +\n  geom_boxplot()"
+    "section": "Causal Inference",
+    "text": "Causal Inference\n\nSpurious relationship: Two variables are associated but not causally related\n\nIn the age of big data, lots of good examples out there.\n\n\n\n→ “Correlation does not imply causation.”\n\n\n→ “Correlation does not imply not causation.”\n\n\nCausal inference: Methods for finding causal relationships even when the data were collected without random assignment."
   },
   {
-    "objectID": "stat100_wk03mon.html#boxplots-4",
-    "href": "stat100_wk03mon.html#boxplots-4",
+    "objectID": "stat100_wk05mon.html#observational-studies",
+    "href": "stat100_wk05mon.html#observational-studies",
     "title": "Stat 100",
-    "section": "Boxplots",
-    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
+    "section": "Observational Studies",
+    "text": "Observational Studies\n\nA study in which the researchers don’t actively control the value of any variable, but simply observe the values as they naturally exist.\nExample: Hand washing study\n\nTo estimate what percent of people in the US wash their hands after using a public restroom, researchers pretended to comb their hair while observing 6000 people in public restrooms throughout the United States. They found that 85% of the people who were observed washed their hands after going to the bathroom."
   },
   {
-    "objectID": "stat100_wk03mon.html#violin-plots",
-    "href": "stat100_wk03mon.html#violin-plots",
+    "objectID": "stat100_wk05mon.html#randomized-experiment",
+    "href": "stat100_wk05mon.html#randomized-experiment",
     "title": "Stat 100",
-    "section": "Violin Plots",
-    "text": "Violin Plots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_violin() +\n  guides(fill = \"none\")"
+    "section": "(Randomized) Experiment",
+    "text": "(Randomized) Experiment\n\nA study in which the researcher actively controls one or more of the explanatory variables through random assignment.\nExample: COVID Trial\nCommon features:\n\nControl group that gets no treatment or a standard treatment\nPlacebo: A fake treatment to control for the placebo effect where if people believe they are receiving a treatment, they may experience the desired effect regardless of whether the treatment is any good.\nBlinding: When the subjects and/or researchers don’t know the explanatory group assignments."
   },
   {
-    "objectID": "stat100_wk03mon.html#boxplot-versus-violin-plots",
-    "href": "stat100_wk03mon.html#boxplot-versus-violin-plots",
+    "objectID": "stat100_wk05mon.html#thoughts-on-data-collection-goals",
+    "href": "stat100_wk05mon.html#thoughts-on-data-collection-goals",
     "title": "Stat 100",
-    "section": "Boxplot Versus Violin Plots",
-    "text": "Boxplot Versus Violin Plots"
+    "section": "Thoughts on Data Collection Goals",
+    "text": "Thoughts on Data Collection Goals\n\nRandom assignment allows you to explore causal relationships between your explanatory variables and the predictor variables because the randomization makes the explanatory groups roughly similar.\nHow do we draw causal conclusions from studies without random assignment?\n\nWith extreme care! Try to control for all possible confounding variables.\nDiscuss the associations/correlations you found. Use domain knowledge to address potentially causal links.\nTake more stats to learn more about causal inference.\n\nBut also consider the goals of your analysis. Often the research question isn’t causal.\n\nBottom Line: We often have to use imperfect data to make decisions."
   },
   {
-    "objectID": "stat100_wk03mon.html#scatterplots",
-    "href": "stat100_wk03mon.html#scatterplots",
-    "title": "Stat 100",
-    "section": "Scatterplots",
-    "text": "Scatterplots\n\nExplore relationships between numerical variables.\n\nWe will be especially interested in linear relationships.\n\n\n\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total)) +\n  geom_point(size = 2)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#scatterplots-1",
-    "href": "stat100_wk03mon.html#scatterplots-1",
-    "title": "Stat 100",
-    "section": "Scatterplots",
-    "text": "Scatterplots\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total)) +\n  geom_point(size = 2, alpha = 0.6)\n\n\n\n\n\n\n\n\n\n\n\nFix over-plotting\nWhy the weird pattern??"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#scatterplots-2",
-    "href": "stat100_wk03mon.html#scatterplots-2",
-    "title": "Stat 100",
-    "section": "Scatterplots",
-    "text": "Scatterplots\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_point(size = 2, alpha = 0.6)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#linegraphs",
-    "href": "stat100_wk03mon.html#linegraphs",
-    "title": "Stat 100",
-    "section": "Linegraphs",
-    "text": "Linegraphs\nAlso called time series plot when time is represented on the x axis.\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(alpha = 0.6)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#linegraphs-1",
-    "href": "stat100_wk03mon.html#linegraphs-1",
-    "title": "Stat 100",
-    "section": "Linegraphs",
-    "text": "Linegraphs\nAlso called time series plot when time is represented on the x axis.\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(alpha = 0.6) +\n  theme(legend.pos = \"bottom\")"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#new-data-setting-dog-names-in-cambridge-ma",
-    "href": "stat100_wk03mon.html#new-data-setting-dog-names-in-cambridge-ma",
-    "title": "Stat 100",
-    "section": "New Data Setting: Dog Names in Cambridge, MA",
-    "text": "New Data Setting: Dog Names in Cambridge, MA\nBased on dog license data collected by Cambridge’s Animal Commission\n\n# Import and inspect data\ndogs &lt;- read_csv(\"https://data.cambridgema.gov/api/views/sckh-3xyx/rows.csv\")\nglimpse(dogs)\n\nRows: 3,942\nColumns: 6\n$ Dog_Name         &lt;chr&gt; \"Butch\", \"Baxter\", \"Bodhi\", \"Ocean\", \"Coco\", \"Brio\", …\n$ Dog_Breed        &lt;chr&gt; \"Mixed Breed\", \"Mixed Breed\", \"Golden Retriever\", \"Pu…\n$ Location_masked  &lt;chr&gt; \"POINT (-71.1328 42.3989)\", \"POINT (-71.1186 42.3814)…\n$ Latitude_masked  &lt;dbl&gt; 42.3989, 42.3814, 42.3998, 42.3726, 42.3610, 42.3892,…\n$ Longitude_masked &lt;dbl&gt; -71.1328, -71.1186, -71.1308, -71.1087, -71.1022, -71…\n$ Neighborhood     &lt;chr&gt; \"North Cambridge\", \"Neighborhood Nine\", \"North Cambri…"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#data-wrangling",
-    "href": "stat100_wk03mon.html#data-wrangling",
-    "title": "Stat 100",
-    "section": "Data Wrangling",
-    "text": "Data Wrangling\nWe haven’t learned this topic yet.\nI only included this code for completeness/transparency.\n\n# Create a column for Breed\ndogs &lt;- mutate(dogs, Breed = if_else(\n                       Dog_Breed == \"Mixed Breed\",\n                       \"Mixed\", \"Single\"))\n\n\n# Find the 5 top most common names\ntop5names &lt;- count(dogs, Dog_Name) %&gt;%\n  slice_max(n = 5, order_by = n) %&gt;%\n  select(Dog_Name) %&gt;%\n  pull()\n  \n# Filter dataset to only the 5 top most common names\ndogs_top5 &lt;- filter(dogs,\n                     Dog_Name %in% top5names)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#barplots",
-    "href": "stat100_wk03mon.html#barplots",
-    "title": "Stat 100",
-    "section": "Barplots",
-    "text": "Barplots\n\n\nDisplays the frequency for each category."
-  },
-  {
-    "objectID": "stat100_wk03mon.html#barplots-1",
-    "href": "stat100_wk03mon.html#barplots-1",
-    "title": "Stat 100",
-    "section": "Barplots",
-    "text": "Barplots\n\n\n# Create barplot\nggplot(data = dogs_top5, \n    mapping = aes(x = Dog_Name)) +\n  geom_bar()\n\n\n\n\n\n\n\n\n\n\nHow could we make this graph better?"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#barplots-2",
-    "href": "stat100_wk03mon.html#barplots-2",
-    "title": "Stat 100",
-    "section": "Barplots",
-    "text": "Barplots\n\n\n# Create barplot\nggplot(data = dogs_top5, \n  mapping = aes(x = fct_infreq(Dog_Name))) +\n  geom_bar()"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#segmented-barplots",
-    "href": "stat100_wk03mon.html#segmented-barplots",
-    "title": "Stat 100",
-    "section": "Segmented Barplots",
-    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar() +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nEach bar is divided into the frequencies of the fill variable.\nHard to make comparisons across categories."
-  },
-  {
-    "objectID": "stat100_wk03mon.html#segmented-barplots-1",
-    "href": "stat100_wk03mon.html#segmented-barplots-1",
-    "title": "Stat 100",
-    "section": "Segmented Barplots",
-    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar(position = \"dodge\") +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nCan add the position argument into the geom_bar()."
-  },
-  {
-    "objectID": "stat100_wk03mon.html#segmented-barplots-2",
-    "href": "stat100_wk03mon.html#segmented-barplots-2",
-    "title": "Stat 100",
-    "section": "Segmented Barplots",
-    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar(position = \"fill\") +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nNow each bar is divided into proportions based on the fill variable."
-  },
-  {
-    "objectID": "stat100_wk03mon.html#adding-more-variables",
-    "href": "stat100_wk03mon.html#adding-more-variables",
-    "title": "Stat 100",
-    "section": "Adding More Variables",
-    "text": "Adding More Variables\n\nTwo main approaches:\n\nUtilize other aesthetics of the geom\nFacet: Create multiple plots across the categories of a categorical variable."
-  },
-  {
-    "objectID": "stat100_wk03mon.html#utilize-other-aesthetics",
-    "href": "stat100_wk03mon.html#utilize-other-aesthetics",
-    "title": "Stat 100",
-    "section": "Utilize other aesthetics",
-    "text": "Utilize other aesthetics\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nAlready saw how to add a third variable to a line graph (and a scatterplot) via color.\n\nCan also change size or type."
-  },
-  {
-    "objectID": "stat100_wk03mon.html#facet",
-    "href": "stat100_wk03mon.html#facet",
-    "title": "Stat 100",
-    "section": "Facet",
-    "text": "Facet\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2) +\n  facet_wrap(~Dog_Name, ncol = 2)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#facet-1",
-    "href": "stat100_wk03mon.html#facet-1",
-    "title": "Stat 100",
-    "section": "Facet",
-    "text": "Facet\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2)  +\n  facet_grid(Breed~Dog_Name)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#consider-doing-both",
-    "href": "stat100_wk03mon.html#consider-doing-both",
-    "title": "Stat 100",
-    "section": "Consider Doing Both!",
-    "text": "Consider Doing Both!\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked,\n                     color = Breed)) +\n  geom_point(size = 2) +\n  facet_wrap(~Dog_Name, ncol = 2)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#adding-some-context",
-    "href": "stat100_wk03mon.html#adding-some-context",
-    "title": "Stat 100",
-    "section": "Adding Some Context",
-    "text": "Adding Some Context\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  labs(x = \"Time of Day\",\n       y = \"Number of Passes\",\n       color = \"What Type of Day?\",\n       caption = \"Data Collected by Eco-Totem\",\n       title = \"Cycling Patterns at Broadway Bike Counter\")"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#customizing-your-ggplot2-plots",
-    "href": "stat100_wk03mon.html#customizing-your-ggplot2-plots",
-    "title": "Stat 100",
-    "section": "Customizing your ggplot2 Plots",
-    "text": "Customizing your ggplot2 Plots\n\nThere are so many ways you can customize the look of your ggplot2 plots.\nLet’s look at some common changes:\n\nFussing with labels\nZooming in\nUsing multiple geoms\nColor!\nThemes"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#fussing-with-labels-rotate",
-    "href": "stat100_wk03mon.html#fussing-with-labels-rotate",
-    "title": "Stat 100",
-    "section": "Fussing with Labels: Rotate",
-    "text": "Fussing with Labels: Rotate\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2)  +\n  facet_grid(Breed~Dog_Name) + \n  theme(axis.text.x =\n          element_text(angle = 45,\n                       vjust = 1,\n                       hjust = 1))"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#zooming-in",
-    "href": "stat100_wk03mon.html#zooming-in",
-    "title": "Stat 100",
-    "section": "Zooming In",
-    "text": "Zooming In\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#zooming-in-1",
-    "href": "stat100_wk03mon.html#zooming-in-1",
-    "title": "Stat 100",
-    "section": "Zooming In",
-    "text": "Zooming In\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot(fill = \"springgreen2\") +\n  guides(fill = \"none\") +\n  coord_cartesian(ylim = c(0, 40))  +\n  scale_fill_manual()"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#multiple-geoms",
-    "href": "stat100_wk03mon.html#multiple-geoms",
-    "title": "Stat 100",
-    "section": "Multiple geoms",
-    "text": "Multiple geoms\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\") +\n  coord_cartesian(ylim = c(0, 40)) +\n  geom_jitter(width = 0.1,\n              height = 0, \n              alpha = 0.6)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#multiple-geoms-1",
-    "href": "stat100_wk03mon.html#multiple-geoms-1",
-    "title": "Stat 100",
-    "section": "Multiple geoms",
-    "text": "Multiple geoms\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  geom_point(size = 3)"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#change-the-color",
-    "href": "stat100_wk03mon.html#change-the-color",
-    "title": "Stat 100",
-    "section": "Change the Color",
-    "text": "Change the Color\n\ncolors()\n\n  [1] \"white\"                \"aliceblue\"            \"antiquewhite\"        \n  [4] \"antiquewhite1\"        \"antiquewhite2\"        \"antiquewhite3\"       \n  [7] \"antiquewhite4\"        \"aquamarine\"           \"aquamarine1\"         \n [10] \"aquamarine2\"          \"aquamarine3\"          \"aquamarine4\"         \n [13] \"azure\"                \"azure1\"               \"azure2\"              \n [16] \"azure3\"               \"azure4\"               \"beige\"               \n [19] \"bisque\"               \"bisque1\"              \"bisque2\"             \n [22] \"bisque3\"              \"bisque4\"              \"black\"               \n [25] \"blanchedalmond\"       \"blue\"                 \"blue1\"               \n [28] \"blue2\"                \"blue3\"                \"blue4\"               \n [31] \"blueviolet\"           \"brown\"                \"brown1\"              \n [34] \"brown2\"               \"brown3\"               \"brown4\"              \n [37] \"burlywood\"            \"burlywood1\"           \"burlywood2\"          \n [40] \"burlywood3\"           \"burlywood4\"           \"cadetblue\"           \n [43] \"cadetblue1\"           \"cadetblue2\"           \"cadetblue3\"          \n [46] \"cadetblue4\"           \"chartreuse\"           \"chartreuse1\"         \n [49] \"chartreuse2\"          \"chartreuse3\"          \"chartreuse4\"         \n [52] \"chocolate\"            \"chocolate1\"           \"chocolate2\"          \n [55] \"chocolate3\"           \"chocolate4\"           \"coral\"               \n [58] \"coral1\"               \"coral2\"               \"coral3\"              \n [61] \"coral4\"               \"cornflowerblue\"       \"cornsilk\"            \n [64] \"cornsilk1\"            \"cornsilk2\"            \"cornsilk3\"           \n [67] \"cornsilk4\"            \"cyan\"                 \"cyan1\"               \n [70] \"cyan2\"                \"cyan3\"                \"cyan4\"               \n [73] \"darkblue\"             \"darkcyan\"             \"darkgoldenrod\"       \n [76] \"darkgoldenrod1\"       \"darkgoldenrod2\"       \"darkgoldenrod3\"      \n [79] \"darkgoldenrod4\"       \"darkgray\"             \"darkgreen\"           \n [82] \"darkgrey\"             \"darkkhaki\"            \"darkmagenta\"         \n [85] \"darkolivegreen\"       \"darkolivegreen1\"      \"darkolivegreen2\"     \n [88] \"darkolivegreen3\"      \"darkolivegreen4\"      \"darkorange\"          \n [91] \"darkorange1\"          \"darkorange2\"          \"darkorange3\"         \n [94] \"darkorange4\"          \"darkorchid\"           \"darkorchid1\"         \n [97] \"darkorchid2\"          \"darkorchid3\"          \"darkorchid4\"         \n[100] \"darkred\"              \"darksalmon\"           \"darkseagreen\"        \n[103] \"darkseagreen1\"        \"darkseagreen2\"        \"darkseagreen3\"       \n[106] \"darkseagreen4\"        \"darkslateblue\"        \"darkslategray\"       \n[109] \"darkslategray1\"       \"darkslategray2\"       \"darkslategray3\"      \n[112] \"darkslategray4\"       \"darkslategrey\"        \"darkturquoise\"       \n[115] \"darkviolet\"           \"deeppink\"             \"deeppink1\"           \n[118] \"deeppink2\"            \"deeppink3\"            \"deeppink4\"           \n[121] \"deepskyblue\"          \"deepskyblue1\"         \"deepskyblue2\"        \n[124] \"deepskyblue3\"         \"deepskyblue4\"         \"dimgray\"             \n[127] \"dimgrey\"              \"dodgerblue\"           \"dodgerblue1\"         \n[130] \"dodgerblue2\"          \"dodgerblue3\"          \"dodgerblue4\"         \n[133] \"firebrick\"            \"firebrick1\"           \"firebrick2\"          \n[136] \"firebrick3\"           \"firebrick4\"           \"floralwhite\"         \n[139] \"forestgreen\"          \"gainsboro\"            \"ghostwhite\"          \n[142] \"gold\"                 \"gold1\"                \"gold2\"               \n[145] \"gold3\"                \"gold4\"                \"goldenrod\"           \n[148] \"goldenrod1\"           \"goldenrod2\"           \"goldenrod3\"          \n[151] \"goldenrod4\"           \"gray\"                 \"gray0\"               \n[154] \"gray1\"                \"gray2\"                \"gray3\"               \n[157] \"gray4\"                \"gray5\"                \"gray6\"               \n[160] \"gray7\"                \"gray8\"                \"gray9\"               \n[163] \"gray10\"               \"gray11\"               \"gray12\"              \n[166] \"gray13\"               \"gray14\"               \"gray15\"              \n[169] \"gray16\"               \"gray17\"               \"gray18\"              \n[172] \"gray19\"               \"gray20\"               \"gray21\"              \n[175] \"gray22\"               \"gray23\"               \"gray24\"              \n[178] \"gray25\"               \"gray26\"               \"gray27\"              \n[181] \"gray28\"               \"gray29\"               \"gray30\"              \n[184] \"gray31\"               \"gray32\"               \"gray33\"              \n[187] \"gray34\"               \"gray35\"               \"gray36\"              \n[190] \"gray37\"               \"gray38\"               \"gray39\"              \n[193] \"gray40\"               \"gray41\"               \"gray42\"              \n[196] \"gray43\"               \"gray44\"               \"gray45\"              \n[199] \"gray46\"               \"gray47\"               \"gray48\"              \n[202] \"gray49\"               \"gray50\"               \"gray51\"              \n[205] \"gray52\"               \"gray53\"               \"gray54\"              \n[208] \"gray55\"               \"gray56\"               \"gray57\"              \n[211] \"gray58\"               \"gray59\"               \"gray60\"              \n[214] \"gray61\"               \"gray62\"               \"gray63\"              \n[217] \"gray64\"               \"gray65\"               \"gray66\"              \n[220] \"gray67\"               \"gray68\"               \"gray69\"              \n[223] \"gray70\"               \"gray71\"               \"gray72\"              \n[226] \"gray73\"               \"gray74\"               \"gray75\"              \n[229] \"gray76\"               \"gray77\"               \"gray78\"              \n[232] \"gray79\"               \"gray80\"               \"gray81\"              \n[235] \"gray82\"               \"gray83\"               \"gray84\"              \n[238] \"gray85\"               \"gray86\"               \"gray87\"              \n[241] \"gray88\"               \"gray89\"               \"gray90\"              \n[244] \"gray91\"               \"gray92\"               \"gray93\"              \n[247] \"gray94\"               \"gray95\"               \"gray96\"              \n[250] \"gray97\"               \"gray98\"               \"gray99\"              \n[253] \"gray100\"              \"green\"                \"green1\"              \n[256] \"green2\"               \"green3\"               \"green4\"              \n[259] \"greenyellow\"          \"grey\"                 \"grey0\"               \n[262] \"grey1\"                \"grey2\"                \"grey3\"               \n[265] \"grey4\"                \"grey5\"                \"grey6\"               \n[268] \"grey7\"                \"grey8\"                \"grey9\"               \n[271] \"grey10\"               \"grey11\"               \"grey12\"              \n[274] \"grey13\"               \"grey14\"               \"grey15\"              \n[277] \"grey16\"               \"grey17\"               \"grey18\"              \n[280] \"grey19\"               \"grey20\"               \"grey21\"              \n[283] \"grey22\"               \"grey23\"               \"grey24\"              \n[286] \"grey25\"               \"grey26\"               \"grey27\"              \n[289] \"grey28\"               \"grey29\"               \"grey30\"              \n[292] \"grey31\"               \"grey32\"               \"grey33\"              \n[295] \"grey34\"               \"grey35\"               \"grey36\"              \n[298] \"grey37\"               \"grey38\"               \"grey39\"              \n[301] \"grey40\"               \"grey41\"               \"grey42\"              \n[304] \"grey43\"               \"grey44\"               \"grey45\"              \n[307] \"grey46\"               \"grey47\"               \"grey48\"              \n[310] \"grey49\"               \"grey50\"               \"grey51\"              \n[313] \"grey52\"               \"grey53\"               \"grey54\"              \n[316] \"grey55\"               \"grey56\"               \"grey57\"              \n[319] \"grey58\"               \"grey59\"               \"grey60\"              \n[322] \"grey61\"               \"grey62\"               \"grey63\"              \n[325] \"grey64\"               \"grey65\"               \"grey66\"              \n[328] \"grey67\"               \"grey68\"               \"grey69\"              \n[331] \"grey70\"               \"grey71\"               \"grey72\"              \n[334] \"grey73\"               \"grey74\"               \"grey75\"              \n[337] \"grey76\"               \"grey77\"               \"grey78\"              \n[340] \"grey79\"               \"grey80\"               \"grey81\"              \n[343] \"grey82\"               \"grey83\"               \"grey84\"              \n[346] \"grey85\"               \"grey86\"               \"grey87\"              \n[349] \"grey88\"               \"grey89\"               \"grey90\"              \n[352] \"grey91\"               \"grey92\"               \"grey93\"              \n[355] \"grey94\"               \"grey95\"               \"grey96\"              \n[358] \"grey97\"               \"grey98\"               \"grey99\"              \n[361] \"grey100\"              \"honeydew\"             \"honeydew1\"           \n[364] \"honeydew2\"            \"honeydew3\"            \"honeydew4\"           \n[367] \"hotpink\"              \"hotpink1\"             \"hotpink2\"            \n[370] \"hotpink3\"             \"hotpink4\"             \"indianred\"           \n[373] \"indianred1\"           \"indianred2\"           \"indianred3\"          \n[376] \"indianred4\"           \"ivory\"                \"ivory1\"              \n[379] \"ivory2\"               \"ivory3\"               \"ivory4\"              \n[382] \"khaki\"                \"khaki1\"               \"khaki2\"              \n[385] \"khaki3\"               \"khaki4\"               \"lavender\"            \n[388] \"lavenderblush\"        \"lavenderblush1\"       \"lavenderblush2\"      \n[391] \"lavenderblush3\"       \"lavenderblush4\"       \"lawngreen\"           \n[394] \"lemonchiffon\"         \"lemonchiffon1\"        \"lemonchiffon2\"       \n[397] \"lemonchiffon3\"        \"lemonchiffon4\"        \"lightblue\"           \n[400] \"lightblue1\"           \"lightblue2\"           \"lightblue3\"          \n[403] \"lightblue4\"           \"lightcoral\"           \"lightcyan\"           \n[406] \"lightcyan1\"           \"lightcyan2\"           \"lightcyan3\"          \n[409] \"lightcyan4\"           \"lightgoldenrod\"       \"lightgoldenrod1\"     \n[412] \"lightgoldenrod2\"      \"lightgoldenrod3\"      \"lightgoldenrod4\"     \n[415] \"lightgoldenrodyellow\" \"lightgray\"            \"lightgreen\"          \n[418] \"lightgrey\"            \"lightpink\"            \"lightpink1\"          \n[421] \"lightpink2\"           \"lightpink3\"           \"lightpink4\"          \n[424] \"lightsalmon\"          \"lightsalmon1\"         \"lightsalmon2\"        \n[427] \"lightsalmon3\"         \"lightsalmon4\"         \"lightseagreen\"       \n[430] \"lightskyblue\"         \"lightskyblue1\"        \"lightskyblue2\"       \n[433] \"lightskyblue3\"        \"lightskyblue4\"        \"lightslateblue\"      \n[436] \"lightslategray\"       \"lightslategrey\"       \"lightsteelblue\"      \n[439] \"lightsteelblue1\"      \"lightsteelblue2\"      \"lightsteelblue3\"     \n[442] \"lightsteelblue4\"      \"lightyellow\"          \"lightyellow1\"        \n[445] \"lightyellow2\"         \"lightyellow3\"         \"lightyellow4\"        \n[448] \"limegreen\"            \"linen\"                \"magenta\"             \n[451] \"magenta1\"             \"magenta2\"             \"magenta3\"            \n[454] \"magenta4\"             \"maroon\"               \"maroon1\"             \n[457] \"maroon2\"              \"maroon3\"              \"maroon4\"             \n[460] \"mediumaquamarine\"     \"mediumblue\"           \"mediumorchid\"        \n[463] \"mediumorchid1\"        \"mediumorchid2\"        \"mediumorchid3\"       \n[466] \"mediumorchid4\"        \"mediumpurple\"         \"mediumpurple1\"       \n[469] \"mediumpurple2\"        \"mediumpurple3\"        \"mediumpurple4\"       \n[472] \"mediumseagreen\"       \"mediumslateblue\"      \"mediumspringgreen\"   \n[475] \"mediumturquoise\"      \"mediumvioletred\"      \"midnightblue\"        \n[478] \"mintcream\"            \"mistyrose\"            \"mistyrose1\"          \n[481] \"mistyrose2\"           \"mistyrose3\"           \"mistyrose4\"          \n[484] \"moccasin\"             \"navajowhite\"          \"navajowhite1\"        \n[487] \"navajowhite2\"         \"navajowhite3\"         \"navajowhite4\"        \n[490] \"navy\"                 \"navyblue\"             \"oldlace\"             \n[493] \"olivedrab\"            \"olivedrab1\"           \"olivedrab2\"          \n[496] \"olivedrab3\"           \"olivedrab4\"           \"orange\"              \n[499] \"orange1\"              \"orange2\"              \"orange3\"             \n[502] \"orange4\"              \"orangered\"            \"orangered1\"          \n[505] \"orangered2\"           \"orangered3\"           \"orangered4\"          \n[508] \"orchid\"               \"orchid1\"              \"orchid2\"             \n[511] \"orchid3\"              \"orchid4\"              \"palegoldenrod\"       \n[514] \"palegreen\"            \"palegreen1\"           \"palegreen2\"          \n[517] \"palegreen3\"           \"palegreen4\"           \"paleturquoise\"       \n[520] \"paleturquoise1\"       \"paleturquoise2\"       \"paleturquoise3\"      \n[523] \"paleturquoise4\"       \"palevioletred\"        \"palevioletred1\"      \n[526] \"palevioletred2\"       \"palevioletred3\"       \"palevioletred4\"      \n[529] \"papayawhip\"           \"peachpuff\"            \"peachpuff1\"          \n[532] \"peachpuff2\"           \"peachpuff3\"           \"peachpuff4\"          \n[535] \"peru\"                 \"pink\"                 \"pink1\"               \n[538] \"pink2\"                \"pink3\"                \"pink4\"               \n[541] \"plum\"                 \"plum1\"                \"plum2\"               \n[544] \"plum3\"                \"plum4\"                \"powderblue\"          \n[547] \"purple\"               \"purple1\"              \"purple2\"             \n[550] \"purple3\"              \"purple4\"              \"red\"                 \n[553] \"red1\"                 \"red2\"                 \"red3\"                \n[556] \"red4\"                 \"rosybrown\"            \"rosybrown1\"          \n[559] \"rosybrown2\"           \"rosybrown3\"           \"rosybrown4\"          \n[562] \"royalblue\"            \"royalblue1\"           \"royalblue2\"          \n[565] \"royalblue3\"           \"royalblue4\"           \"saddlebrown\"         \n[568] \"salmon\"               \"salmon1\"              \"salmon2\"             \n[571] \"salmon3\"              \"salmon4\"              \"sandybrown\"          \n[574] \"seagreen\"             \"seagreen1\"            \"seagreen2\"           \n[577] \"seagreen3\"            \"seagreen4\"            \"seashell\"            \n[580] \"seashell1\"            \"seashell2\"            \"seashell3\"           \n[583] \"seashell4\"            \"sienna\"               \"sienna1\"             \n[586] \"sienna2\"              \"sienna3\"              \"sienna4\"             \n[589] \"skyblue\"              \"skyblue1\"             \"skyblue2\"            \n[592] \"skyblue3\"             \"skyblue4\"             \"slateblue\"           \n[595] \"slateblue1\"           \"slateblue2\"           \"slateblue3\"          \n[598] \"slateblue4\"           \"slategray\"            \"slategray1\"          \n[601] \"slategray2\"           \"slategray3\"           \"slategray4\"          \n[604] \"slategrey\"            \"snow\"                 \"snow1\"               \n[607] \"snow2\"                \"snow3\"                \"snow4\"               \n[610] \"springgreen\"          \"springgreen1\"         \"springgreen2\"        \n[613] \"springgreen3\"         \"springgreen4\"         \"steelblue\"           \n[616] \"steelblue1\"           \"steelblue2\"           \"steelblue3\"          \n[619] \"steelblue4\"           \"tan\"                  \"tan1\"                \n[622] \"tan2\"                 \"tan3\"                 \"tan4\"                \n[625] \"thistle\"              \"thistle1\"             \"thistle2\"            \n[628] \"thistle3\"             \"thistle4\"             \"tomato\"              \n[631] \"tomato1\"              \"tomato2\"              \"tomato3\"             \n[634] \"tomato4\"              \"turquoise\"            \"turquoise1\"          \n[637] \"turquoise2\"           \"turquoise3\"           \"turquoise4\"          \n[640] \"violet\"               \"violetred\"            \"violetred1\"          \n[643] \"violetred2\"           \"violetred3\"           \"violetred4\"          \n[646] \"wheat\"                \"wheat1\"               \"wheat2\"              \n[649] \"wheat3\"               \"wheat4\"               \"whitesmoke\"          \n[652] \"yellow\"               \"yellow1\"              \"yellow2\"             \n[655] \"yellow3\"              \"yellow4\"              \"yellowgreen\""
-  },
-  {
-    "objectID": "stat100_wk03mon.html#change-the-color-1",
-    "href": "stat100_wk03mon.html#change-the-color-1",
-    "title": "Stat 100",
-    "section": "Change the Color",
-    "text": "Change the Color\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  scale_color_manual(values = c(\"violetred2\",\n                                \"steelblue4\"))"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#change-the-color-2",
-    "href": "stat100_wk03mon.html#change-the-color-2",
-    "title": "Stat 100",
-    "section": "Change the Color",
-    "text": "Change the Color\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  scale_color_manual(values = c(\"#0D6759\",\n                                \"#E4844A\"))"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#use-a-different-theme",
-    "href": "stat100_wk03mon.html#use-a-different-theme",
-    "title": "Stat 100",
-    "section": "Use a Different Theme",
-    "text": "Use a Different Theme\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  scale_color_manual(values = c(\"#0D6759\",\n                                \"#E4844A\")) +\n  theme_bw() +\n  theme(legend.pos = \"bottom\")"
-  },
-  {
-    "objectID": "stat100_wk03mon.html#reminders",
-    "href": "stat100_wk03mon.html#reminders",
+    "objectID": "stat100_wk05mon.html#reminders",
+    "href": "stat100_wk05mon.html#reminders",
     "title": "Stat 100",
     "section": "Reminders",
-    "text": "Reminders\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!\nGrab a postcard and/or a stamp from SC 316 if you lost yours.\n\nWe also have markers, colored pencils, and crayons!\n\nDon’t forget that P-Set 1 due on Tuesday by 5pm in Gradescope.\nCome by office hours with any questions."
+    "text": "Reminders\n\nDiscuss exams:\n\nRegistrar’s Office posted our Final Exam time:\n\nIn-class: Fri, Dec 15th 9am - noon\nOral: Wed, Dec 13th & Thurs, Dec 14th\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:15am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!"
   },
   {
     "objectID": "stat100_wk02wed.html#announcements",
@@ -1435,13 +1232,6 @@
     "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
   },
   {
-    "objectID": "stat100_wk02mon.html#section",
-    "href": "stat100_wk02mon.html#section",
-    "title": "Stat 100",
-    "section": "",
-    "text": "Getting Help with R\n\n\n\n\nNovices asking the internet for R help = 😰\nGet help from the Stat 100 teaching staff or classmates!\n\nWill start p-sets in section each week.\nUse the Slack #q-and-a channel.\n\n\n\n\nGet help early before 😡 sets in!\n\nBe prepared for missing commas and quotes, capitalization issues, etc…\n\nLater in the semester, will learn tricks for effectively getting R help online."
-  },
-  {
     "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
     "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
     "title": "Stat 100",
@@ -1467,6 +1257,321 @@
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed"
+    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#announcements",
+    "href": "stat100_wk03mon.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!\nGrab a postcard and/or a stamp from SC 316 if you lost yours.\n\nWe also have markers, colored pencils, and crayons!\n\nDon’t forget that P-Set 1 due on Tuesday by 5pm in Gradescope.\nCome by office hours with any questions."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#goals-for-today",
+    "href": "stat100_wk03mon.html#goals-for-today",
+    "title": "Stat 100",
+    "section": "Goals for Today",
+    "text": "Goals for Today\n\n\n\nCome back to the general structure of ggplot2.\nLearn a few standard graphs for numerical/quantitative data:\n\nHistogram: one numerical variable\nSide-by-side boxplot: one numerical variable and one categorical variable\nSide-by-side violin plot: one numerical variable and one categorical variable\nScatterplot: two numerical variables\nLinegraph: two numerical variables\n\n\n\n\nAnd, learn the standard graphic for categorical data:\n\nBarplot: one categorical variable\nSegmented barplot: two categorical variables\n\nAlso cover some common extensions and customizations."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#load-necessary-packages",
+    "href": "stat100_wk03mon.html#load-necessary-packages",
+    "title": "Stat 100",
+    "section": "Load Necessary Packages",
+    "text": "Load Necessary Packages\n\n\n\n\n\nggplot2 is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#data-setting-eco-totem-broadway-bicycle-count",
+    "href": "stat100_wk03mon.html#data-setting-eco-totem-broadway-bicycle-count",
+    "title": "Stat 100",
+    "section": "Data Setting: Eco-Totem Broadway Bicycle Count",
+    "text": "Data Setting: Eco-Totem Broadway Bicycle Count"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#import-the-data",
+    "href": "stat100_wk03mon.html#import-the-data",
+    "title": "Stat 100",
+    "section": "Import the Data",
+    "text": "Import the Data\n\njuly_2019 &lt;- read_csv(\"data/july_2019.csv\")\n\n# Inspect the data\nglimpse(july_2019)\n\nRows: 192\nColumns: 8\n$ DateTime  &lt;chr&gt; \"07/04/2019 12:00:00 AM\", \"07/04/2019 12:15:00 AM\", \"07/04/2…\n$ Day       &lt;chr&gt; \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", \"Thursday\", …\n$ Date      &lt;date&gt; 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04, 2019-07-04,…\n$ Time      &lt;time&gt; 00:00:00, 00:15:00, 00:30:00, 00:45:00, 01:00:00, 01:15:00,…\n$ Total     &lt;dbl&gt; 2, 3, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …\n$ Westbound &lt;dbl&gt; 2, 3, 1, 0, 2, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, …\n$ Eastbound &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …\n$ Occasion  &lt;chr&gt; \"Fourth of July\", \"Fourth of July\", \"Fourth of July\", \"Fourt…"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#ggplot2-example-code",
+    "href": "stat100_wk03mon.html#ggplot2-example-code",
+    "title": "Stat 100",
+    "section": "ggplot2 example code",
+    "text": "ggplot2 example code\nGuiding Principle: We will map variables from the data to the aesthetic attributes (e.g. location, size, shape, color) of geometric objects (e.g. points, lines, bars).\n\n\nggplot(data = ---, mapping = aes(---)) +\n  geom_---(---) \n\n\nThere are other layers, such as scales_---_---() and labs(), but we will wait on those."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#histograms",
+    "href": "stat100_wk03mon.html#histograms",
+    "title": "Stat 100",
+    "section": "Histograms",
+    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#histograms-1",
+    "href": "stat100_wk03mon.html#histograms-1",
+    "title": "Stat 100",
+    "section": "Histograms",
+    "text": "Histograms\n\n\n# Create histogram\nggplot(data = july_2019, \n       mapping = aes(x = Total)) +\n  geom_histogram(color = \"white\",\n                 fill = \"violetred1\",\n                 bins = 50)\n\n\n\n\n\n\n\n\n\n\n\nmapping to a variable goes in aes()\nsetting to a specific value goes in the geom_---()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots",
+    "href": "stat100_wk03mon.html#boxplots",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\n\nFive number summary:\n\nMinimum\nFirst quartile (Q1)\nMedian\nThird quartile (Q3)\nMaximum\n\nInterquartile range (IQR) \\(=\\) Q3 \\(-\\) Q1\nOutliers: unusual points\n\nBoxplot defines unusual as being beyond \\(1.5*IQR\\) from \\(Q1\\) or \\(Q3\\).\n\nWhiskers: reach out to the furthest point that is NOT an outlier"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-1",
+    "href": "stat100_wk03mon.html#boxplots-1",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\n# Create boxplot\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-2",
+    "href": "stat100_wk03mon.html#boxplots-2",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot(fill = \"springgreen3\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-3",
+    "href": "stat100_wk03mon.html#boxplots-3",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Total)) +\n  geom_boxplot()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplots-4",
+    "href": "stat100_wk03mon.html#boxplots-4",
+    "title": "Stat 100",
+    "section": "Boxplots",
+    "text": "Boxplots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#violin-plots",
+    "href": "stat100_wk03mon.html#violin-plots",
+    "title": "Stat 100",
+    "section": "Violin Plots",
+    "text": "Violin Plots\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_violin() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#boxplot-versus-violin-plots",
+    "href": "stat100_wk03mon.html#boxplot-versus-violin-plots",
+    "title": "Stat 100",
+    "section": "Boxplot Versus Violin Plots",
+    "text": "Boxplot Versus Violin Plots"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#scatterplots",
+    "href": "stat100_wk03mon.html#scatterplots",
+    "title": "Stat 100",
+    "section": "Scatterplots",
+    "text": "Scatterplots\n\nExplore relationships between numerical variables.\n\nWe will be especially interested in linear relationships.\n\n\n\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total)) +\n  geom_point(size = 2)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#scatterplots-1",
+    "href": "stat100_wk03mon.html#scatterplots-1",
+    "title": "Stat 100",
+    "section": "Scatterplots",
+    "text": "Scatterplots\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total)) +\n  geom_point(size = 2, alpha = 0.6)\n\n\n\n\n\n\n\n\n\n\n\nFix over-plotting\nWhy the weird pattern??"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#scatterplots-2",
+    "href": "stat100_wk03mon.html#scatterplots-2",
+    "title": "Stat 100",
+    "section": "Scatterplots",
+    "text": "Scatterplots\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_point(size = 2, alpha = 0.6)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#linegraphs",
+    "href": "stat100_wk03mon.html#linegraphs",
+    "title": "Stat 100",
+    "section": "Linegraphs",
+    "text": "Linegraphs\nAlso called time series plot when time is represented on the x axis.\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(alpha = 0.6)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#linegraphs-1",
+    "href": "stat100_wk03mon.html#linegraphs-1",
+    "title": "Stat 100",
+    "section": "Linegraphs",
+    "text": "Linegraphs\nAlso called time series plot when time is represented on the x axis.\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(alpha = 0.6) +\n  theme(legend.pos = \"bottom\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#new-data-setting-dog-names-in-cambridge-ma",
+    "href": "stat100_wk03mon.html#new-data-setting-dog-names-in-cambridge-ma",
+    "title": "Stat 100",
+    "section": "New Data Setting: Dog Names in Cambridge, MA",
+    "text": "New Data Setting: Dog Names in Cambridge, MA\nBased on dog license data collected by Cambridge’s Animal Commission\n\n# Import and inspect data\ndogs &lt;- read_csv(\"https://data.cambridgema.gov/api/views/sckh-3xyx/rows.csv\")\nglimpse(dogs)\n\nRows: 3,942\nColumns: 6\n$ Dog_Name         &lt;chr&gt; \"Butch\", \"Baxter\", \"Bodhi\", \"Ocean\", \"Coco\", \"Brio\", …\n$ Dog_Breed        &lt;chr&gt; \"Mixed Breed\", \"Mixed Breed\", \"Golden Retriever\", \"Pu…\n$ Location_masked  &lt;chr&gt; \"POINT (-71.1328 42.3989)\", \"POINT (-71.1186 42.3814)…\n$ Latitude_masked  &lt;dbl&gt; 42.3989, 42.3814, 42.3998, 42.3726, 42.3610, 42.3892,…\n$ Longitude_masked &lt;dbl&gt; -71.1328, -71.1186, -71.1308, -71.1087, -71.1022, -71…\n$ Neighborhood     &lt;chr&gt; \"North Cambridge\", \"Neighborhood Nine\", \"North Cambri…"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#data-wrangling",
+    "href": "stat100_wk03mon.html#data-wrangling",
+    "title": "Stat 100",
+    "section": "Data Wrangling",
+    "text": "Data Wrangling\nWe haven’t learned this topic yet.\nI only included this code for completeness/transparency.\n\n# Create a column for Breed\ndogs &lt;- mutate(dogs, Breed = if_else(\n                       Dog_Breed == \"Mixed Breed\",\n                       \"Mixed\", \"Single\"))\n\n\n# Find the 5 top most common names\ntop5names &lt;- count(dogs, Dog_Name) %&gt;%\n  slice_max(n = 5, order_by = n) %&gt;%\n  select(Dog_Name) %&gt;%\n  pull()\n  \n# Filter dataset to only the 5 top most common names\ndogs_top5 &lt;- filter(dogs,\n                     Dog_Name %in% top5names)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#barplots",
+    "href": "stat100_wk03mon.html#barplots",
+    "title": "Stat 100",
+    "section": "Barplots",
+    "text": "Barplots\n\n\nDisplays the frequency for each category."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#barplots-1",
+    "href": "stat100_wk03mon.html#barplots-1",
+    "title": "Stat 100",
+    "section": "Barplots",
+    "text": "Barplots\n\n\n# Create barplot\nggplot(data = dogs_top5, \n    mapping = aes(x = Dog_Name)) +\n  geom_bar()\n\n\n\n\n\n\n\n\n\n\nHow could we make this graph better?"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#barplots-2",
+    "href": "stat100_wk03mon.html#barplots-2",
+    "title": "Stat 100",
+    "section": "Barplots",
+    "text": "Barplots\n\n\n# Create barplot\nggplot(data = dogs_top5, \n  mapping = aes(x = fct_infreq(Dog_Name))) +\n  geom_bar()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#segmented-barplots",
+    "href": "stat100_wk03mon.html#segmented-barplots",
+    "title": "Stat 100",
+    "section": "Segmented Barplots",
+    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar() +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nEach bar is divided into the frequencies of the fill variable.\nHard to make comparisons across categories."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#segmented-barplots-1",
+    "href": "stat100_wk03mon.html#segmented-barplots-1",
+    "title": "Stat 100",
+    "section": "Segmented Barplots",
+    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar(position = \"dodge\") +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nCan add the position argument into the geom_bar()."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#segmented-barplots-2",
+    "href": "stat100_wk03mon.html#segmented-barplots-2",
+    "title": "Stat 100",
+    "section": "Segmented Barplots",
+    "text": "Segmented Barplots\n\n\n# Create segmented barplot\nggplot(data = dogs_top5, \n       mapping = aes(x = fct_infreq(Dog_Name),\n                     fill = Breed)) +\n  geom_bar(position = \"fill\") +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nNow each bar is divided into proportions based on the fill variable."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#adding-more-variables",
+    "href": "stat100_wk03mon.html#adding-more-variables",
+    "title": "Stat 100",
+    "section": "Adding More Variables",
+    "text": "Adding More Variables\n\nTwo main approaches:\n\nUtilize other aesthetics of the geom\nFacet: Create multiple plots across the categories of a categorical variable."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#utilize-other-aesthetics",
+    "href": "stat100_wk03mon.html#utilize-other-aesthetics",
+    "title": "Stat 100",
+    "section": "Utilize other aesthetics",
+    "text": "Utilize other aesthetics\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\")\n\n\n\n\n\n\n\n\n\n\n\nAlready saw how to add a third variable to a line graph (and a scatterplot) via color.\n\nCan also change size or type."
+  },
+  {
+    "objectID": "stat100_wk03mon.html#facet",
+    "href": "stat100_wk03mon.html#facet",
+    "title": "Stat 100",
+    "section": "Facet",
+    "text": "Facet\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2) +\n  facet_wrap(~Dog_Name, ncol = 2)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#facet-1",
+    "href": "stat100_wk03mon.html#facet-1",
+    "title": "Stat 100",
+    "section": "Facet",
+    "text": "Facet\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2)  +\n  facet_grid(Breed~Dog_Name)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#consider-doing-both",
+    "href": "stat100_wk03mon.html#consider-doing-both",
+    "title": "Stat 100",
+    "section": "Consider Doing Both!",
+    "text": "Consider Doing Both!\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked,\n                     color = Breed)) +\n  geom_point(size = 2) +\n  facet_wrap(~Dog_Name, ncol = 2)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#adding-some-context",
+    "href": "stat100_wk03mon.html#adding-some-context",
+    "title": "Stat 100",
+    "section": "Adding Some Context",
+    "text": "Adding Some Context\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  labs(x = \"Time of Day\",\n       y = \"Number of Passes\",\n       color = \"What Type of Day?\",\n       caption = \"Data Collected by Eco-Totem\",\n       title = \"Cycling Patterns at Broadway Bike Counter\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#customizing-your-ggplot2-plots",
+    "href": "stat100_wk03mon.html#customizing-your-ggplot2-plots",
+    "title": "Stat 100",
+    "section": "Customizing your ggplot2 Plots",
+    "text": "Customizing your ggplot2 Plots\n\nThere are so many ways you can customize the look of your ggplot2 plots.\nLet’s look at some common changes:\n\nFussing with labels\nZooming in\nUsing multiple geoms\nColor!\nThemes"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#fussing-with-labels-rotate",
+    "href": "stat100_wk03mon.html#fussing-with-labels-rotate",
+    "title": "Stat 100",
+    "section": "Fussing with Labels: Rotate",
+    "text": "Fussing with Labels: Rotate\n\n\nggplot(data = dogs_top5,\n       mapping = aes(x = Longitude_masked,\n                     y = Latitude_masked)) +\n  geom_point(size = 2)  +\n  facet_grid(Breed~Dog_Name) + \n  theme(axis.text.x =\n          element_text(angle = 45,\n                       vjust = 1,\n                       hjust = 1))"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#zooming-in",
+    "href": "stat100_wk03mon.html#zooming-in",
+    "title": "Stat 100",
+    "section": "Zooming In",
+    "text": "Zooming In\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#zooming-in-1",
+    "href": "stat100_wk03mon.html#zooming-in-1",
+    "title": "Stat 100",
+    "section": "Zooming In",
+    "text": "Zooming In\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total)) +\n  geom_boxplot(fill = \"springgreen2\") +\n  guides(fill = \"none\") +\n  coord_cartesian(ylim = c(0, 40))  +\n  scale_fill_manual()"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#multiple-geoms",
+    "href": "stat100_wk03mon.html#multiple-geoms",
+    "title": "Stat 100",
+    "section": "Multiple geoms",
+    "text": "Multiple geoms\n\n\nggplot(data = july_2019, \n       mapping = aes(x = Occasion, \n                     y = Total,\n                     fill = Occasion)) +\n  geom_boxplot() +\n  guides(fill = \"none\") +\n  coord_cartesian(ylim = c(0, 40)) +\n  geom_jitter(width = 0.1,\n              height = 0, \n              alpha = 0.6)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#multiple-geoms-1",
+    "href": "stat100_wk03mon.html#multiple-geoms-1",
+    "title": "Stat 100",
+    "section": "Multiple geoms",
+    "text": "Multiple geoms\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  geom_point(size = 3)"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#change-the-color",
+    "href": "stat100_wk03mon.html#change-the-color",
+    "title": "Stat 100",
+    "section": "Change the Color",
+    "text": "Change the Color\n\ncolors()\n\n  [1] \"white\"                \"aliceblue\"            \"antiquewhite\"        \n  [4] \"antiquewhite1\"        \"antiquewhite2\"        \"antiquewhite3\"       \n  [7] \"antiquewhite4\"        \"aquamarine\"           \"aquamarine1\"         \n [10] \"aquamarine2\"          \"aquamarine3\"          \"aquamarine4\"         \n [13] \"azure\"                \"azure1\"               \"azure2\"              \n [16] \"azure3\"               \"azure4\"               \"beige\"               \n [19] \"bisque\"               \"bisque1\"              \"bisque2\"             \n [22] \"bisque3\"              \"bisque4\"              \"black\"               \n [25] \"blanchedalmond\"       \"blue\"                 \"blue1\"               \n [28] \"blue2\"                \"blue3\"                \"blue4\"               \n [31] \"blueviolet\"           \"brown\"                \"brown1\"              \n [34] \"brown2\"               \"brown3\"               \"brown4\"              \n [37] \"burlywood\"            \"burlywood1\"           \"burlywood2\"          \n [40] \"burlywood3\"           \"burlywood4\"           \"cadetblue\"           \n [43] \"cadetblue1\"           \"cadetblue2\"           \"cadetblue3\"          \n [46] \"cadetblue4\"           \"chartreuse\"           \"chartreuse1\"         \n [49] \"chartreuse2\"          \"chartreuse3\"          \"chartreuse4\"         \n [52] \"chocolate\"            \"chocolate1\"           \"chocolate2\"          \n [55] \"chocolate3\"           \"chocolate4\"           \"coral\"               \n [58] \"coral1\"               \"coral2\"               \"coral3\"              \n [61] \"coral4\"               \"cornflowerblue\"       \"cornsilk\"            \n [64] \"cornsilk1\"            \"cornsilk2\"            \"cornsilk3\"           \n [67] \"cornsilk4\"            \"cyan\"                 \"cyan1\"               \n [70] \"cyan2\"                \"cyan3\"                \"cyan4\"               \n [73] \"darkblue\"             \"darkcyan\"             \"darkgoldenrod\"       \n [76] \"darkgoldenrod1\"       \"darkgoldenrod2\"       \"darkgoldenrod3\"      \n [79] \"darkgoldenrod4\"       \"darkgray\"             \"darkgreen\"           \n [82] \"darkgrey\"             \"darkkhaki\"            \"darkmagenta\"         \n [85] \"darkolivegreen\"       \"darkolivegreen1\"      \"darkolivegreen2\"     \n [88] \"darkolivegreen3\"      \"darkolivegreen4\"      \"darkorange\"          \n [91] \"darkorange1\"          \"darkorange2\"          \"darkorange3\"         \n [94] \"darkorange4\"          \"darkorchid\"           \"darkorchid1\"         \n [97] \"darkorchid2\"          \"darkorchid3\"          \"darkorchid4\"         \n[100] \"darkred\"              \"darksalmon\"           \"darkseagreen\"        \n[103] \"darkseagreen1\"        \"darkseagreen2\"        \"darkseagreen3\"       \n[106] \"darkseagreen4\"        \"darkslateblue\"        \"darkslategray\"       \n[109] \"darkslategray1\"       \"darkslategray2\"       \"darkslategray3\"      \n[112] \"darkslategray4\"       \"darkslategrey\"        \"darkturquoise\"       \n[115] \"darkviolet\"           \"deeppink\"             \"deeppink1\"           \n[118] \"deeppink2\"            \"deeppink3\"            \"deeppink4\"           \n[121] \"deepskyblue\"          \"deepskyblue1\"         \"deepskyblue2\"        \n[124] \"deepskyblue3\"         \"deepskyblue4\"         \"dimgray\"             \n[127] \"dimgrey\"              \"dodgerblue\"           \"dodgerblue1\"         \n[130] \"dodgerblue2\"          \"dodgerblue3\"          \"dodgerblue4\"         \n[133] \"firebrick\"            \"firebrick1\"           \"firebrick2\"          \n[136] \"firebrick3\"           \"firebrick4\"           \"floralwhite\"         \n[139] \"forestgreen\"          \"gainsboro\"            \"ghostwhite\"          \n[142] \"gold\"                 \"gold1\"                \"gold2\"               \n[145] \"gold3\"                \"gold4\"                \"goldenrod\"           \n[148] \"goldenrod1\"           \"goldenrod2\"           \"goldenrod3\"          \n[151] \"goldenrod4\"           \"gray\"                 \"gray0\"               \n[154] \"gray1\"                \"gray2\"                \"gray3\"               \n[157] \"gray4\"                \"gray5\"                \"gray6\"               \n[160] \"gray7\"                \"gray8\"                \"gray9\"               \n[163] \"gray10\"               \"gray11\"               \"gray12\"              \n[166] \"gray13\"               \"gray14\"               \"gray15\"              \n[169] \"gray16\"               \"gray17\"               \"gray18\"              \n[172] \"gray19\"               \"gray20\"               \"gray21\"              \n[175] \"gray22\"               \"gray23\"               \"gray24\"              \n[178] \"gray25\"               \"gray26\"               \"gray27\"              \n[181] \"gray28\"               \"gray29\"               \"gray30\"              \n[184] \"gray31\"               \"gray32\"               \"gray33\"              \n[187] \"gray34\"               \"gray35\"               \"gray36\"              \n[190] \"gray37\"               \"gray38\"               \"gray39\"              \n[193] \"gray40\"               \"gray41\"               \"gray42\"              \n[196] \"gray43\"               \"gray44\"               \"gray45\"              \n[199] \"gray46\"               \"gray47\"               \"gray48\"              \n[202] \"gray49\"               \"gray50\"               \"gray51\"              \n[205] \"gray52\"               \"gray53\"               \"gray54\"              \n[208] \"gray55\"               \"gray56\"               \"gray57\"              \n[211] \"gray58\"               \"gray59\"               \"gray60\"              \n[214] \"gray61\"               \"gray62\"               \"gray63\"              \n[217] \"gray64\"               \"gray65\"               \"gray66\"              \n[220] \"gray67\"               \"gray68\"               \"gray69\"              \n[223] \"gray70\"               \"gray71\"               \"gray72\"              \n[226] \"gray73\"               \"gray74\"               \"gray75\"              \n[229] \"gray76\"               \"gray77\"               \"gray78\"              \n[232] \"gray79\"               \"gray80\"               \"gray81\"              \n[235] \"gray82\"               \"gray83\"               \"gray84\"              \n[238] \"gray85\"               \"gray86\"               \"gray87\"              \n[241] \"gray88\"               \"gray89\"               \"gray90\"              \n[244] \"gray91\"               \"gray92\"               \"gray93\"              \n[247] \"gray94\"               \"gray95\"               \"gray96\"              \n[250] \"gray97\"               \"gray98\"               \"gray99\"              \n[253] \"gray100\"              \"green\"                \"green1\"              \n[256] \"green2\"               \"green3\"               \"green4\"              \n[259] \"greenyellow\"          \"grey\"                 \"grey0\"               \n[262] \"grey1\"                \"grey2\"                \"grey3\"               \n[265] \"grey4\"                \"grey5\"                \"grey6\"               \n[268] \"grey7\"                \"grey8\"                \"grey9\"               \n[271] \"grey10\"               \"grey11\"               \"grey12\"              \n[274] \"grey13\"               \"grey14\"               \"grey15\"              \n[277] \"grey16\"               \"grey17\"               \"grey18\"              \n[280] \"grey19\"               \"grey20\"               \"grey21\"              \n[283] \"grey22\"               \"grey23\"               \"grey24\"              \n[286] \"grey25\"               \"grey26\"               \"grey27\"              \n[289] \"grey28\"               \"grey29\"               \"grey30\"              \n[292] \"grey31\"               \"grey32\"               \"grey33\"              \n[295] \"grey34\"               \"grey35\"               \"grey36\"              \n[298] \"grey37\"               \"grey38\"               \"grey39\"              \n[301] \"grey40\"               \"grey41\"               \"grey42\"              \n[304] \"grey43\"               \"grey44\"               \"grey45\"              \n[307] \"grey46\"               \"grey47\"               \"grey48\"              \n[310] \"grey49\"               \"grey50\"               \"grey51\"              \n[313] \"grey52\"               \"grey53\"               \"grey54\"              \n[316] \"grey55\"               \"grey56\"               \"grey57\"              \n[319] \"grey58\"               \"grey59\"               \"grey60\"              \n[322] \"grey61\"               \"grey62\"               \"grey63\"              \n[325] \"grey64\"               \"grey65\"               \"grey66\"              \n[328] \"grey67\"               \"grey68\"               \"grey69\"              \n[331] \"grey70\"               \"grey71\"               \"grey72\"              \n[334] \"grey73\"               \"grey74\"               \"grey75\"              \n[337] \"grey76\"               \"grey77\"               \"grey78\"              \n[340] \"grey79\"               \"grey80\"               \"grey81\"              \n[343] \"grey82\"               \"grey83\"               \"grey84\"              \n[346] \"grey85\"               \"grey86\"               \"grey87\"              \n[349] \"grey88\"               \"grey89\"               \"grey90\"              \n[352] \"grey91\"               \"grey92\"               \"grey93\"              \n[355] \"grey94\"               \"grey95\"               \"grey96\"              \n[358] \"grey97\"               \"grey98\"               \"grey99\"              \n[361] \"grey100\"              \"honeydew\"             \"honeydew1\"           \n[364] \"honeydew2\"            \"honeydew3\"            \"honeydew4\"           \n[367] \"hotpink\"              \"hotpink1\"             \"hotpink2\"            \n[370] \"hotpink3\"             \"hotpink4\"             \"indianred\"           \n[373] \"indianred1\"           \"indianred2\"           \"indianred3\"          \n[376] \"indianred4\"           \"ivory\"                \"ivory1\"              \n[379] \"ivory2\"               \"ivory3\"               \"ivory4\"              \n[382] \"khaki\"                \"khaki1\"               \"khaki2\"              \n[385] \"khaki3\"               \"khaki4\"               \"lavender\"            \n[388] \"lavenderblush\"        \"lavenderblush1\"       \"lavenderblush2\"      \n[391] \"lavenderblush3\"       \"lavenderblush4\"       \"lawngreen\"           \n[394] \"lemonchiffon\"         \"lemonchiffon1\"        \"lemonchiffon2\"       \n[397] \"lemonchiffon3\"        \"lemonchiffon4\"        \"lightblue\"           \n[400] \"lightblue1\"           \"lightblue2\"           \"lightblue3\"          \n[403] \"lightblue4\"           \"lightcoral\"           \"lightcyan\"           \n[406] \"lightcyan1\"           \"lightcyan2\"           \"lightcyan3\"          \n[409] \"lightcyan4\"           \"lightgoldenrod\"       \"lightgoldenrod1\"     \n[412] \"lightgoldenrod2\"      \"lightgoldenrod3\"      \"lightgoldenrod4\"     \n[415] \"lightgoldenrodyellow\" \"lightgray\"            \"lightgreen\"          \n[418] \"lightgrey\"            \"lightpink\"            \"lightpink1\"          \n[421] \"lightpink2\"           \"lightpink3\"           \"lightpink4\"          \n[424] \"lightsalmon\"          \"lightsalmon1\"         \"lightsalmon2\"        \n[427] \"lightsalmon3\"         \"lightsalmon4\"         \"lightseagreen\"       \n[430] \"lightskyblue\"         \"lightskyblue1\"        \"lightskyblue2\"       \n[433] \"lightskyblue3\"        \"lightskyblue4\"        \"lightslateblue\"      \n[436] \"lightslategray\"       \"lightslategrey\"       \"lightsteelblue\"      \n[439] \"lightsteelblue1\"      \"lightsteelblue2\"      \"lightsteelblue3\"     \n[442] \"lightsteelblue4\"      \"lightyellow\"          \"lightyellow1\"        \n[445] \"lightyellow2\"         \"lightyellow3\"         \"lightyellow4\"        \n[448] \"limegreen\"            \"linen\"                \"magenta\"             \n[451] \"magenta1\"             \"magenta2\"             \"magenta3\"            \n[454] \"magenta4\"             \"maroon\"               \"maroon1\"             \n[457] \"maroon2\"              \"maroon3\"              \"maroon4\"             \n[460] \"mediumaquamarine\"     \"mediumblue\"           \"mediumorchid\"        \n[463] \"mediumorchid1\"        \"mediumorchid2\"        \"mediumorchid3\"       \n[466] \"mediumorchid4\"        \"mediumpurple\"         \"mediumpurple1\"       \n[469] \"mediumpurple2\"        \"mediumpurple3\"        \"mediumpurple4\"       \n[472] \"mediumseagreen\"       \"mediumslateblue\"      \"mediumspringgreen\"   \n[475] \"mediumturquoise\"      \"mediumvioletred\"      \"midnightblue\"        \n[478] \"mintcream\"            \"mistyrose\"            \"mistyrose1\"          \n[481] \"mistyrose2\"           \"mistyrose3\"           \"mistyrose4\"          \n[484] \"moccasin\"             \"navajowhite\"          \"navajowhite1\"        \n[487] \"navajowhite2\"         \"navajowhite3\"         \"navajowhite4\"        \n[490] \"navy\"                 \"navyblue\"             \"oldlace\"             \n[493] \"olivedrab\"            \"olivedrab1\"           \"olivedrab2\"          \n[496] \"olivedrab3\"           \"olivedrab4\"           \"orange\"              \n[499] \"orange1\"              \"orange2\"              \"orange3\"             \n[502] \"orange4\"              \"orangered\"            \"orangered1\"          \n[505] \"orangered2\"           \"orangered3\"           \"orangered4\"          \n[508] \"orchid\"               \"orchid1\"              \"orchid2\"             \n[511] \"orchid3\"              \"orchid4\"              \"palegoldenrod\"       \n[514] \"palegreen\"            \"palegreen1\"           \"palegreen2\"          \n[517] \"palegreen3\"           \"palegreen4\"           \"paleturquoise\"       \n[520] \"paleturquoise1\"       \"paleturquoise2\"       \"paleturquoise3\"      \n[523] \"paleturquoise4\"       \"palevioletred\"        \"palevioletred1\"      \n[526] \"palevioletred2\"       \"palevioletred3\"       \"palevioletred4\"      \n[529] \"papayawhip\"           \"peachpuff\"            \"peachpuff1\"          \n[532] \"peachpuff2\"           \"peachpuff3\"           \"peachpuff4\"          \n[535] \"peru\"                 \"pink\"                 \"pink1\"               \n[538] \"pink2\"                \"pink3\"                \"pink4\"               \n[541] \"plum\"                 \"plum1\"                \"plum2\"               \n[544] \"plum3\"                \"plum4\"                \"powderblue\"          \n[547] \"purple\"               \"purple1\"              \"purple2\"             \n[550] \"purple3\"              \"purple4\"              \"red\"                 \n[553] \"red1\"                 \"red2\"                 \"red3\"                \n[556] \"red4\"                 \"rosybrown\"            \"rosybrown1\"          \n[559] \"rosybrown2\"           \"rosybrown3\"           \"rosybrown4\"          \n[562] \"royalblue\"            \"royalblue1\"           \"royalblue2\"          \n[565] \"royalblue3\"           \"royalblue4\"           \"saddlebrown\"         \n[568] \"salmon\"               \"salmon1\"              \"salmon2\"             \n[571] \"salmon3\"              \"salmon4\"              \"sandybrown\"          \n[574] \"seagreen\"             \"seagreen1\"            \"seagreen2\"           \n[577] \"seagreen3\"            \"seagreen4\"            \"seashell\"            \n[580] \"seashell1\"            \"seashell2\"            \"seashell3\"           \n[583] \"seashell4\"            \"sienna\"               \"sienna1\"             \n[586] \"sienna2\"              \"sienna3\"              \"sienna4\"             \n[589] \"skyblue\"              \"skyblue1\"             \"skyblue2\"            \n[592] \"skyblue3\"             \"skyblue4\"             \"slateblue\"           \n[595] \"slateblue1\"           \"slateblue2\"           \"slateblue3\"          \n[598] \"slateblue4\"           \"slategray\"            \"slategray1\"          \n[601] \"slategray2\"           \"slategray3\"           \"slategray4\"          \n[604] \"slategrey\"            \"snow\"                 \"snow1\"               \n[607] \"snow2\"                \"snow3\"                \"snow4\"               \n[610] \"springgreen\"          \"springgreen1\"         \"springgreen2\"        \n[613] \"springgreen3\"         \"springgreen4\"         \"steelblue\"           \n[616] \"steelblue1\"           \"steelblue2\"           \"steelblue3\"          \n[619] \"steelblue4\"           \"tan\"                  \"tan1\"                \n[622] \"tan2\"                 \"tan3\"                 \"tan4\"                \n[625] \"thistle\"              \"thistle1\"             \"thistle2\"            \n[628] \"thistle3\"             \"thistle4\"             \"tomato\"              \n[631] \"tomato1\"              \"tomato2\"              \"tomato3\"             \n[634] \"tomato4\"              \"turquoise\"            \"turquoise1\"          \n[637] \"turquoise2\"           \"turquoise3\"           \"turquoise4\"          \n[640] \"violet\"               \"violetred\"            \"violetred1\"          \n[643] \"violetred2\"           \"violetred3\"           \"violetred4\"          \n[646] \"wheat\"                \"wheat1\"               \"wheat2\"              \n[649] \"wheat3\"               \"wheat4\"               \"whitesmoke\"          \n[652] \"yellow\"               \"yellow1\"              \"yellow2\"             \n[655] \"yellow3\"              \"yellow4\"              \"yellowgreen\""
+  },
+  {
+    "objectID": "stat100_wk03mon.html#change-the-color-1",
+    "href": "stat100_wk03mon.html#change-the-color-1",
+    "title": "Stat 100",
+    "section": "Change the Color",
+    "text": "Change the Color\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  scale_color_manual(values = c(\"violetred2\",\n                                \"steelblue4\"))"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#change-the-color-2",
+    "href": "stat100_wk03mon.html#change-the-color-2",
+    "title": "Stat 100",
+    "section": "Change the Color",
+    "text": "Change the Color\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  theme(legend.pos = \"bottom\") +\n  scale_color_manual(values = c(\"#0D6759\",\n                                \"#E4844A\"))"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#use-a-different-theme",
+    "href": "stat100_wk03mon.html#use-a-different-theme",
+    "title": "Stat 100",
+    "section": "Use a Different Theme",
+    "text": "Use a Different Theme\n\n\nggplot(data = july_2019,\n       mapping = aes(x = Time,\n                     y = Total,\n                     color = Occasion)) +\n  geom_line(size = 2) +\n  scale_color_manual(values = c(\"#0D6759\",\n                                \"#E4844A\")) +\n  theme_bw() +\n  theme(legend.pos = \"bottom\")"
+  },
+  {
+    "objectID": "stat100_wk03mon.html#reminders",
+    "href": "stat100_wk03mon.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!\nGrab a postcard and/or a stamp from SC 316 if you lost yours.\n\nWe also have markers, colored pencils, and crayons!\n\nDon’t forget that P-Set 1 due on Tuesday by 5pm in Gradescope.\nCome by office hours with any questions."
   }
 ]
