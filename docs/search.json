@@ -4,7 +4,7 @@
     "href": "stat100_wk05mon.html#announcements",
     "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nDiscuss exams:\n\nRegistrar’s Office posted our Final Exam time:\n\nIn-class: Fri, Dec 15th 9am - noon\nOral: Wed, Dec 13th & Thurs, Dec 14th\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:15am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!\n\n\n\nGoals for Today\n\nDiscus data ethics: responsibilities to research subjects\nFinish up data collection"
+    "text": "Announcements\n\nDiscuss exams:\n\nRegistrar’s Office posted our Final Exam time:\n\nIn-class: Fri, Dec 15th 9am - noon\nOral: Wed, Dec 13th & Thurs, Dec 14th\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:15 11:45am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!\n\n\n\nGoals for Today\n\nDiscus data ethics: responsibilities to research subjects\nFinish up data collection"
   },
   {
     "objectID": "stat100_wk05mon.html#responsibilities-to-research-subjects",
@@ -25,7 +25,7 @@
     "href": "stat100_wk05mon.html#detour-from-our-detour-1",
     "title": "Stat 100",
     "section": "Detour from Our Detour",
-    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\nlibrary(emojifont)\n\nNHANES &lt;- mutate(NHANES, \n          heart = fontawesome(\"fa-heart\"))\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height,\n                     label = heart)) +\n  geom_text(alpha = 0.1, color = \"red\",\n            family='fontawesome-webfont',\n            size = 16) +\n  stat_smooth(color = \"deeppink\")"
+    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\nlibrary(emojifont)\n\nNHANES &lt;- mutate(NHANES, \n          heart = fontawesome(\"fa-pumpkin\"))\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height,\n                     label = heart)) +\n  geom_text(alpha = 0.1, color = \"red\",\n            family='fontawesome-webfont',\n            size = 16) +\n  stat_smooth(color = \"deeppink\")"
   },
   {
     "objectID": "stat100_wk05mon.html#who-are-the-data-supposed-to-represent",
@@ -109,7 +109,7 @@
     "href": "stat100_wk05mon.html#reminders",
     "title": "Stat 100",
     "section": "Reminders",
-    "text": "Reminders\n\nDiscuss exams:\n\nRegistrar’s Office posted our Final Exam time:\n\nIn-class: Fri, Dec 15th 9am - noon\nOral: Wed, Dec 13th & Thurs, Dec 14th\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:15am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!"
+    "text": "Reminders\n\nDiscuss exams:\n\nRegistrar’s Office posted our Final Exam time:\n\nIn-class: Fri, Dec 15th 9am - noon\nOral: Wed, Dec 13th & Thurs, Dec 14th\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:15 11:45am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!"
   },
   {
     "objectID": "stat100_wk02wed.html#announcements",
@@ -987,6 +987,62 @@
     "text": "Reminders\n\nIf able, please bring a laptop or tablet to Mondays’s lecture.\nNo section, no wrap-ups, and no lecture quiz this week.\nMake sure to go through the syllabus, which can be found on Canvas.\n\nWill discuss assessments and course policies on Monday.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nBe on the look-out for the section preference form."
   },
   {
+    "objectID": "stat100_wk05wed.html#announcements",
+    "href": "stat100_wk05wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nNo lecture on Monday – University Holiday.\nSome Monday Office Hours will also be cancelled. Make sure to check the office hours schedule.\nDiscuss upcoming exam:\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:45am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!\n\n\n\nGoals for Today\n\n\n\nIntroduce statistical modeling\nSimple linear regression model\n\n\n\nMeasuring correlation"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#thoughts-on-data-collection-goals",
+    "href": "stat100_wk05wed.html#thoughts-on-data-collection-goals",
+    "title": "Stat 100",
+    "section": "Thoughts on Data Collection Goals",
+    "text": "Thoughts on Data Collection Goals\n\nRandom assignment allows you to explore causal relationships between your explanatory variables and the predictor variables because the randomization makes the explanatory groups roughly similar.\nHow do we draw causal conclusions from studies without random assignment?\n\nWith extreme care! Try to control for all possible confounding variables.\nDiscuss the associations/correlations you found. Use domain knowledge to address potentially causal links.\nTake more stats to learn more about causal inference.\n\nBut also consider the goals of your analysis. Often the research question isn’t causal.\n\n\nBottom Line: We often have to use imperfect data to make decisions."
+  },
+  {
+    "objectID": "stat100_wk05wed.html#conclusions-conclusions",
+    "href": "stat100_wk05wed.html#conclusions-conclusions",
+    "title": "Stat 100",
+    "section": "Conclusions, Conclusions",
+    "text": "Conclusions, Conclusions"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#recap",
+    "href": "stat100_wk05wed.html#recap",
+    "title": "Stat 100",
+    "section": "Recap",
+    "text": "Recap"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#form-of-the-model",
+    "href": "stat100_wk05wed.html#form-of-the-model",
+    "title": "Stat 100",
+    "section": "Form of the Model",
+    "text": "Form of the Model\n\n\\[\ny = f(x) + \\epsilon\n\\]\n\nGoal:\n\nDetermine a reasonable form for \\(f()\\). (Ex: Line, curve, …)\nEstimate \\(f()\\) with \\(\\hat{f}()\\) using the data.\nGenerate predicted values: \\(\\hat y = \\hat{f}(x)\\)."
+  },
+  {
+    "objectID": "stat100_wk05wed.html#sample-correlation-coefficient",
+    "href": "stat100_wk05wed.html#sample-correlation-coefficient",
+    "title": "Stat 100",
+    "section": "(Sample) Correlation Coefficient",
+    "text": "(Sample) Correlation Coefficient\n\nMeasures the strength and direction of linear relationship between two quantitative variables\nSymbol: \\(r\\)\nAlways between -1 and 1\nSign indicates the direction of the relationship\nMagnitude indicates the strength of the linear relationship\n\n\n\ncandy %&gt;%\n  summarize(cor = cor(pricepercent, winpercent))\n\n# A tibble: 1 × 1\n    cor\n  &lt;dbl&gt;\n1 0.345"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#new-example",
+    "href": "stat100_wk05wed.html#new-example",
+    "title": "Stat 100",
+    "section": "New Example",
+    "text": "New Example\n\n\n\n# Correlation coefficients\ndat2 %&gt;%\n  group_by(dataset) %&gt;%\n  summarize(cor = cor(x, y))\n\n# A tibble: 12 × 2\n   dataset        cor\n   &lt;chr&gt;        &lt;dbl&gt;\n 1 away       -0.0641\n 2 bullseye   -0.0686\n 3 circle     -0.0683\n 4 dino       -0.0645\n 5 dots       -0.0603\n 6 h_lines    -0.0617\n 7 high_lines -0.0685\n 8 slant_down -0.0690\n 9 star       -0.0630\n10 v_lines    -0.0694\n11 wide_lines -0.0666\n12 x_shape    -0.0656\n\n\n\n\nConclude that \\(x\\) and \\(y\\) have the same relationship across these different datasets because the correlation is the same?"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#reminders",
+    "href": "stat100_wk05wed.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nNo lecture on Monday – University Holiday.\nSome Monday Office Hours will also be cancelled. Make sure to check the office hours schedule.\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:45am\nOral: Wed afternoon - Fri, Oct 13th\n\nNo sections during midterm exam week!"
+  },
+  {
     "objectID": "stat100_wk04wed.html#announcements",
     "href": "stat100_wk04wed.html#announcements",
     "title": "Stat 100",
@@ -1257,7 +1313,7 @@
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon"
+    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed"
   },
   {
     "objectID": "stat100_wk03mon.html#announcements",

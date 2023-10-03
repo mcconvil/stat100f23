@@ -1,0 +1,744 @@
+---
+pagetitle: "Modeling"
+format: 
+  revealjs:
+    html-math-method: mathjax
+    chalkboard: true
+    incremental: true
+    theme: [default, custom.scss]
+    multiplex: true
+    height: 900
+    width: 1600
+    slide-number: c
+    auto-stretch: false
+    callout-appearance: simple
+    pdf-max-pages-per-slide: 1
+    menu: 
+      side: right
+      numbers: true
+    code-overflow: wrap
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-asp: 0.75
+  fig-width: 8
+#  fig-align: center
+  fig-dpi: 500
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+# Some global options still not available in quarto
+ knitr::opts_chunk$set(fig.align = 'center')
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 16))
+```
+
+::: columns
+::: {.column .center width="45%"}
+![](img/DAW.png){width="90%"}
+:::
+
+::: {.column .center width="55%"}
+[Introduction to Modeling]{.custom-title}
+
+<br>
+<br>
+<br>
+
+[Kelly McConville]{.custom-subtitle}
+
+[Stat 100 <br> Week 5 \| Fall 2023]{.custom-subtitle}
+:::
+:::
+
+------------------------------------------------------------------------
+
+## {background-image="img/October6event.png" background-size="40%"}
+
+
+---
+
+## Announcements
+
+* No lecture on Monday -- University Holiday.
+* Some Monday Office Hours will also be cancelled.  Make sure to check the office hours schedule.
+- Discuss upcoming exam:
+    + Midterm next week
+        + In-class: Wed, Oct 11th 10:30 - 11:45am
+        + Oral: Wed afternoon - Fri, Oct 13th
+        + No sections during midterm exam week!
+    
+
+### Goals for Today
+
+::: columns
+
+::: {.column}
+ 
+* Introduce statistical modeling
+
+* Simple linear regression model
+
+:::
+
+::: {.column}
+
+* Measuring correlation
+
+:::
+:::
+
+------------------------------------------------------------------------
+
+## Thoughts on Data Collection Goals
+
+-   Random assignment allows you to explore **causal** relationships between your explanatory variables and the predictor variables because the randomization makes the explanatory groups roughly similar.
+
+-   How do we draw causal conclusions from studies without random assignment?
+
+    -   With extreme care! Try to **control** for all possible confounding variables.
+    -   Discuss the associations/correlations you found. Use domain knowledge to address potentially causal links.
+    -   Take more stats to learn more about causal inference.
+
+-   But also consider the goals of your analysis. Often the research question isn't causal.
+
+::: fragment
+
+**Bottom Line:** We often have to use imperfect data to make decisions.
+
+:::
+
+---
+
+## Conclusions, Conclusions
+
+```{r, echo = FALSE, out.width='80%'}
+knitr::include_graphics("img/week4.005.jpeg")
+```
+
+---
+
+## Recap {background-image="img/DAW.png" background-size="45%"}
+
+---
+
+### Typical Analysis Goals
+
+
+**Descriptive**: Want to estimate quantities related to the population.
+
+&rarr; How many trees are in Alaska?
+
+<br>
+
+**Predictive**: Want to predict the value of a variable.
+
+&rarr; Can I use remotely sensed data to predict forest types in Alaska?
+
+<br>
+
+**Causal**: Want to determine if changes in a variable cause changes in another variable.
+
+&rarr; Are insects causing the increased mortality rates for pinyon-juniper woodlands?
+
+<br><br>
+
+::: fragment
+
+We will focus mainly on **descriptive/causal modeling** in this course.  If you want to learn more about **predictive modeling**, take Stat 121A: Data Science 1 + Stat 121B: Data Science 2.
+
+:::
+
+---
+
+## Form of the Model
+
+<br><br><br>
+
+
+$$
+y = f(x) + \epsilon
+$$
+
+<br><br><br> 
+
+**Goal:**
+
+* Determine a reasonable form for $f()$. (Ex: Line, curve, ...)
+
+* Estimate $f()$ with $\hat{f}()$ using the data.
+
+* Generate predicted values: $\hat y = \hat{f}(x)$.
+
+---
+
+### Simple Linear Regression Model
+
+Consider this model when:
+
+
+* Response variable $(y)$: quantitative
+
+
+* Explanatory variable $(x)$: quantitative
+    + Have only ONE explanatory variable.
+
+    
+* AND, $f()$ can be approximated by a line.
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+> "The social contract of Halloween is simple: Provide adequate treats to costumed masses, or be prepared for late-night tricks from those dissatisfied with your offer. To help you avoid that type of vengeance, and to help you make good decisions at the supermarket this weekend, we wanted to figure out what Halloween candy people most prefer. So we devised an experiment: Pit dozens of fun-sized candy varietals against one another, and let the wisdom of the crowd decide which one was best." -- Walt Hickey
+
+
+
+> "While we don’t know who exactly voted, we do know this: 8,371 different IP addresses voted on about 269,000 randomly generated matchups.2 So, not a scientific survey or anything, but a good sample of what candy people like. "
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+```{r, echo = FALSE, out.width='80%'}
+knitr::include_graphics("img/candy_ex.png")
+```
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+
+
+```{r}
+candy <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv") %>%
+  mutate(pricepercent = pricepercent*100)
+
+glimpse(candy)
+
+```
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+
+::: columns
+
+::: {.column}
+
+
+* Linear trend? 
+
+* Direction of trend?
+
+::: 
+
+::: {.column}
+
+```{r}
+#| echo: false
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4")
+```
+
+
+:::
+:::
+
+
+---
+
+### Example: [The Ultimate Halloween Candy Power Ranking](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
+
+
+::: columns
+
+::: {.column}
+
+
+* A simple linear regression model would be suitable for these data.
+
+* But first, let's describe more plots!
+
+::: 
+
+::: {.column}
+
+```{r}
+#| echo: false
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  geom_smooth(method = "lm", se = FALSE,
+              color = "deeppink2")
+```
+
+
+:::
+:::
+
+
+---
+
+```{r}
+#| fig-width: 7
+#| fig-height: 3.5
+#| echo: false
+
+set.seed(4119)
+x <- runif(50, 0, 10)
+y1 <- 3 + 1*x + rnorm(50, 0 , 3)
+y2 <- runif(50, 0, 10)
+y3 <- 1 - .5*x + rnorm(50, 0, 1)
+y4 <- 3 + -40*x +  4*x^2 + rnorm(50, 0, 20)
+dat <- data_frame(x, y1, y2, y3, y4)  
+
+library(cowplot)
+# Create scatterplots and place in a grid
+p1 <- ggplot(dat, aes(x, y1)) + geom_point()
+p2 <- ggplot(dat, aes(x, y2)) + geom_point()
+p3 <- ggplot(dat, aes(x, y3)) + geom_point()
+p4 <- ggplot(dat, aes(x, y4)) + geom_point()
+plot_grid(p1, p2, p3, p4, ncol=2, labels = c("A", "B", "C", "D"))
+
+```
+
+* Need a summary statistics that quantifies the strength and relationship of the linear trend!
+
+
+---
+
+## (Sample) Correlation Coefficient
+
+* Measures the **strength** and **direction** of **linear** relationship between two quantitative variables
+
+
+
+* Symbol: $r$
+
+
+
+* Always between -1 and 1
+
+
+
+* Sign indicates the direction of the relationship 
+
+
+
+* Magnitude indicates the strength of the linear relationship
+
+::: fragment
+
+```{r}
+candy %>%
+  summarize(cor = cor(pricepercent, winpercent))
+```
+
+:::
+
+
+---
+
+::: columns
+
+::: {.column .center}
+
+```{r, echo = FALSE, fig.height=5, fig.width=7.5, fig.align='center'}
+
+plot_grid(p1, p2, p3, p4, ncol=2, labels = c("A", "B", "C", "D"))
+
+```
+
+::: 
+
+::: {.column}
+
+Any guesses on the correlations for A, B, C, or D?
+
+::: fragment
+
+```{r}
+dat %>%
+  summarize(A = cor(x, y1), B = cor(x, y2),
+            C = cor(x, y3), D = cor(x, y4))
+```
+
+:::
+:::
+:::
+
+---
+
+## New Example
+
+```{r, echo = FALSE}
+# Load new dataset
+dat2 <- read_csv("data/datasaurus.csv") %>%
+  filter(dataset != "slant_up")
+```
+
+
+::: columns
+
+::: {.column}
+
+```{r}
+# Correlation coefficients
+dat2 %>%
+  group_by(dataset) %>%
+  summarize(cor = cor(x, y))
+```
+
+::: 
+
+::: {.column}
+
+* Conclude that $x$ and $y$ have the same relationship across these different datasets because the correlation is the same?
+
+:::
+:::
+
+---
+
+####  Always graph the data when exploring relationships!
+
+```{r}
+#| fig-width: 7
+#| fig-height: 3.5
+#| echo: false
+ggplot(data = dat2, mapping = aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(~ dataset, ncol = 4)
+```
+
+# Returning to the Simple Linear Regression model...
+
+---
+
+### Simple Linear Regression
+
+
+::: columns
+
+::: {.column}
+
+Let's return to the Candy Example.
+
+
+* A line is a reasonable model form.
+
+
+
+* Where should the line be?
+    + Slope? Intercept?
+
+
+::: 
+
+::: {.column}
+
+```{r}
+#| echo: false
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  geom_smooth(method = "lm", se = FALSE,
+              color = "deeppink2") + 
+  geom_smooth(method = "lm", se = FALSE, data = candy[1:30,], color = "purple") +
+  geom_smooth(method = "lm", se = FALSE, data = candy[40:80,], color = "orange") 
+```
+
+
+:::
+:::
+
+---
+
+###  Form of the SLR Model
+
+$$ 
+\begin{align}
+y &= f(x) + \epsilon \\
+y &= \beta_o + \beta_1 x + \epsilon
+\end{align}
+$$
+
+* Need to determine the best **estimates** of $\beta_o$ and $\beta_1$.
+
+---
+
+#### Distinguishing between the **population** and the **sample**
+
+::: columns
+
+::: {.column}
+
+$$ 
+y = \beta_o + \beta_1 x + \epsilon
+$$
+
+
+* Parameters: 
+    + Based on the **population**
+    + Unknown then if don't have data on the whole population
+    + EX: $\beta_o$ and $\beta_1$
+    
+:::
+
+::: {.column}
+
+$$
+\hat{y} = \hat{ \beta}_o + \hat{\beta}_1 x
+$$
+
+* Statistics: 
+    + Based on the **sample** data
+    + Known
+    + Usually estimate a population parameter
+    + EX: $\hat{\beta}_o$ and $\hat{\beta}_1$ 
+
+:::
+:::
+
+---
+
+
+### Method of Least Squares
+
+Need two key definitions:
+
+
+
+* **Fitted value**: The *estimated* value of the $i$-th case
+
+::: fragment
+
+$$
+\hat{y}_i = \hat{\beta}_o + \hat{\beta}_1 x_i
+$$
+
+:::
+
+
+* **Residuals**: The *observed* error term for the $i$-th case
+
+::: fragment
+
+$$
+e_i = y_i - \hat{y}_i
+$$
+
+
+
+
+**Goal**: Pick values for $\hat{\beta}_o$ and $\hat{\beta}_1$  so that the residuals are small!
+
+:::
+
+---
+
+### Method of Least Squares
+
+::: columns
+
+::: {.column}
+
+* Want residuals to be small.
+
+
+* Minimize a function of the residuals.
+
+* Minimize:
+
+::: fragment
+
+$$
+\sum_{i = 1}^n e^2_i
+$$
+:::
+
+
+
+::: 
+
+::: {.column}
+
+
+```{r, echo=FALSE, eval = TRUE}
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  stat_smooth(method = "lm", se = FALSE,
+              color = "deeppink2") +
+  annotate("segment", x = candy$pricepercent, 
+           xend = candy$pricepercent, 
+           y = candy$winpercent, yend = 42 + .178*candy$pricepercent, 
+           color = "darkblue", arrow = arrow(length = unit(0.03, "npc"))) + 
+  geom_point()
+  
+```
+
+:::
+:::
+
+---
+
+### Method of Least Squares
+
+After minimizing the sum of squared residuals, you get the following equations:
+
+Get the following equations:
+
+$$ 
+\begin{align}
+\hat{\beta}_1 &= \frac{ \sum_{i = 1}^n (x_i - \bar{x}) (y_i - \bar{y})}{ \sum_{i = 1}^n (x_i - \bar{x})^2} \\
+\hat{\beta}_o &= \bar{y} - \hat{\beta}_1 \bar{x}
+\end{align}
+$$
+where 
+
+$$
+\begin{align}
+\bar{y} = \frac{1}{n} \sum_{i = 1}^n y_i \quad \mbox{and} \quad \bar{x} = \frac{1}{n} \sum_{i = 1}^n x_i
+\end{align}
+$$
+
+---
+
+### Method of Least Squares
+
+
+
+Then we can estimate the whole function with:
+
+$$
+\hat{y} = \hat{\beta}_o + \hat{\beta}_1 x
+$$
+
+Called the **least squares line** or the **line of best fit**.
+
+
+
+---
+
+### Method of Least Squares
+
+
+
+`ggplot2` will compute the line and add it to your plot using `geom_smooth(method = "lm")`
+
+```{r}
+#| output-location: column
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  geom_smooth(method = "lm", se = FALSE,
+              color = "deeppink2")
+```
+
+
+
+But what are the **exact** values of $\hat{\beta}_o$ and $\hat{\beta}_1$?
+
+---
+
+### Constructing the Simple Linear Regression Model in R
+
+```{r}
+mod <- lm(winpercent ~ pricepercent, data = candy)
+
+library(moderndive)
+get_regression_table(mod)
+```
+
+* Interpretation of the coefficients?
+
+
+
+---
+
+### Prediction
+
+```{r}
+new_cases <- data.frame(pricepercent = c(25, 85, 150))
+predict(mod, newdata = new_cases)
+```
+
+* We didn't have any treats in our sample with a price percentage of 85%.  Can we still make this prediction?
+    + Called **interpolation**
+
+<br>
+
+* We didn't have any treats in our sample with a price percentage of 150%.  Can we still make this prediction?
+    + Called **extrapolation**
+
+
+
+---
+
+
+### Cautions
+
+::: columns
+
+::: {.column}
+
+* Careful to only predict values within the range of $x$ values in the sample.
+
+
+
+* Make sure to investigate **outliers**: observations that fall far from the cloud of points.
+
+
+:::
+
+::: {.column}
+
+```{r, echo = FALSE}
+set.seed(13681)
+x <- c(runif(50, 0, 10))
+y1 <- c(3 + 1*x + rnorm(50, 0))
+dat1 <- data_frame(x = c(x, 20), y = c(y1, 20))
+x2 <- c(x, 20)
+y2 <- c(y1, 5)
+dat <- data_frame(x = x2, y = y2) 
+p1 <- ggplot(dat, aes(x, y)) + geom_point() + 
+  stat_smooth(method = "lm", se = FALSE, color = "turquoise4", linewidth = 2) +
+  stat_smooth(method = "lm", se = FALSE, data = dat[-51,], color = "deeppink3", linewidth = 2)
+p2 <- ggplot(dat1, aes(x, y)) + geom_point() + 
+  stat_smooth(method = "lm", se = FALSE, color = "turquoise4", linewidth = 2) +
+  stat_smooth(method = "lm", se = FALSE, data = dat[-51,], color = "deeppink3", linewidth = 2)
+plot_grid(p1, p2, ncol = 2)
+```
+
+:::
+:::
+
+---
+
+## Reminders
+
+* No lecture on Monday -- University Holiday.
+* Some Monday Office Hours will also be cancelled.  Make sure to check the office hours schedule.
++ Midterm next week
+    + In-class: Wed, Oct 11th 10:30 - 11:45am
+    + Oral: Wed afternoon - Fri, Oct 13th
++ No sections during midterm exam week!
