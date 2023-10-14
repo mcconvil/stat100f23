@@ -357,6 +357,27 @@
     "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class today."
   },
   {
+    "objectID": "stat100_wk07wed.html#announcements",
+    "href": "stat100_wk07wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nDon’t forget about this week’s lecture quiz.\n\nGoals for Today\n\n\n\nHandling categorical, explanatory variables with more than 2 categories\n\n\n\nRegression with polynomial explanatory variables"
+  },
+  {
+    "objectID": "stat100_wk07wed.html#adding-a-curve-to-your-scatterplot",
+    "href": "stat100_wk07wed.html#adding-a-curve-to-your-scatterplot",
+    "title": "Stat 100",
+    "section": "Adding a Curve to your Scatterplot",
+    "text": "Adding a Curve to your Scatterplot\n\n\nggplot(data = movies2,\n       mapping = aes(x = AudienceScore,\n                     y = RottenTomatoes,\n                     color = Genre)) +\n  geom_point(alpha = 0.5) +\n  stat_smooth(method = lm, se = FALSE, \n        formula = y ~ poly(x, degree = 2))"
+  },
+  {
+    "objectID": "stat100_wk07wed.html#practice",
+    "href": "stat100_wk07wed.html#practice",
+    "title": "Stat 100",
+    "section": "Practice",
+    "text": "Practice\nDetermine and interpret the slope for a Chinstrap penguin using Model 1.\n \nDetermine and interpret the slope for a Adelie penguin using Model 1.\n \nIn Model 1, interpret \\(\\hat{\\beta}_2\\).\n \nDetermine and interpret the slope for a Chinstrap penguin using Model 2.\n \nDetermine and interpret the slope for a Adelie penguin using Model 2."
+  },
+  {
     "objectID": "stat100_wk04mon.html#announcements",
     "href": "stat100_wk04mon.html#announcements",
     "title": "Stat 100",
@@ -1313,7 +1334,21 @@
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed"
+    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed\n\n\n\n\nWeek 7, Mon\n\n\n\n\nWeek 7, Wed"
+  },
+  {
+    "objectID": "stat100_wk07mon.html#announcements",
+    "href": "stat100_wk07mon.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nBack to a normal schedule.\n\nHave section & wrap-ups this week!\n\nNotes on the midterm.\n\nGoals for Today\n\n\n\nRecap: Simple linear regression model\nBroadening our idea of linear regression\n\n\n\nRegression with a single, categorical explanatory variable\nRegression with multiple explanatory variables"
+  },
+  {
+    "objectID": "stat100_wk07mon.html#example",
+    "href": "stat100_wk07mon.html#example",
+    "title": "Stat 100",
+    "section": "Example",
+    "text": "Example\nMeadowfoam is a plant that grows in the Pacific Northwest and is harvested for its seed oil. In a randomized experiment, researchers at Oregon State University looked at how two light-related factors influenced the number of flowers per meadowfoam plant, the primary measure of productivity for this plant. The two light measures were light intensity (in mmol/ \\(m^2\\) /sec) and the timing of onset of the light (early or late in terms of photo periodic floral induction).\n\nResponse variable:\n\nExplanatory variables:\n\nModel Form:"
   },
   {
     "objectID": "stat100_wk03mon.html#announcements",

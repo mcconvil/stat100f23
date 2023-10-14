@@ -1,0 +1,614 @@
+---
+pagetitle: "Multiple Linear Regression"
+format: 
+  revealjs:
+    html-math-method: mathjax
+    chalkboard: true
+    incremental: true
+    theme: [default, custom.scss]
+    multiplex: true
+    height: 900
+    width: 1600
+    slide-number: c
+    auto-stretch: false
+    callout-appearance: simple
+    pdf-max-pages-per-slide: 1
+    menu: 
+      side: right
+      numbers: true
+    code-overflow: wrap
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-asp: 0.75
+  fig-width: 8
+#  fig-align: center
+  fig-dpi: 500
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+# Some global options still not available in quarto
+ knitr::opts_chunk$set(fig.align = 'center')
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 16))
+```
+
+::: columns
+::: {.column .center width="45%"}
+![](img/DAW.png){width="90%"}
+:::
+
+::: {.column .center width="55%"}
+[Multiple Linear Regression]{.custom-title}
+
+<br> <br> <br>
+
+[Kelly McConville]{.custom-subtitle}
+
+[Stat 100 <br> Week 7 \| Fall 2023]{.custom-subtitle}
+:::
+:::
+
+------------------------------------------------------------------------
+
+
+
+## Announcements
+
+-   Back to a normal schedule.
+    + Have section & wrap-ups this week!
+-   Notes on the midterm.
+
+### Goals for Today
+
+::: columns
+::: column
+
+-   Recap: Simple linear regression model
+-   Broadening our idea of linear regression
+
+:::
+
+::: column
+-   Regression with a single, categorical explanatory variable
+-   Regression with multiple explanatory variables
+:::
+:::
+
+
+---
+
+### Simple Linear Regression
+
+Consider this model when:
+
+::: {.nonincremental}
+
+-   Response variable $(y)$: quantitative
+
+-   Explanatory variable $(x)$: quantitative
+
+    -   Have only ONE explanatory variable.
+
+-   AND, $f()$ can be approximated by a line:
+
+::: 
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x + \epsilon
+\end{align}
+$$
+
+------------------------------------------------------------------------
+
+### Cautions
+
+::: columns
+::: column
+-   Careful to only predict values within the range of $x$ values in the sample.
+
+-   Make sure to investigate **outliers**: observations that fall far from the cloud of points.
+:::
+
+::: column
+
+::: fragment
+
+```{r, echo = FALSE}
+set.seed(13681)
+x <- c(runif(50, 0, 10))
+y1 <- c(3 + 1*x + rnorm(50, 0))
+dat1 <- data_frame(x = c(x, 20), y = c(y1, 20))
+x2 <- c(x, 20)
+y2 <- c(y1, 5)
+dat <- data_frame(x = x2, y = y2) 
+p1 <- ggplot(dat, aes(x, y)) + geom_point() + 
+  stat_smooth(method = "lm", se = FALSE, color = "turquoise4", linewidth = 2) +
+  stat_smooth(method = "lm", se = FALSE, data = dat[-51,], color = "deeppink3", linewidth = 2)
+p2 <- ggplot(dat1, aes(x, y)) + geom_point() + 
+  stat_smooth(method = "lm", se = FALSE, color = "turquoise4", linewidth = 2) +
+  stat_smooth(method = "lm", se = FALSE, data = dat[-51,], color = "deeppink3", linewidth = 2)
+library(cowplot)
+plot_grid(p1, p2, ncol = 2)
+```
+:::
+:::
+:::
+
+---
+
+
+### Linear Regression
+
+Linear regression is a flexible class of models that allow for:
+
+* Both quantitative and categorical **explanatory** variables.
+
+
+* **Multiple** explanatory variables.
+
+
+* **Curved** relationships between the response variable and the explanatory variable.
+
+
+
+* BUT the **response variable is quantitative**.
+
+---
+
+### What About A Categorical Explanatory Variable?
+
+
+* Response variable $(y)$: quantitative
+
+
+* Have 1 categorical explanatory variable $(x)$ with two categories.
+
+* Model form:
+
+::: fragment
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x + \epsilon
+\end{align}
+$$
+
+:::
+
+* First, need to convert the categories of $x$ to numbers.
+
+---
+
+### Example: Halloween Candy
+
+```{r}
+candy <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv")
+glimpse(candy)
+```
+
+What might be a good categorical explanatory variable of `winpercent`?
+
+
+---
+
+### Exploratory Data Analysis
+
+Before building the model, let's explore and visualize the data!
+
+
+* What `dplyr` functions should I use to find the mean and sd of `winpercent` by the categories of `chocolate`?
+
+
+* What graph should we use to visualize the `winpercent` scores by `chocolate`?
+
+------------------------------------------------------------------------
+
+### Exploratory Data Analysis
+
+```{r}
+# Summarize
+candy %>%
+  group_by(chocolate) %>%
+  summarize(count = n(), mean_win = mean(winpercent), 
+            sd_win = sd(winpercent))
+```
+
+---
+
+### Exploratory Data Analysis
+
+```{r}
+#| output-location: column
+
+ggplot(candy, aes(x = factor(chocolate), 
+                   y = winpercent, 
+                  fill = factor(chocolate))) +
+  geom_boxplot() +
+    stat_summary(fun = mean,
+                 geom = "point",
+                 color = "yellow",
+                 size = 4) +
+  guides(fill = "none") +
+  scale_fill_manual(values =
+                      c("0" = "deeppink",
+                        "1" = "chocolate4")) +
+  scale_x_discrete(labels = c("No", "Yes"),
+                   name =
+          "Does the candy contain chocolate?")
+```
+
+---
+
+### Fit the Linear Regression Model
+
+
+Model Form:
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x + \epsilon
+\end{align}
+$$
+
+
+
+When $x = 0$:
+
+
+<br>
+
+<br>
+
+When $x = 1$:
+
+
+
+
+```{r}
+mod <- lm(winpercent ~ chocolate, data = candy)
+library(moderndive)
+get_regression_table(mod)
+```
+
+---
+
+### Notes 
+
+* When the explanatory variable is categorical, $\beta_o$ and $\beta_1$ no longer represent the intercept and slope.
+
+
+
+* Now $\beta_o$ represents the (population) mean of the response variable when $x = 0$.
+
+
+
+* And, $\beta_1$ represents the change in the (population) mean response going from $x = 0$ to $x = 1$.
+
+
+
+* Can also do prediction:
+
+::: fragment
+
+```{r}
+new_candy <- data.frame(chocolate = c(0, 1))
+predict(mod, newdata = new_candy)
+```
+
+:::
+
+---
+
+### Turns Out Reese's Miniatures Are Under-Priced...
+
+```{r echo = FALSE}
+#| fig-width: 11
+
+library(ggrepel)
+ggplot(data = candy, 
+       mapping = aes(x = pricepercent,
+                     y = winpercent)) +
+  geom_point(alpha = 0.6, size = 4, 
+             color = "chocolate4") +
+  geom_text_repel(aes(label = competitorname), size = 4,
+                  force = 2, show.legend  = FALSE,
+                  box.padding = 1)
+```
+
+---
+
+
+### Multiple Linear Regression
+
+Form of the Model:
+
+
+$$ 
+\begin{align}
+y &= \beta_o + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\end{align}
+$$
+
+How does extending to more predictors change our process?
+
+* What **doesn't** change:
+    + Still use **Method of Least Squares** to estimate coefficients
+    + Still use `lm()` to fit the model and `predict()` for prediction
+
+* What **does** change:
+    + Meaning of the coefficients are more complicated and depend on other variables in the model
+    + Need to decide which variables to include and how (linear term, squared term...)
+
+---
+
+### Multiple Linear Regression
+
+* We are going to see a few examples of multiple linear regression today and next lecture.
+
+
+* We will need to return to modeling later in the course to more definitively answer questions about **model selection**.
+
+---
+
+## Example 
+
+Meadowfoam is a plant that grows in the Pacific Northwest and is harvested for its seed oil.  In a randomized experiment, researchers at Oregon State University looked at how two light-related factors influenced the number of flowers per meadowfoam plant, the primary measure of productivity for this plant.  The two light measures were light intensity (in mmol/ $m^2$ /sec) and the timing of onset of the light (early or late in terms of photo periodic floral induction).
+
+<br> 
+
+
+**Response variable**: 
+
+<br> 
+
+**Explanatory variables**: 
+
+
+<br> 
+
+**Model Form:**
+
+
+---
+
+### Data Loading and Wrangling
+
+```{r}
+library(tidyverse)
+library(Sleuth3)
+data(case0901)
+
+# Recode the timing variable
+count(case0901, Time)
+case0901 <- case0901 %>%
+  mutate(TimeCat = case_when(
+    Time == 1 ~ "Late",
+    Time == 2 ~ "Early"
+    )) 
+count(case0901, TimeCat)
+```
+
+
+---
+
+### Visualizing the Data
+
+
+```{r}
+#| output-location: column
+
+ggplot(case0901,
+       aes(x = Intensity,
+           y = Flowers,
+           color = TimeCat)) + 
+  geom_point(size = 4)
+
+```
+
+Why don't I have to include `data = ` and `mapping = ` in my `ggplot()` layer?
+
+---
+
+### Building the Linear Regression Model
+
+
+Full model form:
+
+```{r}
+modFlowers <- lm(Flowers ~ Intensity + TimeCat, data = case0901)
+
+library(moderndive)
+get_regression_table(modFlowers)
+```
+
+::: nonincremental
+
+* Estimated regression line for $x_2 = 1$:
+
+<br> <br>  
+
+
+* Estimated regression line for $x_2 = 0$:
+
+
+:::
+
+---
+
+### Appropriateness of Model Form
+
+
+
+```{r}
+#| output-location: column
+
+ggplot(case0901, 
+       aes(x = Intensity,
+           y = Flowers,
+           color = TimeCat)) + 
+  geom_point(size = 4) + 
+  geom_smooth(method = "lm", se = FALSE)
+
+```
+
+Is the assumption of **equal slopes** reasonable here?
+
+---
+
+### Prediction
+
+```{r}
+flowersNew <- data.frame(Intensity = c(700, 700), TimeCat = c("Early", "Late"))
+flowersNew
+
+predict(modFlowers, newdata = flowersNew)
+```
+
+
+---
+
+### New Example
+
+For this example, we will use data collected by the website pollster.com, which aggregated 102 presidential polls from August 29th, 2008 through the end of September.  We want to determine the best model to explain the variable `Margin`, measured by the difference in preference between Barack Obama and John McCain.  Our potential predictors are `Days` (the number of days after the Democratic Convention) and `Charlie` (indicator variable on whether poll was conducted before or after the first ABC interview of Sarah Palin with Charlie Gibson). 
+
+::: columns
+
+::: {.column width="70%"}
+
+```{r}
+library(Stat2Data)
+data("Pollster08")
+glimpse(Pollster08)
+```
+
+::: 
+
+::: {.column width="30%"}
+
+**Response variable**: 
+
+<br> 
+
+
+
+**Explanatory variables**: 
+
+:::
+:::
+
+
+---
+
+### Visualizing the Data
+
+
+```{r}
+#| output-location: column
+
+ggplot(Pollster08,
+       aes(x = Days,
+           y = Margin, 
+           color = Charlie)) +
+  geom_point(size = 3)
+```
+
+
+
+What is wrong with how one of the variables is mapped in the graph?
+
+
+
+---
+
+### Visualizing the Data
+
+
+```{r}
+#| output-location: column
+
+ggplot(Pollster08,
+       aes(x = Days,
+           y = Margin, 
+           color = factor(Charlie))) +
+  geom_point(size = 3)
+```
+
+
+
+Is the assumption of **equal slopes** reasonable here?
+
+
+---
+
+### Model Forms
+
+**Same** Slopes Model:
+
+<br> <br> <br> 
+
+**Different** Slopes Model:
+
+
+::: nonincremental
+
+* Line for $x_2 = 1$:
+
+<br> <br> <br> 
+
+
+* Line for $x_2 = 0$: 
+
+:::
+
+---
+
+### Fitting the Linear Regression Model
+
+```{r}
+modPoll <- lm(Margin ~ Days*factor(Charlie), data = Pollster08)
+
+get_regression_table(modPoll)
+```
+
+
+::: nonincremental
+
+* Estimated regression line for $x_2 = 1$:
+
+<br> <br> <br> 
+
+
+* Estimated regression line for $x_2 = 0$: 
+
+:::
+
+---
+
+### Adding the Regression Model to the Plot
+
+
+```{r polls3}
+#| output-location: column
+
+ggplot(Pollster08, 
+       aes(x = Days, 
+           y = Margin, 
+           color = factor(Charlie))) +
+  geom_point(size = 3) +
+  stat_smooth(method = lm, se = FALSE)
+```
+
+
+
+Is our modeling goal here **predictive** or **descriptive**?
+
+
+
+
