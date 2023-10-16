@@ -77,7 +77,12 @@ theme_update(text = element_text(size = 16))
 :::
 
 
-# But first, a quick survey.
+# But first, does everyone have their randomly generated number?
+
+
+# Then let's do a quick survey.
+
+Go to [bit.ly/stat-100-pumpkin](https://bit.ly/stat-100-pumpkin)
 
 ---
 
