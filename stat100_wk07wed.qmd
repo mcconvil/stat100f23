@@ -56,8 +56,6 @@ theme_update(text = element_text(size = 16))
 
 ------------------------------------------------------------------------
 
-
-
 ## Announcements
 
 -   Don't forget about this week's lecture quiz.
@@ -66,9 +64,7 @@ theme_update(text = element_text(size = 16))
 
 ::: columns
 ::: column
-
 -   Handling categorical, explanatory variables **with more than 2 categories**
-
 :::
 
 ::: column
@@ -76,16 +72,13 @@ theme_update(text = element_text(size = 16))
 :::
 :::
 
-
 # But first, does everyone have their randomly generated number?
-
 
 # Then let's do a quick survey.
 
 Go to [bit.ly/stat-100-pumpkin](https://bit.ly/stat-100-pumpkin)
 
----
-
+------------------------------------------------------------------------
 
 ### Linear Regression
 
@@ -100,22 +93,16 @@ $$
 Linear regression is a flexible class of models that allow for:
 
 ::: nonincremental
+-   Both quantitative and categorical **explanatory** variables.
 
-* Both quantitative and categorical **explanatory** variables.
+-   **Multiple** explanatory variables.
 
+-   **Curved** relationships between the response variable and the explanatory variable.
 
-* **Multiple** explanatory variables.
-
-
-* **Curved** relationships between the response variable and the explanatory variable.
-
-
-
-* BUT the **response variable is quantitative**.
-
+-   BUT the **response variable is quantitative**.
 :::
 
----
+------------------------------------------------------------------------
 
 ### Example: Movies
 
@@ -136,47 +123,37 @@ glimpse(movies2)
 
 **Explanatory variables:**
 
----
+------------------------------------------------------------------------
 
 #### How should we encode a categorical variable with more than 2 categories?
 
 Let's start with what NOT to do.
 
-<br>
-<br>
+<br> <br>
 
 **Equal Slopes Model:**
 
-
----
+------------------------------------------------------------------------
 
 #### How should we encode a categorical variable with more than 2 categories?
 
 What we should do instead.
 
-<br>
-<br>
+<br> <br>
 
 **Equal Slopes Model:**
 
-
----
+------------------------------------------------------------------------
 
 #### How should we encode a categorical variable with more than 2 categories?
 
-
-
-<br>
-<br>
-
+<br> <br>
 
 **Different Slopes Model:**
 
-
----
+------------------------------------------------------------------------
 
 ### Exploring the Data
-
 
 ```{r}
 #| output-location: column
@@ -187,21 +164,19 @@ ggplot(data = movies2,
                      color = Genre)) +
   geom_point(alpha = 0.5) +
   stat_smooth(method = lm, se = FALSE) +
-  geom_abline(slope = 1, intercept = 0)
+  geom_abline(slope = 1, intercept = 0) +
+  xlim(0, 80) + ylim(0, 80)
 ```
 
 ::: nonincremental
+-   Trends?
 
-* Trends?
-
-* Should we include interaction terms in the model?
-
+-   Should we include interaction terms in the model?
 :::
 
----
+------------------------------------------------------------------------
 
 ### Side-bar: Identify Outliers on a Graph
-
 
 ```{r}
 outliers <- movies2 %>%
@@ -211,10 +186,9 @@ outliers <- movies2 %>%
 outliers
 ```
 
----
+------------------------------------------------------------------------
 
 ### Side-bar: Identify Outliers on a Graph
-
 
 ```{r}
 #| output-location: column
@@ -235,14 +209,11 @@ ggplot(data = movies2,
                   size = 6)
 ```
 
-
-
----
-
+------------------------------------------------------------------------
 
 ### Building the Model:
 
-Full model form: 
+Full model form:
 
 ```{r}
 mod <- lm(RottenTomatoes ~ AudienceScore*Genre, data = movies2)
@@ -253,11 +224,9 @@ get_regression_table(mod)
 
 Estimated model for Dramas:
 
----
+------------------------------------------------------------------------
 
 ### Coming Back to Our Exploratory Data Analysis
-
-
 
 ```{r}
 #| output-location: column
@@ -272,10 +241,9 @@ ggplot(data = movies2,
 
 Evidence of **curvature**?
 
----
+------------------------------------------------------------------------
 
 ## Adding a Curve to your Scatterplot
-
 
 ```{r}
 #| output-location: column
@@ -288,9 +256,9 @@ ggplot(data = movies2,
         formula = y ~ poly(x, degree = 2))
 ```
 
----
+------------------------------------------------------------------------
 
-### Fitting the New Model 
+### Fitting the New Model
 
 ```{r}
 #| output-location: slide
@@ -300,14 +268,13 @@ mod2 <- lm(RottenTomatoes ~ poly(AudienceScore, degree = 2, raw = TRUE)*Genre,
 get_regression_table(mod2, print = TRUE) 
 ```
 
----
-
+------------------------------------------------------------------------
 
 ### Let's Practice with the `palmerpenguins`!
 
 ![](img/penguins.png){fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ### Let's Practice with the `palmerpenguins`!
 
@@ -316,10 +283,9 @@ library(palmerpenguins)
 glimpse(penguins)
 ```
 
----
+------------------------------------------------------------------------
 
 ### Let's Practice with the `palmerpenguins`!
-
 
 ```{r}
 #| output-location: column
@@ -332,44 +298,36 @@ ggplot(data = penguins,
   stat_smooth(method = "lm", se = FALSE)
 ```
 
-
----
-
+------------------------------------------------------------------------
 
 ```{r}
 mod1 <- lm(bill_length_mm ~ flipper_length_mm + species, data = penguins)
-get_regression_table(mod1, print = TRUE)
+get_regression_table(mod1)
 ```
 
 ```{r}
 mod2 <- lm(bill_length_mm ~ flipper_length_mm * species, data = penguins)
-get_regression_table(mod2, print = TRUE)
+get_regression_table(mod2)
 ```
 
----
+------------------------------------------------------------------------
 
 ## Practice
 
 Determine and interpret the slope for a **Chinstrap** penguin using Model 1.
 
-<br>
-<br>
+<br> <br>
 
 Determine and interpret the slope for a **Adelie** penguin using Model 1.
 
-<br>
-<br>
+<br> <br>
 
 In Model 1, interpret $\hat{\beta}_2$.
 
-<br>
-<br>
+<br> <br>
 
 Determine and interpret the slope for a **Chinstrap** penguin using Model 2.
 
-<br>
-<br>
+<br> <br>
 
 Determine and interpret the slope for a **Adelie** penguin using Model 2.
-
-

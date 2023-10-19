@@ -903,17 +903,17 @@ $ Meltdown  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 <h3 id="fitting-the-linear-regression-model">Fitting the Linear Regression Model</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>modPoll <span class="ot">&lt;-</span> <span class="fu">lm</span>(Margin <span class="sc">~</span> Days<span class="sc">*</span><span class="fu">factor</span>(Charlie), <span class="at">data =</span> Pollster08)</span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>modPoll <span class="ot">&lt;-</span> <span class="fu">lm</span>(Margin <span class="sc">~</span> <span class="fu">factor</span>(Charlie)<span class="sc">*</span>Days, <span class="at">data =</span> Pollster08)</span>
 <span id="cb26-2"><a href="#cb26-2"></a></span>
 <span id="cb26-3"><a href="#cb26-3"></a><span class="fu">get_regression_table</span>(modPoll)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 7
-  term                  estimate std_error statistic p_value lower_ci upper_ci
-  &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 intercept                5.57      1.09       5.11       0    3.40     7.73 
-2 Days                    -0.598     0.121     -4.96       0   -0.838   -0.359
-3 factor(Charlie): 1     -10.1       1.92      -5.25       0  -13.9     -6.29 
-4 Days:factor(Charlie)1    0.921     0.136      6.75       0    0.65     1.19 </code></pre>
+  term                    estimate std_error statistic p_value lower_ci upper_ci
+  &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 intercept                  5.57      1.09       5.11       0    3.40     7.73 
+2 factor(Charlie): 1       -10.1       1.92      -5.25       0  -13.9     -6.29 
+3 Days                      -0.598     0.121     -4.96       0   -0.838   -0.359
+4 factor(Charlie): 1:Days    0.921     0.136      6.75       0    0.65     1.19 </code></pre>
 </div>
 </div>
 <div>

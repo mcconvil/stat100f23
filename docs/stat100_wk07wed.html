@@ -519,7 +519,8 @@ $ Year             &lt;dbl&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2
 <span id="cb3-4"><a href="#cb3-4"></a>                     <span class="at">color =</span> Genre)) <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">80</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">80</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -833,152 +834,30 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">get_regression_table</span>(mod1, <span class="at">print =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table>
-<colgroup>
-<col style="width: 25%">
-<col style="width: 12%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 10%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std_error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p_value</th>
-<th style="text-align: right;">lower_ci</th>
-<th style="text-align: right;">upper_ci</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">intercept</td>
-<td style="text-align: right;">-2.059</td>
-<td style="text-align: right;">4.039</td>
-<td style="text-align: right;">-0.510</td>
-<td style="text-align: right;">0.611</td>
-<td style="text-align: right;">-10.002</td>
-<td style="text-align: right;">5.885</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">flipper_length_mm</td>
-<td style="text-align: right;">0.215</td>
-<td style="text-align: right;">0.021</td>
-<td style="text-align: right;">10.129</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.173</td>
-<td style="text-align: right;">0.257</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">species: Chinstrap</td>
-<td style="text-align: right;">8.780</td>
-<td style="text-align: right;">0.399</td>
-<td style="text-align: right;">21.998</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">7.995</td>
-<td style="text-align: right;">9.565</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">species: Gentoo</td>
-<td style="text-align: right;">2.857</td>
-<td style="text-align: right;">0.659</td>
-<td style="text-align: right;">4.338</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">1.561</td>
-<td style="text-align: right;">4.152</td>
-</tr>
-</tbody>
-</table>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">get_regression_table</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+  term               estimate std_error statistic p_value lower_ci upper_ci
+  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 intercept            -2.06      4.04      -0.51   0.611  -10.0      5.88 
+2 flipper_length_mm     0.215     0.021     10.1    0        0.173    0.257
+3 species: Chinstrap    8.78      0.399     22.0    0        8.00     9.56 
+4 species: Gentoo       2.86      0.659      4.34   0        1.56     4.15 </code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> flipper_length_mm <span class="sc">*</span> species, <span class="at">data =</span> penguins)</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">get_regression_table</span>(mod2, <span class="at">print =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table style="width:100%;">
-<colgroup>
-<col style="width: 38%">
-<col style="width: 9%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 8%">
-<col style="width: 9%">
-<col style="width: 9%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std_error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p_value</th>
-<th style="text-align: right;">lower_ci</th>
-<th style="text-align: right;">upper_ci</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">intercept</td>
-<td style="text-align: right;">13.587</td>
-<td style="text-align: right;">6.051</td>
-<td style="text-align: right;">2.246</td>
-<td style="text-align: right;">0.025</td>
-<td style="text-align: right;">1.685</td>
-<td style="text-align: right;">25.489</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">flipper_length_mm</td>
-<td style="text-align: right;">0.133</td>
-<td style="text-align: right;">0.032</td>
-<td style="text-align: right;">4.168</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.070</td>
-<td style="text-align: right;">0.195</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">species: Chinstrap</td>
-<td style="text-align: right;">-7.994</td>
-<td style="text-align: right;">10.481</td>
-<td style="text-align: right;">-0.763</td>
-<td style="text-align: right;">0.446</td>
-<td style="text-align: right;">-28.611</td>
-<td style="text-align: right;">12.623</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">species: Gentoo</td>
-<td style="text-align: right;">-34.323</td>
-<td style="text-align: right;">9.820</td>
-<td style="text-align: right;">-3.495</td>
-<td style="text-align: right;">0.001</td>
-<td style="text-align: right;">-53.639</td>
-<td style="text-align: right;">-15.007</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">flipper_length_mm:speciesChinstrap</td>
-<td style="text-align: right;">0.088</td>
-<td style="text-align: right;">0.054</td>
-<td style="text-align: right;">1.631</td>
-<td style="text-align: right;">0.104</td>
-<td style="text-align: right;">-0.018</td>
-<td style="text-align: right;">0.194</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">flipper_length_mm:speciesGentoo</td>
-<td style="text-align: right;">0.182</td>
-<td style="text-align: right;">0.048</td>
-<td style="text-align: right;">3.801</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.088</td>
-<td style="text-align: right;">0.275</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> flipper_length_mm <span class="sc">*</span> species, <span class="at">data =</span> penguins)</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">get_regression_table</span>(mod2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  term                    estimate std_error statistic p_value lower_ci upper_ci
+  &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 intercept                 13.6       6.05      2.25    0.025    1.68    25.5  
+2 flipper_length_mm          0.133     0.032     4.17    0        0.07     0.195
+3 species: Chinstrap        -7.99     10.5      -0.763   0.446  -28.6     12.6  
+4 species: Gentoo          -34.3       9.82     -3.50    0.001  -53.6    -15.0  
+5 flipper_length_mm:spec…    0.088     0.054     1.63    0.104   -0.018    0.194
+6 flipper_length_mm:spec…    0.182     0.048     3.80    0        0.088    0.275</code></pre>
 </div>
 </div>
 </section>

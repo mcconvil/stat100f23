@@ -499,7 +499,7 @@ Is the assumption of **equal slopes** reasonable here?
 ### Fitting the Linear Regression Model
 
 ```{r}
-modPoll <- lm(Margin ~ Days*factor(Charlie), data = Pollster08)
+modPoll <- lm(Margin ~ factor(Charlie)*Days, data = Pollster08)
 
 get_regression_table(modPoll)
 ```
