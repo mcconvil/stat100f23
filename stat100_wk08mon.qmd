@@ -58,15 +58,15 @@ theme_update(text = element_text(size = 16))
 
 ## Announcements
 
-* Oct 30th: Hex or Treat Day in Stat 100
-    + Wear a Halloween costume and get either a hex sticker or candy!!
+-   Oct 30th: Hex or Treat Day in Stat 100
+    -   Wear a Halloween costume and get either a hex sticker or candy!!
 
 ### Goals for Today
 
 ::: columns
 ::: column
 -   Finish up: Regression with polynomial explanatory variables
-- Modeling guidance
+-   Modeling guidance
 :::
 
 ::: column
@@ -75,7 +75,7 @@ theme_update(text = element_text(size = 16))
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ### Linear Regression
 
@@ -116,10 +116,9 @@ movies2 <- movies %>%
 glimpse(movies2)
 ```
 
----
+------------------------------------------------------------------------
 
 ### Coming Back to Our Exploratory Data Analysis
-
 
 ```{r}
 #| output-location: column
@@ -144,12 +143,11 @@ library(moderndive)
 get_regression_table(mod2, print = TRUE) 
 ```
 
----
+------------------------------------------------------------------------
 
 ### Linear Regression & Curved Relationships
 
 **Form of the Model:**
-
 
 $$ 
 \begin{align}
@@ -159,19 +157,16 @@ $$
 
 But why is it called **linear** regression if the model also handles for curved relationship??
 
----
+------------------------------------------------------------------------
 
-###  Model Building Guidance
+### Model Building Guidance
 
 What degree of polynomial should I include in my model?
 
 ::: fragment
-
 ::: columns
-
-::: {.column}
-
-<br> 
+::: column
+<br>
 
 **Guiding Principle**: Capture the general trend, not the noise.
 
@@ -181,11 +176,9 @@ y &= f(x) + \epsilon \\
 y &= \mbox{TREND} + \mbox{NOISE}
 \end{align}
 $$
-
 :::
 
-::: {.column}
-
+::: column
 Returning the 2008 Election Example:
 
 ```{r, echo = FALSE}
@@ -201,23 +194,18 @@ ggplot(Pollster08, aes(x = Days, y = Margin)) +
   geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, degree = 18), 
               color = "darkgreen")
 ```
-
 :::
 :::
-
 :::
 
----
+------------------------------------------------------------------------
 
-###  Model Building Guidance
+### Model Building Guidance
 
 Shouldn't we always include the interaction term?
 
-
 ::: columns
-
-::: {.column}
-
+::: column
 **Guiding Principle**: Occam's Razor for Modeling
 
 > "All other things being equal, simpler models are to be preferred over complex ones." -- ModernDive
@@ -225,16 +213,11 @@ Shouldn't we always include the interaction term?
 **Guiding Principle**: Consider your modeling goals.
 
 ::: nonincremental
-
-* The equal slopes model allows us to control for the intensity of the light and then see the impact of being in the early or late timing groups on the number of flowers.
-
+-   The equal slopes model allows us to control for the intensity of the light and then see the impact of being in the early or late timing groups on the number of flowers.
+:::
 :::
 
-::: 
-
-::: {.column}
-
-
+::: column
 ```{r mf, echo = FALSE}
 library(Sleuth3)
 data(case0901)
@@ -252,24 +235,17 @@ ggplot(case0901, aes(x = Intensity, y = Flowers,
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-* Later in the course will learn statistical procedures for determining whether or not a particular term should be included in the model.
-
+-   Later in the course will learn statistical procedures for determining whether or not a particular term should be included in the model.
 :::
 :::
-
-
-
-
 
 # What if I want to include more than 2 explanatory variables??
 
+------------------------------------------------------------------------
 
----
+### Model Building Guidance
 
-###  Model Building Guidance
-
-We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
-
+We often have several potential explanatory variables. How do we determine which to include in the model and in what form?
 
 **Guiding Principle**: Include explanatory variables that attempt to explain **different** aspects of the variation in the response variable.
 
@@ -283,14 +259,11 @@ movies2 %>%
   ggpairs()
 ```
 
+------------------------------------------------------------------------
 
+### Model Building Guidance
 
----
-
-###  Model Building Guidance
-
-We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
-
+We often have several potential explanatory variables. How do we determine which to include in the model and in what form?
 
 **Guiding Principle**: Include explanatory variables that attempt to explain **different** aspects of the variation in the response variable.
 
@@ -299,16 +272,13 @@ mod_movies <- lm(RottenTomatoes ~ AudienceScore + DomesticGross + Genre, data = 
 get_regression_table(mod_movies, print = TRUE)
 ```
 
+------------------------------------------------------------------------
 
----
+### Model Building Guidance
 
-###  Model Building Guidance
+We often have several potential explanatory variables. How do we determine which to include in the model and in what form?
 
-We often have several potential explanatory variables.  How do we determine which to include in the model and in what form?
-
-
-**Guiding Principle**:  Use your modeling motivation to determine how much you weigh **interpretability** versus **prediction accuracy** when choosing the model.
-
+**Guiding Principle**: Use your modeling motivation to determine how much you weigh **interpretability** versus **prediction accuracy** when choosing the model.
 
 ```{r, fig.width=13, echo=FALSE, fig.asp = 0.4}
 p1 <- ggplot(Pollster08, aes(x = Days, y = Margin, 
@@ -328,22 +298,22 @@ plot_grid(p1, p2, p3, ncol = 3)
 
 ```
 
----
+------------------------------------------------------------------------
 
 ### Model Building
 
-* We will come back to methods for model selection.
+-   We will come back to methods for model selection.
 
-* Key ideas:
-    + Determining the **response** variable and the potential **explanatory** variable(s)
-    + Writing out the **model form** and understanding the terms
-    + **Building** and **visualizing** linear regression models in `R`
-    + **Comparing** different potential models
+-   Key ideas:
 
+    -   Determining the **response** variable and the potential **explanatory** variable(s)
+    -   Writing out the **model form** and understanding the terms
+    -   **Building** and **visualizing** linear regression models in `R`
+    -   **Comparing** different potential models
 
 # Shift Gears: Statistical Inference
 
----
+------------------------------------------------------------------------
 
 ### The `r emo::ji("heart")` of statistical inference is quantifying uncertainty
 
@@ -352,19 +322,16 @@ knitr::include_graphics("img/week4.005.jpeg")
 ```
 
 ::: fragment
-
 ```{r}
 library(tidyverse)
 ce <- read_csv("data/fmli.csv")
 summarize(ce, meanFINCBTAX = mean(FINCBTAX))
 ```
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### The `r emo::ji("heart")` of statistical inference is quantifying uncertainty
-
 
 ```{r}
 library(tidyverse)
@@ -375,44 +342,33 @@ summarize(ce, meanFINCBTAX = mean(FINCBTAX))
 Now we need to distinguish between the **population** and the **sample**
 
 ::: columns
-
-::: {.column}
-
+::: column
 ::: nonincremental
-
-* **Parameters**: 
-    + Based on the **population**
-    + Unknown then if don't have data on the whole population
-    + EX: $\beta_o$ and $\beta_1$
-    + EX: $\mu$ = population mean
-
+-   **Parameters**:
+    -   Based on the **population**
+    -   Unknown then if don't have data on the whole population
+    -   EX: $\beta_o$ and $\beta_1$
+    -   EX: $\mu$ = population mean
 :::
 :::
 
-::: {.column}
-
+::: column
 ::: nonincremental
-
-* **Statistics**: 
-    + Based on the **sample** data
-    + Known
-    + Usually estimate a population parameter
-    + EX: $\hat{\beta}_o$ and $\hat{\beta}_1$ 
-    + EX: $\bar{x}$ = sample mean
-
-
+-   **Statistics**:
+    -   Based on the **sample** data
+    -   Known
+    -   Usually estimate a population parameter
+    -   EX: $\hat{\beta}_o$ and $\hat{\beta}_1$
+    -   EX: $\bar{x}$ = sample mean
 :::
 :::
 :::
 
+------------------------------------------------------------------------
 
----
-
-### Quantifying Our Uncertainty 
+### Quantifying Our Uncertainty
 
 `R` has been giving us uncertainty estimates:
-
-
 
 ```{r}
 #| output-location: column
@@ -429,12 +385,9 @@ ggplot(Pollster08, aes(x = Days,
 
 ```
 
+------------------------------------------------------------------------
 
-
-
----
-
-### Quantifying Our Uncertainty 
+### Quantifying Our Uncertainty
 
 `R` has been giving us uncertainty estimates:
 
@@ -446,159 +399,122 @@ library(moderndive)
 get_regression_table(modPoll)
 ```
 
+------------------------------------------------------------------------
 
----
-
-### Quantifying Our Uncertainty 
+### Quantifying Our Uncertainty
 
 The [news and journal articles](https://www.pewresearch.org/fact-tank/2019/12/17/more-u-s-homeowners-say-they-are-considering-home-solar-panels/) are also giving us uncertainty estimates:
 
 ::: columns
-
-::: {.column}
-
+::: column
 ```{r  out.width = "65%", echo=FALSE, fig.align='center'}
 include_graphics("img/solar_panels.png") 
 ```
+:::
 
-::: 
-
-::: {.column}
-
-
+::: column
 ```{r  out.width = "85%", echo=FALSE, fig.align='center'}
 include_graphics("img/margin_of_error.png") 
 ```
-
 :::
 :::
 
----
+------------------------------------------------------------------------
 
-### Quantifying Our Uncertainty 
+### Quantifying Our Uncertainty
 
 The [news and journal articles](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/1740-9713.01501) are also giving us uncertainty estimates:
-
-
 
 ```{r  out.width = "65%", echo=FALSE, fig.align='center'}
 include_graphics("img/ci_swimming.png") 
 ```
 
-
-
-
----
+------------------------------------------------------------------------
 
 ### Statistical Inference
 
 **Goal**: Draw conclusions about the population based on the sample.
 
-
-
 **Main Flavors**
 
-* Estimating numerical quantities (parameters).
+-   Estimating numerical quantities (parameters).
 
-* Testing conjectures.
+-   Testing conjectures.
 
----
+------------------------------------------------------------------------
 
 ### Estimation
 
-**Goal**: Estimate a (population) parameter.  
+**Goal**: Estimate a (population) parameter.
 
-Best guess?  
+Best guess?
 
-* The corresponding (sample) statistic 
+-   The corresponding (sample) statistic
 
 ::: fragment
-
 **Example**: Are GIFs just another way for people to share videos of their pets?
 
-<iframe src="https://giphy.com/embed/MCfhrrNN1goH6" width="280" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/easy-ear-MCfhrrNN1goH6">via GIPHY</a></p>
+<iframe src="https://giphy.com/embed/MCfhrrNN1goH6" width="280" height="240" frameBorder="0" class="giphy-embed" allowFullScreen>
 
+</iframe>
+
+<p><a href="https://giphy.com/gifs/easy-ear-MCfhrrNN1goH6">via GIPHY</a></p>
 
 Want to estimate the proportion of GIFs that feature animals.
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### Estimation
 
 **Key Question**: How accurate is the statistic as an estimate of the parameter?
 
-
 **Helpful Sub-Question**: If we take many samples, how much would the statistic vary from sample to sample?
-
-
 
 Need two new concepts:
 
+-   The **sampling variability** of a statistic
 
-
-* The **sampling variability** of a statistic
-
-
-
-* The **sampling distribution** of a statistic
-
+-   The **sampling distribution** of a statistic
 
 # Let's learn about these ideas through an activity! Go to [bit.ly/stat100gif](https://bit.ly/stat100gif).
 
----
+------------------------------------------------------------------------
 
 ## Sampling Distribution of a Statistic
 
 Steps to Construct an (Approximate) Sampling Distribution:
 
-1. Decide on a sample size, $n$.
+1.  Decide on a sample size, $n$.
 
+2.  Randomly select a sample of size $n$ from the population.
 
-
-2. Randomly select a sample of size $n$ from the population.
-
-
-
-3. Compute the sample statistic.
-
-
+3.  Compute the sample statistic.
 
 4.  Put the sample back in.
 
+5.  Repeat Steps 2 - 4 many (1000+) times.
 
-
-5. Repeat Steps 2 - 4 many (1000+) times.
-
-
----
+------------------------------------------------------------------------
 
 ## Sampling Distribution of a Statistic
-
 
 ```{r  out.width = "55%", echo=FALSE, fig.align='center'}
 include_graphics("img/samp_dist.png") 
 ```
 
 ::: columns
+::: column
+-   Center? Shape?
 
-::: {.column}
+-   Spread?
 
-* Center? Shape?
-
-* Spread?
-    + Standard error = standard deviation of the statistic
-
-::: 
-
-::: {.column}
-
-* What happens to the center/spread/shape as we increase the sample size?
-
-
-* What happens to the center/spread/shape if the true parameter changes?
-
+    -   Standard error = standard deviation of the statistic
 :::
 
-::: 
+::: column
+-   What happens to the center/spread/shape as we increase the sample size?
+
+-   What happens to the center/spread/shape if the true parameter changes?
+:::
+:::

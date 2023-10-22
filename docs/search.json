@@ -399,480 +399,88 @@
     "text": "Sampling Distribution of a Statistic\n\n\n\n\n\n\n\n\n\n\n\n\nCenter? Shape?\nSpread?\n\nStandard error = standard deviation of the statistic\n\n\n\n\nWhat happens to the center/spread/shape as we increase the sample size?\nWhat happens to the center/spread/shape if the true parameter changes?"
   },
   {
-    "objectID": "stat100_wk02mon.html#announcements",
-    "href": "stat100_wk02mon.html#announcements",
+    "objectID": "stat100_wk08wed.html#announcements",
+    "href": "stat100_wk08wed.html#announcements",
     "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
+    "text": "Announcements\n\nOct 30th: Hex or Treat Day in Stat 100\n\nWear a Halloween costume and get either a hex sticker or candy!!\n\n\nGoals for Today\n\n\n\nModeling & Ethics: Algorithmic bias\nSampling Distribution\n\nProperties\nConstruction in R\n\n\n\n\nEstimation"
   },
   {
-    "objectID": "stat100_wk02mon.html#day-2-goals",
-    "href": "stat100_wk02mon.html#day-2-goals",
+    "objectID": "stat100_wk08wed.html#integrity-of-data-and-methods",
+    "href": "stat100_wk08wed.html#integrity-of-data-and-methods",
     "title": "Stat 100",
-    "section": "Day 2 Goals",
-    "text": "Day 2 Goals\n\nDiscuss course structure & goals (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
+    "section": "Integrity of Data and Methods",
+    "text": "Integrity of Data and Methods\n\n“The ethical statistical practitioner seeks to understand and mitigate known or suspected limitations, defects, or biases in the data or methods and communicates potential impacts on the interpretation, conclusions, recommendations, decisions, or other results of statistical practices.”\n\n\n“For models and algorithms designed to inform or implement decisions repeatedly, develops and/or implements plans to validate assumptions and assess performance over time, as needed. Considers criteria and mitigation plans for model or algorithm failure and retirement.”"
   },
   {
-    "objectID": "stat100_wk02mon.html#data-analysis-workflow",
-    "href": "stat100_wk02mon.html#data-analysis-workflow",
+    "objectID": "stat100_wk08wed.html#sampling-distribution-of-a-statistic",
+    "href": "stat100_wk08wed.html#sampling-distribution-of-a-statistic",
     "title": "Stat 100",
-    "section": "Data Analysis Workflow",
-    "text": "Data Analysis Workflow"
+    "section": "Sampling Distribution of a Statistic",
+    "text": "Sampling Distribution of a Statistic\n\n\nSteps to Construct an (Approximate) Sampling Distribution:\n\nDecide on a sample size, \\(n\\).\nRandomly select a sample of size \\(n\\) from the population.\nCompute the sample statistic.\nPut the sample back in.\nRepeat Steps 2 - 4 many (1000+) times.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat happens to the center/spread/shape as we increase the sample size?\nWhat happens to the center/spread/shape if the true parameter changes?"
   },
   {
-    "objectID": "stat100_wk02mon.html#stat-100-weekly-flow",
-    "href": "stat100_wk02mon.html#stat-100-weekly-flow",
+    "objectID": "stat100_wk08wed.html#lets-construct-some-sampling-distributions-using-r",
+    "href": "stat100_wk08wed.html#lets-construct-some-sampling-distributions-using-r",
     "title": "Stat 100",
-    "section": "Stat 100 Weekly Flow",
-    "text": "Stat 100 Weekly Flow"
+    "section": "Let’s Construct Some Sampling Distributions using R!",
+    "text": "Let’s Construct Some Sampling Distributions using R!\nImportant Notes\n\nTo construct a sampling distribution for a statistic, we need access to the entire population so that we can take repeated samples from the population.\n\nPopulation = Harvard trees\n\nBut if we have access to the entire population, then we know the value of the population parameter.\n\nCan compute the exact mean diameter of trees in our population.\n\nThe sampling distribution is needed in the exact scenario where we can’t compute it: the scenario where we only have a single sample.\nWe will learn how to estimate the sampling distribution soon.\nToday, we have the entire population and are constructing sampling distributions anyway to study their properties!"
   },
   {
-    "objectID": "stat100_wk02mon.html#forms-of-assessment",
-    "href": "stat100_wk02mon.html#forms-of-assessment",
+    "objectID": "stat100_wk08wed.html#new-r-package-infer",
+    "href": "stat100_wk08wed.html#new-r-package-infer",
     "title": "Stat 100",
-    "section": "Forms of Assessment",
-    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one p-set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
+    "section": "New R Package: infer",
+    "text": "New R Package: infer\n\n\n\n\n\n\n\n\n  \n\nlibrary(infer)\n\n\n\n\nWill use infer to conduct statistical inference."
   },
   {
-    "objectID": "stat100_wk02mon.html#this-weeks-assessments",
-    "href": "stat100_wk02mon.html#this-weeks-assessments",
+    "objectID": "stat100_wk08wed.html#our-population-parameter",
+    "href": "stat100_wk08wed.html#our-population-parameter",
     "title": "Stat 100",
-    "section": "This Week’s Assessments",
-    "text": "This Week’s Assessments\n\nLecture quiz releases on Wed at 11:45am.\nP-Set 1 will be posted to Posit Cloud on Wednesday.\n\nDue the following Tuesday, September 19th at 5pm on Gradescope.\nIn section this week, you will get started on P-Set 1 and will learn how to submit to Gradescope."
+    "section": "Our Population Parameter",
+    "text": "Our Population Parameter\nCreate data frame of Harvard trees:\n\nlibrary(tidyverse)\nlibrary(bosTrees)\nharTrees &lt;- camTrees %&gt;%\n  filter(Ownership == \"Harvard\", SiteType == \"Tree\") %&gt;%\n  drop_na(SpeciesShort)\n\nAdd variable of interest:\n\nharTrees &lt;- harTrees %&gt;%\n  mutate(tree_of_interest = case_when(\n    SpeciesShort == \"Maple\" ~ \"yes\",\n    SpeciesShort != \"Not Maple\" ~ \"no\"\n  ))\ncount(harTrees, tree_of_interest)\n\n# A tibble: 2 × 2\n  tree_of_interest     n\n  &lt;chr&gt;            &lt;int&gt;\n1 no                2707\n2 yes                434"
   },
   {
-    "objectID": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
-    "href": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
+    "objectID": "stat100_wk08wed.html#population-parameter",
+    "href": "stat100_wk08wed.html#population-parameter",
     "title": "Stat 100",
-    "section": "Professor McConville in Spring 2023",
-    "text": "Professor McConville in Spring 2023\n\n\n\nBBC Science Focus"
+    "section": "Population Parameter",
+    "text": "Population Parameter\n\n\n# Population distribution\nggplot(data = harTrees, \n       mapping = aes(x = tree_of_interest)) +\n  geom_bar(aes(y = ..prop.., group = 1),\n           stat = \"count\") \n\n\n\n\n\n\n\n\n# True population parameter\nsummarize(harTrees, \n          parameter = mean(tree_of_interest == \"yes\"))\n\n# A tibble: 1 × 1\n  parameter\n      &lt;dbl&gt;\n1     0.138"
   },
   {
-    "objectID": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
-    "href": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
+    "objectID": "stat100_wk08wed.html#key-features-of-a-sampling-distribution",
+    "href": "stat100_wk08wed.html#key-features-of-a-sampling-distribution",
     "title": "Stat 100",
-    "section": "Professor McConville in Summer 2023",
-    "text": "Professor McConville in Summer 2023\n\n\n\n\n\nRicardo IV Tamayo\n\n\n\nGenerative AI Engagements\n\nParticipated in Stats Dept reading group on generative AI\nWent to conference talks on generative AI\nTalked to ChatGPT"
+    "section": "Key Features of a Sampling Distribution",
+    "text": "Key Features of a Sampling Distribution\nWhat did we learn about sampling distributions?\n\nCentered around the true population parameter.\nAs the sample size increases, the standard error (SE) of the statistic decreases.\nAs the sample size increases, the shape of the sampling distribution becomes more bell-shaped and symmetric.\nQuestion: How do sampling distributions help us quantify uncertainty?\nQuestion: If I am estimating a parameter in a real example, why won’t I be able to construct the sampling distribution??"
   },
   {
-    "objectID": "stat100_wk02mon.html#chatgpt",
-    "href": "stat100_wk02mon.html#chatgpt",
+    "objectID": "stat100_wk08wed.html#estimation",
+    "href": "stat100_wk08wed.html#estimation",
     "title": "Stat 100",
-    "section": "",
-    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
+    "section": "Estimation",
+    "text": "Estimation\nGoal: Estimate the value of a population parameter using data from the sample.\n\nQuestion: How do I know which population parameter I am interesting in estimating?\nAnswer: Likely depends on the research question and structure of your data!\nPoint Estimate: The corresponding statistic\n\nSingle best guess for the parameter\n\n\n\n\nlibrary(tidyverse)\nce &lt;- read_csv(\"data/fmli.csv\")\nsummarize(ce, meanFINCBTAX = mean(FINCBTAX))\n\n# A tibble: 1 × 1\n  meanFINCBTAX\n         &lt;dbl&gt;\n1       62480."
   },
   {
-    "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
-    "href": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
+    "objectID": "stat100_wk08wed.html#confidence-intervals",
+    "href": "stat100_wk08wed.html#confidence-intervals",
     "title": "Stat 100",
-    "section": "My View on the (Current) Role of ChatGPT in Data Work",
-    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
+    "section": "Confidence Intervals",
+    "text": "Confidence Intervals\n\n\nIt is time to move beyond just point estimates to interval estimates that quantify our uncertainty.\n\n\nsummarize(ce, meanFINCBTAX = mean(FINCBTAX))\n\n# A tibble: 1 × 1\n  meanFINCBTAX\n         &lt;dbl&gt;\n1       62480.\n\n\n\n\n\nConfidence Interval: Interval of plausible values for a parameter\nForm: \\(\\mbox{statistic} \\pm \\mbox{Margin of Error}\\)\nQuestion: How do we find the Margin of Error (ME)?\nAnswer: If the sampling distribution of the statistic is approximately bell-shaped and symmetric, then a statistic will be within 2 SEs of the parameter for 95% of the samples.\nForm: \\(\\mbox{statistic} \\pm 2\\mbox{SE}\\)\nCalled a 95% confidence interval (CI). (Will discuss the meaning of confidence soon)"
   },
   {
-    "objectID": "stat100_wk02mon.html#ai-policy-for-stat-100",
-    "href": "stat100_wk02mon.html#ai-policy-for-stat-100",
+    "objectID": "stat100_wk08wed.html#confidence-intervals-1",
+    "href": "stat100_wk08wed.html#confidence-intervals-1",
     "title": "Stat 100",
-    "section": "AI Policy for Stat 100",
-    "text": "AI Policy for Stat 100\n\nWhile A.I. tools, such as ChatGPT, are being used to generate code and analyze data, goals of this course are to develop your own ability to write code and to thoughtfully extract knowledge from data. Therefore, we expect that all work students submit for this course will be their own. This includes code, written work, and oral assessments. We specifically forbid the use of ChatGPT or any other generative artificial intelligence (AI) tools at all stages of the work process, including preliminary ones, unless the assignment specifically states that it is allowed. Violations of this policy will be considered academic misconduct. We draw your attention to the fact that different classes at Harvard could implement different AI policies, and it is the student’s responsibility to conform to expectations for each course.\n\n\nThe goal of this policy is not to lessen your access to support but to ensure we are achieving the learning objectives of the course. Please see the Avenues for Help section of the syllabus for ways to get support in Stat 100."
+    "section": "Confidence Intervals",
+    "text": "Confidence Intervals\n95% CI Form:\n\\[\n\\mbox{statistic} \\pm 2\\mbox{SE}\n\\]\nLet’s use the ce data to produce a CI for the average household income before taxes.\n\nsummarize(ce, meanFINCBTAX = mean(FINCBTAX))\n\n# A tibble: 1 × 1\n  meanFINCBTAX\n         &lt;dbl&gt;\n1       62480.\n\n\nWhat else do we need to construct the CI?\n\nProblem: To compute the SE, we need many samples from the population. We have 1 sample.\nSolution: Approximate the sampling distribution using ONLY OUR ONE SAMPLE!"
   },
   {
-    "objectID": "stat100_wk02mon.html#engagement",
-    "href": "stat100_wk02mon.html#engagement",
+    "objectID": "stat100_wk08wed.html#reminders",
+    "href": "stat100_wk08wed.html#reminders",
     "title": "Stat 100",
-    "section": "Engagement",
-    "text": "Engagement\n\n\n \n\n\n\n\n\n\nBeing actively present is key.\n\n\n\nDuring lecture and section, remove distractions.\n\nWhen we are on our computers, close email, social media, news, etc.\nIf you will be using a computer/tablet for taking notes, please sit outside the technology-free zone (first 6 rows of the middle section) starting next lecture so as not to distract classmates.\nHide your phone.\n\nI have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#identity-and-the-classroom",
-    "href": "stat100_wk02mon.html#identity-and-the-classroom",
-    "title": "Stat 100",
-    "section": "Identity and the Classroom",
-    "text": "Identity and the Classroom\n\nAcknowledge that my perspectives and experiences have shaped how I teach this course and how I approach my data work\nSome of my identities place me in dominant groups while others in marginalized groups\nStrive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities\nStrive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you\nAsk that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#code-of-conduct",
-    "href": "stat100_wk02mon.html#code-of-conduct",
-    "title": "Stat 100",
-    "section": "Code of Conduct",
-    "text": "Code of Conduct\n\nWe expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\n\n\nWe expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners. You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.\n\nThis Code of Conduct is adapted from the Contributor Covenant, version 2.0."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#ways-to-get-support",
-    "href": "stat100_wk02mon.html#ways-to-get-support",
-    "title": "Stat 100",
-    "section": "Ways to Get Support",
-    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
-    "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
-    "title": "Stat 100",
-    "section": "Language: R-This, R-That, Q-What?",
-    "text": "Language: R-This, R-That, Q-What?\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
-  },
-  {
-    "objectID": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
-    "href": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
-    "title": "Stat 100",
-    "section": "Main Components of RStudio Lay-Out",
-    "text": "Main Components of RStudio Lay-Out"
-  },
-  {
-    "objectID": "stat100_wk02mon.html#reminders",
-    "href": "stat100_wk02mon.html#reminders",
-    "title": "Stat 100",
-    "section": "Reminders",
-    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
-  },
-  {
-    "objectID": "stat100_wk04wed.html#announcements",
-    "href": "stat100_wk04wed.html#announcements",
-    "title": "Stat 100",
-    "section": "Announcements",
-    "text": "Announcements\n\nOral practice in section this week.\n\nGoals for Today\n\nFinish up data joins.\nCover data collection/acquisition."
-  },
-  {
-    "objectID": "stat100_wk04wed.html#which-are-you",
-    "href": "stat100_wk04wed.html#which-are-you",
-    "title": "Stat 100",
-    "section": "Which Are YOU?",
-    "text": "Which Are YOU?\n\n\nData Visualizer\n\n\n\nvia GIPHY\n\n\nData Wrangler\n\n\n\nvia GIPHY"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#load-necessary-packages",
-    "href": "stat100_wk04wed.html#load-necessary-packages",
-    "title": "Stat 100",
-    "section": "Load Necessary Packages",
-    "text": "Load Necessary Packages\n\n\n\n\n\ndplyr is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#data-setting-bureau-of-labor-statistics-bls-consumer-expenditure-survey",
-    "href": "stat100_wk04wed.html#data-setting-bureau-of-labor-statistics-bls-consumer-expenditure-survey",
-    "title": "Stat 100",
-    "section": "Data Setting: Bureau of Labor Statistics (BLS) Consumer Expenditure Survey",
-    "text": "Data Setting: Bureau of Labor Statistics (BLS) Consumer Expenditure Survey\nBLS Mission: “Measures labor market activity, working conditions, price changes, and productivity in the U.S. economy to support public and private decision making.”\nData: Last quarter of the 2016 BLS Consumer Expenditure Survey.\n\nlibrary(tidyverse)\n\nce_raw &lt;- read_csv(\"data/fmli.csv\", \n                 na = c(\"NA\", \".\"))\nglimpse(ce_raw)\n\nRows: 6,301\nColumns: 51\n$ NEWID    &lt;chr&gt; \"03324174\", \"03324204\", \"03324214\", \"03324244\", \"03324274\", \"…\n$ PRINEARN &lt;chr&gt; \"01\", \"01\", \"01\", \"01\", \"02\", \"01\", \"01\", \"01\", \"02\", \"01\", \"…\n$ FINLWT21 &lt;dbl&gt; 25984.767, 6581.018, 20208.499, 18078.372, 20111.619, 19907.3…\n$ FINCBTAX &lt;dbl&gt; 116920, 200, 117000, 0, 2000, 942, 0, 91000, 95000, 40037, 10…\n$ BLS_URBN &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ POPSIZE  &lt;dbl&gt; 2, 3, 4, 2, 2, 2, 1, 2, 5, 2, 3, 2, 2, 3, 4, 3, 3, 1, 4, 1, 1…\n$ EDUC_REF &lt;chr&gt; \"16\", \"15\", \"16\", \"15\", \"14\", \"11\", \"10\", \"13\", \"12\", \"12\", \"…\n$ EDUCA2   &lt;dbl&gt; 15, 15, 13, NA, NA, NA, NA, 15, 15, 14, 12, 12, NA, NA, NA, 1…\n$ AGE_REF  &lt;dbl&gt; 63, 50, 47, 37, 51, 63, 77, 37, 51, 64, 26, 59, 81, 51, 67, 4…\n$ AGE2     &lt;dbl&gt; 50, 47, 46, NA, NA, NA, NA, 36, 53, 67, 44, 62, NA, NA, NA, 4…\n$ SEX_REF  &lt;dbl&gt; 1, 1, 2, 1, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1…\n$ SEX2     &lt;dbl&gt; 2, 2, 1, NA, NA, NA, NA, 2, 2, 1, 1, 1, NA, NA, NA, 1, NA, 1,…\n$ REF_RACE &lt;dbl&gt; 1, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1…\n$ RACE2    &lt;dbl&gt; 1, 4, 1, NA, NA, NA, NA, 1, 1, 1, 1, 1, NA, NA, NA, 2, NA, 1,…\n$ HISP_REF &lt;dbl&gt; 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1…\n$ HISP2    &lt;dbl&gt; 2, 2, 1, NA, NA, NA, NA, 2, 2, 2, 2, 2, NA, NA, NA, 2, NA, 2,…\n$ FAM_TYPE &lt;dbl&gt; 3, 4, 1, 8, 9, 9, 8, 3, 1, 1, 3, 1, 8, 9, 8, 5, 9, 4, 8, 3, 2…\n$ MARITAL1 &lt;dbl&gt; 1, 1, 1, 5, 3, 3, 2, 1, 1, 1, 1, 1, 2, 3, 5, 1, 3, 1, 3, 1, 1…\n$ REGION   &lt;dbl&gt; 4, 4, 3, 4, 4, 3, 4, 1, 3, 2, 1, 4, 1, 3, 3, 3, 2, 1, 2, 4, 3…\n$ SMSASTAT &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ HIGH_EDU &lt;chr&gt; \"16\", \"15\", \"16\", \"15\", \"14\", \"11\", \"10\", \"15\", \"15\", \"14\", \"…\n$ EHOUSNGC &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ TOTEXPCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ FOODCQ   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ TRANSCQ  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ HEALTHCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ ENTERTCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ EDUCACQ  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ TOBACCCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ STUDFINX &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ IRAX     &lt;dbl&gt; 1000000, 10000, 0, NA, NA, 0, 0, 15000, NA, 477000, NA, NA, N…\n$ CUTENURE &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 4, 1, 1, 2, 1, 2, 2, 2, 2, 4, 1, 1, 1, 4, 4…\n$ FAM_SIZE &lt;dbl&gt; 4, 6, 2, 1, 2, 2, 1, 5, 2, 2, 4, 2, 1, 2, 1, 4, 2, 4, 1, 3, 3…\n$ VEHQ     &lt;dbl&gt; 3, 5, 0, 4, 2, 0, 0, 2, 4, 2, 3, 2, 1, 3, 1, 2, 4, 4, 0, 2, 3…\n$ ROOMSQ   &lt;dbl&gt; 8, 5, 6, 4, 4, 4, 7, 5, 4, 9, 6, 10, 4, 7, 5, 6, 6, 8, 18, 4,…\n$ INC_HRS1 &lt;dbl&gt; 40, 40, 40, 44, 40, NA, NA, 40, 40, NA, 40, NA, NA, NA, NA, 4…\n$ INC_HRS2 &lt;dbl&gt; 30, 40, 52, NA, NA, NA, NA, 40, 40, NA, 65, NA, NA, NA, NA, 6…\n$ EARNCOMP &lt;dbl&gt; 3, 2, 2, 1, 4, 7, 8, 2, 2, 8, 2, 8, 8, 7, 8, 2, 7, 3, 1, 2, 1…\n$ NO_EARNR &lt;dbl&gt; 4, 2, 2, 1, 2, 1, 0, 2, 2, 0, 2, 0, 0, 1, 0, 2, 1, 3, 1, 2, 1…\n$ OCCUCOD1 &lt;chr&gt; \"03\", \"03\", \"05\", \"03\", \"04\", \"\", \"\", \"12\", \"04\", \"\", \"01\", \"…\n$ OCCUCOD2 &lt;chr&gt; \"04\", \"02\", \"01\", \"\", \"\", \"\", \"\", \"02\", \"03\", \"\", \"11\", \"\", \"…\n$ STATE    &lt;chr&gt; \"41\", \"15\", \"48\", \"06\", \"06\", \"48\", \"06\", \"42\", \"\", \"27\", \"25…\n$ DIVISION &lt;dbl&gt; 9, 9, 7, 9, 9, 7, 9, 2, NA, 4, 1, 8, 2, 5, 6, 7, 3, 2, 3, 9, …\n$ TOTXEST  &lt;dbl&gt; 15452, 11459, 15738, 25978, 588, 0, 0, 7261, 9406, -1414, 141…\n$ CREDFINX &lt;dbl&gt; 0, NA, 0, NA, 5, NA, NA, NA, NA, 0, NA, 0, NA, NA, NA, 2, 35,…\n$ CREDITB  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ CREDITX  &lt;dbl&gt; 4000, 5000, 2000, NA, 7000, 1800, NA, 6000, NA, 719, NA, 1200…\n$ BUILDING &lt;chr&gt; \"01\", \"01\", \"01\", \"02\", \"08\", \"01\", \"01\", \"01\", \"01\", \"01\", \"…\n$ ST_HOUS  &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…\n$ INT_PHON &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#ce-data",
-    "href": "stat100_wk04wed.html#ce-data",
-    "title": "Stat 100",
-    "section": "CE Data",
-    "text": "CE Data\n\n\nHousehold survey but data are also collected on individuals\n\nfmli: household data\nmemi: household member-level data\n\n\n\n\nfmli &lt;- read_csv(\"data/fmli.csv\", \n                 na = c(\"NA\", \".\")) %&gt;%\n  select(NEWID, PRINEARN, FINCBTAX,\n         BLS_URBN, HIGH_EDU)\nmemi &lt;- read_csv(\"data/memi.csv\", \n                 na = c(\"NA\", \".\")) %&gt;%\n  select(NEWID, MEMBNO, AGE, SEX, EARNTYPE)\n\nfmli &lt;- mutate(fmli, PRINEARN = as.integer(PRINEARN))\n\n\nWant to add variables on the principal earner from the member data frame to the household data frame"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#smaller-sets-of-ce-data",
-    "href": "stat100_wk04wed.html#smaller-sets-of-ce-data",
-    "title": "Stat 100",
-    "section": "Smaller Sets of CE Data",
-    "text": "Smaller Sets of CE Data\n\n\n\nfmli_small &lt;- filter(fmli, NEWID %in% c(\"03530051\",\n                                        \"03327224\",\n                                        \"03324324\",\n                                        \"03324244\"))\nfmli_small\n\n# A tibble: 4 × 5\n  NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU\n  &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   \n1 03324244        1        0        1 15      \n2 03324324        2    95000        2 15      \n3 03327224        1        0        1 14      \n4 03530051        3    70000        1 11      \n\n\n\n\nmemi_small &lt;- filter(memi, NEWID %in% c(\"03530051\",\n                                        \"03327224\",\n                                        \"03324324\",\n                                        \"03324244\"))\nmemi_small\n\n# A tibble: 10 × 5\n   NEWID    MEMBNO   AGE   SEX EARNTYPE\n   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;\n 1 03324244      1    37     1        1\n 2 03324324      1    51     1        1\n 3 03324324      2    53     2        1\n 4 03327224      1    28     2        3\n 5 03327224      2    32     1        2\n 6 03327224      3     1     2       NA\n 7 03530051      1    43     1       NA\n 8 03530051      2    16     1       NA\n 9 03530051      3    44     1        3\n10 03530051      4     5     2       NA"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#look-at-the-possible-joins",
-    "href": "stat100_wk04wed.html#look-at-the-possible-joins",
-    "title": "Stat 100",
-    "section": "Look at the Possible Joins",
-    "text": "Look at the Possible Joins\n\nfull_join(fmli_small, memi_small, join_by(\"NEWID\" == \"NEWID\", \"PRINEARN\" == \"MEMBNO\"))\n\n# A tibble: 10 × 8\n   NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU   AGE   SEX EARNTYPE\n   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;\n 1 03324244        1        0        1 15          37     1        1\n 2 03324324        2    95000        2 15          53     2        1\n 3 03327224        1        0        1 14          28     2        3\n 4 03530051        3    70000        1 11          44     1        3\n 5 03324324        1       NA       NA &lt;NA&gt;        51     1        1\n 6 03327224        2       NA       NA &lt;NA&gt;        32     1        2\n 7 03327224        3       NA       NA &lt;NA&gt;         1     2       NA\n 8 03530051        1       NA       NA &lt;NA&gt;        43     1       NA\n 9 03530051        2       NA       NA &lt;NA&gt;        16     1       NA\n10 03530051        4       NA       NA &lt;NA&gt;         5     2       NA"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#joining-tips",
-    "href": "stat100_wk04wed.html#joining-tips",
-    "title": "Stat 100",
-    "section": "Joining Tips",
-    "text": "Joining Tips\n\nfmli &lt;- left_join(fmli, memi, join_by(\"NEWID\" == \"NEWID\", \"PRINEARN\" == \"MEMBNO\"))\n\n\nFIRST: conceptualize for yourself what you think you want the final dataset to look like!\nCheck initial dimensions and final dimensions.\nUse variable names when joining even if they are the same."
-  },
-  {
-    "objectID": "stat100_wk04wed.html#naming-wrangled-data",
-    "href": "stat100_wk04wed.html#naming-wrangled-data",
-    "title": "Stat 100",
-    "section": "Naming Wrangled Data",
-    "text": "Naming Wrangled Data\nShould I name my new dataframe ce or ce1?\n\nMy answer:\n\nIs your new dataset structurally different? If so, give it a new name.\nAre you removing values you will need for a future analysis within the same document? If so, give it a new name.\nAre you just adding to or cleaning the data? If so, then write over the original."
-  },
-  {
-    "objectID": "stat100_wk04wed.html#now-for-data-collection",
-    "href": "stat100_wk04wed.html#now-for-data-collection",
-    "title": "Stat 100",
-    "section": "Now for Data Collection",
-    "text": "Now for Data Collection"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#motivating-our-discussion-of-data-collection",
-    "href": "stat100_wk04wed.html#motivating-our-discussion-of-data-collection",
-    "title": "Stat 100",
-    "section": "Motivating Our Discussion of Data Collection",
-    "text": "Motivating Our Discussion of Data Collection"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent",
-    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent",
-    "title": "Stat 100",
-    "section": "Who are the data supposed to represent?",
-    "text": "Who are the data supposed to represent?\n\n\n\n\n\nKey questions:\n\nWhat evidence is there that the data are representative?\nWho is present? Who is absent?\nWho is overrepresented? Who is underrepresented?"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-1",
-    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-1",
-    "title": "Stat 100",
-    "section": "Who are the data supposed to represent?",
-    "text": "Who are the data supposed to represent?\n\n\n\n\n\nCensus: We have data on the whole population!"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-2",
-    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-2",
-    "title": "Stat 100",
-    "section": "Who are the data supposed to represent?",
-    "text": "Who are the data supposed to represent?"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-3",
-    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-3",
-    "title": "Stat 100",
-    "section": "Who are the data supposed to represent?",
-    "text": "Who are the data supposed to represent?\n\n\n\n\n\nKey questions:\n\nWhat evidence is there that the sample is representative of the population?\nWho is present? Who is absent?\nWho is overrepresented? Who is underrepresented?"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#sampling-bias",
-    "href": "stat100_wk04wed.html#sampling-bias",
-    "title": "Stat 100",
-    "section": "Sampling Bias",
-    "text": "Sampling Bias\n\n\n\n\n\nSampling bias: When the sampled units are systematically different from the non-sampled units on the variables of interest."
-  },
-  {
-    "objectID": "stat100_wk04wed.html#random-sampling",
-    "href": "stat100_wk04wed.html#random-sampling",
-    "title": "Stat 100",
-    "section": "Random Sampling",
-    "text": "Random Sampling\nUse random sampling (a random mechanism for selecting cases from the population) to remove sampling bias.\nTypes of random sampling\n\nSimple random sampling\nCluster sampling\nStratified random sampling\nSystematic sampling\n\n\nWhy aren’t all samples generated using simple random sampling?"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#responsibilities-to-research-subjects",
-    "href": "stat100_wk04wed.html#responsibilities-to-research-subjects",
-    "title": "Stat 100",
-    "section": "Responsibilities to Research Subjects",
-    "text": "Responsibilities to Research Subjects\n\n“The ethical statistician protects and respects the rights and interests of human and animal subjects at all stages of their involvement in a project. This includes respondents to the census or to surveys, those whose data are contained in administrative records, and subjects of physically or psychologically invasive research.”"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#detour-from-our-detour",
-    "href": "stat100_wk04wed.html#detour-from-our-detour",
-    "title": "Stat 100",
-    "section": "Detour from Our Detour",
-    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height)) +\n  geom_point(alpha = 0.1) +\n  geom_smooth(color = \"skyblue\")"
-  },
-  {
-    "objectID": "stat100_wk04wed.html#detour-from-our-detour-1",
-    "href": "stat100_wk04wed.html#detour-from-our-detour-1",
-    "title": "Stat 100",
-    "section": "Detour from Our Detour",
-    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\nlibrary(emojifont)\n\nNHANES &lt;- mutate(NHANES, \n          heart = fontawesome(\"fa-heart\"))\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height,\n                     label = heart)) +\n  geom_text(alpha = 0.1, color = \"red\",\n            family='fontawesome-webfont',\n            size = 16) +\n  stat_smooth(color = \"deeppink\")"
-  },
-  {
-    "objectID": "stat100_wk05wed.html#announcements",
-    "href": "stat100_wk05wed.html#announcements",
-    "title": "Stat 100",
-    "section": "Announcements",
-    "text": "Announcements\n\nNo lecture on Monday – University Holiday.\nSome Monday Office Hours will also be cancelled. Make sure to check the office hours schedule.\nDiscuss upcoming exam:\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:45am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!\n\n\n\nGoals for Today\n\n\n\nIntroduce statistical modeling\nSimple linear regression model\n\n\n\nMeasuring correlation"
-  },
-  {
-    "objectID": "stat100_wk05wed.html#thoughts-on-data-collection-goals",
-    "href": "stat100_wk05wed.html#thoughts-on-data-collection-goals",
-    "title": "Stat 100",
-    "section": "Thoughts on Data Collection Goals",
-    "text": "Thoughts on Data Collection Goals\n\nRandom assignment allows you to explore causal relationships between your explanatory variables and the predictor variables because the randomization makes the explanatory groups roughly similar.\nHow do we draw causal conclusions from studies without random assignment?\n\nWith extreme care! Try to control for all possible confounding variables.\nDiscuss the associations/correlations you found. Use domain knowledge to address potentially causal links.\nTake more stats to learn more about causal inference.\n\nBut also consider the goals of your analysis. Often the research question isn’t causal.\n\n\nBottom Line: We often have to use imperfect data to make decisions."
-  },
-  {
-    "objectID": "stat100_wk05wed.html#conclusions-conclusions",
-    "href": "stat100_wk05wed.html#conclusions-conclusions",
-    "title": "Stat 100",
-    "section": "Conclusions, Conclusions",
-    "text": "Conclusions, Conclusions"
-  },
-  {
-    "objectID": "stat100_wk05wed.html#recap",
-    "href": "stat100_wk05wed.html#recap",
-    "title": "Stat 100",
-    "section": "Recap",
-    "text": "Recap"
-  },
-  {
-    "objectID": "stat100_wk05wed.html#form-of-the-model",
-    "href": "stat100_wk05wed.html#form-of-the-model",
-    "title": "Stat 100",
-    "section": "Form of the Model",
-    "text": "Form of the Model\n\n\\[\ny = f(x) + \\epsilon\n\\]\n\nGoal:\n\nDetermine a reasonable form for \\(f()\\). (Ex: Line, curve, …)\nEstimate \\(f()\\) with \\(\\hat{f}()\\) using the data.\nGenerate predicted values: \\(\\hat y = \\hat{f}(x)\\)."
-  },
-  {
-    "objectID": "stat100_wk05wed.html#sample-correlation-coefficient",
-    "href": "stat100_wk05wed.html#sample-correlation-coefficient",
-    "title": "Stat 100",
-    "section": "(Sample) Correlation Coefficient",
-    "text": "(Sample) Correlation Coefficient\n\nMeasures the strength and direction of linear relationship between two quantitative variables\nSymbol: \\(r\\)\nAlways between -1 and 1\nSign indicates the direction of the relationship\nMagnitude indicates the strength of the linear relationship\n\n\n\ncandy %&gt;%\n  summarize(cor = cor(pricepercent, winpercent))\n\n# A tibble: 1 × 1\n    cor\n  &lt;dbl&gt;\n1 0.345"
-  },
-  {
-    "objectID": "stat100_wk05wed.html#new-example",
-    "href": "stat100_wk05wed.html#new-example",
-    "title": "Stat 100",
-    "section": "New Example",
-    "text": "New Example\n\n\n\n# Correlation coefficients\ndat2 %&gt;%\n  group_by(dataset) %&gt;%\n  summarize(cor = cor(x, y))\n\n# A tibble: 12 × 2\n   dataset        cor\n   &lt;chr&gt;        &lt;dbl&gt;\n 1 away       -0.0641\n 2 bullseye   -0.0686\n 3 circle     -0.0683\n 4 dino       -0.0645\n 5 dots       -0.0603\n 6 h_lines    -0.0617\n 7 high_lines -0.0685\n 8 slant_down -0.0690\n 9 star       -0.0630\n10 v_lines    -0.0694\n11 wide_lines -0.0666\n12 x_shape    -0.0656\n\n\n\n\nConclude that \\(x\\) and \\(y\\) have the same relationship across these different datasets because the correlation is the same?"
-  },
-  {
-    "objectID": "stat100_wk05wed.html#reminders",
-    "href": "stat100_wk05wed.html#reminders",
-    "title": "Stat 100",
-    "section": "Reminders",
-    "text": "Reminders\n\nNo lecture on Monday – University Holiday.\nSome Monday Office Hours will also be cancelled. Make sure to check the office hours schedule.\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:45am\nOral: Wed afternoon - Fri, Oct 13th\n\nNo sections during midterm exam week!"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#keyword",
-    "href": "stat100_wk01wed.html#keyword",
-    "title": "Stat 100",
-    "section": "",
-    "text": "What words or phrases do you think of when you hear the word “Harvard”?\n\n\nThis being a data class, I’d like to collect some data related to “statistical thinking.”\n\n\nGo to bit.ly/stat-100-think to provide the words or phrases you think of when you hear “statistical thinking.”"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#getting-started-in-stat-100",
-    "href": "stat100_wk01wed.html#getting-started-in-stat-100",
-    "title": "Stat 100",
-    "section": "Getting Started in Stat 100",
-    "text": "Getting Started in Stat 100\nStep 1: Getting Started Module in Canvas"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#stat-100-tech-materials",
-    "href": "stat100_wk01wed.html#stat-100-tech-materials",
-    "title": "Stat 100",
-    "section": "Stat 100 Tech & Materials",
-    "text": "Stat 100 Tech & Materials"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#announcements",
-    "href": "stat100_wk01wed.html#announcements",
-    "title": "Stat 100",
-    "section": "Announcements",
-    "text": "Announcements\n\nLecture slide decks will always be posted and linked to a Canvas Module the day before lecture.\n\nWill also bring printed versions for those who prefer paper copies.\n\nNo section and no lecture quiz this week.\n\nBut be on the look-out for section preference form from my.harvard.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nIf able, please bring a laptop or tablet to Mondays’s lecture."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#day-1-goals",
-    "href": "stat100_wk01wed.html#day-1-goals",
-    "title": "Stat 100",
-    "section": "Day 1 Goals",
-    "text": "Day 1 Goals\n\nStart engaging in statistical thinking\nIntroduce data\nConsider hand-drawn visualizations as a way to tell stories with data\nHop into the RStudio Server using Posit Cloud"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#looking-ahead-to-day-2",
-    "href": "stat100_wk01wed.html#looking-ahead-to-day-2",
-    "title": "Stat 100",
-    "section": "Looking Ahead to Day 2…",
-    "text": "Looking Ahead to Day 2…\n\nDiscuss course structure (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#research-interests",
-    "href": "stat100_wk01wed.html#research-interests",
-    "title": "Stat 100",
-    "section": "Research Interests",
-    "text": "Research Interests\nSurvey statistics and collaborate with"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#research-interests-1",
-    "href": "stat100_wk01wed.html#research-interests-1",
-    "title": "Stat 100",
-    "section": "Research Interests",
-    "text": "Research Interests\nWhere survey statistics meets data science"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
-    "href": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
-    "title": "Stat 100",
-    "section": "Stat 100 is about developing our statistical thinking skills.",
-    "text": "Stat 100 is about developing our statistical thinking skills.\n\n\nWhat is statistical thinking?\n\n\n\nIt is not the same as mathematical thinking.\n\n\n\nLet’s discover what statistical thinking is through some examples."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-in-stat-100",
-    "href": "stat100_wk01wed.html#data-in-stat-100",
-    "title": "Stat 100",
-    "section": "Data in Stat 100",
-    "text": "Data in Stat 100\nWill use a wide-range of real and relevant data examples"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-in-stat-100-1",
-    "href": "stat100_wk01wed.html#data-in-stat-100-1",
-    "title": "Stat 100",
-    "section": "Data in Stat 100",
-    "text": "Data in Stat 100\n\n\n\n\n\n\n\n\nI understand that some of these topics have likely had profound impacts on your lives.\nWe will focus class time on the key course objectives but will use these current topics to empower ourselves and to see how we can productively participate with data."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#statistical-thinking",
-    "href": "stat100_wk01wed.html#statistical-thinking",
-    "title": "Stat 100",
-    "section": "Statistical Thinking",
-    "text": "Statistical Thinking\n\n\n\nUnderstanding the importance of context.\n\n\n\n Context explains the Monday jumps in the COVID counts.\n\n\n\n\n\n\nHow we encode information in a graph should be driven by our research question.\n\n\n\n Design choices impact the conclusions the viewer draws.\n\n\n\n\n\n\nHow the data are collected impacts the conclusions we can draw.\n\n\n\n Voluntary COVID test results don’t likely provide good estimates of COVID prevalence.\n\n\n\n\n\n\nOften we are using a sample of data to say something about a larger group. In this case, we should measure how certain our estimates are!\n\n\n\n We will learn to compute and interpret certainty estimates (like those in the wastewater graph) later in the course!"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#statistical-thinking-1",
-    "href": "stat100_wk01wed.html#statistical-thinking-1",
-    "title": "Stat 100",
-    "section": "Statistical Thinking",
-    "text": "Statistical Thinking\n\nAbout developing reasoning (not just learning definitions and formulae).\nDeveloping our statistical thinking skills will allow us to soundly extract knowledge from data!\nStatistical thinking requires judgment that takes time to develop.\n\nWill see examples and practice applying statistical thinking throughout the course."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#what-areis-data",
-    "href": "stat100_wk01wed.html#what-areis-data",
-    "title": "Stat 100",
-    "section": "What are/is Data?",
-    "text": "What are/is Data?\n\n\n\n“‘Raw data’ is an oxymoron.” – Lisa Gitelman\n\n\n\n“Data … is information made tractable.” – Catherine D’Ignazio and Lauren Klein"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-frames",
-    "href": "stat100_wk01wed.html#data-frames",
-    "title": "Stat 100",
-    "section": "Data Frames",
-    "text": "Data Frames\nData in spreadsheet-like format where:\n\nRows = Observations/cases\nColumns = Variables\n\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\n\nData from GPT Detectors Are Biased Against Non-Native English Writers. Weixin Liang, Mert Yuksekgonul, Yining Mao, Eric Wu, James Zou. CellPress Patterns and available in the R package detectors."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-frames-1",
-    "href": "stat100_wk01wed.html#data-frames-1",
-    "title": "Stat 100",
-    "section": "Data Frames",
-    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nRows = Observations/cases\nWhat are the cases? What does each row represent?"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#data-frames-2",
-    "href": "stat100_wk01wed.html#data-frames-2",
-    "title": "Stat 100",
-    "section": "Data Frames",
-    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nColumns = Variables\nVariables: Describe characteristics of the observations\n\nQuantitative: Numerical in nature\nCategorical: Values are categories\nIdentification: Uniquely identify each case"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz",
-    "href": "stat100_wk01wed.html#hand-drawn-data-viz",
-    "title": "Stat 100",
-    "section": "Hand-Drawn Data Viz",
-    "text": "Hand-Drawn Data Viz\n\nOnce we have collected data, a common next step is to visualize it.\nTwo key aspects of data visualization:\n\nDetermining how you want to display the data.\nFiguring out how to tell the computer to do that mapping.\n\nHand-drawn data visualizations allow us to focus on the first part with full control over the creative process!"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
-    "href": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
-    "title": "Stat 100",
-    "section": "Hand-Drawn Data Viz Examples",
-    "text": "Hand-Drawn Data Viz Examples\nDear Data\n\n“Each week, and for a year, we collected and measured a particular type of data about our lives, used this data to make a drawing on a postcard-sized sheet of paper, and then dropped the postcard in an English”postbox” (Stefanie) or an American “mailbox” (Giorgia)!“"
-  },
-  {
-    "objectID": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
-    "href": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
-    "title": "Stat 100",
-    "section": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.",
-    "text": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.\n\n\n\nRecommendations\n\n\nStore the data in your favorite spreadsheet program (Google Sheets, Numbers, Excel).\nDetermine what your cases/observations will be.\nCollect data on more variables than you will likely visualize. It is hard to know beforehand what the interesting relationships will be.\n\n\n\nNext Week\n\nWill get a blank postcard and further guidance on the visualization with P-Set 1."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#section",
-    "href": "stat100_wk01wed.html#section",
-    "title": "Stat 100",
-    "section": "",
-    "text": "Demo of accessing the RStudio Server on Posit Cloud\n\n\nTry to access the RStudio Server between now and next lecture.\nCome back to the recording if need help with the steps."
-  },
-  {
-    "objectID": "stat100_wk01wed.html#reminders",
-    "href": "stat100_wk01wed.html#reminders",
-    "title": "Stat 100",
-    "section": "Reminders",
-    "text": "Reminders\n\nIf able, please bring a laptop or tablet to Mondays’s lecture.\nNo section, no wrap-ups, and no lecture quiz this week.\nMake sure to go through the syllabus, which can be found on Canvas.\n\nWill discuss assessments and course policies on Monday.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nBe on the look-out for the section preference form."
+    "section": "Reminders:",
+    "text": "Reminders:\n\nOct 30th: Hex or Treat Day in Stat 100\n\nWear a Halloween costume and get either a hex sticker or candy!!"
   },
   {
     "objectID": "stat100_wk03wed.html#announcements",
@@ -1104,6 +712,482 @@
     "title": "Stat 100",
     "section": "Reminders",
     "text": "Reminders\n\nWith COVID working its way through campus right now, make sure to check the Sections spreadsheet and the Office hours spreadsheet for updates!"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#keyword",
+    "href": "stat100_wk01wed.html#keyword",
+    "title": "Stat 100",
+    "section": "",
+    "text": "What words or phrases do you think of when you hear the word “Harvard”?\n\n\nThis being a data class, I’d like to collect some data related to “statistical thinking.”\n\n\nGo to bit.ly/stat-100-think to provide the words or phrases you think of when you hear “statistical thinking.”"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#getting-started-in-stat-100",
+    "href": "stat100_wk01wed.html#getting-started-in-stat-100",
+    "title": "Stat 100",
+    "section": "Getting Started in Stat 100",
+    "text": "Getting Started in Stat 100\nStep 1: Getting Started Module in Canvas"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#stat-100-tech-materials",
+    "href": "stat100_wk01wed.html#stat-100-tech-materials",
+    "title": "Stat 100",
+    "section": "Stat 100 Tech & Materials",
+    "text": "Stat 100 Tech & Materials"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#announcements",
+    "href": "stat100_wk01wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nLecture slide decks will always be posted and linked to a Canvas Module the day before lecture.\n\nWill also bring printed versions for those who prefer paper copies.\n\nNo section and no lecture quiz this week.\n\nBut be on the look-out for section preference form from my.harvard.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nIf able, please bring a laptop or tablet to Mondays’s lecture."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#day-1-goals",
+    "href": "stat100_wk01wed.html#day-1-goals",
+    "title": "Stat 100",
+    "section": "Day 1 Goals",
+    "text": "Day 1 Goals\n\nStart engaging in statistical thinking\nIntroduce data\nConsider hand-drawn visualizations as a way to tell stories with data\nHop into the RStudio Server using Posit Cloud"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#looking-ahead-to-day-2",
+    "href": "stat100_wk01wed.html#looking-ahead-to-day-2",
+    "title": "Stat 100",
+    "section": "Looking Ahead to Day 2…",
+    "text": "Looking Ahead to Day 2…\n\nDiscuss course structure (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#research-interests",
+    "href": "stat100_wk01wed.html#research-interests",
+    "title": "Stat 100",
+    "section": "Research Interests",
+    "text": "Research Interests\nSurvey statistics and collaborate with"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#research-interests-1",
+    "href": "stat100_wk01wed.html#research-interests-1",
+    "title": "Stat 100",
+    "section": "Research Interests",
+    "text": "Research Interests\nWhere survey statistics meets data science"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
+    "href": "stat100_wk01wed.html#stat-100-is-about-developing-our-statistical-thinking-skills.",
+    "title": "Stat 100",
+    "section": "Stat 100 is about developing our statistical thinking skills.",
+    "text": "Stat 100 is about developing our statistical thinking skills.\n\n\nWhat is statistical thinking?\n\n\n\nIt is not the same as mathematical thinking.\n\n\n\nLet’s discover what statistical thinking is through some examples."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-in-stat-100",
+    "href": "stat100_wk01wed.html#data-in-stat-100",
+    "title": "Stat 100",
+    "section": "Data in Stat 100",
+    "text": "Data in Stat 100\nWill use a wide-range of real and relevant data examples"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-in-stat-100-1",
+    "href": "stat100_wk01wed.html#data-in-stat-100-1",
+    "title": "Stat 100",
+    "section": "Data in Stat 100",
+    "text": "Data in Stat 100\n\n\n\n\n\n\n\n\nI understand that some of these topics have likely had profound impacts on your lives.\nWe will focus class time on the key course objectives but will use these current topics to empower ourselves and to see how we can productively participate with data."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#statistical-thinking",
+    "href": "stat100_wk01wed.html#statistical-thinking",
+    "title": "Stat 100",
+    "section": "Statistical Thinking",
+    "text": "Statistical Thinking\n\n\n\nUnderstanding the importance of context.\n\n\n\n Context explains the Monday jumps in the COVID counts.\n\n\n\n\n\n\nHow we encode information in a graph should be driven by our research question.\n\n\n\n Design choices impact the conclusions the viewer draws.\n\n\n\n\n\n\nHow the data are collected impacts the conclusions we can draw.\n\n\n\n Voluntary COVID test results don’t likely provide good estimates of COVID prevalence.\n\n\n\n\n\n\nOften we are using a sample of data to say something about a larger group. In this case, we should measure how certain our estimates are!\n\n\n\n We will learn to compute and interpret certainty estimates (like those in the wastewater graph) later in the course!"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#statistical-thinking-1",
+    "href": "stat100_wk01wed.html#statistical-thinking-1",
+    "title": "Stat 100",
+    "section": "Statistical Thinking",
+    "text": "Statistical Thinking\n\nAbout developing reasoning (not just learning definitions and formulae).\nDeveloping our statistical thinking skills will allow us to soundly extract knowledge from data!\nStatistical thinking requires judgment that takes time to develop.\n\nWill see examples and practice applying statistical thinking throughout the course."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#what-areis-data",
+    "href": "stat100_wk01wed.html#what-areis-data",
+    "title": "Stat 100",
+    "section": "What are/is Data?",
+    "text": "What are/is Data?\n\n\n\n“‘Raw data’ is an oxymoron.” – Lisa Gitelman\n\n\n\n“Data … is information made tractable.” – Catherine D’Ignazio and Lauren Klein"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-frames",
+    "href": "stat100_wk01wed.html#data-frames",
+    "title": "Stat 100",
+    "section": "Data Frames",
+    "text": "Data Frames\nData in spreadsheet-like format where:\n\nRows = Observations/cases\nColumns = Variables\n\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\n\nData from GPT Detectors Are Biased Against Non-Native English Writers. Weixin Liang, Mert Yuksekgonul, Yining Mao, Eric Wu, James Zou. CellPress Patterns and available in the R package detectors."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-frames-1",
+    "href": "stat100_wk01wed.html#data-frames-1",
+    "title": "Stat 100",
+    "section": "Data Frames",
+    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nRows = Observations/cases\nWhat are the cases? What does each row represent?"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#data-frames-2",
+    "href": "stat100_wk01wed.html#data-frames-2",
+    "title": "Stat 100",
+    "section": "Data Frames",
+    "text": "Data Frames\n\n\n\n\n\n\nID\nkind\n.pred_AI\n.pred_class\ndetector\nnative\nname\nmodel\n\n\n\n\n1\nHuman\n0.9999942\nAI\nSapling\nNo\nReal TOEFL\nHuman\n\n\n2\nHuman\n0.8281448\nAI\nCrossplag\nNo\nReal TOEFL\nHuman\n\n\n3\nHuman\n0.0002137\nHuman\nCrossplag\nYes\nReal College Essays\nHuman\n\n\n4\nAI\n0.0000000\nHuman\nZeroGPT\nNA\nFake CS224N - GPT3\nGPT3\n\n\n5\nAI\n0.0017841\nHuman\nOriginalityAI\nNA\nFake CS224N - GPT3, PE\nGPT4\n\n\n6\nHuman\n0.0001783\nHuman\nHFOpenAI\nYes\nReal CS224N\nHuman\n\n\n\n\n\n\n\n\nColumns = Variables\nVariables: Describe characteristics of the observations\n\nQuantitative: Numerical in nature\nCategorical: Values are categories\nIdentification: Uniquely identify each case"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz",
+    "href": "stat100_wk01wed.html#hand-drawn-data-viz",
+    "title": "Stat 100",
+    "section": "Hand-Drawn Data Viz",
+    "text": "Hand-Drawn Data Viz\n\nOnce we have collected data, a common next step is to visualize it.\nTwo key aspects of data visualization:\n\nDetermining how you want to display the data.\nFiguring out how to tell the computer to do that mapping.\n\nHand-drawn data visualizations allow us to focus on the first part with full control over the creative process!"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
+    "href": "stat100_wk01wed.html#hand-drawn-data-viz-examples",
+    "title": "Stat 100",
+    "section": "Hand-Drawn Data Viz Examples",
+    "text": "Hand-Drawn Data Viz Examples\nDear Data\n\n“Each week, and for a year, we collected and measured a particular type of data about our lives, used this data to make a drawing on a postcard-sized sheet of paper, and then dropped the postcard in an English”postbox” (Stefanie) or an American “mailbox” (Giorgia)!“"
+  },
+  {
+    "objectID": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
+    "href": "stat100_wk01wed.html#goal-by-next-wed-collect-data-from-your-life-so-that-you-can-visualize-it-on-p-set-1.",
+    "title": "Stat 100",
+    "section": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.",
+    "text": "Goal: By next Wed, collect data from your life so that you can visualize it on P-Set 1.\n\n\n\nRecommendations\n\n\nStore the data in your favorite spreadsheet program (Google Sheets, Numbers, Excel).\nDetermine what your cases/observations will be.\nCollect data on more variables than you will likely visualize. It is hard to know beforehand what the interesting relationships will be.\n\n\n\nNext Week\n\nWill get a blank postcard and further guidance on the visualization with P-Set 1."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#section",
+    "href": "stat100_wk01wed.html#section",
+    "title": "Stat 100",
+    "section": "",
+    "text": "Demo of accessing the RStudio Server on Posit Cloud\n\n\nTry to access the RStudio Server between now and next lecture.\nCome back to the recording if need help with the steps."
+  },
+  {
+    "objectID": "stat100_wk01wed.html#reminders",
+    "href": "stat100_wk01wed.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nIf able, please bring a laptop or tablet to Mondays’s lecture.\nNo section, no wrap-ups, and no lecture quiz this week.\nMake sure to go through the syllabus, which can be found on Canvas.\n\nWill discuss assessments and course policies on Monday.\n\nOnly I will be running office hours this week at the following time:\n\nToday 1:30 - 3:00 pm in Science Center 316 (This week only)\n\nThe regular office hour schedule will be posted later this week and will start next week.\nBe on the look-out for the section preference form."
+  },
+  {
+    "objectID": "stat100_wk05wed.html#announcements",
+    "href": "stat100_wk05wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nNo lecture on Monday – University Holiday.\nSome Monday Office Hours will also be cancelled. Make sure to check the office hours schedule.\nDiscuss upcoming exam:\n\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:45am\nOral: Wed afternoon - Fri, Oct 13th\nNo sections during midterm exam week!\n\n\n\nGoals for Today\n\n\n\nIntroduce statistical modeling\nSimple linear regression model\n\n\n\nMeasuring correlation"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#thoughts-on-data-collection-goals",
+    "href": "stat100_wk05wed.html#thoughts-on-data-collection-goals",
+    "title": "Stat 100",
+    "section": "Thoughts on Data Collection Goals",
+    "text": "Thoughts on Data Collection Goals\n\nRandom assignment allows you to explore causal relationships between your explanatory variables and the predictor variables because the randomization makes the explanatory groups roughly similar.\nHow do we draw causal conclusions from studies without random assignment?\n\nWith extreme care! Try to control for all possible confounding variables.\nDiscuss the associations/correlations you found. Use domain knowledge to address potentially causal links.\nTake more stats to learn more about causal inference.\n\nBut also consider the goals of your analysis. Often the research question isn’t causal.\n\n\nBottom Line: We often have to use imperfect data to make decisions."
+  },
+  {
+    "objectID": "stat100_wk05wed.html#conclusions-conclusions",
+    "href": "stat100_wk05wed.html#conclusions-conclusions",
+    "title": "Stat 100",
+    "section": "Conclusions, Conclusions",
+    "text": "Conclusions, Conclusions"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#recap",
+    "href": "stat100_wk05wed.html#recap",
+    "title": "Stat 100",
+    "section": "Recap",
+    "text": "Recap"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#form-of-the-model",
+    "href": "stat100_wk05wed.html#form-of-the-model",
+    "title": "Stat 100",
+    "section": "Form of the Model",
+    "text": "Form of the Model\n\n\\[\ny = f(x) + \\epsilon\n\\]\n\nGoal:\n\nDetermine a reasonable form for \\(f()\\). (Ex: Line, curve, …)\nEstimate \\(f()\\) with \\(\\hat{f}()\\) using the data.\nGenerate predicted values: \\(\\hat y = \\hat{f}(x)\\)."
+  },
+  {
+    "objectID": "stat100_wk05wed.html#sample-correlation-coefficient",
+    "href": "stat100_wk05wed.html#sample-correlation-coefficient",
+    "title": "Stat 100",
+    "section": "(Sample) Correlation Coefficient",
+    "text": "(Sample) Correlation Coefficient\n\nMeasures the strength and direction of linear relationship between two quantitative variables\nSymbol: \\(r\\)\nAlways between -1 and 1\nSign indicates the direction of the relationship\nMagnitude indicates the strength of the linear relationship\n\n\n\ncandy %&gt;%\n  summarize(cor = cor(pricepercent, winpercent))\n\n# A tibble: 1 × 1\n    cor\n  &lt;dbl&gt;\n1 0.345"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#new-example",
+    "href": "stat100_wk05wed.html#new-example",
+    "title": "Stat 100",
+    "section": "New Example",
+    "text": "New Example\n\n\n\n# Correlation coefficients\ndat2 %&gt;%\n  group_by(dataset) %&gt;%\n  summarize(cor = cor(x, y))\n\n# A tibble: 12 × 2\n   dataset        cor\n   &lt;chr&gt;        &lt;dbl&gt;\n 1 away       -0.0641\n 2 bullseye   -0.0686\n 3 circle     -0.0683\n 4 dino       -0.0645\n 5 dots       -0.0603\n 6 h_lines    -0.0617\n 7 high_lines -0.0685\n 8 slant_down -0.0690\n 9 star       -0.0630\n10 v_lines    -0.0694\n11 wide_lines -0.0666\n12 x_shape    -0.0656\n\n\n\n\nConclude that \\(x\\) and \\(y\\) have the same relationship across these different datasets because the correlation is the same?"
+  },
+  {
+    "objectID": "stat100_wk05wed.html#reminders",
+    "href": "stat100_wk05wed.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nNo lecture on Monday – University Holiday.\nSome Monday Office Hours will also be cancelled. Make sure to check the office hours schedule.\nMidterm next week\n\nIn-class: Wed, Oct 11th 10:30 - 11:45am\nOral: Wed afternoon - Fri, Oct 13th\n\nNo sections during midterm exam week!"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#announcements",
+    "href": "stat100_wk04wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nOral practice in section this week.\n\nGoals for Today\n\nFinish up data joins.\nCover data collection/acquisition."
+  },
+  {
+    "objectID": "stat100_wk04wed.html#which-are-you",
+    "href": "stat100_wk04wed.html#which-are-you",
+    "title": "Stat 100",
+    "section": "Which Are YOU?",
+    "text": "Which Are YOU?\n\n\nData Visualizer\n\n\n\nvia GIPHY\n\n\nData Wrangler\n\n\n\nvia GIPHY"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#load-necessary-packages",
+    "href": "stat100_wk04wed.html#load-necessary-packages",
+    "title": "Stat 100",
+    "section": "Load Necessary Packages",
+    "text": "Load Necessary Packages\n\n\n\n\n\ndplyr is part of this collection of data science packages.\n\n# Load necessary packages\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#data-setting-bureau-of-labor-statistics-bls-consumer-expenditure-survey",
+    "href": "stat100_wk04wed.html#data-setting-bureau-of-labor-statistics-bls-consumer-expenditure-survey",
+    "title": "Stat 100",
+    "section": "Data Setting: Bureau of Labor Statistics (BLS) Consumer Expenditure Survey",
+    "text": "Data Setting: Bureau of Labor Statistics (BLS) Consumer Expenditure Survey\nBLS Mission: “Measures labor market activity, working conditions, price changes, and productivity in the U.S. economy to support public and private decision making.”\nData: Last quarter of the 2016 BLS Consumer Expenditure Survey.\n\nlibrary(tidyverse)\n\nce_raw &lt;- read_csv(\"data/fmli.csv\", \n                 na = c(\"NA\", \".\"))\nglimpse(ce_raw)\n\nRows: 6,301\nColumns: 51\n$ NEWID    &lt;chr&gt; \"03324174\", \"03324204\", \"03324214\", \"03324244\", \"03324274\", \"…\n$ PRINEARN &lt;chr&gt; \"01\", \"01\", \"01\", \"01\", \"02\", \"01\", \"01\", \"01\", \"02\", \"01\", \"…\n$ FINLWT21 &lt;dbl&gt; 25984.767, 6581.018, 20208.499, 18078.372, 20111.619, 19907.3…\n$ FINCBTAX &lt;dbl&gt; 116920, 200, 117000, 0, 2000, 942, 0, 91000, 95000, 40037, 10…\n$ BLS_URBN &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ POPSIZE  &lt;dbl&gt; 2, 3, 4, 2, 2, 2, 1, 2, 5, 2, 3, 2, 2, 3, 4, 3, 3, 1, 4, 1, 1…\n$ EDUC_REF &lt;chr&gt; \"16\", \"15\", \"16\", \"15\", \"14\", \"11\", \"10\", \"13\", \"12\", \"12\", \"…\n$ EDUCA2   &lt;dbl&gt; 15, 15, 13, NA, NA, NA, NA, 15, 15, 14, 12, 12, NA, NA, NA, 1…\n$ AGE_REF  &lt;dbl&gt; 63, 50, 47, 37, 51, 63, 77, 37, 51, 64, 26, 59, 81, 51, 67, 4…\n$ AGE2     &lt;dbl&gt; 50, 47, 46, NA, NA, NA, NA, 36, 53, 67, 44, 62, NA, NA, NA, 4…\n$ SEX_REF  &lt;dbl&gt; 1, 1, 2, 1, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1…\n$ SEX2     &lt;dbl&gt; 2, 2, 1, NA, NA, NA, NA, 2, 2, 1, 1, 1, NA, NA, NA, 1, NA, 1,…\n$ REF_RACE &lt;dbl&gt; 1, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1…\n$ RACE2    &lt;dbl&gt; 1, 4, 1, NA, NA, NA, NA, 1, 1, 1, 1, 1, NA, NA, NA, 2, NA, 1,…\n$ HISP_REF &lt;dbl&gt; 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1…\n$ HISP2    &lt;dbl&gt; 2, 2, 1, NA, NA, NA, NA, 2, 2, 2, 2, 2, NA, NA, NA, 2, NA, 2,…\n$ FAM_TYPE &lt;dbl&gt; 3, 4, 1, 8, 9, 9, 8, 3, 1, 1, 3, 1, 8, 9, 8, 5, 9, 4, 8, 3, 2…\n$ MARITAL1 &lt;dbl&gt; 1, 1, 1, 5, 3, 3, 2, 1, 1, 1, 1, 1, 2, 3, 5, 1, 3, 1, 3, 1, 1…\n$ REGION   &lt;dbl&gt; 4, 4, 3, 4, 4, 3, 4, 1, 3, 2, 1, 4, 1, 3, 3, 3, 2, 1, 2, 4, 3…\n$ SMSASTAT &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ HIGH_EDU &lt;chr&gt; \"16\", \"15\", \"16\", \"15\", \"14\", \"11\", \"10\", \"15\", \"15\", \"14\", \"…\n$ EHOUSNGC &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ TOTEXPCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ FOODCQ   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ TRANSCQ  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ HEALTHCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ ENTERTCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ EDUCACQ  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ TOBACCCQ &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…\n$ STUDFINX &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ IRAX     &lt;dbl&gt; 1000000, 10000, 0, NA, NA, 0, 0, 15000, NA, 477000, NA, NA, N…\n$ CUTENURE &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 4, 1, 1, 2, 1, 2, 2, 2, 2, 4, 1, 1, 1, 4, 4…\n$ FAM_SIZE &lt;dbl&gt; 4, 6, 2, 1, 2, 2, 1, 5, 2, 2, 4, 2, 1, 2, 1, 4, 2, 4, 1, 3, 3…\n$ VEHQ     &lt;dbl&gt; 3, 5, 0, 4, 2, 0, 0, 2, 4, 2, 3, 2, 1, 3, 1, 2, 4, 4, 0, 2, 3…\n$ ROOMSQ   &lt;dbl&gt; 8, 5, 6, 4, 4, 4, 7, 5, 4, 9, 6, 10, 4, 7, 5, 6, 6, 8, 18, 4,…\n$ INC_HRS1 &lt;dbl&gt; 40, 40, 40, 44, 40, NA, NA, 40, 40, NA, 40, NA, NA, NA, NA, 4…\n$ INC_HRS2 &lt;dbl&gt; 30, 40, 52, NA, NA, NA, NA, 40, 40, NA, 65, NA, NA, NA, NA, 6…\n$ EARNCOMP &lt;dbl&gt; 3, 2, 2, 1, 4, 7, 8, 2, 2, 8, 2, 8, 8, 7, 8, 2, 7, 3, 1, 2, 1…\n$ NO_EARNR &lt;dbl&gt; 4, 2, 2, 1, 2, 1, 0, 2, 2, 0, 2, 0, 0, 1, 0, 2, 1, 3, 1, 2, 1…\n$ OCCUCOD1 &lt;chr&gt; \"03\", \"03\", \"05\", \"03\", \"04\", \"\", \"\", \"12\", \"04\", \"\", \"01\", \"…\n$ OCCUCOD2 &lt;chr&gt; \"04\", \"02\", \"01\", \"\", \"\", \"\", \"\", \"02\", \"03\", \"\", \"11\", \"\", \"…\n$ STATE    &lt;chr&gt; \"41\", \"15\", \"48\", \"06\", \"06\", \"48\", \"06\", \"42\", \"\", \"27\", \"25…\n$ DIVISION &lt;dbl&gt; 9, 9, 7, 9, 9, 7, 9, 2, NA, 4, 1, 8, 2, 5, 6, 7, 3, 2, 3, 9, …\n$ TOTXEST  &lt;dbl&gt; 15452, 11459, 15738, 25978, 588, 0, 0, 7261, 9406, -1414, 141…\n$ CREDFINX &lt;dbl&gt; 0, NA, 0, NA, 5, NA, NA, NA, NA, 0, NA, 0, NA, NA, NA, 2, 35,…\n$ CREDITB  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ CREDITX  &lt;dbl&gt; 4000, 5000, 2000, NA, 7000, 1800, NA, 6000, NA, 719, NA, 1200…\n$ BUILDING &lt;chr&gt; \"01\", \"01\", \"01\", \"02\", \"08\", \"01\", \"01\", \"01\", \"01\", \"01\", \"…\n$ ST_HOUS  &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…\n$ INT_PHON &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ INT_HOME &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#ce-data",
+    "href": "stat100_wk04wed.html#ce-data",
+    "title": "Stat 100",
+    "section": "CE Data",
+    "text": "CE Data\n\n\nHousehold survey but data are also collected on individuals\n\nfmli: household data\nmemi: household member-level data\n\n\n\n\nfmli &lt;- read_csv(\"data/fmli.csv\", \n                 na = c(\"NA\", \".\")) %&gt;%\n  select(NEWID, PRINEARN, FINCBTAX,\n         BLS_URBN, HIGH_EDU)\nmemi &lt;- read_csv(\"data/memi.csv\", \n                 na = c(\"NA\", \".\")) %&gt;%\n  select(NEWID, MEMBNO, AGE, SEX, EARNTYPE)\n\nfmli &lt;- mutate(fmli, PRINEARN = as.integer(PRINEARN))\n\n\nWant to add variables on the principal earner from the member data frame to the household data frame"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#smaller-sets-of-ce-data",
+    "href": "stat100_wk04wed.html#smaller-sets-of-ce-data",
+    "title": "Stat 100",
+    "section": "Smaller Sets of CE Data",
+    "text": "Smaller Sets of CE Data\n\n\n\nfmli_small &lt;- filter(fmli, NEWID %in% c(\"03530051\",\n                                        \"03327224\",\n                                        \"03324324\",\n                                        \"03324244\"))\nfmli_small\n\n# A tibble: 4 × 5\n  NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU\n  &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   \n1 03324244        1        0        1 15      \n2 03324324        2    95000        2 15      \n3 03327224        1        0        1 14      \n4 03530051        3    70000        1 11      \n\n\n\n\nmemi_small &lt;- filter(memi, NEWID %in% c(\"03530051\",\n                                        \"03327224\",\n                                        \"03324324\",\n                                        \"03324244\"))\nmemi_small\n\n# A tibble: 10 × 5\n   NEWID    MEMBNO   AGE   SEX EARNTYPE\n   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;\n 1 03324244      1    37     1        1\n 2 03324324      1    51     1        1\n 3 03324324      2    53     2        1\n 4 03327224      1    28     2        3\n 5 03327224      2    32     1        2\n 6 03327224      3     1     2       NA\n 7 03530051      1    43     1       NA\n 8 03530051      2    16     1       NA\n 9 03530051      3    44     1        3\n10 03530051      4     5     2       NA"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#look-at-the-possible-joins",
+    "href": "stat100_wk04wed.html#look-at-the-possible-joins",
+    "title": "Stat 100",
+    "section": "Look at the Possible Joins",
+    "text": "Look at the Possible Joins\n\nfull_join(fmli_small, memi_small, join_by(\"NEWID\" == \"NEWID\", \"PRINEARN\" == \"MEMBNO\"))\n\n# A tibble: 10 × 8\n   NEWID    PRINEARN FINCBTAX BLS_URBN HIGH_EDU   AGE   SEX EARNTYPE\n   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;\n 1 03324244        1        0        1 15          37     1        1\n 2 03324324        2    95000        2 15          53     2        1\n 3 03327224        1        0        1 14          28     2        3\n 4 03530051        3    70000        1 11          44     1        3\n 5 03324324        1       NA       NA &lt;NA&gt;        51     1        1\n 6 03327224        2       NA       NA &lt;NA&gt;        32     1        2\n 7 03327224        3       NA       NA &lt;NA&gt;         1     2       NA\n 8 03530051        1       NA       NA &lt;NA&gt;        43     1       NA\n 9 03530051        2       NA       NA &lt;NA&gt;        16     1       NA\n10 03530051        4       NA       NA &lt;NA&gt;         5     2       NA"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#joining-tips",
+    "href": "stat100_wk04wed.html#joining-tips",
+    "title": "Stat 100",
+    "section": "Joining Tips",
+    "text": "Joining Tips\n\nfmli &lt;- left_join(fmli, memi, join_by(\"NEWID\" == \"NEWID\", \"PRINEARN\" == \"MEMBNO\"))\n\n\nFIRST: conceptualize for yourself what you think you want the final dataset to look like!\nCheck initial dimensions and final dimensions.\nUse variable names when joining even if they are the same."
+  },
+  {
+    "objectID": "stat100_wk04wed.html#naming-wrangled-data",
+    "href": "stat100_wk04wed.html#naming-wrangled-data",
+    "title": "Stat 100",
+    "section": "Naming Wrangled Data",
+    "text": "Naming Wrangled Data\nShould I name my new dataframe ce or ce1?\n\nMy answer:\n\nIs your new dataset structurally different? If so, give it a new name.\nAre you removing values you will need for a future analysis within the same document? If so, give it a new name.\nAre you just adding to or cleaning the data? If so, then write over the original."
+  },
+  {
+    "objectID": "stat100_wk04wed.html#now-for-data-collection",
+    "href": "stat100_wk04wed.html#now-for-data-collection",
+    "title": "Stat 100",
+    "section": "Now for Data Collection",
+    "text": "Now for Data Collection"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#motivating-our-discussion-of-data-collection",
+    "href": "stat100_wk04wed.html#motivating-our-discussion-of-data-collection",
+    "title": "Stat 100",
+    "section": "Motivating Our Discussion of Data Collection",
+    "text": "Motivating Our Discussion of Data Collection"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent",
+    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent",
+    "title": "Stat 100",
+    "section": "Who are the data supposed to represent?",
+    "text": "Who are the data supposed to represent?\n\n\n\n\n\nKey questions:\n\nWhat evidence is there that the data are representative?\nWho is present? Who is absent?\nWho is overrepresented? Who is underrepresented?"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-1",
+    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-1",
+    "title": "Stat 100",
+    "section": "Who are the data supposed to represent?",
+    "text": "Who are the data supposed to represent?\n\n\n\n\n\nCensus: We have data on the whole population!"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-2",
+    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-2",
+    "title": "Stat 100",
+    "section": "Who are the data supposed to represent?",
+    "text": "Who are the data supposed to represent?"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-3",
+    "href": "stat100_wk04wed.html#who-are-the-data-supposed-to-represent-3",
+    "title": "Stat 100",
+    "section": "Who are the data supposed to represent?",
+    "text": "Who are the data supposed to represent?\n\n\n\n\n\nKey questions:\n\nWhat evidence is there that the sample is representative of the population?\nWho is present? Who is absent?\nWho is overrepresented? Who is underrepresented?"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#sampling-bias",
+    "href": "stat100_wk04wed.html#sampling-bias",
+    "title": "Stat 100",
+    "section": "Sampling Bias",
+    "text": "Sampling Bias\n\n\n\n\n\nSampling bias: When the sampled units are systematically different from the non-sampled units on the variables of interest."
+  },
+  {
+    "objectID": "stat100_wk04wed.html#random-sampling",
+    "href": "stat100_wk04wed.html#random-sampling",
+    "title": "Stat 100",
+    "section": "Random Sampling",
+    "text": "Random Sampling\nUse random sampling (a random mechanism for selecting cases from the population) to remove sampling bias.\nTypes of random sampling\n\nSimple random sampling\nCluster sampling\nStratified random sampling\nSystematic sampling\n\n\nWhy aren’t all samples generated using simple random sampling?"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#responsibilities-to-research-subjects",
+    "href": "stat100_wk04wed.html#responsibilities-to-research-subjects",
+    "title": "Stat 100",
+    "section": "Responsibilities to Research Subjects",
+    "text": "Responsibilities to Research Subjects\n\n“The ethical statistician protects and respects the rights and interests of human and animal subjects at all stages of their involvement in a project. This includes respondents to the census or to surveys, those whose data are contained in administrative records, and subjects of physically or psychologically invasive research.”"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#detour-from-our-detour",
+    "href": "stat100_wk04wed.html#detour-from-our-detour",
+    "title": "Stat 100",
+    "section": "Detour from Our Detour",
+    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height)) +\n  geom_point(alpha = 0.1) +\n  geom_smooth(color = \"skyblue\")"
+  },
+  {
+    "objectID": "stat100_wk04wed.html#detour-from-our-detour-1",
+    "href": "stat100_wk04wed.html#detour-from-our-detour-1",
+    "title": "Stat 100",
+    "section": "Detour from Our Detour",
+    "text": "Detour from Our Detour\n\n\nlibrary(tidyverse)\nlibrary(NHANES)\nlibrary(emojifont)\n\nNHANES &lt;- mutate(NHANES, \n          heart = fontawesome(\"fa-heart\"))\n\nggplot(data = NHANES, \n       mapping = aes(x = Age,\n                     y = Height,\n                     label = heart)) +\n  geom_text(alpha = 0.1, color = \"red\",\n            family='fontawesome-webfont',\n            size = 16) +\n  stat_smooth(color = \"deeppink\")"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#announcements",
+    "href": "stat100_wk02mon.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#day-2-goals",
+    "href": "stat100_wk02mon.html#day-2-goals",
+    "title": "Stat 100",
+    "section": "Day 2 Goals",
+    "text": "Day 2 Goals\n\nDiscuss course structure & goals (lecture, section, wrap-ups, office hours, assessments…)\nPresent important course policies (engagement, code of conduct, chatGPT, …)\nGet started in RStudio and with Quarto documents"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#data-analysis-workflow",
+    "href": "stat100_wk02mon.html#data-analysis-workflow",
+    "title": "Stat 100",
+    "section": "Data Analysis Workflow",
+    "text": "Data Analysis Workflow"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#stat-100-weekly-flow",
+    "href": "stat100_wk02mon.html#stat-100-weekly-flow",
+    "title": "Stat 100",
+    "section": "Stat 100 Weekly Flow",
+    "text": "Stat 100 Weekly Flow"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#forms-of-assessment",
+    "href": "stat100_wk02mon.html#forms-of-assessment",
+    "title": "Stat 100",
+    "section": "Forms of Assessment",
+    "text": "Forms of Assessment\n\n\n\nWeekly lecture quizzes:\n\nAddress important concepts covered.\nFind out what is still confusing.\nCan drop one quiz grade.\n\n\n\n\nWeekly problem sets:\n\nPractice concepts.\nTime during section will be devoted to starting the next p-set.\nCan drop one p-set grade and get 4 extension days.\n\n\n\n\n\n\n\nExams:\n\nFormat: In-class Exam & Oral Exam.\nWill have both a Mid-term and Final.\n\n\n\n\nParticipation/Engagement:\n\nIn lecture and section.\nBy Oct 9th, must:\n\nAttend at least one office hour.\nPost at least two messages on Slack."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#this-weeks-assessments",
+    "href": "stat100_wk02mon.html#this-weeks-assessments",
+    "title": "Stat 100",
+    "section": "This Week’s Assessments",
+    "text": "This Week’s Assessments\n\nLecture quiz releases on Wed at 11:45am.\nP-Set 1 will be posted to Posit Cloud on Wednesday.\n\nDue the following Tuesday, September 19th at 5pm on Gradescope.\nIn section this week, you will get started on P-Set 1 and will learn how to submit to Gradescope."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
+    "href": "stat100_wk02mon.html#professor-mcconville-in-spring-2023",
+    "title": "Stat 100",
+    "section": "Professor McConville in Spring 2023",
+    "text": "Professor McConville in Spring 2023\n\n\n\nBBC Science Focus"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
+    "href": "stat100_wk02mon.html#professor-mcconville-in-summer-2023",
+    "title": "Stat 100",
+    "section": "Professor McConville in Summer 2023",
+    "text": "Professor McConville in Summer 2023\n\n\n\n\n\nRicardo IV Tamayo\n\n\n\nGenerative AI Engagements\n\nParticipated in Stats Dept reading group on generative AI\nWent to conference talks on generative AI\nTalked to ChatGPT"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#chatgpt",
+    "href": "stat100_wk02mon.html#chatgpt",
+    "title": "Stat 100",
+    "section": "",
+    "text": "ChatGPT Strengths\n\nVery dangerous automated data analysis.\n\nHard to determine if its conclusions are based on the data at hand or the data the large language model was built on.\n\n\n\nStat 100 Goals\n\nLearn that data analysis is a humanistic endeavor where context drives the data analysis process.\n\nStill need to be careful about biases and data quality.\n\n\n\n\n\n\n\nA personalized tutor (especially for coding) that tells you the answers.\n\n\n\nFor you to learn to code and to think statistically.\n\nThe Stat 100 Teaching Team will help support that learning.\n\n\n\n\n\n\n\nInstantly generating written blurbs.\n\n\n\nFor you to learn how to communicate about your data work and data ethics."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
+    "href": "stat100_wk02mon.html#my-view-on-the-current-role-of-chatgpt-in-data-work",
+    "title": "Stat 100",
+    "section": "My View on the (Current) Role of ChatGPT in Data Work",
+    "text": "My View on the (Current) Role of ChatGPT in Data Work\n\nTo generate code to realize fully conceived ideas that aren’t novel or advanced.\nSeasoned data scientist can/should:\n\nVerify the correctness of the code.\nIdentify any assumptions or defaults ChatGPT is employing.\nRun the code in R and draw conclusions based on the data to reduce risk of perpetuating biases that exist in ChatGPT’s training data.\n\nSo, ChatGPT might be useful to you after Stat 100 but will be detrimental to your learning during Stat 100."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#ai-policy-for-stat-100",
+    "href": "stat100_wk02mon.html#ai-policy-for-stat-100",
+    "title": "Stat 100",
+    "section": "AI Policy for Stat 100",
+    "text": "AI Policy for Stat 100\n\nWhile A.I. tools, such as ChatGPT, are being used to generate code and analyze data, goals of this course are to develop your own ability to write code and to thoughtfully extract knowledge from data. Therefore, we expect that all work students submit for this course will be their own. This includes code, written work, and oral assessments. We specifically forbid the use of ChatGPT or any other generative artificial intelligence (AI) tools at all stages of the work process, including preliminary ones, unless the assignment specifically states that it is allowed. Violations of this policy will be considered academic misconduct. We draw your attention to the fact that different classes at Harvard could implement different AI policies, and it is the student’s responsibility to conform to expectations for each course.\n\n\nThe goal of this policy is not to lessen your access to support but to ensure we are achieving the learning objectives of the course. Please see the Avenues for Help section of the syllabus for ways to get support in Stat 100."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#engagement",
+    "href": "stat100_wk02mon.html#engagement",
+    "title": "Stat 100",
+    "section": "Engagement",
+    "text": "Engagement\n\n\n \n\n\n\n\n\n\nBeing actively present is key.\n\n\n\nDuring lecture and section, remove distractions.\n\nWhen we are on our computers, close email, social media, news, etc.\nIf you will be using a computer/tablet for taking notes, please sit outside the technology-free zone (first 6 rows of the middle section) starting next lecture so as not to distract classmates.\nHide your phone.\n\nI have high expectations but know that all of you (regardless of your stats or computing background) have the ability to meet them."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#identity-and-the-classroom",
+    "href": "stat100_wk02mon.html#identity-and-the-classroom",
+    "title": "Stat 100",
+    "section": "Identity and the Classroom",
+    "text": "Identity and the Classroom\n\nAcknowledge that my perspectives and experiences have shaped how I teach this course and how I approach my data work\nSome of my identities place me in dominant groups while others in marginalized groups\nStrive to bring examples and scholarly contributions that value knowledge from folks with a wide variety of identities\nStrive to be a open listener and recognize your thoughts as a generous offer and a vote of confidence in my ability to hear and be transformed by you\nAsk that you reflect on your own identities, privileges, and power and how they impact your engagement with Stat 100"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#code-of-conduct",
+    "href": "stat100_wk02mon.html#code-of-conduct",
+    "title": "Stat 100",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\n\nWe expect all members of STAT 100 to make participation a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.\n\n\nWe expect everyone to act and interact in ways that contribute to an open, welcoming diverse, inclusive, and healthy community of learners. You can contribute to a positive learning environment by demonstrating empathy and kindness, being respectful of differing viewpoints and experiences, and giving and gracefully accepting constructive feedback.\n\nThis Code of Conduct is adapted from the Contributor Covenant, version 2.0."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#ways-to-get-support",
+    "href": "stat100_wk02mon.html#ways-to-get-support",
+    "title": "Stat 100",
+    "section": "Ways to Get Support",
+    "text": "Ways to Get Support\n\nAttend, attend, attend when you don’t feel ill\nParticipate in the Stat 100 Slack Workspace\nCome to Office Hours and Wrap-up Sessions\nCreate study groups with your classmates\n\nDon’t know anyone in the course?\n\nUse Slack or Section to each to know other students in the course!\nFill out this Stat 100 study group matching form"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#language-r-this-r-that-q-what",
+    "href": "stat100_wk02mon.html#language-r-this-r-that-q-what",
+    "title": "Stat 100",
+    "section": "Language: R-This, R-That, Q-What?",
+    "text": "Language: R-This, R-That, Q-What?\n\n\n\n \n\n\nR is the name of the programming language.\n\n\n\nRStudio is the pretty interface and is hosted on a Posit Cloud Server.\n\n\n\n\nQuarto is the type of file where we will record all of our work (code, output, narrative)."
+  },
+  {
+    "objectID": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
+    "href": "stat100_wk02mon.html#main-components-of-rstudio-lay-out",
+    "title": "Stat 100",
+    "section": "Main Components of RStudio Lay-Out",
+    "text": "Main Components of RStudio Lay-Out"
+  },
+  {
+    "objectID": "stat100_wk02mon.html#reminders",
+    "href": "stat100_wk02mon.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders",
+    "text": "Reminders\n\nClass in full swing:\n\nSections: Can find your assigned section in my.harvard but need to go to the linked spreadsheet to find the room!\nOffice hours\nWrap-ups on Th 3-4pm and Fri 10:30 - 11:30am in SC 309\nLecture quiz will be released in Gradescope after class on Wednesday."
   },
   {
     "objectID": "stat100_wk04mon.html#announcements",
@@ -1355,7 +1439,7 @@
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed\n\n\n\n\nWeek 7, Mon\n\n\n\n\nWeek 7, Wed\n\n\n\n\nWeek 8, Mon"
+    "text": "The lecture slides (both in HTML and PDF) will be posted here.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed\n\n\n\n\nWeek 7, Mon\n\n\n\n\nWeek 7, Wed\n\n\n\n\nWeek 8, Mon\n\n\n\n\nWeek 8, Wed"
   },
   {
     "objectID": "stat100_wk07mon.html#announcements",

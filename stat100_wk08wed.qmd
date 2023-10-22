@@ -1,0 +1,540 @@
+---
+pagetitle: "Sampling Distributions"
+format: 
+  revealjs:
+    html-math-method: mathjax
+    chalkboard: true
+    incremental: true
+    theme: [default, custom.scss]
+    multiplex: true
+    height: 900
+    width: 1600
+    slide-number: c
+    auto-stretch: false
+    callout-appearance: simple
+    pdf-max-pages-per-slide: 1
+    menu: 
+      side: right
+      numbers: true
+    code-overflow: wrap
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-asp: 0.75
+  fig-width: 8
+#  fig-align: center
+  fig-dpi: 500
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+# Some global options still not available in quarto
+ knitr::opts_chunk$set(fig.align = 'center')
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 16))
+```
+
+::: columns
+::: {.column .center width="45%"}
+![](img/DAW.png){width="90%"}
+:::
+
+::: {.column .center width="55%"}
+[Sampling Distributions]{.custom-title}
+
+<br> <br> <br>
+
+[Kelly McConville]{.custom-subtitle}
+
+[Stat 100 <br> Week 8 \| Fall 2023]{.custom-subtitle}
+:::
+:::
+
+------------------------------------------------------------------------
+
+## Announcements
+
+* Oct 30th: Hex or Treat Day in Stat 100
+    + Wear a Halloween costume and get either a hex sticker or candy!!
+
+### Goals for Today
+
+::: columns
+::: column
+* Modeling & Ethics: Algorithmic bias
+
+* **Sampling Distribution**
+    + Properties
+    + Construction in `R`
+:::
+
+::: column
+* Estimation
+:::
+:::
+
+# Data Ethics: Algorithmic Bias
+
+[Return to the Americian Statistical Association's ["Ethical Guidelines for Statistical Practice"](https://www.amstat.org/ASA/Your-Career/Ethical-Guidelines-for-Statistical-Practice.aspx)]{.custom-subtitle}
+
+---
+
+
+
+##  Integrity of Data and Methods
+
+
+> "The ethical statistical practitioner seeks to understand and mitigate known or suspected limitations,  defects, or biases in the data or methods and communicates potential impacts on the interpretation, conclusions, recommendations, decisions, or other results of statistical practices."
+
+
+
+
+> "For models and algorithms designed to inform or implement decisions repeatedly, develops and/or implements plans to validate assumptions and assess performance over time, as needed. Considers criteria and mitigation plans for model or algorithm failure and retirement."
+
+
+---
+
+### Algorithmic Bias
+
+**Algorithmic bias**: when the model systematically creates unfair outcomes, such as privileging one group over another.
+
+**Example**: [The Coded Gaze](https://www.youtube.com/watch?v=162VzSzzoPs)
+
+
+```{r, echo = FALSE, out.width='35%', fig.cap = "Joy Buolamwini"}
+knitr::include_graphics("img/coded_gaze.png")
+```
+
+
+
+* Facial recognition software struggles to see faces of color.
+
+
+
+* Algorithms built on a non-diverse, biased dataset.
+
+---
+
+### Algorithmic Bias
+
+**Algorithmic bias**: when the model systematically creates unfair outcomes, such as privileging one group over another.
+
+**Example**: [COMPAS model](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing) used throughout the country to predict recidivism 
+
+::: nonincremental
+
+* Differences in predictions across race and gender
+
+:::
+
+```{r, echo = FALSE, out.width='45%', fig.cap = "ProPublica Analysis"}
+knitr::include_graphics("img/compas.png")
+```
+
+* Cynthia Rudin and collaborators wrote [The Age of Secrecy and Unfairness in Recidivism Prediction](https://hdsr.mitpress.mit.edu/pub/7z10o269/release/7)
+    + Argue for the need for transparency in models that make such important decisions.
+    
+    
+---
+
+## Sampling Distribution of a Statistic
+
+::: columns
+
+::: {.column}
+
+Steps to Construct an (Approximate) Sampling Distribution:
+
+1. Decide on a sample size, $n$.
+
+
+
+2. Randomly select a sample of size $n$ from the population.
+
+
+
+3. Compute the sample statistic.
+
+
+
+4.  Put the sample back in.
+
+
+
+5. Repeat Steps 2 - 4 many (1000+) times.
+
+::: 
+
+::: {.column}
+
+```{r  out.width = "55%", echo=FALSE, fig.align='center'}
+include_graphics("img/samp_dist.png") 
+```
+
+::: 
+
+::: 
+
+
+
+* What happens to the center/spread/shape as we **increase the sample size**?
+
+
+* What happens to the center/spread/shape if the **true parameter changes**?
+
+---
+
+## Let's Construct Some Sampling Distributions using `R`!
+
+**Important Notes**
+
+* To construct a **sampling distribution** for a statistic, we need access to the entire population so that we can take **repeated samples** from the population.
+    + Population = Harvard trees
+
+* But if we have access to the entire population, then we **know** the value of the population parameter.
+    + Can compute the exact mean diameter of trees in our population.
+
+
+* The sampling distribution is needed in the exact scenario where we can't compute it: the scenario where we only have a **single sample**.  
+
+* We will learn how to **estimate** the sampling distribution soon.
+
+
+* Today, we have the **entire population** and are constructing sampling distributions anyway to study their properties!
+
+---
+
+## New `R` Package: `infer`
+
+::: columns
+
+::: {.column width="20%"}
+
+![](img/infer.png){width="100%" fig-align="center"}
+
+:::
+
+::: {.column}
+
+<br>
+<br>
+<br>
+
+```{r}
+library(infer)
+```
+
+
+:::
+
+:::
+
+* Will use `infer` to conduct statistical inference.
+
+---
+
+## Our Population Parameter
+
+Create data frame of Harvard trees:
+
+```{r}
+library(tidyverse)
+library(bosTrees)
+harTrees <- camTrees %>%
+  filter(Ownership == "Harvard", SiteType == "Tree") %>%
+  drop_na(SpeciesShort)
+```
+
+Add variable of interest:
+
+```{r}
+harTrees <- harTrees %>%
+  mutate(tree_of_interest = case_when(
+    SpeciesShort == "Maple" ~ "yes",
+    SpeciesShort != "Not Maple" ~ "no"
+  ))
+count(harTrees, tree_of_interest)
+```
+
+---
+
+## Population Parameter
+
+```{r}
+#| output-location: column
+
+# Population distribution
+ggplot(data = harTrees, 
+       mapping = aes(x = tree_of_interest)) +
+  geom_bar(aes(y = ..prop.., group = 1),
+           stat = "count") 
+
+# True population parameter
+summarize(harTrees, 
+          parameter = mean(tree_of_interest == "yes"))
+
+```
+
+---
+
+### Random Samples
+
+Let's look at 4 random samples.
+
+
+```{r, fig.width = 8, fig.height = 4}
+#| output-location: column
+
+# Draw random samples
+samples <- harTrees %>% 
+  rep_sample_n(size = 20, reps = 4)
+  
+# Graph the samples
+ggplot(data = samples, 
+       mapping = aes(x = tree_of_interest)) +
+  geom_bar(aes(y = ..prop.., group = 1),
+           stat = "count") +
+  facet_wrap( ~ replicate)
+```
+
+---
+
+### Constructing the Sampling Distribution
+
+Now, let's take 1000 random samples.
+
+```{r}
+#| output-location: column
+# Construct the sampling distribution
+samp_dist <- harTrees %>% 
+  rep_sample_n(size = 20, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarize(statistic = 
+              mean(tree_of_interest == "yes"))
+
+# Graph the sampling distribution
+ggplot(data = samp_dist, 
+       mapping = aes(x = statistic)) +
+  geom_histogram(bins = 14)
+```
+
+::: columns
+
+::: {.column width="33%"}
+
+* Shape?
+
+::: 
+
+::: {.column width="33%"}
+
+* Center?
+
+::: 
+
+::: {.column width="33%"}
+* Spread?
+
+::: 
+
+::: 
+
+---
+
+### Properties of the Sampling Distribution
+
+::: columns
+
+::: {.column}
+
+```{r}
+#| echo: false
+# Construct the sampling distribution
+samp_dist <- harTrees %>% 
+  rep_sample_n(size = 20, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarize(statistic = 
+              mean(tree_of_interest == "yes"))
+
+# Graph the sampling distribution
+ggplot(data = samp_dist, 
+       mapping = aes(x = statistic)) +
+  geom_histogram(bins = 10)
+```
+
+::: 
+
+::: {.column}
+```{r}
+summarize(samp_dist, mean(statistic))
+summarize(samp_dist, sd(statistic))
+```
+
+::: 
+::: 
+
+The standard deviation of a sample statistic is called the **standard error**.
+
+---
+
+What happens to the sampling distribution if we change the sample size from 20 to 100?
+
+```{r}
+#| output-location: column
+# Construct the sampling distribution
+samp_dist <- harTrees %>% 
+  rep_sample_n(size = 100, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarize(statistic = 
+              mean(tree_of_interest == "yes"))
+
+# Graph the sampling distribution
+ggplot(data = samp_dist, 
+       mapping = aes(x = statistic)) +
+  geom_histogram(bins = 20)
+
+summarize(samp_dist, mean(statistic))
+summarize(samp_dist, sd(statistic))
+```
+
+---
+
+What if we change the true parameter value?
+
+```{r}
+#| output-location: column
+# Construct the sampling distribution
+samp_dist <- harTrees %>%
+  rep_sample_n(size = 20, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarize(statistic =
+              mean(SpeciesShort == "Cherry"))
+
+# Graph the sampling distribution
+ggplot(data = samp_dist,
+       mapping = aes(x = statistic)) +
+    geom_histogram(bins = 20)
+
+summarize(samp_dist, mean(statistic))
+summarize(samp_dist, sd(statistic))
+```
+
+
+# On P-Set 5, will investigate what happens when we change the parameter of interest to a mean or a correlation coefficient!
+    
+---
+
+## Key Features of a Sampling Distribution
+
+What did we learn about sampling distributions?
+
+
+* Centered around the true population parameter.
+
+* As the sample size increases, the **standard error** (SE) of the statistic decreases.
+
+* As the sample size increases, the shape of the sampling distribution becomes more bell-shaped and symmetric.
+
+* **Question:** How do sampling distributions help us **quantify uncertainty**?
+
+* **Question:** If I am estimating a parameter in a real example, why won't I be able to construct the sampling distribution??
+
+
+---
+
+## Estimation
+
+**Goal**: Estimate the value of a population parameter using data from the sample.
+
+
+* **Question**: How do I know which population parameter I am interesting in estimating?
+
+* **Answer**: Likely depends on the research question and structure of your data!
+
+
+* **Point Estimate**: The corresponding statistic
+    + Single best guess for the parameter
+
+::: fragment
+
+```{r}
+library(tidyverse)
+ce <- read_csv("data/fmli.csv")
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```
+
+:::
+
+---
+
+### Potential Parameters and Point Estimates
+
+
+---
+
+## Confidence Intervals
+
+::: columns
+
+::: {.column}
+
+It is time to move **beyond** just point estimates to interval estimates that quantify our uncertainty.
+
+:::
+
+::: {.column}
+
+```{r}
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```
+
+:::
+
+:::
+
+* **Confidence Interval**: Interval of **plausible** values for a parameter
+
+* **Form**: $\mbox{statistic} \pm \mbox{Margin of Error}$
+
+* **Question**: How do we find the Margin of Error (ME)?
+
+* **Answer**: If the sampling distribution of the statistic is approximately bell-shaped and symmetric, then a statistic will be within 2 SEs of the parameter for 95% of the samples.
+
+* **Form**: $\mbox{statistic} \pm 2\mbox{SE}$
+
+* Called a 95% confidence interval (CI).  (Will discuss the meaning of **confidence** soon)
+
+---
+
+## Confidence Intervals
+
+**95% CI Form**:
+
+$$
+\mbox{statistic} \pm 2\mbox{SE}
+$$
+
+Let's use the `ce` data to produce a CI for the average household income before taxes.
+
+```{r}
+summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+```
+
+What else do we need to construct the CI?
+
+* **Problem**: To compute the SE, we need many samples from the population.  We have 1 sample.
+
+* **Solution**: Approximate the sampling distribution using **ONLY OUR ONE SAMPLE!**
+
+---
+
+
+## Reminders:
+
+* Oct 30th: Hex or Treat Day in Stat 100
+    + Wear a Halloween costume and get either a hex sticker or candy!!
+    

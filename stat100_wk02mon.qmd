@@ -387,7 +387,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ## ![](img/packages.jpeg){width="100%"}
 
----
+------------------------------------------------------------------------
 
 ### Getting Help with `R`
 
@@ -410,7 +410,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ## Language: `R`-This, `R`-That, `Q`-What? {.smaller}
 
