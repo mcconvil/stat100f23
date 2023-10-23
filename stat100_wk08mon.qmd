@@ -75,6 +75,44 @@ theme_update(text = element_text(size = 16))
 :::
 :::
 
+---
+
+### Which Are You?
+
+::: columns
+
+::: {.column width="33%"}
+
+Data Visualizer
+
+
+<iframe src="https://giphy.com/embed/d31vTpVi1LAcDvdm" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+::: 
+
+::: {.column width="33%"}
+
+Data Wrangler
+
+<iframe src="https://giphy.com/embed/DbaUtl1DcLyrdwhzGJ" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+::: 
+
+::: {.column width="33%"}
+
+
+
+Model Builder
+
+<br>
+
+<iframe src="https://giphy.com/embed/xZsLh7B3KMMyUptD9D" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+
+:::
+
+:::
+
+
 ------------------------------------------------------------------------
 
 ### Linear Regression
