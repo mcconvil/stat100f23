@@ -528,7 +528,7 @@ $ Year             &lt;dbl&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2
 
 <h3 id="fitting-the-polynomial-model">Fitting the Polynomial Model</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(RottenTomatoes <span class="sc">~</span> <span class="fu">poly</span>(AudienceScore, <span class="at">degree =</span> <span class="dv">2</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>)<span class="sc">*</span>Genre, <span class="at">data =</span> movies2)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(RottenTomatoes <span class="sc">~</span> <span class="fu">poly</span>(AudienceScore, <span class="at">degree =</span> <span class="dv">2</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> Genre, <span class="at">data =</span> movies2)</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="fu">library</span>(moderndive)</span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="fu">get_regression_table</span>(mod2, <span class="at">print =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -536,15 +536,15 @@ $ Year             &lt;dbl&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2
 </section>
 <section id="" class="slide level2 output-location-slide"><div class="cell output-location-slide" data-layout-align="center">
 <div class="cell-output-display">
-<table>
+<table style="width:100%;">
 <colgroup>
-<col style="width: 50%">
+<col style="width: 45%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 10%">
 <col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 7%">
-<col style="width: 8%">
-<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -560,84 +560,48 @@ $ Year             &lt;dbl&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">intercept</td>
-<td style="text-align: right;">9.922</td>
-<td style="text-align: right;">14.851</td>
-<td style="text-align: right;">0.668</td>
-<td style="text-align: right;">0.505</td>
-<td style="text-align: right;">-19.301</td>
-<td style="text-align: right;">39.145</td>
+<td style="text-align: right;">20.917</td>
+<td style="text-align: right;">10.851</td>
+<td style="text-align: right;">1.928</td>
+<td style="text-align: right;">0.055</td>
+<td style="text-align: right;">-0.434</td>
+<td style="text-align: right;">42.267</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">poly(AudienceScore, degree = 2, raw = TRUE)1</td>
-<td style="text-align: right;">0.098</td>
-<td style="text-align: right;">0.515</td>
-<td style="text-align: right;">0.191</td>
-<td style="text-align: right;">0.849</td>
-<td style="text-align: right;">-0.916</td>
-<td style="text-align: right;">1.113</td>
+<td style="text-align: right;">-0.259</td>
+<td style="text-align: right;">0.377</td>
+<td style="text-align: right;">-0.687</td>
+<td style="text-align: right;">0.492</td>
+<td style="text-align: right;">-1.000</td>
+<td style="text-align: right;">0.482</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">poly(AudienceScore, degree = 2, raw = TRUE)2</td>
-<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">3.284</td>
+<td style="text-align: right;">0.001</td>
 <td style="text-align: right;">0.004</td>
-<td style="text-align: right;">1.788</td>
-<td style="text-align: right;">0.075</td>
-<td style="text-align: right;">-0.001</td>
 <td style="text-align: right;">0.016</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Genre: Drama</td>
-<td style="text-align: right;">88.923</td>
-<td style="text-align: right;">24.538</td>
-<td style="text-align: right;">3.624</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">40.638</td>
-<td style="text-align: right;">137.208</td>
+<td style="text-align: right;">5.867</td>
+<td style="text-align: right;">2.420</td>
+<td style="text-align: right;">2.424</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: right;">1.105</td>
+<td style="text-align: right;">10.630</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Genre: Horror</td>
-<td style="text-align: right;">-23.767</td>
-<td style="text-align: right;">31.054</td>
-<td style="text-align: right;">-0.765</td>
-<td style="text-align: right;">0.445</td>
-<td style="text-align: right;">-84.876</td>
-<td style="text-align: right;">37.342</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">poly(AudienceScore, degree = 2, raw = TRUE)1:GenreDrama</td>
-<td style="text-align: right;">-2.608</td>
-<td style="text-align: right;">0.840</td>
-<td style="text-align: right;">-3.107</td>
-<td style="text-align: right;">0.002</td>
-<td style="text-align: right;">-4.260</td>
-<td style="text-align: right;">-0.956</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">poly(AudienceScore, degree = 2, raw = TRUE)2:GenreDrama</td>
-<td style="text-align: right;">0.019</td>
-<td style="text-align: right;">0.007</td>
-<td style="text-align: right;">2.785</td>
-<td style="text-align: right;">0.006</td>
-<td style="text-align: right;">0.006</td>
-<td style="text-align: right;">0.032</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">poly(AudienceScore, degree = 2, raw = TRUE)1:GenreHorror</td>
-<td style="text-align: right;">0.574</td>
-<td style="text-align: right;">1.223</td>
-<td style="text-align: right;">0.469</td>
-<td style="text-align: right;">0.639</td>
-<td style="text-align: right;">-1.833</td>
-<td style="text-align: right;">2.981</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">poly(AudienceScore, degree = 2, raw = TRUE)2:GenreHorror</td>
-<td style="text-align: right;">-0.001</td>
-<td style="text-align: right;">0.012</td>
-<td style="text-align: right;">-0.061</td>
-<td style="text-align: right;">0.951</td>
-<td style="text-align: right;">-0.024</td>
-<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">2.237</td>
+<td style="text-align: right;">3.047</td>
+<td style="text-align: right;">0.734</td>
+<td style="text-align: right;">0.463</td>
+<td style="text-align: right;">-3.758</td>
+<td style="text-align: right;">8.233</td>
 </tr>
 </tbody>
 </table>

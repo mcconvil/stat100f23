@@ -176,7 +176,7 @@ ggplot(data = movies2,
 ```{r}
 #| output-location: slide
 
-mod2 <- lm(RottenTomatoes ~ poly(AudienceScore, degree = 2, raw = TRUE)*Genre, data = movies2)
+mod2 <- lm(RottenTomatoes ~ poly(AudienceScore, degree = 2, raw = TRUE) + Genre, data = movies2)
 library(moderndive)
 get_regression_table(mod2, print = TRUE) 
 ```
