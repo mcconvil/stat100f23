@@ -38,9 +38,9 @@ library(tidyverse)
 theme_update(text = element_text(size = 16))
 ```
 
-# Grab 30 notecards! It is okay if they already have markings on them. And, please return the notecards to the same spot after class.
+# Grab 30 notecards! It is okay if they already have markings on them. And, please return the notecards to the same spot after class. {.unnumbered .unlisted}
 
----
+------------------------------------------------------------------------
 
 ::: columns
 ::: {.column .center width="45%"}
@@ -69,85 +69,69 @@ theme_update(text = element_text(size = 16))
 
 ::: columns
 ::: column
-
-* Estimation
-* Bootstrap distributions
-
-
+-   Estimation
+-   Bootstrap distributions
 :::
 
 ::: column
-* Bootstrapped confidence intervals
+-   Bootstrapped confidence intervals
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ### Question: How do sampling distributions help us **quantify uncertainty**?
 
 ![](img/stat_inf_amoeba.png){width="60%" fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ## Estimation
 
-**Goal**: Estimate the value of a population parameter using data from the sample.  
+**Goal**: Estimate the value of a population parameter using data from the sample.
 
 **Sub-Goal**: Quantify our uncertainty in using the sample to say something about the population.
 
 ::: fragment
-
 **Confidence Interval (CI)**: Interval of **plausible** values for a parameter
 
+**Form of a 95% Confidence Interval**:
 
-**Form of a 95% Confidence Interval**: 
-
+```{=tex}
 \begin{align*}
 \mbox{statistic} &\pm \mbox{Margin of Error}\\
 \mbox{statistic} &\pm 2\mbox{SE}
 \end{align*}
-
+```
 :::
-
 
 ::: fragment
-
-
-**Problem**: To compute the SE, we need many samples from the population.  We have 1 sample.
-
-
+**Problem**: To compute the SE, we need many samples from the population. We have 1 sample.
 
 **Solution**: Approximate the sampling distribution using **ONLY OUR ONE SAMPLE!**
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### Bootstrap Distribution
 
 How do we approximate the sampling distribution?
 
 ::: columns
-
-::: {.column width="50%}
-
-
+::: {.column width="\"50%"}
 **Bootstrap Distribution of a Sample Statistic**:
 
-1. Take a sample of size $n$ **with replacement** from the sample. Called a bootstrap sample.
+1.  Take a sample of size $n$ **with replacement** from the sample. Called a bootstrap sample.
 
-2. Compute the statistic on the bootstrap sample.
+2.  Compute the statistic on the bootstrap sample.
 
-
-3. Repeat 1 and 2 many (1000+) times.
- 
+3.  Repeat 1 and 2 many (1000+) times.
 :::
 :::
 
----
+------------------------------------------------------------------------
 
 ### Let's Practice Generating Bootstrap Samples!
-
 
 **Example:** In a recent study, 23 rats showed compassion that surprised scientists. Twenty-three of the 30 rats in the study freed another trapped rat in their cage, even when chocolate served as a distraction and even when the rats would then have to share the chocolate with their freed companion. (Rats, it turns out, love chocolate.) Rats did not open the cage when it was empty or when there was a stuffed animal inside, only when a fellow rat was trapped. We wish to use the sample to estimate the proportion of rats that show empathy in this way.
 
@@ -155,69 +139,53 @@ How do we approximate the sampling distribution?
 
 **Statistic**:
 
-Use your 30 cards to take a bootstrap sample.  (Make sure to appropriately label them first!)
+Use your 30 cards to take a bootstrap sample. (Make sure to appropriately label them first!)
 
 Compute the bootstrap statistic and put it on the class dotplot.
 
-
-
 (Will use these data for one of the problems in the next p-set.)
 
-
----
+------------------------------------------------------------------------
 
 ### Sampling Distribution Versus Bootstrap Distribution
 
 ::: nonincremental
-
-* Data needed:
-
-<br> <br> <br>
-
-
-
-* Center:
+-   Data needed:
 
 <br> <br> <br>
 
+-   Center:
 
+<br> <br> <br>
 
-* Spread:
-
-
+-   Spread:
 :::
 
----
-
+------------------------------------------------------------------------
 
 ### (Bootstrapped) Confidence Intervals
 
-
-**95% CI Form**: 
+**95% CI Form**:
 
 $$
 \mbox{statistic} \pm 2\mbox{SE}
 $$
 
-
-
 We approximate $\mbox{SE}$ with $\widehat{\mbox{SE}}$ = the standard deviation of the bootstrapped statistics.
-
 
 Caveats:
 
-* Assuming a random sample
+-   Assuming a random sample
 
-* Even with random samples, sometimes we get non-representative samples.  Bootstrapping can't fix that.
+-   Even with random samples, sometimes we get non-representative samples. Bootstrapping can't fix that.
 
-* Assuming the bootstrap distribution is bell-shaped and symmetric
+-   Assuming the bootstrap distribution is bell-shaped and symmetric
 
----
+------------------------------------------------------------------------
 
 ### Bootstrapped Confidence Intervals
 
 #### Two Methods
-
 
 Assuming random sample and roughly bell-shaped and symmetric bootstrap distribution for both methods.
 
@@ -229,14 +197,13 @@ $$
 
 We approximate $\mbox{SE}$ with $\widehat{\mbox{SE}}$ = the standard deviation of the bootstrapped statistics.
 
-
 **Percentile Method CI:**
 
 If I want a P% confidence interval, I find the bounds of the middle P% of the bootstrap distribution.
 
 # How can we construct bootstrap distributions and bootstrapped CIs in R?
 
----
+------------------------------------------------------------------------
 
 ## Load Packages and Data
 
@@ -245,16 +212,14 @@ library(tidyverse)
 library(infer)
 ```
 
-
 Let's return to the movies dataset and estimate numerical quantities about Hollywood movies.
-
 
 ```{r}
 # Read in data
 movies <- read_csv("https://www.lock5stat.com/datasets2e/HollywoodMovies.csv")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Estimation for a Single Mean
 
@@ -269,9 +234,9 @@ x_bar <- movies %>%
 x_bar
 ```
 
-* Why is our numerical quantity a mean and not a proportion or correlation here?
+-   Why is our numerical quantity a mean and not a proportion or correlation here?
 
----
+------------------------------------------------------------------------
 
 ## Estimation for a Single Mean
 
@@ -291,8 +256,7 @@ ggplot(data = bootstrap_dist,
   geom_histogram(color = "white")
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Estimation for a Single Mean -- SE Method
 
@@ -306,16 +270,11 @@ ci <- bootstrap_dist %>%
 ci
 ```
 
-**Interpretation:**  The point estimate is \$ `r round(x_bar$stat, digits = 1)`M.  I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `r round(ci$lower_ci, digits = 1)`M  and \$ `r round(ci$upper_ci, digits = 1)`M.
+**Interpretation:** The point estimate is \$ `r round(x_bar$stat, digits = 1)`M. I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `r round(ci$lower_ci, digits = 1)`M and \$ `r round(ci$upper_ci, digits = 1)`M.
 
-**Inline `R` code:** The point estimate is \$ `` `r
-round(x_bar$stat, digits = 1)` ``M.  I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `` `r
-round(ci$lower_ci, digits = 1)` ``M  and \$ `` `r
-round(ci$upper_ci, digits = 1)` ``M.
+**Inline `R` code:** The point estimate is \$ `` `r round(x_bar$stat, digits = 1)` ``M. I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `` `r round(ci$lower_ci, digits = 1)` ``M and \$ `` `r round(ci$upper_ci, digits = 1)` ``M.
 
-
----
-
+------------------------------------------------------------------------
 
 ## Estimation for a Single Mean
 
@@ -327,8 +286,7 @@ bootstrap_dist %>%
   shade_confidence_interval(endpoints = ci)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Estimation for a Single Mean -- Percentile Method
 
@@ -342,7 +300,7 @@ ci_95 <- bootstrap_dist %>%
 ci_95
 ```
 
----
+------------------------------------------------------------------------
 
 ## Estimation for Difference in Means
 
@@ -360,9 +318,9 @@ diff_x_bar <- movies %>%
 diff_x_bar
 ```
 
-* Why a difference in means?
+-   Why a difference in means?
 
----
+------------------------------------------------------------------------
 
 ## Estimation for Difference in Means
 
@@ -384,7 +342,7 @@ ggplot(data = bootstrap_dist,
   geom_histogram(color = "white")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Estimation for Difference in Means -- SE Method
 
@@ -397,9 +355,9 @@ ci_95 <- bootstrap_dist %>%
 ci_95
 ```
 
-**Interpretation**: The point estimate is \$ `r round(diff_x_bar$stat, digits = 1)`M.  I am 95% confidence that action movies make, on average, between \$ `r round(ci_95$lower_ci, digits = 1)`M and \$ `r round(ci_95$upper_ci, digits = 1)`M more than dramas. 
+**Interpretation**: The point estimate is \$ `r round(diff_x_bar$stat, digits = 1)`M. I am 95% confidence that action movies make, on average, between \$ `r round(ci_95$lower_ci, digits = 1)`M and \$ `r round(ci_95$upper_ci, digits = 1)`M more than dramas.
 
----
+------------------------------------------------------------------------
 
 ## Comparing CIs
 
@@ -419,67 +377,43 @@ bootstrap_dist %>%
   shade_confidence_interval(endpoints = ci_95) 
 ```
 
-* Why construct a 95% CI versus a 99% CI?  
-    + Need to dig into what we mean by confidence!
-    
-    
----
+-   Why construct a 95% CI versus a 99% CI?
+    -   Need to dig into what we mean by confidence!
+
+------------------------------------------------------------------------
 
 ::: columns
-
 ::: {.column width="40%"}
-
-
-
 ```{r,  out.width = "80%", echo=FALSE, fig.align='center', fig.cap = "", fig.pos="h"}
 library(knitr)
 include_graphics("img/cis.png") 
 ```
-
 :::
 
 ::: {.column width="60%"}
-
 [What do we mean by confidence?](http://www.rossmanchance.com/applets/2021/confsim/ConfSim.html)
 
+-   Confidence level = success rate of the method under **repeated sampling**
 
-* Confidence level = success rate of the method under **repeated sampling**
+-   How do I know if my ONE CI successfully contains the true value of the parameter?
 
+-   As we increase the **confidence level**, what happens to the width of the interval?
 
+-   As we increase the **sample size**, what happens to the width of the interval?
 
-* How do I know if my ONE CI successfully contains the true value of the parameter?
-
-
-
-* As we increase the **confidence level**, what happens to the width of the interval?
-
-
-
-* As we increase the **sample size**, what happens to the width of the interval?
-
-
-
-* As we increase the **number of bootstrap samples** we take, what happens to the width of the interval?
-
-
-
+-   As we increase the **number of bootstrap samples** we take, what happens to the width of the interval?
 :::
 :::
 
-
-
----
-
+------------------------------------------------------------------------
 
 ## Interpreting Confidence Intervals
 
 **Example:** Estimating average household income before taxes in the US
 
 ::: columns
-
-::: {.column}
-
-SE Method Formula: 
+::: column
+SE Method Formula:
 
 $$
 \mbox{statistic} \pm{\mbox{ME}}
@@ -496,48 +430,34 @@ bootstrap_dist <- ce %>%
   calculate(stat = "mean")
 summarize(bootstrap_dist, ME = 2*sd(stat), lower = 62480 - ME, upper = 62480 + ME)
 ```
-
 :::
 
-::: {.column}
-
-*"The margin of [sampling] error can be described as the 'penalty' in precision for not talking to everyone in a given population. It describes the range that an answer likely falls between if the survey had reached everyone in a population, instead of just a sample of that population."* -- Courtney Kennedy, Director of Survey Research at Pew Research Center
-
+::: column
+*"The margin of \[sampling\] error can be described as the 'penalty' in precision for not talking to everyone in a given population. It describes the range that an answer likely falls between if the survey had reached everyone in a population, instead of just a sample of that population."* -- Courtney Kennedy, Director of Survey Research at Pew Research Center
 
 CI = interval of **plausible** values for the **parameter**
+:::
+:::
 
-::: 
+**Safe interpretation:** I am P% confident that {insert what the parameter represents in context} is between {insert lower bound} and {insert upper bound}.
 
-::: 
-
-**Safe interpretation:** I am P% confident that {insert what the parameter represents in context}  is between {insert lower bound} and {insert upper bound}.
-
----
+------------------------------------------------------------------------
 
 ## Caution: Confidence intervals in the wild
 
 Statement in [an article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1255808/) for The BMJ (British Medical Journal):
 
-
-
 ```{r, echo = FALSE, fig.align='center', out.width='90%'}
 knitr::include_graphics("img/bmj.png")
 ```
-
-
-
-
 
 # `r emo::ji("thinking")` The second half of Stat 100 is more conceptually difficult. `r emo::ji("thinking")`
 
 [So keep coming to lecture, to section, to wrap-up sessions, and to office hours to get your questions answered!]{.custom-subtitle}
 
-
----
+------------------------------------------------------------------------
 
 ## Reminders:
 
--  Oct 30th **Today**: Hex or Treat Day in Stat 100
+-   Oct 30th **Today**: Hex or Treat Day in Stat 100
     -   If you are wearing a Halloween costume, come to the front before or after class for your hex sticker or treat!
-    
-

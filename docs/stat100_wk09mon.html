@@ -392,7 +392,7 @@
 
 
 <section>
-<section id="grab-30-notecards-it-is-okay-if-they-already-have-markings-on-them.-and-please-return-the-notecards-to-the-same-spot-after-class." class="title-slide slide level1 center">
+<section id="grab-30-notecards-it-is-okay-if-they-already-have-markings-on-them.-and-please-return-the-notecards-to-the-same-spot-after-class." class="title-slide slide level1 unnumbered unlisted center">
 <h1>Grab 30 notecards! It is okay if they already have markings on them. And, please return the notecards to the same spot after class.</h1>
 
 </section>
@@ -447,10 +447,10 @@
 <div class="fragment">
 <p><strong>Confidence Interval (CI)</strong>: Interval of <strong>plausible</strong> values for a parameter</p>
 <p><strong>Form of a 95% Confidence Interval</strong>:</p>
-<p><span class="math display">\[\begin{align*}
+<span class="math display">\[\begin{align*}
 \mbox{statistic} &amp;\pm \mbox{Margin of Error}\\
 \mbox{statistic} &amp;\pm 2\mbox{SE}
-\end{align*}\]</span></p>
+\end{align*}\]</span>
 </div>
 <div class="fragment">
 <p><strong>Problem</strong>: To compute the SE, we need many samples from the population. We have 1 sample.</p>
@@ -606,12 +606,12 @@
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1     19.0     22.2</code></pre>
+1     19.0     22.3</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Interpretation:</strong> The point estimate is $ 20.6M. I am 95% confidence that the average amount of money made by all Hollywood movies is between $ 19M and $ 22.2M.</p>
-<p><strong>Inline <code>R</code> code:</strong> The point estimate is $ <code>`r round(x_bar$stat, digits = 1)`</code>M. I am 95% confidence that the average amount of money made by all Hollywood movies is between $ <code>`r round(ci$lower_ci, digits = 1)`</code>M and $ <code>`r round(ci$upper_ci, digits = 1)`</code>M.</p>
+<p><strong>Interpretation:</strong> The point estimate is $ 20.6M. I am 95% confidence that the average amount of money made by all Hollywood movies is between $ 19M and $ 22.3M.</p>
+<p><strong>Inline <code>R</code> code:</strong> The point estimate is $ <code>20.6</code>M. I am 95% confidence that the average amount of money made by all Hollywood movies is between $ <code>19</code>M and $ <code>22.3</code>M.</p>
 </section>
 <section id="estimation-for-a-single-mean-2" class="slide level2">
 <h2>Estimation for a Single Mean</h2>
@@ -646,7 +646,7 @@
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1     19.1     22.3</code></pre>
+1     19.2     22.3</code></pre>
 </div>
 </div>
 </div>
@@ -721,11 +721,11 @@ Explanatory: Genre (factor)
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1     16.0     27.3</code></pre>
+1     15.9     27.4</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Interpretation</strong>: The point estimate is $ 21.7M. I am 95% confidence that action movies make, on average, between $ 16M and $ 27.3M more than dramas.</p>
+<p><strong>Interpretation</strong>: The point estimate is $ 21.7M. I am 95% confidence that action movies make, on average, between $ 15.9M and $ 27.4M more than dramas.</p>
 </section>
 <section id="comparing-cis" class="slide level2">
 <h2>Comparing CIs</h2>
@@ -797,7 +797,7 @@ Explanatory: Genre (factor)
 <pre><code># A tibble: 1 × 3
      ME  lower  upper
   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 1905. 60575. 64385.</code></pre>
+1 1974. 60506. 64454.</code></pre>
 </div>
 </div>
 </div><div class="column">
