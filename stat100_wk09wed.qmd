@@ -70,6 +70,7 @@ theme_update(text = element_text(size = 16))
 
 ::: columns
 ::: column
+- Confidence interval interpretations
 -   Set-up the structure of **hypothesis testing**
 :::
 
@@ -80,9 +81,75 @@ theme_update(text = element_text(size = 16))
 
 ------------------------------------------------------------------------
 
-### Question: How do sampling distributions help us **quantify uncertainty**?
+::: columns
+::: {.column width="40%"}
+```{r,  out.width = "80%", echo=FALSE, fig.align='center', fig.cap = "", fig.pos="h"}
+library(knitr)
+include_graphics("img/cis.png") 
+```
+:::
 
-![](img/stat_inf_amoeba.png){width="60%" fig-align="center"}
+::: {.column width="60%"}
+[What do we mean by confidence?](http://www.rossmanchance.com/applets/2021/confsim/ConfSim.html)
+
+-   Confidence level = success rate of the method under **repeated sampling**
+
+-   How do I know if my ONE CI successfully contains the true value of the parameter?
+
+-   As we increase the **confidence level**, what happens to the width of the interval?
+
+-   As we increase the **sample size**, what happens to the width of the interval?
+
+-   As we increase the **number of bootstrap samples** we take, what happens to the width of the interval?
+:::
+:::
+
+------------------------------------------------------------------------
+
+## Interpreting Confidence Intervals
+
+**Example:** Estimating average household income before taxes in the US
+
+::: columns
+::: column
+SE Method Formula:
+
+$$
+\mbox{statistic} \pm{\mbox{ME}}
+$$
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(infer)
+ce <- read_csv("data/fmli.csv")
+# summarize(ce, meanFINCBTAX = mean(FINCBTAX))
+bootstrap_dist <- ce %>%
+  specify(response = FINCBTAX) %>%
+  generate(reps =  1000, type = "bootstrap") %>%
+  calculate(stat = "mean")
+summarize(bootstrap_dist, ME = 2*sd(stat), lower = 62480 - ME, upper = 62480 + ME)
+```
+:::
+
+::: column
+*"The margin of \[sampling\] error can be described as the 'penalty' in precision for not talking to everyone in a given population. It describes the range that an answer likely falls between if the survey had reached everyone in a population, instead of just a sample of that population."* -- Courtney Kennedy, Director of Survey Research at Pew Research Center
+
+CI = interval of **plausible** values for the **parameter**
+:::
+:::
+
+**Safe interpretation:** I am P% confident that {insert what the parameter represents in context} is between {insert lower bound} and {insert upper bound}.
+
+------------------------------------------------------------------------
+
+## Caution: Confidence intervals in the wild
+
+Statement in [an article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1255808/) for The BMJ (British Medical Journal):
+
+```{r, echo = FALSE, fig.align='center', out.width='90%'}
+knitr::include_graphics("img/bmj.png")
+```
+
 
 ------------------------------------------------------------------------
 
@@ -120,10 +187,8 @@ knitr::include_graphics("img/Bem_Honorton.png")
 Bem and Honorton conducted extrasensory perception studies:
 
 ::: nonincremental
-
 -   A "sender" randomly chooses an object out of 4 possible objects and sends that information to a "receiver".
 -   The "receiver" is then given a set of 4 possible objects and they must decide which one most resembles the object sent to them.
-
 :::
 
 Out of 329 trials, the "receivers" correctly identified the object 106 times.
@@ -137,18 +202,14 @@ Out of 329 trials, the "receivers" correctly identified the object 106 times.
 Let's consider the following questions:
 
 ::: nonincremental
-
 a.  If ESP does not exist and the "receivers" are guessing, how often would we expect them to be correct?
 
-
 b.  For each sample (set of 329 trials), do we expect the proportion of correct guesses to be equal? Why or why not?
-
 
 c.  Is it possible to randomly guess correctly 106 out of 329 times (i.e., 32% of the time)?
 
 d.  How unusual is it to guess correctly 106 out of 329 times if ESP doesn't exist?
-
-::: 
+:::
 
 ::: fragment
 To help us answer d., we need a **sampling distribution** for the sample proportion where **we assume the "receivers" were purely guessing!**
@@ -160,11 +221,9 @@ To help us answer d., we need a **sampling distribution** for the sample proport
 
 ::: columns
 ::: column
-
 **Steps for (Approximate) Distribution:**
 
 ::: nonincremental
-
 (1) Decide on a sample size, $n$.
 
 (2) Randomly select a sample of size $n$ from the population.
@@ -193,7 +252,6 @@ To help us answer d., we need a **sampling distribution** for the sample proport
 **Steps for (Approximate) Distribution:**
 
 ::: nonincremental
-
 (1) Decide on a sample size, $n$.
 
 (2) Randomly select a sample of size $n$ from the population.
@@ -203,7 +261,6 @@ To help us answer d., we need a **sampling distribution** for the sample proport
 (4) Put the sample back in.
 
 (5) Repeat Steps (2) - (4) many (1000+) times.
-
 :::
 :::
 
@@ -221,11 +278,9 @@ include_graphics("img/stat100f22_sampling_distribution.png")
 **Steps for (Approximate) Distribution:**
 
 ::: nonincremental
-
 (1) Decide on a sample size, $n$.
 
 (2) Randomly select a sample of size $n$ from the population.
-
 :::
 
 ```{r}
@@ -238,9 +293,7 @@ rflip(n = 329, prob = 0.25)
 ## Sampling Distribution Under No ESP
 
 ::: nonincremental
-
 (3) Compute the sample statistic.
-
 :::
 
 ```{r}
@@ -248,13 +301,10 @@ rflip(n = 329, prob = 0.25, summarize = TRUE)
 ```
 
 ::: fragment
-
 ::: nonincremental
-
 (4) Put the sample back in.
 
 (5) Repeat Steps (2) - (4) many (1000+) times.
-
 :::
 
 ```{r}
@@ -283,10 +333,8 @@ What value should our sampling distribution be centered around if the receivers 
 ## Sampling Distribution Under No ESP
 
 ::: nonincremental
-
 -   How do the study results compare to the sampling distribution under no ESP?
     -   How unusual is it to guess correctly 106 out of 329 times if ESP doesn't exist?
-
 :::
 
 ```{r}
@@ -313,7 +361,6 @@ ggplot(data = guess_sampling_dist,
 In pairs:
 
 ::: nonincremental
-
 -   Decide who is going to be the sender and who is going to be the receiver.
 
 -   **Sender:** Think of one of these images.
@@ -323,7 +370,6 @@ In pairs:
 -   Now switch roles and do it again!
 
 -   Once you have both played each role, each person should add a tally mark on the chalkboard.
-
 :::
 :::
 
@@ -450,12 +496,10 @@ ggplot(data = guess_sampling_dist, mapping = aes(x = prop)) +
 ### Let's Take a Step Back from Our Last Statement...
 
 ::: nonincremental
-
 -   Two important words in data analysis:
 
     -   Reproducibility
     -   Replicability
-
 :::
 
 -   **Reproducibility**: If I give you the raw data and my write-up, you will get to the exact same final numbers that I did.
@@ -464,7 +508,7 @@ ggplot(data = guess_sampling_dist, mapping = aes(x = prop)) +
 
 -   **Replicability**: If you follow my study design but collect new data (i.e. repeat my study on new subjects), you will come to the same conclusions that I did.
 
----
+------------------------------------------------------------------------
 
 ### Replication Crisis
 
@@ -481,12 +525,9 @@ ggplot(data = guess_sampling_dist, mapping = aes(x = prop)) +
 ## Reminders:
 
 ::: nonincremental
-
 -   Don't forget that the midterm exam rewrites are due on Thursday at 5pm on Gradescope.
     -   Make sure to use the Quarto doc in the Midterm Exam (Rewrites) project on Posit Cloud.
 -   `r emo::ji("tada")` We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out [this application](https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform) by **Nov 15th**.
     -   About 10-12 hours of work per week.\
     -   Primary responsibilities: Attend weekly team meetings, lead a discussion section, hold office hours, grade assessments.
-    
-    
 :::

@@ -242,6 +242,8 @@ x_bar
 
 ```{r}
 #| output-location: column
+set.seed(999)
+
 
 # Construct bootstrap distribution
 bootstrap_dist <- movies %>%
@@ -272,7 +274,10 @@ ci
 
 **Interpretation:** The point estimate is \$ `r round(x_bar$stat, digits = 1)`M. I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `r round(ci$lower_ci, digits = 1)`M and \$ `r round(ci$upper_ci, digits = 1)`M.
 
-**Inline `R` code:** The point estimate is \$ `` `r round(x_bar$stat, digits = 1)` ``M. I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `` `r round(ci$lower_ci, digits = 1)` ``M and \$ `` `r round(ci$upper_ci, digits = 1)` ``M.
+**Inline `R` code:** The point estimate is \$ `` `r round(x_bar$stat, digits = 1)` ``M. I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `r ci$lower_ci` M and \$ `r round(ci$upper_ci, digits = 1)` M.
+
+
+
 
 ------------------------------------------------------------------------
 
@@ -313,8 +318,7 @@ diff_x_bar <- movies %>%
   drop_na(OpeningWeekend) %>%
   filter(Genre %in% c("Drama", "Action")) %>%
   specify(OpeningWeekend ~ Genre) %>%
-  calculate(stat = "diff in means", 
-            order = c("Action", "Drama"))
+  calculate(stat = "diff in means")
 diff_x_bar
 ```
 
