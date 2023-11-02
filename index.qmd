@@ -22,4 +22,5 @@ The lecture slides (both in HTML and PDF) will be posted here.
 | Week 8, Wed  | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk08wed.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk08wed.pdf) |
 | Week 9, Mon  | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk09mon.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk09mon.pdf) |
 | Week 9, Wed  | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk09wed.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk09wed.pdf) |
+| Week 10, Mon  | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk10mon.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk10mon.pdf) |
 :::

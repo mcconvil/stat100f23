@@ -70,7 +70,7 @@ theme_update(text = element_text(size = 16))
 
 ::: columns
 ::: column
-- Confidence interval interpretations
+-   Confidence interval interpretations
 -   Set-up the structure of **hypothesis testing**
 :::
 
@@ -149,7 +149,6 @@ Statement in [an article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1255808/)
 ```{r, echo = FALSE, fig.align='center', out.width='90%'}
 knitr::include_graphics("img/bmj.png")
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -387,8 +386,8 @@ knitr::include_graphics("img/four_images.png")
 What do we need to modify in the code to answer the question?
 
 ```{r, eval = FALSE}
-guess_sampling_dist <- do(1000)*rflip(n = 329, prob = 0.25)
-p_hat <- 106/329
+guess_sampling_dist <- do(1000)*rflip(n = 80, prob = 0.25)
+p_hat <- 27/80
 ggplot(data = guess_sampling_dist, mapping = aes(x = prop)) +
   geom_histogram(color = "white", bins = 20) +
   geom_vline(xintercept = p_hat, color = "orange", size = 2)

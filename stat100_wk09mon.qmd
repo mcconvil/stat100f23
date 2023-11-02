@@ -276,9 +276,6 @@ ci
 
 **Inline `R` code:** The point estimate is \$ `` `r round(x_bar$stat, digits = 1)` ``M. I am 95% confidence that the average amount of money made by all Hollywood movies is between \$ `r ci$lower_ci` M and \$ `r round(ci$upper_ci, digits = 1)` M.
 
-
-
-
 ------------------------------------------------------------------------
 
 ## Estimation for a Single Mean
