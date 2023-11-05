@@ -68,187 +68,159 @@ theme_update(text = element_text(size = 16))
 
 ::: columns
 ::: column
-* Learn the **language** of hypothesis testing (including **p-values**)
+-   Learn the **language** of hypothesis testing (including **p-values**)
 
-* Practice framing research questions in terms of hypotheses
+-   Practice framing research questions in terms of hypotheses
 :::
 
 ::: column
-* Learn how to generate **null distributions** 
+-   Learn how to generate **null distributions**
 
-* Use `infer` to conduct hypothesis tests in `R`
+-   Use `infer` to conduct hypothesis tests in `R`
 :::
 :::
-
 
 # `r emo::ji("thinking")` The second half of Stat 100 is more conceptually difficult. `r emo::ji("thinking")`
 
 [So keep coming to lecture, to section, to wrap-up sessions, and to office hours to get your questions answered!]{.custom-subtitle}
 
----
+------------------------------------------------------------------------
 
 ### Hypothesis Testing Framework
 
 Have two competing hypothesis:
 
-* Null Hypothesis $(H_o)$: Dull hypothesis, status quo, random chance, no effect...
+-   Null Hypothesis $(H_o)$: Dull hypothesis, status quo, random chance, no effect...
 
-
-* Alternative Hypothesis $(H_a)$: (Usually) contains the researchers' conjecture.
-
+-   Alternative Hypothesis $(H_a)$: (Usually) contains the researchers' conjecture.
 
 ::: fragment
-
 Must first take those hypotheses and translate them into statements about the **population parameters** so that we can test them with sample data.
 
-
 Example:
-
 :::
 
 ::: columns
 ::: column
-
 ::: fragment
-
 $H_o$: ESP doesn't exist.
 
 $H_a$: ESP does exist.
 
 Then translate into a statistical problem!
-
+:::
 :::
 
-:::
-
- 
 ::: column
-
 ::: fragment
+$p$ =
 
-$p$ = 
+$H_o$:
 
-$H_o$: 
-
-$H_a$: 
-
-::: 
-::: 
-
+$H_a$:
+:::
+:::
 :::
 
 # Let's Practice Setting up Hypotheses!
 
----
+------------------------------------------------------------------------
 
 ### Example 1
 
 Can a simple smile have an effect on punishment assigned following an infraction? In a 1995 study, Hecht and LeFrance examined the effect of a smile on the leniency of disciplinary action for wrongdoers. Participants in the experiment took on the role of members of a college disciplinary panel judging students accused of cheating. For each suspect, along with a description of the offense, a picture was provided with either a smile or neutral facial expression. A leniency score was calculated based on the disciplinary decisions made by the participants.
 
-
 Write out Ho and Ha in terms of conjectures.
-
-
-<br> 
 
 <br>
 
+<br>
 
-
-Write out Ho and Ha in terms of population parameters.  
+Write out Ho and Ha in terms of population parameters.
 
 Make sure to first define the population parameter in the context of the problem.
 
-
----
+------------------------------------------------------------------------
 
 ### Example 2
 
-Can you tell if a mouse is in pain by looking at its facial expression? A recent study created a ‘‘mouse grimace scale” and tested to see if there was a positive correlation between scores on that scale and the degree and duration of pain (based on injections of a weak and mildly painful solution). The study’s authors believe that if the scale applies to other mammals as well, it could help veterinarians test how well painkillers and other medications work in animals.
-
+Can you tell if a mouse is in pain by looking at its facial expression? A recent study created a ''mouse grimace scale" and tested to see if there was a positive correlation between scores on that scale and the degree and duration of pain (based on injections of a weak and mildly painful solution). The study's authors believe that if the scale applies to other mammals as well, it could help veterinarians test how well painkillers and other medications work in animals.
 
 Write out Ho and Ha in terms of conjectures.
 
-
-<br> 
+<br>
 
 <br>
 
-
-
-Write out Ho and Ha in terms of population parameters.  
+Write out Ho and Ha in terms of population parameters.
 
 Make sure to first define the population parameter in the context of the problem.
 
----
+------------------------------------------------------------------------
 
 ### Hypothesis Testing Framework
 
-
 Flavors of hypotheses:
 
-* $H_o$: parameter $=$ null value
+-   $H_o$: parameter $=$ null value
 
-* One of the following:
-    + $H_a$: parameter $\neq$ null value 
-    + $H_a$: parameter $>$ null value 
-    + $H_a$: parameter $<$ null value 
+-   One of the following:
+
+    -   $H_a$: parameter $\neq$ null value
+    -   $H_a$: parameter $>$ null value
+    -   $H_a$: parameter $<$ null value
 
 ::: fragment
-
 **Question**: But doesn't $H_o$ sometimes represent $\leq$ or $\geq$?
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### Hypothesis Testing Framework
 
 Once you have set-up your hypotheses...
 
-* Collect data.
+-   Collect data.
 
-* Assume $H_o$ is correct.  
+-   Assume $H_o$ is correct.
 
-* Quantify the likelihood of the sample results using a test statistic.
-    + **Test statistic**:  Numerical summary of the sample data
-        + Often is equal to the sample statistic.
-    + **Null distribution**: Sampling distribution of the test statistic if the null hypothesis is true.
+-   Quantify the likelihood of the sample results using a test statistic.
+
+    -   **Test statistic**: Numerical summary of the sample data
+        -   Often is equal to the sample statistic.
+    -   **Null distribution**: Sampling distribution of the test statistic if the null hypothesis is true.
 
 ::: fragment
-
 **Question**: How do we use the null distribution to quantify the likelihood of the sample results?
-
 :::
-    
----
+
+------------------------------------------------------------------------
 
 ### Null Distributions and P-Values
 
 **p-value** = Probability of the observed test statistic or more extreme if $H_o$ is true
 
+-   More extreme = direction of $H_a$
 
-* More extreme = direction of $H_a$
+-   Find the proportion of test statistics in the null distribution that are equal to or more extreme that the observed test statistic
 
+    -   Let's draw some pictures.
 
-* Find the proportion of test statistics in the null distribution that are equal to or more extreme that the observed test statistic
-    + Let's draw some pictures.
-   
----
+------------------------------------------------------------------------
 
 ### P-values and Conclusions
 
-* If the p-value is small, we have evidence for $H_a$.
+-   If the p-value is small, we have evidence for $H_a$.
 
-* If the p-value is not small, we don't have evidence for $H_a$.
+-   If the p-value is not small, we don't have evidence for $H_a$.
 
-* In your conclusions, focus on $H_a$ (the hypothesis that stores the researchers' conjecture).
+-   In your conclusions, focus on $H_a$ (the hypothesis that stores the researchers' conjecture).
 
-* Will discuss conclusions in more detail soon!
-    + For example, what do we mean by "small"?
+-   Will discuss conclusions in more detail soon!
 
+    -   For example, what do we mean by "small"?
 
----
+------------------------------------------------------------------------
 
 ## Generating Null Distributions
 
@@ -256,18 +228,15 @@ Once you have set-up your hypotheses...
 
 ::: columns
 ::: column
-
 Steps:
 
-1. Flip unfair coin (prop heads = 0.25) 329 times.
-2. Compute proportion of heads.
-3. Repeat 1 and 2 many times.
+1.  Flip unfair coin (prop heads = 0.25) 329 times.
+2.  Compute proportion of heads.
+3.  Repeat 1 and 2 many times.
+:::
 
-::: 
 ::: column
-
 ::: fragment
-
 `R` code using the `infer` package:
 
 ```{r}
@@ -285,19 +254,15 @@ null_dist <- esp %>%
   generate(reps = 1000, type = "draw") %>%
   calculate(stat ="prop")
 ```
-
 :::
-
 :::
 :::
 
 ::: fragment
-
 For different variable types, we will need to move beyond using a coin to conceptualize the null distribution.
-
 :::
 
----
+------------------------------------------------------------------------
 
 ## Hypothesis Testing in `R`
 
@@ -311,7 +276,7 @@ test_stat <- esp %>%
 test_stat
 ```
 
----
+------------------------------------------------------------------------
 
 ## Hypothesis Testing in `R`
 
@@ -325,7 +290,7 @@ visualize(null_dist) +
 
 ```
 
----
+------------------------------------------------------------------------
 
 ## Hypothesis Testing in `R`
 
@@ -340,24 +305,18 @@ p_value
 ```
 
 ::: fragment
-
-**Interpretation of $p$-value**: If ESP doesn't exist, the probability of observing 106 or more correct identifications out of 329 trials equals `r p_value`.
-
+**Interpretation of** $p$-value: If ESP doesn't exist, the probability of observing 106 or more correct identifications out of 329 trials equals `r p_value`.
 :::
 
 ::: fragment
-
 **Conclusion**: Since it is so unlikely (i.e., practically impossible) to have seen such unusual results if ESP doesn't exist, these data suggest that ESP does exist.
-
 :::
 
+------------------------------------------------------------------------
 
+### Example
 
----
-
-###  Example
-
-In 2005, the researchers Antonioli and Reveley posed the question "Does swimming with the dolphins help depression?" To investigate, they recruited 30 US subjects diagnosed with mild to moderate depression. Participants were randomly assigned to either the treatment group or the control group. Those in the treatment group went swimming with dolphins, while those in the control group went swimming without dolphins. After two weeks, each subject was categorized as “showed substantial improvement” or “did not show substantial improvement”.
+In 2005, the researchers Antonioli and Reveley posed the question "Does swimming with the dolphins help depression?" To investigate, they recruited 30 US subjects diagnosed with mild to moderate depression. Participants were randomly assigned to either the treatment group or the control group. Those in the treatment group went swimming with dolphins, while those in the control group went swimming without dolphins. After two weeks, each subject was categorized as "showed substantial improvement" or "did not show substantial improvement".
 
 ```{r, message=FALSE,echo = FALSE}
 dolphins <- read.csv("data/Dolphins.txt", sep="")
@@ -367,27 +326,22 @@ Here's a contingency table of `improve` and `group`.
 
 ::: columns
 ::: column
-
 ```{r}
 dolphins %>%
   count(group, improve)
 ```
+:::
 
-::: 
 ::: column
-
 Ho:
 
 Ha:
-
-::: 
-::: 
-
+:::
+:::
 
 How might we generate the null distribution for this scenario?
 
-
----
+------------------------------------------------------------------------
 
 ### Dolphin Example
 
@@ -405,14 +359,11 @@ dolphins %>%
   sample_n(8)
 ```
 
-
-
 Once you have your simulated null statistic, add it to the class dotplot.
 
+# Will finish the dolphin example on the next p-set. Let's return to the Palmer Penguins.
 
-# Will finish the dolphin example on the next p-set.  Let's return to the Palmer Penguins.
-
----
+------------------------------------------------------------------------
 
 ## Penguins Example
 
@@ -430,8 +381,7 @@ Let's return to the `penguins` data and ask if flipper length varies, on average
 
 **Statistical Hypotheses**:
 
-
----
+------------------------------------------------------------------------
 
 ## Exploratory Data Analysis
 
@@ -449,10 +399,9 @@ ggplot(mapping = aes(x = sex,
 
 ```
 
----
+------------------------------------------------------------------------
 
 ## Two-Sided Hypothesis Test
-
 
 ```{r}
 #| output-location: column
@@ -467,7 +416,6 @@ test_stat <- penguins %>%
 test_stat
 ```
 
-
 ```{r}
 # Generate null distribution 
 null_dist <- penguins %>%
@@ -479,8 +427,7 @@ null_dist <- penguins %>%
             order = c("female", "male"))
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Two-Sided Hypothesis Test
 
@@ -495,8 +442,7 @@ visualize(null_dist) +
              color = "deeppink", size = 2)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## Two-Sided Hypothesis Test
 
@@ -510,13 +456,11 @@ p_value <- null_dist %>%
 p_value
 ```
 
+**Interpretation of** $p$-value: If the mean flipper length does not differ by sex in the population, the probability of observing a difference in the sample means of at least `r abs(test_stat$stat)` mm (in magnitude) is equal to `r p_value`.
 
-**Interpretation of $p$-value**: If the mean flipper length does not differ by sex in the population, the probability of observing a difference in the sample means of at least `r abs(test_stat$stat)` mm (in magnitude) is equal to `r p_value`.
+**Conclusion**: These data represent evidence that flipper length does vary by sex.
 
-
-**Conclusion**: These data represent evidence that flipper length does vary by sex. 
-
----
+------------------------------------------------------------------------
 
 ## Reminders:
 
@@ -525,4 +469,3 @@ p_value
     -   About 10-12 hours of work per week.\
     -   Primary responsibilities: Attend weekly team meetings, lead a discussion section, hold office hours, grade assessments.
 :::
-
