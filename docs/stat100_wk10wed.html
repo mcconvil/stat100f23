@@ -407,12 +407,10 @@
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li class="fragment">🎉 We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform">this application</a> by <strong>Nov 15th</strong>.
-<ul>
-<li class="fragment">About 10-12 hours of work per week.<br>
+<li class="fragment">🎉 We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform">this application</a> by <strong>Nov 15th</strong>.</li>
+<li class="fragment">No wrap-up session on Friday due to the university holiday.<br>
 </li>
-<li class="fragment">Primary responsibilities: Attend weekly team meetings, lead a discussion section, hold office hours, grade assessments.</li>
-</ul></li>
+<li class="fragment">You are all invited to the <strong>Info Session on Data Science Internships</strong>: Mon at 4pm in SC 316!</li>
 </ul>
 <h3 id="goals-for-today">Goals for Today</h3>
 <div class="columns">
@@ -432,9 +430,176 @@
 </div>
 </div>
 </section>
-<section class="slide level2">
+<section>
+<section id="now-that-you-are-at-least-25-of-the-way-to-a-stats-secondary-what-other-classes-should-you-consider" class="title-slide slide level1 center">
+<h1>Now that you are at least 25% of the way to a stats secondary, what other classes should you consider?</h1>
 
-<p>XXX: What we are learning in Stat 100</p>
+</section>
+<section id="that-next-stats-class" class="slide level2">
+<h2>That Next Stats Class</h2>
+<ul>
+<li class="fragment"><p>But first… <strong>Common Question</strong>: How should I describe my post-Stat 100 coding abilities?</p></li>
+<li class="fragment"><p><strong>Potential Answer</strong>: You have learned how to write code <strong>to analyze data</strong>. This includes visualization (<code>ggplot2</code>), data wrangling (<code>dplyr</code>), data importation (<code>readr</code>), modeling, inference (<code>infer</code>) and communication (with <code>Quarto</code>).</p></li>
+<li class="fragment"><p><strong>Follow-up Question</strong>: So what coding is there left to learn?</p></li>
+<li class="fragment"><p><strong>Answer</strong>: Learning how to <strong>program</strong>. This includes topics such as control flow, iteration, creating functions, and vectorization.</p></li>
+</ul>
+</section>
+<section id="that-next-coding-class" class="slide level2">
+<h2>That Next Coding Class</h2>
+<div>
+<ul>
+<li>Stat 108: Introduction to Statistical Computing with <code>R</code></li>
+<li>CompSci 32: Computational Thinking and Problem Solving</li>
+<li>CompSci 50: Introduction to Computer Science</li>
+<li>AP 10: Computing with Python for Scientists and Engineers</li>
+</ul>
+</div>
+</section>
+<section id="that-next-modeling-course" class="slide level2">
+<h2>That Next Modeling Course</h2>
+<div>
+<ul>
+<li>Stat 109A: Data Science I &amp; Stat 109B: Data Science II</li>
+<li>Stat 139: Linear Models</li>
+<li>Many of the upper-level stats courses are modeling courses (but they do have pre-reqs).</li>
+</ul>
+</div>
+</section>
+<section id="that-next-theorymethods-course" class="slide level2">
+<h2>That Next Theory/Methods Course</h2>
+<div>
+<ul>
+<li>Stat 110: Introduction to Probability</li>
+<li>Stat 111: Introduction to Statistical Inference</li>
+</ul>
+</div>
+</section>
+<section id="that-next-visualization-course" class="slide level2">
+<h2>That Next Visualization Course</h2>
+<div>
+<ul>
+<li>Stat 108: Introduction to Statistical Computing with <code>R</code></li>
+<li>CompSci 171: Visualization</li>
+<li>Stat 106: Data Science for Sports Analytics
+<ul>
+<li>Not on the books yet but should be coming next academic year.</li>
+</ul></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="another-hypothesis-testing-example" class="title-slide slide level1 center">
+<h1>Another Hypothesis Testing Example</h1>
+
+</section>
+<section id="penguins-example" class="slide level2">
+<h2>Penguins Example</h2>
+<p>Let’s return to the <code>penguins</code> data and ask if flipper length varies, on average, by the sex of the penguin.</p>
+<p><strong>Research Question</strong>: Does flipper length differ by sex?</p>
+<p><strong>Response Variable</strong>:</p>
+<p><br></p>
+<p><strong>Explanatory Variable</strong>:</p>
+<p><br></p>
+<p><strong>Statistical Hypotheses</strong>:</p>
+</section>
+<section id="exploratory-data-analysis" class="slide level2">
+<h2>Exploratory Data Analysis</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>penguins <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> sex,</span>
+<span id="cb1-8"><a href="#cb1-8"></a>                     <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-2-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="two-sided-hypothesis-test" class="slide level2">
+<h2>Two-Sided Hypothesis Test</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Compute observed test statistic</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>test_stat <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">specify</span>(flipper_length_mm <span class="sc">~</span> sex) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span><span class="st">"diff in means"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</span>
+<span id="cb2-7"><a href="#cb2-7"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>Response: flipper_length_mm (numeric)
+Explanatory: sex (factor)
+# A tibble: 1 × 1
+   stat
+  &lt;dbl&gt;
+1 -7.14</code></pre>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Generate null distribution </span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>null_dist <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">specify</span>(flipper_length_mm <span class="sc">~</span> sex) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span><span class="st">"diff in means"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="two-sided-hypothesis-test-1" class="slide level2">
+<h2>Two-Sided Hypothesis Test</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Graph null distribution with test statistic</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">visualize</span>(null_dist) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat<span class="sc">$</span>stat,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">abs</span>(test_stat<span class="sc">$</span>stat),</span>
+<span id="cb5-6"><a href="#cb5-6"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-5-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="two-sided-hypothesis-test-2" class="slide level2">
+<h2>Two-Sided Hypothesis Test</h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Compute p-value</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>p_value <span class="ot">&lt;-</span> null_dist <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_stat,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>              <span class="at">direction =</span> <span class="st">"two_sided"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1       0</code></pre>
+</div>
+</div>
+</div>
+<p><strong>Interpretation of</strong> <span class="math inline">\(p\)</span>-value: If the mean flipper length does not differ by sex in the population, the probability of observing a difference in the sample means of at least 7.142316 mm (in magnitude) is equal to 0.</p>
+<p><strong>Conclusion</strong>: These data represent evidence that flipper length does vary by sex.</p>
 </section>
 <section class="slide level2">
 
@@ -488,7 +653,7 @@
 <li class="fragment"><p>Will depend on the convention in your field.</p></li>
 <li class="fragment"><p>Want a small <span class="math inline">\(\alpha\)</span> and a small <span class="math inline">\(\beta\)</span>. But they are related.</p>
 <ul>
-<li class="fragment"><strong>The smaller <span class="math inline">\(\alpha\)</span> is the larger <span class="math inline">\(\beta\)</span> will be.</strong></li>
+<li class="fragment"><strong>The smaller</strong> <span class="math inline">\(\alpha\)</span> is the larger <span class="math inline">\(\beta\)</span> will be.</li>
 </ul></li>
 <li class="fragment"><p>Choose a lower <span class="math inline">\(\alpha\)</span> (e.g., 0.01, 0.001) when the Type I error is worse and a higher <span class="math inline">\(\alpha\)</span> (e.g., 0.1) when the Type II error is worse.</p></li>
 <li class="fragment"><p>Can’t easily compute <span class="math inline">\(\beta\)</span>. Why?</p></li>
@@ -515,7 +680,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-2-1.png" width="4000"></p>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-7-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
@@ -524,7 +689,7 @@
 <div>
 <ul>
 <li><p>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.05\)</span>, he needs to hit 9 or more to get a small enough p-value to reject <span class="math inline">\(H_o\)</span>.</p></li>
-<li><p>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.05\)</span>, the power of this test is 0.166.</p></li>
+<li><p>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.05\)</span>, the power of this test is 0.214.</p></li>
 <li><p>Why is the power <strong>so low</strong>?</p></li>
 <li><p>What aspects of the test could the baseball player change to <strong>increase the power</strong> of the test?</p></li>
 </ul>
@@ -543,7 +708,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-3-1.png" width="4000"></p>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-8-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
@@ -552,7 +717,7 @@
 <div>
 <ul>
 <li><p>Increasing the sample size increases the power.</p></li>
-<li><p>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.05\)</span> and the sample size is now 100, the power of this test is 0.57.</p></li>
+<li><p>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.05\)</span> and the sample size is now 100, the power of this test is 0.49.</p></li>
 </ul>
 </div>
 </div>
@@ -562,14 +727,14 @@
 
 <h3 id="example-2">Example</h3>
 <p>Suppose we have a baseball player who has been a 0.250 career hitter who suddenly improves to be a 0.333 hitter. He wants a raise but needs to convince his manager that he has genuinely improved. The manager offers to examine his performance in <del>20</del> 100 at-bats.</p>
-<p><strong>What will happen to the power of the test if we increase <span class="math inline">\(\alpha\)</span> to 0.1?</strong></p>
+<p><strong>What will happen to the power of the test if we increase</strong> <span class="math inline">\(\alpha\)</span> to 0.1?</p>
 <div class="columns">
 <div class="column">
 <div class="cell" data-layout-align="center" data-fig.asp="0.65">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-4-1.png" width="4000"></p>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-9-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
@@ -581,7 +746,7 @@
 <ul>
 <li>Decreases <span class="math inline">\(\beta\)</span>.</li>
 </ul></li>
-<li>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.1\)</span> and the sample size is 100, the power of this test is 0.66.</li>
+<li>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.1\)</span> and the sample size is 100, the power of this test is 0.64.</li>
 </ul>
 </div>
 </div>
@@ -598,7 +763,7 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-5-1.png" width="4000"></p>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-10-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
@@ -611,7 +776,7 @@
 <li>Often standardized.</li>
 </ul></li>
 <li><p>Increasing the effect size increases the power.</p></li>
-<li><p>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.1\)</span>, the sample size is 100, and the true probability of hitting the ball is 0.4, the power of this test is 0.96.</p></li>
+<li><p>When <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.1\)</span>, the sample size is 100, and the true probability of hitting the ball is 0.4, the power of this test is 0.97.</p></li>
 </ul>
 </div>
 </div>
@@ -627,24 +792,24 @@
 </div>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Create a dummy dataset with the correct sample size</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">at_bats =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"hit"</span>, <span class="dv">80</span>), </span>
-<span id="cb1-3"><a href="#cb1-3"></a>                              <span class="fu">rep</span>(<span class="st">"miss"</span>, <span class="dv">20</span>)))</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6"></a>null <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="fu">specify</span>(<span class="at">response =</span> at_bats, <span class="at">success =</span> <span class="st">"hit"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">p =</span> <span class="fl">0.25</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"draw"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"prop"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">27</span>, <span class="at">color =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Create a dummy dataset with the correct sample size</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">at_bats =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"hit"</span>, <span class="dv">80</span>), </span>
+<span id="cb8-3"><a href="#cb8-3"></a>                              <span class="fu">rep</span>(<span class="st">"miss"</span>, <span class="dv">20</span>)))</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a>null <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">specify</span>(<span class="at">response =</span> at_bats, <span class="at">success =</span> <span class="st">"hit"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">p =</span> <span class="fl">0.25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"draw"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"prop"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">27</span>, <span class="at">color =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-6-1.png" width="4000"></p>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-11-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
@@ -661,21 +826,21 @@
 </div>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code> 95% 
 0.32 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>),</span>
-<span id="cb4-4"><a href="#cb4-4"></a>             <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb4-5"><a href="#cb4-5"></a>             <span class="at">color =</span> <span class="st">"turquoise4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>),</span>
+<span id="cb11-4"><a href="#cb11-4"></a>             <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>             <span class="at">color =</span> <span class="st">"turquoise4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-7-1.png" width="4000"></p>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-12-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
@@ -692,23 +857,23 @@
 </div>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>alt <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">specify</span>(<span class="at">response =</span> at_bats, <span class="at">success =</span> <span class="st">"hit"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">p =</span> <span class="fl">0.333</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"draw"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"prop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">mutate</span>(<span class="at">dist =</span> <span class="st">"Alternative"</span>)</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="fu">ggplot</span>(<span class="at">data =</span> alt, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">27</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>),</span>
-<span id="cb5-11"><a href="#cb5-11"></a>             <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb5-12"><a href="#cb5-12"></a>             <span class="at">color =</span> <span class="st">"turquoise4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>alt <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">specify</span>(<span class="at">response =</span> at_bats, <span class="at">success =</span> <span class="st">"hit"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">p =</span> <span class="fl">0.333</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"draw"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"prop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>  <span class="fu">mutate</span>(<span class="at">dist =</span> <span class="st">"Alternative"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">ggplot</span>(<span class="at">data =</span> alt, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">27</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>),</span>
+<span id="cb12-11"><a href="#cb12-11"></a>             <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb12-12"><a href="#cb12-12"></a>             <span class="at">color =</span> <span class="st">"turquoise4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-8-1.png" width="4000"></p>
+<p><img data-src="stat100_wk10wed_files/figure-revealjs/unnamed-chunk-13-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
@@ -724,13 +889,13 @@
 </ol>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>alt <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">summarize</span>(<span class="at">power =</span> <span class="fu">mean</span>(stat <span class="sc">&gt;</span> <span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>alt <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">summarize</span>(<span class="at">power =</span> <span class="fu">mean</span>(stat <span class="sc">&gt;</span> <span class="fu">quantile</span>(null<span class="sc">$</span>stat, <span class="fl">0.95</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   power
   &lt;dbl&gt;
-1 0.567</code></pre>
+1 0.579</code></pre>
 </div>
 </div>
 </section>
@@ -775,7 +940,7 @@
 <div class="footer footer-default">
 
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

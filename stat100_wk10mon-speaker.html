@@ -404,6 +404,11 @@
 </div>
 </div>
 </section>
+<section>
+<section id="grab-30-notecards-it-is-okay-if-they-already-have-markings-on-them.-and-please-return-the-notecards-to-the-same-spot-after-class." class="title-slide slide level1 unnumbered unlisted center">
+<h1>Grab 30 notecards! It is okay if they already have markings on them. And, please return the notecards to the same spot after class.</h1>
+
+</section>
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
@@ -428,7 +433,7 @@
 </ul>
 </div>
 </div>
-</section>
+</section></section>
 <section>
 <section id="the-second-half-of-stat-100-is-more-conceptually-difficult." class="title-slide slide level1 center">
 <h1>🤔 The second half of Stat 100 is more conceptually difficult. 🤔</h1>
@@ -602,6 +607,11 @@
   &lt;dbl&gt;
 1 0.322</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>test_stat <span class="ot">&lt;-</span> <span class="dv">106</span><span class="sc">/</span><span class="dv">329</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3221884</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -609,10 +619,10 @@
 <h2>Hypothesis Testing in <code>R</code></h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Graph null distribution with test statistic</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">visualize</span>(null_dist) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat<span class="sc">$</span>stat,</span>
-<span id="cb4-4"><a href="#cb4-4"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Graph null distribution with test statistic</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">visualize</span>(null_dist) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -628,11 +638,11 @@
 <h2>Hypothesis Testing in <code>R</code></h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Compute p-value</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>p_value <span class="ot">&lt;-</span> null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_stat,</span>
-<span id="cb5-4"><a href="#cb5-4"></a>              <span class="at">direction =</span> <span class="st">"right"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Compute p-value</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>p_value <span class="ot">&lt;-</span> null_dist <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_stat,</span>
+<span id="cb7-4"><a href="#cb7-4"></a>              <span class="at">direction =</span> <span class="st">"right"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -657,8 +667,8 @@
 <div class="columns">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>dolphins <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">count</span>(group, improve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dolphins <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">count</span>(group, improve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      group improve  n
 1   Control      no 12
@@ -715,13 +725,13 @@
 <h2>Exploratory Data Analysis</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a>penguins <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> sex,</span>
-<span id="cb10-6"><a href="#cb10-6"></a>                     <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>penguins <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> sex,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>                     <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -737,13 +747,13 @@
 <h2>Two-Sided Hypothesis Test</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Compute observed test statistic</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>test_stat <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">specify</span>(flipper_length_mm <span class="sc">~</span> sex) <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span><span class="st">"diff in means"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</span>
-<span id="cb11-7"><a href="#cb11-7"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Compute observed test statistic</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>test_stat <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">specify</span>(flipper_length_mm <span class="sc">~</span> sex) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span><span class="st">"diff in means"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</span>
+<span id="cb13-7"><a href="#cb13-7"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>Response: flipper_length_mm (numeric)
@@ -756,26 +766,26 @@ Explanatory: sex (factor)
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Generate null distribution </span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>null_dist <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">specify</span>(flipper_length_mm <span class="sc">~</span> sex) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span><span class="st">"diff in means"</span>,</span>
-<span id="cb13-8"><a href="#cb13-8"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Generate null distribution </span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>null_dist <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">specify</span>(flipper_length_mm <span class="sc">~</span> sex) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span><span class="st">"diff in means"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="two-sided-hypothesis-test-1" class="slide level2">
 <h2>Two-Sided Hypothesis Test</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Graph null distribution with test statistic</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">visualize</span>(null_dist) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat<span class="sc">$</span>stat,</span>
-<span id="cb14-4"><a href="#cb14-4"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">abs</span>(test_stat<span class="sc">$</span>stat),</span>
-<span id="cb14-6"><a href="#cb14-6"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Graph null distribution with test statistic</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">visualize</span>(null_dist) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat<span class="sc">$</span>stat,</span>
+<span id="cb16-4"><a href="#cb16-4"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">abs</span>(test_stat<span class="sc">$</span>stat),</span>
+<span id="cb16-6"><a href="#cb16-6"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -791,11 +801,11 @@ Explanatory: sex (factor)
 <h2>Two-Sided Hypothesis Test</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Compute p-value</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>p_value <span class="ot">&lt;-</span> null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_stat,</span>
-<span id="cb15-4"><a href="#cb15-4"></a>              <span class="at">direction =</span> <span class="st">"two_sided"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Compute p-value</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>p_value <span class="ot">&lt;-</span> null_dist <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_stat,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>              <span class="at">direction =</span> <span class="st">"two_sided"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1

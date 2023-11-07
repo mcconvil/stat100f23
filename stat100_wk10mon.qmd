@@ -56,6 +56,8 @@ theme_update(text = element_text(size = 16))
 :::
 :::
 
+# Grab 30 notecards! It is okay if they already have markings on them. And, please return the notecards to the same spot after class. {.unnumbered .unlisted}
+
 ------------------------------------------------------------------------
 
 ## Announcements
@@ -274,6 +276,9 @@ test_stat <- esp %>%
   specify(response = guess, success = "correct") %>%
   calculate(stat ="prop")
 test_stat
+
+test_stat <- 106/329
+test_stat
 ```
 
 ------------------------------------------------------------------------
@@ -285,7 +290,7 @@ test_stat
 
 # Graph null distribution with test statistic
 visualize(null_dist) +
-  geom_vline(xintercept = test_stat$stat,
+  geom_vline(xintercept = test_stat,
              color = "deeppink", size = 2)
 
 ```
