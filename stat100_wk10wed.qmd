@@ -190,7 +190,6 @@ ggplot(mapping = aes(x = sex,
 ```{r}
 #| output-location: column
 
-
 # Compute observed test statistic
 test_stat <- penguins %>%
   drop_na(sex) %>%
