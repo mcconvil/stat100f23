@@ -1,0 +1,723 @@
+---
+pagetitle: "Probability Concepts"
+format: 
+  revealjs:
+    html-math-method: mathjax
+    chalkboard: true
+    incremental: true
+    theme: [default, custom.scss]
+    multiplex: true
+    height: 900
+    width: 1600
+    slide-number: c
+    auto-stretch: false
+    callout-appearance: simple
+    pdf-max-pages-per-slide: 1
+    menu: 
+      side: right
+      numbers: true
+    code-overflow: wrap
+#    fontsize: 20
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-asp: 0.75
+  fig-width: 8
+#  fig-align: center
+  fig-dpi: 500
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+# Some global options still not available in quarto
+ knitr::opts_chunk$set(fig.align = 'center')
+library(knitr)
+library(tidyverse)
+theme_update(text = element_text(size = 16))
+```
+
+------------------------------------------------------------------------
+
+::: columns
+::: {.column .center width="45%"}
+![](img/DAW.png){width="90%"}
+:::
+
+::: {.column .center width="55%"}
+[Probability Concepts]{.custom-title}
+
+<br> <br> <br>
+
+[Kelly McConville]{.custom-subtitle}
+
+[Stat 100 <br> Week 11 \| Fall 2023]{.custom-subtitle}
+:::
+:::
+
+------------------------------------------------------------------------
+
+## Announcements
+
+- No sections or wrap-ups during Thanksgiving Week.
+- OH schedule for Thanksgiving Week:
+    + Sun, Nov 19th - Tues, Nov 21st: [Happening with some modifications](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing)
+    + No OHs Wed, Nov 22nd - Sun, Nov 26th!
+
+### Goals for Today
+
+::: columns
+::: column
+* Learn about conditional probabilities
+
+* Discuss probability concepts
+:::
+
+::: column
+* Cover continuous random variables
+
+* Learn important **named** random variables
+:::
+:::
+
+# But First, Final Round of "Which Flavor of Data Scientist Are You?"
+
+---
+
+::: columns
+::: column
+Data Visualizer
+
+<iframe src="https://giphy.com/embed/d31vTpVi1LAcDvdm" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen>
+
+</iframe>
+
+Data Wrangler
+
+<iframe src="https://giphy.com/embed/DbaUtl1DcLyrdwhzGJ" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen>
+
+</iframe>
+
+:::
+
+::: column
+
+Model Builder
+
+<br>
+
+<iframe src="https://giphy.com/embed/xZsLh7B3KMMyUptD9D" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
+
+</iframe>
+
+Inferencer
+
+<br>
+
+<iframe src="https://giphy.com/embed/NS7gPxeumewkWDOIxi" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+:::
+:::
+
+---
+
+### Conditional Probabilities
+
+> "Conditioning is the soul of statistics." — Joe Blitzstein, Stat 110 Prof
+
+
+
+**Question**: What do we mean by "conditioning"?
+
+
+* Most polar bears are twins. Therefore, if you're a twin, you're probably a polar bear.
+    * P(twin given polar bear) $\neq$ P(polar bear given twin)
+
+
+* The p-value is a conditional probability.  
+    * P-value = P(data given $H_o$) ( $\neq$ P( $H_o$ given data))
+
+
+
+---
+
+### Conditional Probabilities
+
+**Other favorite examples:**
+
+* P(have COVID given wear mask) $\neq$ P(wear mask given have COVID)
+    + In a CDC study, P(wear mask given have COVID) = 0.71 while P(have COVID given wear mask) is much lower.
+  
+
+* P(it is raining given there are clouds directly overhead) $\neq$ Pr(there are clouds directly overhead given it is raining)
+
+::: fragment
+
+**Notation**: P(A given B) = P(A | B)
+
+:::
+
+
+---
+
+## Example {.smaller}
+
+Testing for COVID-19 was an important part of the *Keep Harvard Healthy* Program.  There are a variety of COVID-19 tests out there but for this problem let's assume the following:
+
+::: non-incremental
+
+* The test gives a **false negative** result 13% of the time where a false negative case is a person with COVID-19 but the test says they don't have it.
+* The test gives a **false positive** result 5% of the time where a false positive case is a person who doesn't have COVID-19 but the test says they do.
+
+:::
+
+Let's assume the true prevalence is 1%.  During the 2021-2022 school year, each week they tested about 30,000 Harvard affiliates.  Use the assumed percentages to fill in the following table of potential outcomes:
+
+
+|                              | Positive Test Result | Negative Test Result | Total  |
+|------------------------------|----------------------|----------------------|--------|
+| Actually have COVID-19       |                      |                      |        |
+| Actually don't have COVID-19 |                      |                      |        |
+| Total                        |                      |                      | 30,000 |
+
+
+::: columns
+
+::: column
+
+P(test - | have COVID) = 
+
+P(have COVID | test -) = 
+
+:::
+
+::: column
+
+P(test + | don't have COVID) = 
+
+P(don't have COVID | test +) = 
+
+:::
+:::
+
+
+---
+
+## Example
+
+The false negative rate of COVID-19 tests have varied wildly.  One paper estimated it could be as high as 54%.
+
+Recreate the table with this new false negative rate.
+
+
+|                              | Positive Test Result | Negative Test Result | Total  |
+|------------------------------|----------------------|----------------------|--------|
+| Actually have COVID-19       |                      |                      |        |
+| Actually don't have COVID-19 |                      |                      |        |
+| Total                        |                      |                      | 30,000 |
+
+
+::: columns
+
+::: column
+
+P(test - | have COVID) = 
+
+P(have COVID | test -) = 
+
+:::
+
+::: column
+
+P(test + | don't have COVID) = 
+
+P(don't have COVID | test +) = 
+
+:::
+:::
+
+
+
+---
+
+### Random Variables
+
+For a discrete random variable, care about its:
+
+-   Distribution: $p(x) = P(X = x)$
+
+-   Center -- Mean:
+
+::: fragment
+$$
+\mu = \sum x p(x)
+$$
+:::
+
+-   Spread -- Variance & Standard Deviation:
+
+::: fragment
+$$
+\sigma^2 = \sum (x - \mu)^2 p(x)
+$$
+
+$$
+\sigma = \sqrt{ \sum (x - \mu)^2 p(x)}
+$$
+:::
+
+---
+
+### Random Variables
+
+If a random variable, $X$, is a **continuous** RV, then it can take on any value in an interval.
+
+* Probability function: 
+    + $P(X = x) = 0$ so
+
+::: fragment
+
+$$
+p(x) \color{orange}{\approx} P(X = x)
+$$
+
+but if $p(4) > p(2)$ that still means that X is more likely to take on values around 4 than values around 2.
+
+:::
+
+---
+
+
+### Random Variables: Continuous
+
+Change $\sum$ to $\int$:
+
+::: non-incremental
+
+* $\int p(x) dx = 1$.
+
+
+* Center -- Mean/Expected value:
+
+:::
+
+$$
+\mu = \int x p(x) dx
+$$
+
+::: non-incremental
+
+* Spread -- Standard deviation:
+
+:::
+
+$$
+\sigma = \sqrt{ \int (x - \mu)^2 p(x) dx}
+$$
+
+
+
+
+# Why do we care about random variables?
+
+[We will recast our sample statistics as random variables.]{.custom-subtitle .fragment}
+
+[Use the distribution of the random variable to approximate the sampling distribution of our sample statistic!]{.custom-subtitle .fragment}
+
+
+# Specific Named Random Variables
+
+---
+
+
+### Specific Named Random Variables
+
+* There is a vast array of random variables out there.  
+
+
+* But there are a few particular ones that we will find useful.
+    + Because these ones are used often, they have been given names.
+
+
+* Will identify these named RVs using the following format:
+
+::: fragment
+
+$$
+X \sim \mbox{Name(values of key parameters)}
+$$
+
+:::
+
+
+---
+
+### Bernoulli Random Variables
+
+::: columns
+
+::: column
+
+$X \sim$ Bernoulli $(p)$ 
+
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+
+
+Important parameter: 
+
+$$
+\begin{align*}
+p & = \mbox{probability of success} \\
+& = P(X = 1)
+\end{align*}
+$$
+
+:::
+
+
+::: column
+
+```{r, echo = FALSE, fig.asp = 0.5}
+library(tidyverse)
+dat <- data.frame(y = c(.3, .7), x = c(0, 1))
+ggplot(dat, aes(factor(x), y)) + 
+  geom_col(fill = "deeppink3") +
+  labs(title = expression(X %~% " Bernoulli(p = 0.7)"),
+       x = "x", y = "p(x)")
+```
+
+
+Distribution:
+
+| $x$    | 0   | 1 |
+|------|-----|---|
+| $p(x)$ | 1 - $p$ | $p$ |
+
+
+:::
+:::
+
+---
+
+### Bernoulli Random Variables
+
+::: columns
+
+::: column
+
+$X \sim$ Bernoulli $(p = 0.5)$ 
+
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+
+:::
+
+
+::: column
+
+```{r, echo = FALSE, fig.asp = 0.5}
+library(tidyverse)
+dat <- data.frame(y = c(.5, .5), x = c(0, 1))
+ggplot(dat, aes(factor(x), y)) + 
+  geom_col(fill = "deeppink3") +
+  labs(title = expression(X %~% " Bernoulli(p = 0.5)"),
+       x = "x", y = "p(x)")
+```
+
+
+Distribution:
+
+| $x$    | 0   | 1 |
+|------|-----|---|
+| $p(x)$ | 0.5 | 0.5 |
+
+
+:::
+:::
+
+
+
+
+---
+
+### Bernoulli Random Variables
+
+::: columns
+
+::: column
+
+$X \sim$ Bernoulli $(p)$ 
+
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+
+:::
+
+::: column
+
+Distribution:
+
+| $x$    | 0   | 1 |
+|------|-----|---|
+| $p(x)$ | 1 - $p$ | $p$ |
+
+:::
+
+:::
+
+Mean: 
+
+$$
+\begin{align*}
+\mu &= \sum x p(x) \\
+& = 1*p + 0*(1 - p) \\
+& = p
+\end{align*}
+$$
+
+
+Standard deviation: 
+
+$$
+\begin{align*}
+\sigma & = \sqrt{ \sum (x - \mu)^2 p(x)} \\
+& = \sqrt{(1 - p)^2*p + (0 - p)^2*(1 - p)}  \\
+& = \sqrt{p(1 - p)}
+\end{align*}
+
+$$
+
+
+
+---
+
+### Normal Random Variables
+
+$X \sim$ Normal $(\mu, \sigma)$
+
+* Distribution:
+
+$$
+p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp{\left(-\frac{(x - \mu)^2}{2\sigma^2} \right)}
+$$
+where $-\infty < x < \infty$
+
+::: columns
+
+::: column
+
+* Mean: $\mu$
+
+* Standard deviation: $\sigma$
+
+:::
+
+::: column
+
+```{r, echo = FALSE, fig.asp = 0.6}
+library(tidyverse)
+dat <- data.frame(x = seq(from = -4, to = 8, length.out = 1000)) %>%
+  mutate(X1 = dnorm(x, mean = 0, sd = 1),
+         X2 = dnorm(x, mean = 2, sd = 1),
+         X3 = dnorm(x, mean = 2, sd = 2)) %>%
+  pivot_longer(-x, names_to = "variable") %>%
+  mutate(variable = case_when(
+    variable == "X1" ~ "N(0, 1)",
+    variable == "X2" ~ "N(2, 1)",
+    TRUE ~ "N(2, 2)"
+  ))
+ggplot(dat, aes(x = x, y = value, color = variable)) + 
+  geom_line(size = 2) +
+  labs(title = expression(paste("X", "~", "N", "(", mu, ",", sigma, ")")),
+       x = "x", y = "p(x)")
+```
+
+:::
+:::
+
+---
+
+### Normal Random Variables
+
+$X \sim$ Normal $(\mu, \sigma)$
+
+
+::: columns
+
+::: column
+
+**Notes:**
+
+
+(a) Area under the curve = 1.
+
+
+
+(b) Height $\approx$ how likely values are to occur
+
+(c) Super special Normal RV: 
+
+$Z \sim$ Normal $(\mu = 0, \sigma = 1)$.  
+
+:::
+
+::: column
+
+
+```{r, echo = FALSE, fig.asp = 0.6}
+library(tidyverse)
+dat <- data.frame(x = seq(from = -4, to = 8, length.out = 1000)) %>%
+  mutate(X1 = dnorm(x, mean = 0, sd = 1),
+         X2 = dnorm(x, mean = 2, sd = 1),
+         X3 = dnorm(x, mean = 2, sd = 2)) %>%
+  pivot_longer(-x, names_to = "variable") %>%
+  mutate(variable = case_when(
+    variable == "X1" ~ "N(0, 1)",
+    variable == "X2" ~ "N(2, 1)",
+    TRUE ~ "N(2, 2)"
+  ))
+ggplot(dat, aes(x = x, y = value, color = variable)) + 
+  geom_line(size = 2) +
+  labs(title = expression(paste("X", "~", "N", "(", mu, ",", sigma, ")")),
+       x = "x", y = "p(x)")
+```
+
+:::
+
+:::
+
+
+---
+
+### Normal Random Variables
+
+$X \sim$ Normal $(\mu, \sigma)$
+
+
+::: columns
+
+::: column
+
+**Notes:**
+
+* The Normal curve will be a good approximation for **MANY distributions.** 
+
+* But sometimes its **tails** just aren't fat enough. 
+
+:::
+
+::: column
+
+
+```{r, echo = FALSE, fig.asp = 0.6}
+library(tidyverse)
+dat <- data.frame(x = seq(from = -4, to = 8, length.out = 1000)) %>%
+  mutate(X1 = dnorm(x, mean = 0, sd = 1),
+         X2 = dnorm(x, mean = 2, sd = 1),
+         X3 = dnorm(x, mean = 2, sd = 2)) %>%
+  pivot_longer(-x, names_to = "variable") %>%
+  mutate(variable = case_when(
+    variable == "X1" ~ "N(0, 1)",
+    variable == "X2" ~ "N(2, 1)",
+    TRUE ~ "N(2, 2)"
+  ))
+ggplot(dat, aes(x = x, y = value, color = variable)) + 
+  geom_line(size = 2) +
+  labs(title = expression(paste("X", "~", "N", "(", mu, ",", sigma, ")")),
+       x = "x", y = "p(x)")
+```
+
+:::
+
+:::
+
+
+
+---
+
+### t Random Variables
+
+$X \sim$ t(df)
+
+::: columns
+
+::: column
+
+
+* Distribution:
+
+$$
+p(x) = \frac{\Gamma(\mbox{df} + 1)}{\sqrt{\mbox{df}\pi} \Gamma(2^{-1}\mbox{df})}\left(1 + \frac{x^2}{\mbox{df}} \right)^{-\frac{df + 1}{2}}
+$$
+
+where $-\infty < x < \infty$
+
+
+* Mean: 0
+
+
+* Standard deviation: $\sqrt{\mbox{df}/(\mbox{df} - 2)}$
+
+:::
+
+::: column
+
+
+```{r, echo = FALSE}
+library(tidyverse)
+dat <- data.frame(x = seq(from = -5, to = 5, length.out = 1000)) %>%
+  mutate(X1 = dnorm(x, mean = 0, sd = 1),
+         X2 = dt(x, df = 2),
+         X3 = dt(x, df = 8)) %>%
+  pivot_longer(-x, names_to = "variable") %>%
+  mutate(variable = case_when(
+    variable == "X1" ~ "N(0, 1)",
+    variable == "X2" ~ "t(2)",
+    TRUE ~ "t(8)"
+  ))
+ggplot(dat, aes(x = x, y = value, color = variable)) + 
+  geom_line(size = 1) +
+  labs(title = "Standard Normal versus t",
+       x = "x", y = "p(x)")
+```
+
+:::
+
+:::
+
+
+# Next Time: Recast some of the sample statistics we have been exploring as random variables!
+
+---
+
+## Reminders:
+
+::: nonincremental
+- No sections or wrap-ups during Thanksgiving Week.
+- OH schedule for Thanksgiving Week:
+    + Sun, Nov 19th - Tues, Nov 21st: [Happening with some modifications](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing)
+    + No OHs Wed, Nov 22nd - Sun, Nov 26th!
+:::

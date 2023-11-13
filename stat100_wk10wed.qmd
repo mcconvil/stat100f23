@@ -62,8 +62,8 @@ theme_update(text = element_text(size = 16))
 ## Announcements
 
 -   `r emo::ji("tada")` We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out [this application](https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform) by **Nov 15th**.
-- No wrap-up session on Friday due to the university holiday.  
-- You are all invited to the **Info Session on Data Science Internships**: Mon at 4pm in SC 316!
+-   No wrap-up session on Friday due to the university holiday.\
+-   You are all invited to the **Info Session on Data Science Internships**: Mon at 4pm in SC 316!
 
 ### Goals for Today
 
@@ -86,62 +86,53 @@ theme_update(text = element_text(size = 16))
 
 ## That Next Stats Class
 
-* But first... **Common Question**:  How should I describe my post-Stat 100 coding abilities?
+-   But first... **Common Question**: How should I describe my post-Stat 100 coding abilities?
 
-* **Potential Answer**: You have learned how to write code **to analyze data**.  This includes visualization (`ggplot2`), data wrangling (`dplyr`), data importation (`readr`), modeling, inference (`infer`) and communication (with `Quarto`).
+-   **Potential Answer**: You have learned how to write code **to analyze data**. This includes visualization (`ggplot2`), data wrangling (`dplyr`), data importation (`readr`), modeling, inference (`infer`) and communication (with `Quarto`).
 
-* **Follow-up Question**: So what coding is there left to learn?
+-   **Follow-up Question**: So what coding is there left to learn?
 
-* **Answer**: Learning how to **program**.  This includes topics such as control flow, iteration, creating functions, and vectorization.
+-   **Answer**: Learning how to **program**. This includes topics such as control flow, iteration, creating functions, and vectorization.
 
-
----
+------------------------------------------------------------------------
 
 ## That Next Coding Class
 
 ::: nonincremental
-
-* Stat 108: Introduction to Statistical Computing with `R`
-* CompSci 32: Computational Thinking and Problem Solving
-* CompSci 50: Introduction to Computer Science 
-* AP 10: Computing with Python for Scientists and Engineers
-
+-   Stat 108: Introduction to Statistical Computing with `R`
+-   CompSci 32: Computational Thinking and Problem Solving
+-   CompSci 50: Introduction to Computer Science
+-   AP 10: Computing with Python for Scientists and Engineers
 :::
 
----
+------------------------------------------------------------------------
 
 ## That Next Modeling Course
 
 ::: nonincremental
-
-* Stat 109A: Data Science I & Stat 109B: Data Science II
-* Stat 139: Linear Models
-* Many of the upper-level stats courses are modeling courses (but they do have pre-reqs).
-
+-   Stat 109A: Data Science I & Stat 109B: Data Science II
+-   Stat 139: Linear Models
+-   Many of the upper-level stats courses are modeling courses (but they do have pre-reqs).
 :::
 
----
+------------------------------------------------------------------------
 
 ## That Next Theory/Methods Course
 
 ::: nonincremental
-
-* Stat 110: Introduction to Probability
-* Stat 111: Introduction to Statistical Inference
-
+-   Stat 110: Introduction to Probability
+-   Stat 111: Introduction to Statistical Inference
 :::
 
----
+------------------------------------------------------------------------
 
 ## That Next Visualization Course
 
 ::: nonincremental
-
-* Stat 108: Introduction to Statistical Computing with `R`
-* CompSci 171: Visualization
-* Stat 106: Data Science for Sports Analytics
-    + Not on the books yet but should be coming next academic year.
-
+-   Stat 108: Introduction to Statistical Computing with `R`
+-   CompSci 171: Visualization
+-   Stat 106: Data Science for Sports Analytics
+    -   Not on the books yet but should be coming next academic year.
 :::
 
 # Another Hypothesis Testing Example
@@ -244,7 +235,6 @@ p_value
 **Conclusion**: These data represent evidence that flipper length does vary by sex.
 
 ------------------------------------------------------------------------
-
 
 ### Hypothesis Testing: Decisions, Decisions
 

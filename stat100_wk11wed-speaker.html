@@ -10,7 +10,7 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <title>P-Value Pitfalls</title>
+  <title>Probability Concepts</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -332,7 +332,7 @@
 <div class="column center" style="width:45%;">
 <p><img data-src="img/DAW.png" style="width:90.0%"></p>
 </div><div class="column center" style="width:55%;">
-<p><span class="custom-title">P-Value Pitfalls</span></p>
+<p><span class="custom-title">Probability Concepts</span></p>
 <p><br> <br> <br></p>
 <p><span class="custom-subtitle">Kelly McConville</span></p>
 <p><span class="custom-subtitle">Stat 100 <br> Week 11 | Fall 2023</span></p>
@@ -342,27 +342,31 @@
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li class="fragment">🎉 We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform">this application</a> by <strong>Nov 15th</strong>.</li>
-<li class="fragment">You are all invited to the <strong>Info Session on Data Science Internships</strong> today at 4pm in SC 316!</li>
+<li class="fragment">No sections or wrap-ups during Thanksgiving Week.</li>
+<li class="fragment">OH schedule for Thanksgiving Week:
+<ul>
+<li class="fragment">Sun, Nov 19th - Tues, Nov 21st: <a href="https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing">Happening with some modifications</a></li>
+<li class="fragment">No OHs Wed, Nov 22nd - Sun, Nov 26th!</li>
+</ul></li>
 </ul>
 <h3 id="goals-for-today">Goals for Today</h3>
 <div class="columns">
 <div class="column">
 <ul>
-<li class="fragment"><p>Finish discussion power</p></li>
-<li class="fragment"><p>Statistical inference zoom out</p></li>
+<li class="fragment"><p>Learn about conditional probabilities</p></li>
+<li class="fragment"><p>Discuss probability concepts</p></li>
 </ul>
 </div><div class="column">
 <ul>
-<li class="fragment"><p>A hearty p-values discussion</p></li>
-<li class="fragment"><p>Key probability concepts</p></li>
+<li class="fragment"><p>Cover continuous random variables</p></li>
+<li class="fragment"><p>Learn important <strong>named</strong> random variables</p></li>
 </ul>
 </div>
 </div>
 </section>
 <section>
-<section id="which-flavor-of-data-scientist-are-you" class="title-slide slide level1 center">
-<h1>Which Flavor of Data Scientist Are You?</h1>
+<section id="but-first-final-round-of-which-flavor-of-data-scientist-are-you" class="title-slide slide level1 center">
+<h1>But First, Final Round of “Which Flavor of Data Scientist Are You?”</h1>
 
 </section>
 <section class="slide level2">
@@ -387,395 +391,148 @@
 </div>
 </div>
 </section>
-<section id="thoughts-on-power" class="slide level2">
-<h2>Thoughts on Power</h2>
-<div class="columns">
-<div class="column">
-<ul>
-<li class="fragment"><p>What aspects of the test did the player actually have control over?</p></li>
-<li class="fragment"><p>Why is it easier to set <span class="math inline">\(\alpha\)</span> than to set <span class="math inline">\(\beta\)</span> or power?</p></li>
-<li class="fragment"><p>Considering power before conducting a study is very important!</p></li>
-<li class="fragment"><p>The danger of under-powered studies</p>
-<ul>
-<li class="fragment">EX: Turning right at a red light</li>
-</ul></li>
-</ul>
-</div>
-</div>
-</section>
 <section class="slide level2">
 
-<h3 id="lets-talk-about-p-values">Let’s Talk About P-values</h3>
-<ul>
-<li class="fragment"><p>The original intention of the p-value was as an <strong>informal</strong> measure to judge whether or not a researcher should take a second look.</p></li>
-<li class="fragment"><p>But to create simple statistical manuals for practitioners, this informal measure quickly became a rule: <strong>“p-value &lt; 0.05” = “statistically significant”</strong>.</p></li>
-</ul>
-<div class="fragment">
-<p><strong>What were/are the consequences of the “p-value &lt; 0.05” = “statistically significant” rule?</strong></p>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="lets-talk-about-p-values-1">Let’s Talk About P-values</h3>
-<div>
-<ul>
-<li><strong>A consequence</strong>: The p-value is often misinterpreted to be the probability the null hypothesis is true.
-<ul>
-<li>A p-value of 0.003 does not mean there’s a 0.3% chance that ESP doesn’t exist!</li>
-<li>By giving people a simple rule, they never learned what the p-value actually measures.</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="lets-talk-about-p-values-2">Let’s Talk About P-values</h3>
-<div class="columns">
-<div class="column">
-<div>
-<ul>
-<li><strong>A consequence</strong>: Researchers often put too much weight on the p-value and not enough weight on their domain knowledge/the plausibility of their conjecture.
-<ul>
-<li>Sometimes we give more weight to things we don’t understand.</li>
-</ul></li>
-<li><a href="https://xkcd.com/1132/">xkcd comic</a></li>
-</ul>
-</div>
-</div><div class="column">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/frequentists_vs_bayesians_2x.png" style="width:65.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="lets-talk-about-p-values-3">Let’s Talk About P-values</h3>
-<div class="columns">
-<div class="column">
-<div>
-<ul>
-<li><p><strong>A consequence</strong>: <a href="https://projects.fivethirtyeight.com/p-hacking/">P-hacking</a>: Cherry-picking promising findings that are beyond this arbitrary threshold.</p></li>
-<li><p><a href="https://www.explainxkcd.com/wiki/index.php/882:_Significant">xkcd comic</a></p></li>
-</ul>
-</div>
-</div><div class="column">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/significant.png" style="width:40.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="lets-talk-about-p-values-4">Let’s Talk About P-values</h3>
-<ul>
-<li class="fragment"><strong>A consequence</strong>: People conflate <em>statistical significance</em> with <em>practical significance</em>.</li>
-</ul>
-<div class="fragment">
-<p><strong>Example</strong>: A recent <em>Nature</em> study of 19,000+ people found that those who meet their spouses online…</p>
-</div>
-<ul>
-<li class="fragment"><p>Are less likely to divorce (p-value &lt; 0.002)</p></li>
-<li class="fragment"><p>Are more likely to have high marital satisfaction (p-value &lt; 0.001)</p></li>
-<li class="fragment"><p>BUT the estimated <strong>effect sizes</strong> were tiny.</p>
-<ul>
-<li class="fragment">Divorce rate of 5.96% for those who met online versus 7.67% for those who met in-person.</li>
-<li class="fragment">On a 7 point scale, happiness value of 5.64 for those who met online versus 5.48 for those who met in-person.</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<p><strong>Question</strong>: Do these results provide compelling evidence that one should change their dating behavior?</p>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="lets-talk-about-p-values-5">Let’s Talk About P-values</h3>
-<div>
-<ul>
-<li><p><strong>A consequence</strong>: People conflate <em>statistical significance</em> with <em>practical significance</em>.</p></li>
-<li><p>We won’t use the <strong>“statistically significant”</strong> language in Stat 100. Instead say <strong>“statistically discernible.”</strong></p></li>
-</ul>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="lets-talk-about-p-values-6">Let’s Talk About P-values</h3>
-<p>The American Statistical Association created a set of principles to address misconceptions and misuse of p-values:</p>
-<div>
-<ol type="1">
-<li><p>P-values can indicate how incompatible the data are with a specified statistical model.</p></li>
-<li><p>P-values do not measure the probability that the studied hypothesis is true, or the probability that the data were produced by random chance alone.</p></li>
-<li><p>Scientific conclusions and business or policy decisions should not be based only on whether or not a p-value passes a specific threshold (i.e.&nbsp;0.05).</p></li>
-<li><p>Proper inference requires full reporting and transparency.</p></li>
-<li><p>A p-value, or statistical significance, does not measure the size of an effect or the importance of a result.</p></li>
-<li><p>By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.</p></li>
-</ol>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="lets-talk-about-p-values-7">Let’s Talk About P-values</h3>
-<ul>
-<li class="fragment"><p>Despite its issues, p-values are still quite popular and can still be a useful tool <strong>when used properly</strong>.</p></li>
-<li class="fragment"><p>In 2014, George Cobb a professor from Mount Holyoke College poised the following questions (and answers):</p></li>
-</ul>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/Cobb.png" style="width:55.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<ul>
-<li class="fragment">I want us to stop this cycle.</li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="stat-100-p-values">Stat 100 &amp; P-Values</h3>
-<ul>
-<li class="fragment"><p>Understanding p-values and being able to <strong>interpret a p-value in context</strong> is a learning objective of Stat 100.</p>
-<ul>
-<li class="fragment">Ex: If ESP doesn’t exist, the probability of guessing correctly on at least 106 out of 329 trials is 0.003.</li>
-</ul></li>
-<li class="fragment"><p>Understanding that a small p-value means we have evidence for <span class="math inline">\(H_a\)</span> is important.</p>
-<ul>
-<li class="fragment">Ex: Because the p-value is small, we have evidence for ESP.</li>
-</ul></li>
-<li class="fragment"><p>Understanding that a small p-value alone does not imply practical significance.</p>
-<ul>
-<li class="fragment">Create a confidence interval to measure the effect size!</li>
-</ul></li>
-<li class="fragment"><p>Understanding that what you mean by <strong>small</strong> should depend on your field and whether a Type I Error or Type II Error is worse for <strong>your particular research question</strong>.</p></li>
-<li class="fragment"><p>Your ability to tell if a # is less than 0.05 is not a learning objective for Stat 100.</p></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="reporting-results-in-journal-articles">Reporting Results in Journal Articles</h3>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/bem_honorton_1994_results.png" style="width:60.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="statistical-inference-zoom-out-estimation">Statistical Inference Zoom Out – Estimation</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/ci_diagram_sim.png" style="width:70.0%"></p>
-</figure>
-</div>
-<div class="fragment">
-<p><strong>Question</strong>: How did folks do inference before computers?</p>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="statistical-inference-zoom-out-testing">Statistical Inference Zoom Out – Testing</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/hyp_testing_diagram_sim.png" style="width:80.0%"></p>
-</figure>
-</div>
-<div class="fragment">
-<p><strong>Question</strong>: How did folks do inference before computers?</p>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="statistical-inference-zoom-out-estimation-1">Statistical Inference Zoom Out – Estimation</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/ci_diagram.png" style="width:70.0%"></p>
-</figure>
-</div>
-<p><strong>Question</strong>: How did folks do inference before computers?</p>
-</section>
-<section class="slide level2">
-
-<h3 id="statistical-inference-zoom-out-testing-1">Statistical Inference Zoom Out – Testing</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/hyp_testing_diagram.png" style="width:80.0%"></p>
-</figure>
-</div>
-<p><strong>Question</strong>: How did folks do inference before computers?</p>
-</section></section>
-<section>
-<section id="this-means-we-need-to-learn-about-probability-models" class="title-slide slide level1 center">
-<h1>This means we need to learn about probability models!</h1>
-
-</section>
-<section class="slide level2">
-
-<h3 id="probability-models">Probability Models</h3>
+<h3 id="conditional-probabilities">Conditional Probabilities</h3>
 <blockquote>
-<p><em>“All models are wrong but some are useful.”</em> – George Box</p>
+<p>“Conditioning is the soul of statistics.” — Joe Blitzstein, Stat 110 Prof</p>
 </blockquote>
-<div class="columns">
-<div class="column">
-<p><strong>Question</strong>: How can we use theoretical probability models to approximate our (sampling) distributions?</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="stat100_wk11mon_files/figure-revealjs/unnamed-chunk-6-1.png" width="3000"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column">
-<div class="fragment">
-<p>Before we can answer that question, we need to learn some probability concepts that will help us understand these models.</p>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="probability-concepts">Probability Concepts</h3>
+<p><strong>Question</strong>: What do we mean by “conditioning”?</p>
 <ul>
-<li class="fragment"><p><strong>Random process</strong>: outcomes is uncertain.</p>
+<li class="fragment">Most polar bears are twins. Therefore, if you’re a twin, you’re probably a polar bear.
 <ul>
-<li class="fragment">EX: Roll 6 sided die.</li>
+<li class="fragment">P(twin given polar bear) <span class="math inline">\(\neq\)</span> P(polar bear given twin)</li>
 </ul></li>
-<li class="fragment"><p>The <strong>probability</strong> of an outcome is the “long-run proportion” of times the outcome occurs.</p></li>
-<li class="fragment"><p>EX: Want probability of rolling the #5</p>
+<li class="fragment">The p-value is a conditional probability.
 <ul>
-<li class="fragment">Let <span class="math inline">\(p_m\)</span> = proportion of rolls that are 5 in <span class="math inline">\(m\)</span> rolls</li>
-<li class="fragment">Let <span class="math inline">\(p\)</span> = probability of rolling 5 on a given roll = <span class="math inline">\(P\)</span>(roll 5)</li>
+<li class="fragment">P-value = P(data given <span class="math inline">\(H_o\)</span>) ( <span class="math inline">\(\neq\)</span> P( <span class="math inline">\(H_o\)</span> given data))</li>
 </ul></li>
-<li class="fragment"><p><strong>Law of Large Numbers</strong> (LLN) says that as <span class="math inline">\(m\)</span> increases, <span class="math inline">\(p_m\)</span> converges to <span class="math inline">\(p\)</span>.</p></li>
 </ul>
 </section>
 <section class="slide level2">
 
-<h3 id="probability-concepts-1">Probability Concepts</h3>
-<div class="columns">
-<div class="column">
+<h3 id="conditional-probabilities-1">Conditional Probabilities</h3>
+<p><strong>Other favorite examples:</strong></p>
 <ul>
-<li class="fragment"><p><strong>Question</strong>: Why is the LLN important to us?</p></li>
-<li class="fragment"><p><strong>Answer</strong>: We’ve assuming <span class="math inline">\(p_m\)</span> and <span class="math inline">\(p\)</span> are essentially the same thing when computing p-values.</p></li>
+<li class="fragment">P(have COVID given wear mask) <span class="math inline">\(\neq\)</span> P(wear mask given have COVID)
+<ul>
+<li class="fragment">In a CDC study, P(wear mask given have COVID) = 0.71 while P(have COVID given wear mask) is much lower.</li>
+</ul></li>
+<li class="fragment">P(it is raining given there are clouds directly overhead) <span class="math inline">\(\neq\)</span> Pr(there are clouds directly overhead given it is raining)</li>
 </ul>
 <div class="fragment">
-<p>p-value = # of extreme test statistics/# of replications</p>
+<p><strong>Notation</strong>: P(A given B) = P(A | B)</p>
 </div>
+</section>
+<section id="example" class="slide level2 smaller">
+<h2>Example</h2>
+<p>Testing for COVID-19 was an important part of the <em>Keep Harvard Healthy</em> Program. There are a variety of COVID-19 tests out there but for this problem let’s assume the following:</p>
+<div class="non-incremental">
+<ul>
+<li class="fragment">The test gives a <strong>false negative</strong> result 13% of the time where a false negative case is a person with COVID-19 but the test says they don’t have it.</li>
+<li class="fragment">The test gives a <strong>false positive</strong> result 5% of the time where a false positive case is a person who doesn’t have COVID-19 but the test says they do.</li>
+</ul>
+</div>
+<p>Let’s assume the true prevalence is 1%. During the 2021-2022 school year, each week they tested about 30,000 Harvard affiliates. Use the assumed percentages to fill in the following table of potential outcomes:</p>
+<table>
+<colgroup>
+<col style="width: 36%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Positive Test Result</th>
+<th>Negative Test Result</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Actually have COVID-19</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Actually don’t have COVID-19</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td></td>
+<td></td>
+<td>30,000</td>
+</tr>
+</tbody>
+</table>
+<div class="columns">
+<div class="column">
+<p>P(test - | have COVID) =</p>
+<p>P(have COVID | test -) =</p>
 </div><div class="column">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="stat100_wk11mon_files/figure-revealjs/unnamed-chunk-7-1.png" width="4000"></p>
-</figure>
+<p>P(test + | don’t have COVID) =</p>
+<p>P(don’t have COVID | test +) =</p>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>LLN tells us the proportion of extreme test stats is roughly equal to the true probability of observing the test statistic or more extreme under <span class="math inline">\(H_o\)</span>.</p>
 </div>
 </section>
-<section class="slide level2">
-
-<h3 id="useful-properties-of-probabilities">Useful properties of probabilities:</h3>
-<p>The probability of an event is between 0 and 1:</p>
-<p><span class="math display">\[0 \leq P(\mbox{event}) \leq 1\]</span></p>
-</section>
-<section class="slide level2">
-
-<h3 id="probabilities-pmboxevent">Probabilities: <span class="math inline">\(P(\mbox{event})\)</span></h3>
-<p>If two events are disjoints (have no outcomes in common), then</p>
-<p><span class="math display">\[
-P(\mbox{event 1 or event 2}) = P(\mbox{event 1}) + P(\mbox{event 1}).
-\]</span></p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="stat100_wk11mon_files/figure-revealjs/unnamed-chunk-8-1.png" width="7000"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We use this fact when we find a two-sided p-value.</p>
-</section>
-<section class="slide level2">
-
-<h3 id="probabilities-pmboxevent-1">Probabilities: <span class="math inline">\(P(\mbox{event})\)</span></h3>
-<p>Complement Rule:</p>
-<p><span class="math display">\[
-P(\mbox{event}) = 1 - P(\mbox{not that event}) = 1 - P(\mbox{event}^c)
-\]</span></p>
-<p>Sometimes it is “easier” to find the complement event’s probability.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="stat100_wk11mon_files/figure-revealjs/unnamed-chunk-9-1.png" width="7000"></p>
-</figure>
-</div>
+<section id="example-1" class="slide level2">
+<h2>Example</h2>
+<p>The false negative rate of COVID-19 tests have varied wildly. One paper estimated it could be as high as 54%.</p>
+<p>Recreate the table with this new false negative rate.</p>
+<table>
+<colgroup>
+<col style="width: 36%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Positive Test Result</th>
+<th>Negative Test Result</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Actually have COVID-19</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Actually don’t have COVID-19</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td></td>
+<td></td>
+<td>30,000</td>
+</tr>
+</tbody>
+</table>
+<div class="columns">
+<div class="column">
+<p>P(test - | have COVID) =</p>
+<p>P(have COVID | test -) =</p>
+</div><div class="column">
+<p>P(test + | don’t have COVID) =</p>
+<p>P(don’t have COVID | test +) =</p>
 </div>
 </div>
 </section>
 <section class="slide level2">
 
 <h3 id="random-variables">Random Variables</h3>
-<p><strong>Random variable</strong> (RV) is a random process that <strong>takes on numerical values</strong>.</p>
-<ul>
-<li class="fragment">Discrete RV: Takes on discrete values (countable number of possible values)
-<ul>
-<li class="fragment">EX: X = 1 if you are a morning person, 0 if not</li>
-</ul></li>
-<li class="fragment">Continuous RV: Can take on any value in a interval
-<ul>
-<li class="fragment">EX: X = Amount of sugar in one cone of oatly soft-serve in the d-hall</li>
-</ul></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="behavior-of-random-variables">Behavior of Random Variables</h3>
-<ul>
-<li class="fragment"><p>Random variables have <strong>probability functions</strong> that tell us the likelihood of specific values.</p></li>
-<li class="fragment"><p>For discrete RV, probability function is:</p></li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
-p(x) = P(X = x)
-\]</span></p>
-<p>where <span class="math inline">\(\sum p(x) = 1\)</span>.</p>
-</div>
-<ul>
-<li class="fragment">Example: X = 1 if you are a morning person, 0 if not</li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="random-variables-1">Random Variables</h3>
 <p>For a discrete random variable, care about its:</p>
 <ul>
 <li class="fragment"><p>Distribution: <span class="math inline">\(p(x) = P(X = x)\)</span></p></li>
@@ -800,35 +557,340 @@ p(x) = P(X = x)
 </section>
 <section class="slide level2">
 
-<h3 id="another-example">Another Example:</h3>
-<p>Suppose 4 students have still not received their graded Stat 100 Midterm (yes, let’s pretend we actually have hand-written work) and that I hand back the exams randomly to each student. Let X = the number of students who get their correct exam.</p>
-<div class="fragment">
-<p><strong>Questions:</strong></p>
-<div>
+<h3 id="random-variables-1">Random Variables</h3>
+<p>If a random variable, <span class="math inline">\(X\)</span>, is a <strong>continuous</strong> RV, then it can take on any value in an interval.</p>
 <ul>
-<li><p>Let’s say the student’s names are A(licia), B(ob), C(olin), and D(onna) and they are sitting in a row ABCD. One possible outcome is ABDC (1st exam goes to A, 2nd to B, 3rd to D, 4th to C). In that case, what does X equal?</p></li>
-<li><p>List out all possible outcomes. And for each outcome, determine what X equals.</p></li>
-<li><p>Why is P(X = 3) = 0?</p></li>
-<li><p>Write out the probability distribution for X.</p></li>
-<li><p>Determine the mean value of X.</p></li>
-<li><p>Determine the standard deviation of X.</p></li>
-<li><p>What is the probability that at least one student gets their correct exam?</p></li>
+<li class="fragment">Probability function:
+<ul>
+<li class="fragment"><span class="math inline">\(P(X = x) = 0\)</span> so</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+p(x) \color{orange}{\approx} P(X = x)
+\]</span></p>
+<p>but if <span class="math inline">\(p(4) &gt; p(2)\)</span> that still means that X is more likely to take on values around 4 than values around 2.</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="random-variables-continuous">Random Variables: Continuous</h3>
+<p>Change <span class="math inline">\(\sum\)</span> to <span class="math inline">\(\int\)</span>:</p>
+<div class="non-incremental">
+<ul>
+<li class="fragment"><p><span class="math inline">\(\int p(x) dx = 1\)</span>.</p></li>
+<li class="fragment"><p>Center – Mean/Expected value:</p></li>
 </ul>
 </div>
+<p><span class="math display">\[
+\mu = \int x p(x) dx
+\]</span></p>
+<div class="non-incremental">
+<ul>
+<li class="fragment">Spread – Standard deviation:</li>
+</ul>
 </div>
+<p><span class="math display">\[
+\sigma = \sqrt{ \int (x - \mu)^2 p(x) dx}
+\]</span></p>
+</section></section>
+<section id="why-do-we-care-about-random-variables" class="title-slide slide level1 center">
+<h1>Why do we care about random variables?</h1>
+<p><span class="custom-subtitle fragment">We will recast our sample statistics as random variables.</span></p>
+<p><span class="custom-subtitle fragment">Use the distribution of the random variable to approximate the sampling distribution of our sample statistic!</span></p>
+</section>
+
+<section>
+<section id="specific-named-random-variables" class="title-slide slide level1 center">
+<h1>Specific Named Random Variables</h1>
+
+</section>
+<section class="slide level2">
+
+<h3 id="specific-named-random-variables-1">Specific Named Random Variables</h3>
+<ul>
+<li class="fragment"><p>There is a vast array of random variables out there.</p></li>
+<li class="fragment"><p>But there are a few particular ones that we will find useful.</p>
+<ul>
+<li class="fragment">Because these ones are used often, they have been given names.</li>
+</ul></li>
+<li class="fragment"><p>Will identify these named RVs using the following format:</p></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+X \sim \mbox{Name(values of key parameters)}
+\]</span></p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="bernoulli-random-variables">Bernoulli Random Variables</h3>
+<div class="columns">
+<div class="column">
+<p><span class="math inline">\(X \sim\)</span> Bernoulli <span class="math inline">\((p)\)</span></p>
+<p><span class="math display">\[\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 &amp; \mbox{success} \\
+      0 &amp; \mbox{failure} \\
+\end{array}
+\right.  
+\end{align*}\]</span></p>
+<p>Important parameter:</p>
+<p><span class="math display">\[
+\begin{align*}
+p &amp; = \mbox{probability of success} \\
+&amp; = P(X = 1)
+\end{align*}
+\]</span></p>
+</div><div class="column">
+<div class="cell" data-layout-align="center" data-fig.asp="0.5">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-2-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Distribution:</p>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(p(x)\)</span></td>
+<td>1 - <span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(p\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="bernoulli-random-variables-1">Bernoulli Random Variables</h3>
+<div class="columns">
+<div class="column">
+<p><span class="math inline">\(X \sim\)</span> Bernoulli <span class="math inline">\((p = 0.5)\)</span></p>
+<p><span class="math display">\[\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 &amp; \mbox{success} \\
+      0 &amp; \mbox{failure} \\
+\end{array}
+\right.  
+\end{align*}\]</span></p>
+</div><div class="column">
+<div class="cell" data-layout-align="center" data-fig.asp="0.5">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-3-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Distribution:</p>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(p(x)\)</span></td>
+<td>0.5</td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="bernoulli-random-variables-2">Bernoulli Random Variables</h3>
+<div class="columns">
+<div class="column">
+<p><span class="math inline">\(X \sim\)</span> Bernoulli <span class="math inline">\((p)\)</span></p>
+<p><span class="math display">\[\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 &amp; \mbox{success} \\
+      0 &amp; \mbox{failure} \\
+\end{array}
+\right.  
+\end{align*}\]</span></p>
+</div><div class="column">
+<p>Distribution:</p>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(p(x)\)</span></td>
+<td>1 - <span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(p\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Mean:</p>
+<p><span class="math display">\[
+\begin{align*}
+\mu &amp;= \sum x p(x) \\
+&amp; = 1*p + 0*(1 - p) \\
+&amp; = p
+\end{align*}
+\]</span></p>
+<p>Standard deviation:</p>
+<p>$$ <span class="math display">\[\begin{align*}
+\sigma &amp; = \sqrt{ \sum (x - \mu)^2 p(x)} \\
+&amp; = \sqrt{(1 - p)^2*p + (0 - p)^2*(1 - p)}  \\
+&amp; = \sqrt{p(1 - p)}
+\end{align*}\]</span></p>
+<p>$$</p>
+</section>
+<section class="slide level2">
+
+<h3 id="normal-random-variables">Normal Random Variables</h3>
+<p><span class="math inline">\(X \sim\)</span> Normal <span class="math inline">\((\mu, \sigma)\)</span></p>
+<ul>
+<li class="fragment">Distribution:</li>
+</ul>
+<p><span class="math display">\[
+p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp{\left(-\frac{(x - \mu)^2}{2\sigma^2} \right)}
+\]</span> where <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span></p>
+<div class="columns">
+<div class="column">
+<ul>
+<li class="fragment"><p>Mean: <span class="math inline">\(\mu\)</span></p></li>
+<li class="fragment"><p>Standard deviation: <span class="math inline">\(\sigma\)</span></p></li>
+</ul>
+</div><div class="column">
+<div class="cell" data-layout-align="center" data-fig.asp="0.6">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-4-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="normal-random-variables-1">Normal Random Variables</h3>
+<p><span class="math inline">\(X \sim\)</span> Normal <span class="math inline">\((\mu, \sigma)\)</span></p>
+<div class="columns">
+<div class="column">
+<p><strong>Notes:</strong></p>
+<ol type="a">
+<li class="fragment"><p>Area under the curve = 1.</p></li>
+<li class="fragment"><p>Height <span class="math inline">\(\approx\)</span> how likely values are to occur</p></li>
+<li class="fragment"><p>Super special Normal RV:</p></li>
+</ol>
+<p><span class="math inline">\(Z \sim\)</span> Normal <span class="math inline">\((\mu = 0, \sigma = 1)\)</span>.</p>
+</div><div class="column">
+<div class="cell" data-layout-align="center" data-fig.asp="0.6">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-5-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="normal-random-variables-2">Normal Random Variables</h3>
+<p><span class="math inline">\(X \sim\)</span> Normal <span class="math inline">\((\mu, \sigma)\)</span></p>
+<div class="columns">
+<div class="column">
+<p><strong>Notes:</strong></p>
+<ul>
+<li class="fragment"><p>The Normal curve will be a good approximation for <strong>MANY distributions.</strong></p></li>
+<li class="fragment"><p>But sometimes its <strong>tails</strong> just aren’t fat enough.</p></li>
+</ul>
+</div><div class="column">
+<div class="cell" data-layout-align="center" data-fig.asp="0.6">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-6-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="t-random-variables">t Random Variables</h3>
+<p><span class="math inline">\(X \sim\)</span> t(df)</p>
+<div class="columns">
+<div class="column">
+<ul>
+<li class="fragment">Distribution:</li>
+</ul>
+<p><span class="math display">\[
+p(x) = \frac{\Gamma(\mbox{df} + 1)}{\sqrt{\mbox{df}\pi} \Gamma(2^{-1}\mbox{df})}\left(1 + \frac{x^2}{\mbox{df}} \right)^{-\frac{df + 1}{2}}
+\]</span></p>
+<p>where <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span></p>
+<ul>
+<li class="fragment"><p>Mean: 0</p></li>
+<li class="fragment"><p>Standard deviation: <span class="math inline">\(\sqrt{\mbox{df}/(\mbox{df} - 2)}\)</span></p></li>
+</ul>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-7-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="next-time-recast-some-of-the-sample-statistics-we-have-been-exploring-as-random-variables" class="title-slide slide level1 center">
+<h1>Next Time: Recast some of the sample statistics we have been exploring as random variables!</h1>
+
 </section>
 <section id="reminders" class="slide level2">
 <h2>Reminders:</h2>
 <div>
 <ul>
-<li>🎉 We are now accepting Course Assistant/Teaching Fellow applications for Stat 100 for next semester. To apply, fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLScwKJaRfppRqXAzyxMMCeBUdwrzBudNONt0S9dc8lE2ZUlQwQ/viewform">this application</a> by <strong>Nov 15th</strong>.
+<li>No sections or wrap-ups during Thanksgiving Week.</li>
+<li>OH schedule for Thanksgiving Week:
 <ul>
-<li>About 10-12 hours of work per week.<br>
-</li>
-<li>Primary responsibilities: Attend weekly team meetings, lead a discussion section, hold office hours, grade assessments.</li>
+<li>Sun, Nov 19th - Tues, Nov 21st: <a href="https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing">Happening with some modifications</a></li>
+<li>No OHs Wed, Nov 22nd - Sun, Nov 26th!</li>
 </ul></li>
-<li>You are all invited to the <strong>Info Session on Data Science Internships</strong> today at 4pm in SC 316!<br>
-</li>
 </ul>
 </div>
 
@@ -872,7 +934,7 @@ p(x) = P(X = x)
 'autoAnimateUnmatched': true,
 'menu': {"side":"right","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":null,"id":"501492e6e0f82d51","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"16996286023406259316","id":"aad7bc87d298c8b6","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1046,7 +1108,7 @@ p(x) = P(X = x)
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
-          
+          RevealNotes,
           RevealSearch,
           RevealZoom
         ]

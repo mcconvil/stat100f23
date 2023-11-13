@@ -39,6 +39,7 @@ library(tidyverse)
 theme_update(text = element_text(size = 16))
 ```
 
+
 ------------------------------------------------------------------------
 
 ::: columns
@@ -172,9 +173,11 @@ Inferencer
 :::
 
 ::: column
+
 ```{r  out.width = "65%", echo=FALSE, fig.align='center'}
 include_graphics("img/frequentists_vs_bayesians_2x.png") 
 ```
+
 :::
 :::
 
@@ -192,9 +195,11 @@ include_graphics("img/frequentists_vs_bayesians_2x.png")
 :::
 
 ::: column
+
 ```{r  out.width = "40%", echo=FALSE, fig.align='center'}
 include_graphics("img/significant.png") 
 ```
+
 :::
 :::
 
@@ -260,9 +265,11 @@ The American Statistical Association created a set of principles to address misc
 -   In 2014, George Cobb a professor from Mount Holyoke College poised the following questions (and answers):
 
 ::: fragment
+
 ```{r  out.width = "55%", echo=FALSE, fig.align='center'}
 include_graphics("img/Cobb.png") 
 ```
+
 :::
 
 -   I want us to stop this cycle.
@@ -291,9 +298,11 @@ include_graphics("img/Cobb.png")
 
 ### Reporting Results in Journal Articles
 
+
 ```{r, echo = FALSE, out.width= "60%"}
 knitr::include_graphics("img/bem_honorton_1994_results.png")
 ```
+
 
 ------------------------------------------------------------------------
 
@@ -343,6 +352,7 @@ knitr::include_graphics("img/bem_honorton_1994_results.png")
 ::: column
 **Question**: How can we use theoretical probability models to approximate our (sampling) distributions?
 
+
 ```{r, echo=FALSE, fig.width = 6}
 library(tidyverse)
 library(palmerpenguins)
@@ -355,6 +365,7 @@ penguins %>%
   calculate(stat ="diff in means", order = c("female", "male")) %>%
   visualize()
 ```
+
 :::
 
 ::: column
@@ -397,6 +408,7 @@ p-value = \# of extreme test statistics/# of replications
 :::
 
 ::: column
+
 ```{r, echo = FALSE}
 # Construct data frame of sample results
 esp <- data.frame(guess = c(rep("correct", 106),
@@ -421,6 +433,7 @@ ggplot(null_dist, aes(x = stat)) +
   geom_dotplot() +
   geom_vline(xintercept = test_stat$stat, color = "deeppink", size = 2)
 ```
+
 :::
 :::
 
@@ -446,6 +459,7 @@ $$
 P(\mbox{event 1 or event 2}) = P(\mbox{event 1}) + P(\mbox{event 1}).
 $$
 
+
 ```{r, echo = FALSE}
 #| fig-align: center
 #| fig-width: 14
@@ -455,6 +469,7 @@ ggplot(null_dist, aes(x = stat)) +
   geom_vline(xintercept = .3, color = "deeppink", size = 2) +
   geom_vline(xintercept = .2, color = "deeppink", size = 2)
 ```
+
 
 We use this fact when we find a two-sided p-value.
 
@@ -470,6 +485,7 @@ $$
 
 Sometimes it is "easier" to find the complement event's probability.
 
+
 ```{r, echo = FALSE}
 #| fig-align: center
 #| fig-width: 14
@@ -478,6 +494,7 @@ ggplot(null_dist, aes(x = stat)) +
   geom_histogram() +
   geom_vline(xintercept = .3, color = "deeppink", size = 2)
 ```
+
 
 ------------------------------------------------------------------------
 
@@ -572,3 +589,4 @@ Suppose 4 students have still not received their graded Stat 100 Midterm (yes, l
     -   Primary responsibilities: Attend weekly team meetings, lead a discussion section, hold office hours, grade assessments.
 -   You are all invited to the **Info Session on Data Science Internships** today at 4pm in SC 316!\
 :::
+
