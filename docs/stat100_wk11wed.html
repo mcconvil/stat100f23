@@ -401,10 +401,10 @@
 <section id="example" class="slide level2 smaller">
 <h2>Example</h2>
 <p>Testing for COVID-19 was an important part of the <em>Keep Harvard Healthy</em> Program. There are a variety of COVID-19 tests out there but for this problem let’s assume the following:</p>
-<div class="non-incremental">
+<div>
 <ul>
-<li class="fragment">The test gives a <strong>false negative</strong> result 13% of the time where a false negative case is a person with COVID-19 but the test says they don’t have it.</li>
-<li class="fragment">The test gives a <strong>false positive</strong> result 5% of the time where a false positive case is a person who doesn’t have COVID-19 but the test says they do.</li>
+<li>The test gives a <strong>false negative</strong> result 13% of the time where a false negative case is a person with COVID-19 but the test says they don’t have it.</li>
+<li>The test gives a <strong>false positive</strong> result 5% of the time where a false positive case is a person who doesn’t have COVID-19 but the test says they do.</li>
 </ul>
 </div>
 <p>Let’s assume the true prevalence is 1%. During the 2021-2022 school year, each week they tested about 30,000 Harvard affiliates. Use the assumed percentages to fill in the following table of potential outcomes:</p>
@@ -550,20 +550,17 @@ p(x) \color{orange}{\approx} P(X = x)
 
 <h3 id="random-variables-continuous">Random Variables: Continuous</h3>
 <p>Change <span class="math inline">\(\sum\)</span> to <span class="math inline">\(\int\)</span>:</p>
-<div class="non-incremental">
-<ul>
-<li class="fragment"><p><span class="math inline">\(\int p(x) dx = 1\)</span>.</p></li>
-<li class="fragment"><p>Center – Mean/Expected value:</p></li>
-</ul>
-</div>
+<p><span class="math inline">\(\int p(x) dx = 1\)</span>.</p>
+<p>Center – Mean/Expected value:</p>
 <p><span class="math display">\[
 \mu = \int x p(x) dx
 \]</span></p>
-<div class="non-incremental">
-<ul>
-<li class="fragment">Spread – Standard deviation:</li>
-</ul>
-</div>
+</section>
+<section class="slide level2">
+
+<h3 id="random-variables-continuous-1">Random Variables: Continuous</h3>
+<p>Change <span class="math inline">\(\sum\)</span> to <span class="math inline">\(\int\)</span>:</p>
+<p>Spread – Standard deviation:</p>
 <p><span class="math display">\[
 \sigma = \sqrt{ \int (x - \mu)^2 p(x) dx}
 \]</span></p>
@@ -733,13 +730,49 @@ X=   \left\{
 &amp; = p
 \end{align*}
 \]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="bernoulli-random-variables-3">Bernoulli Random Variables</h3>
+<div class="columns">
+<div class="column">
+<p><span class="math inline">\(X \sim\)</span> Bernoulli <span class="math inline">\((p)\)</span></p>
+<span class="math display">\[\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 &amp; \mbox{success} \\
+      0 &amp; \mbox{failure} \\
+\end{array}
+\right.  
+\end{align*}\]</span>
+</div><div class="column">
+<p>Distribution:</p>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(p(x)\)</span></td>
+<td>1 - <span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(p\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Standard deviation:</p>
-<p>$$ <span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 \sigma &amp; = \sqrt{ \sum (x - \mu)^2 p(x)} \\
 &amp; = \sqrt{(1 - p)^2*p + (0 - p)^2*(1 - p)}  \\
 &amp; = \sqrt{p(1 - p)}
-\end{align*}\]</span></p>
-<p>$$</p>
+\end{align*}
+\]</span></p>
 </section>
 <section class="slide level2">
 
@@ -775,11 +808,13 @@ p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp{\left(-\frac{(x - \mu)^2}{2\sigma^2} \
 <div class="columns">
 <div class="column">
 <p><strong>Notes:</strong></p>
+<div>
 <ol type="a">
-<li class="fragment"><p>Area under the curve = 1.</p></li>
-<li class="fragment"><p>Height <span class="math inline">\(\approx\)</span> how likely values are to occur</p></li>
-<li class="fragment"><p>Super special Normal RV:</p></li>
+<li><p>Area under the curve = 1.</p></li>
+<li><p>Height <span class="math inline">\(\approx\)</span> how likely values are to occur</p></li>
+<li><p>Super special Normal RV:</p></li>
 </ol>
+</div>
 <p><span class="math inline">\(Z \sim\)</span> Normal <span class="math inline">\((\mu = 0, \sigma = 1)\)</span>.</p>
 </div><div class="column">
 <div class="cell" data-layout-align="center" data-fig.asp="0.6">
@@ -943,7 +978,9 @@ p(x) = \frac{\Gamma(\mbox{df} + 1)}{\sqrt{\mbox{df}\pi} \Gamma(2^{-1}\mbox{df})}
 </div>
 </div>
 </div>
+<div class="fragment">
 <p>We will learn that a <strong>standardized</strong> version of the difference in sample means is <strong>better</strong> approximated by the distribution of a t(df = 7).</p>
+</div>
 </section>
 <section class="slide level2">
 

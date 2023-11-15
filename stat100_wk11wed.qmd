@@ -121,9 +121,11 @@ theme_update(text = element_text(size = 13))
 
 Testing for COVID-19 was an important part of the *Keep Harvard Healthy* Program. There are a variety of COVID-19 tests out there but for this problem let's assume the following:
 
-::: non-incremental
+::: nonincremental
+
 -   The test gives a **false negative** result 13% of the time where a false negative case is a person with COVID-19 but the test says they don't have it.
 -   The test gives a **false positive** result 5% of the time where a false positive case is a person who doesn't have COVID-19 but the test says they do.
+
 :::
 
 Let's assume the true prevalence is 1%. During the 2021-2022 school year, each week they tested about 30,000 Harvard affiliates. Use the assumed percentages to fill in the following table of potential outcomes:
@@ -227,19 +229,26 @@ but if $p(4) > p(2)$ that still means that X is more likely to take on values ar
 
 Change $\sum$ to $\int$:
 
-::: non-incremental
--   $\int p(x) dx = 1$.
 
--   Center -- Mean/Expected value:
-:::
+
+$\int p(x) dx = 1$.
+
+Center -- Mean/Expected value:
+
 
 $$
 \mu = \int x p(x) dx
 $$
 
-::: non-incremental
--   Spread -- Standard deviation:
-:::
+
+------------------------------------------------------------------------
+
+### Random Variables: Continuous
+
+Change $\sum$ to $\int$:
+
+Spread -- Standard deviation:
+
 
 $$
 \sigma = \sqrt{ \int (x - \mu)^2 p(x) dx}
@@ -394,15 +403,44 @@ $$
 \end{align*}
 $$
 
+------------------------------------------------------------------------
+
+### Bernoulli Random Variables
+
+::: columns
+::: column
+$X \sim$ Bernoulli $(p)$
+
+```{=tex}
+\begin{align*}
+X=   \left\{
+\begin{array}{ll}
+      1 & \mbox{success} \\
+      0 & \mbox{failure} \\
+\end{array} 
+\right.  
+\end{align*}
+```
+:::
+
+::: column
+Distribution:
+
+| $x$    | 0       | 1   |
+|--------|---------|-----|
+| $p(x)$ | 1 - $p$ | $p$ |
+:::
+:::
+
 Standard deviation:
 
-\$\$ \begin{align*}
+$$
+\begin{align*}
 \sigma & = \sqrt{ \sum (x - \mu)^2 p(x)} \\
 & = \sqrt{(1 - p)^2*p + (0 - p)^2*(1 - p)}  \\
 & = \sqrt{p(1 - p)}
 \end{align*}
-
-\$\$
+$$
 
 ------------------------------------------------------------------------
 
@@ -454,13 +492,19 @@ $X \sim$ Normal $(\mu, \sigma)$
 ::: column
 **Notes:**
 
+::: nonincremental
+
 (a) Area under the curve = 1.
 
 (b) Height $\approx$ how likely values are to occur
 
 (c) Super special Normal RV:
 
+:::
+
 $Z \sim$ Normal $(\mu = 0, \sigma = 1)$.
+
+
 :::
 
 ::: column
@@ -727,8 +771,11 @@ ggplot(null_dist, aes(x = stat, y = ..density..)) +
 :::
 :::
 
+::: fragment
+
 We will learn that a **standardized** version of the difference in sample means is **better** approximated by the distribution of a t(df = 7).
 
+:::
 
 ---
 
@@ -863,7 +910,7 @@ plot_grid(p1, p2)
 ```{r, echo = FALSE, fig.asp = 0.3 }
 # Graph the sampling distribution
 p2 <- ggplot(data = samp_dist, mapping = , aes(x = statistic, y = ..density..)) +
-  geom_histogram(bins = 15) +
+  geom_histogram(bins = 16) +
   geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2) + labs(title = "The Sampling\n Distribution")
 
 library(cowplot)
