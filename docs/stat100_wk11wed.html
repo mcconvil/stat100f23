@@ -342,6 +342,7 @@
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
+<li class="fragment">Only Thursday wrap-ups this week!</li>
 <li class="fragment">No sections or wrap-ups during Thanksgiving Week.</li>
 <li class="fragment">OH schedule for Thanksgiving Week:
 <ul>
@@ -354,40 +355,13 @@
 <div class="column">
 <ul>
 <li class="fragment"><p>Learn about conditional probabilities</p></li>
-<li class="fragment"><p>Discuss probability concepts</p></li>
+<li class="fragment"><p>Cover continuous random variables</p></li>
 </ul>
 </div><div class="column">
 <ul>
-<li class="fragment"><p>Cover continuous random variables</p></li>
 <li class="fragment"><p>Learn important <strong>named</strong> random variables</p></li>
+<li class="fragment"><p>Discuss the <strong>Central Limit Theorem</strong></p></li>
 </ul>
-</div>
-</div>
-</section>
-<section>
-<section id="but-first-final-round-of-which-flavor-of-data-scientist-are-you" class="title-slide slide level1 center">
-<h1>But First, Final Round of “Which Flavor of Data Scientist Are You?”</h1>
-
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column">
-<p>Data Visualizer</p>
-<iframe src="https://giphy.com/embed/d31vTpVi1LAcDvdm" width="480" height="362" frameborder="0" class="giphy-embed" allowfullscreen="">
-</iframe>
-<p>Data Wrangler</p>
-<iframe src="https://giphy.com/embed/DbaUtl1DcLyrdwhzGJ" width="480" height="362" frameborder="0" class="giphy-embed" allowfullscreen="">
-</iframe>
-</div><div class="column">
-<p>Model Builder</p>
-<p><br></p>
-<iframe src="https://giphy.com/embed/xZsLh7B3KMMyUptD9D" width="480" height="270" frameborder="0" class="giphy-embed" allowfullscreen="">
-</iframe>
-<p>Inferencer</p>
-<p><br></p>
-<iframe src="https://giphy.com/embed/NS7gPxeumewkWDOIxi" width="480" height="270" frameborder="0" class="giphy-embed" allowfullscreen="">
-</iframe>
 </div>
 </div>
 </section>
@@ -436,10 +410,10 @@
 <p>Let’s assume the true prevalence is 1%. During the 2021-2022 school year, each week they tested about 30,000 Harvard affiliates. Use the assumed percentages to fill in the following table of potential outcomes:</p>
 <table>
 <colgroup>
-<col style="width: 36%">
-<col style="width: 26%">
-<col style="width: 26%">
-<col style="width: 9%">
+<col style="width: 31%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -486,10 +460,10 @@
 <p>Recreate the table with this new false negative rate.</p>
 <table>
 <colgroup>
-<col style="width: 36%">
-<col style="width: 26%">
-<col style="width: 26%">
-<col style="width: 9%">
+<col style="width: 31%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -593,7 +567,7 @@ p(x) \color{orange}{\approx} P(X = x)
 <p><span class="math display">\[
 \sigma = \sqrt{ \int (x - \mu)^2 p(x) dx}
 \]</span></p>
-</section></section>
+</section>
 <section id="why-do-we-care-about-random-variables" class="title-slide slide level1 center">
 <h1>Why do we care about random variables?</h1>
 <p><span class="custom-subtitle fragment">We will recast our sample statistics as random variables.</span></p>
@@ -628,14 +602,14 @@ X \sim \mbox{Name(values of key parameters)}
 <div class="columns">
 <div class="column">
 <p><span class="math inline">\(X \sim\)</span> Bernoulli <span class="math inline">\((p)\)</span></p>
-<p><span class="math display">\[\begin{align*}
+<span class="math display">\[\begin{align*}
 X=   \left\{
 \begin{array}{ll}
       1 &amp; \mbox{success} \\
       0 &amp; \mbox{failure} \\
 \end{array}
 \right.  
-\end{align*}\]</span></p>
+\end{align*}\]</span>
 <p>Important parameter:</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -679,14 +653,14 @@ p &amp; = \mbox{probability of success} \\
 <div class="columns">
 <div class="column">
 <p><span class="math inline">\(X \sim\)</span> Bernoulli <span class="math inline">\((p = 0.5)\)</span></p>
-<p><span class="math display">\[\begin{align*}
+<span class="math display">\[\begin{align*}
 X=   \left\{
 \begin{array}{ll}
       1 &amp; \mbox{success} \\
       0 &amp; \mbox{failure} \\
 \end{array}
 \right.  
-\end{align*}\]</span></p>
+\end{align*}\]</span>
 </div><div class="column">
 <div class="cell" data-layout-align="center" data-fig.asp="0.5">
 <div class="cell-output-display">
@@ -723,14 +697,14 @@ X=   \left\{
 <div class="columns">
 <div class="column">
 <p><span class="math inline">\(X \sim\)</span> Bernoulli <span class="math inline">\((p)\)</span></p>
-<p><span class="math display">\[\begin{align*}
+<span class="math display">\[\begin{align*}
 X=   \left\{
 \begin{array}{ll}
       1 &amp; \mbox{success} \\
       0 &amp; \mbox{failure} \\
 \end{array}
 \right.  
-\end{align*}\]</span></p>
+\end{align*}\]</span>
 </div><div class="column">
 <p>Distribution:</p>
 <table>
@@ -771,9 +745,7 @@ X=   \left\{
 
 <h3 id="normal-random-variables">Normal Random Variables</h3>
 <p><span class="math inline">\(X \sim\)</span> Normal <span class="math inline">\((\mu, \sigma)\)</span></p>
-<ul>
-<li class="fragment">Distribution:</li>
-</ul>
+<p>Distribution:</p>
 <p><span class="math display">\[
 p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp{\left(-\frac{(x - \mu)^2}{2\sigma^2} \right)}
 \]</span> where <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span></p>
@@ -852,9 +824,7 @@ p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp{\left(-\frac{(x - \mu)^2}{2\sigma^2} \
 <p><span class="math inline">\(X \sim\)</span> t(df)</p>
 <div class="columns">
 <div class="column">
-<ul>
-<li class="fragment">Distribution:</li>
-</ul>
+<p>Distribution:</p>
 <p><span class="math display">\[
 p(x) = \frac{\Gamma(\mbox{df} + 1)}{\sqrt{\mbox{df}\pi} \Gamma(2^{-1}\mbox{df})}\left(1 + \frac{x^2}{\mbox{df}} \right)^{-\frac{df + 1}{2}}
 \]</span></p>
@@ -877,8 +847,236 @@ p(x) = \frac{\Gamma(\mbox{df} + 1)}{\sqrt{\mbox{df}\pi} \Gamma(2^{-1}\mbox{df})}
 </div>
 </section></section>
 <section>
-<section id="next-time-recast-some-of-the-sample-statistics-we-have-been-exploring-as-random-variables" class="title-slide slide level1 center">
-<h1>Next Time: Recast some of the sample statistics we have been exploring as random variables!</h1>
+<section id="it-is-time-to-recast-some-of-the-sample-statistics-we-have-been-exploring-as-random-variables" class="title-slide slide level1 center">
+<h1>It is time to recast some of the sample statistics we have been exploring as random variables!</h1>
+
+</section>
+<section class="slide level2">
+
+<h3 id="sample-statistics-as-random-variables">Sample Statistics as Random Variables</h3>
+<p>Here are some of the sample statistics we’ve seen lately:</p>
+<div>
+<ul>
+<li><p><span class="math inline">\(\hat{p}\)</span> = sample proportion of correct receiver guesses out of 329 trials</p></li>
+<li><p><span class="math inline">\(\bar{x}_I - \bar{x}_N\)</span> = difference in sample mean tuition between Ivies and non-Ivies</p></li>
+<li><p><span class="math inline">\(\hat{p}_D - \hat{p}_Y\)</span> = difference in sample improvement proportions between those who swam with dolphins and those who did yoga</p></li>
+</ul>
+</div>
+<p>Why are these all random variables?</p>
+<ul>
+<li class="fragment">But they aren’t <strong>Bernoulli</strong> random variables, nor <strong>Normal</strong> random variables, nor <strong>t</strong> random variables.</li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p><em>“All models are wrong but some are useful.”</em> – George Box</p>
+</blockquote>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-these-distributions">Approximating These Distributions</h3>
+<ul>
+<li class="fragment"><span class="math inline">\(\hat{p}\)</span> = sample proportion of correct receiver guesses out of 329 trials</li>
+</ul>
+<div class="columns">
+<div class="column">
+<div class="fragment">
+<p>We generated its Null Distribution:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-8-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="fragment">
+<p>Which is well approximated by the distribution of a N(0.25, 0.024).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-9-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-these-distributions-1">Approximating These Distributions</h3>
+<ul>
+<li class="fragment"><span class="math inline">\(\bar{x}_I - \bar{x}_N\)</span> = difference in sample mean tuition between Ivies and non-Ivies</li>
+</ul>
+<div class="columns">
+<div class="column">
+<div class="fragment">
+<p>We generated its Null Distribution:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-10-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="fragment">
+<p>Which is somewhat approximated by the distribution of a N(0.25, 0.024).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-11-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>We will learn that a <strong>standardized</strong> version of the difference in sample means is <strong>better</strong> approximated by the distribution of a t(df = 7).</p>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-these-distributions-2">Approximating These Distributions</h3>
+<ul>
+<li class="fragment"><span class="math inline">\(\hat{p}_D - \hat{p}_Y\)</span> = difference in sample improvement proportions between those who swam with dolphins and those who did yoga</li>
+</ul>
+<div class="columns">
+<div class="column">
+<div class="fragment">
+<p>We generated its Null Distribution:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-12-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="fragment">
+<p>Which is <strong>kinda somewhat</strong> approximated by the probability function of a N(0, 0.16).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-13-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-these-distributions-3">Approximating These Distributions</h3>
+<ul>
+<li class="fragment"><p>How do I know <strong>which</strong> probability function is a good approximation for my sample statistic’s distribution?</p></li>
+<li class="fragment"><p>Once I have figured out a probability function that approximates the distribution of my sample statistic, how do I <strong>use it</strong> to do statistical inference?</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="central-limit-theorem">Central Limit Theorem</h3>
+<p><strong>Central Limit Theorem (CLT):</strong> For random samples and a large sample size <span class="math inline">\((n)\)</span>, the sampling distribution of many sample statistics is approximately normal.</p>
+<p><strong>Example</strong>: Harvard Trees</p>
+<div class="cell" data-layout-align="center" data-fig.asp="0.3">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-14-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-sampling-distributions">Approximating Sampling Distributions</h3>
+<p><strong>Central Limit Theorem (CLT):</strong> For random samples and a large sample size <span class="math inline">\((n)\)</span>, the sampling distribution of many sample statistics is approximately normal.</p>
+<p><strong>Example</strong>: Harvard Trees</p>
+<div class="cell" data-layout-align="center" data-fig.asp="0.3">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk11wed_files/figure-revealjs/unnamed-chunk-15-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">But <strong>which</strong> Normal? (What is the value of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>?)</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-sampling-distributions-1">Approximating Sampling Distributions</h3>
+<p><strong>Question</strong>: But <strong>which</strong> normal? (What is the value of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>?)</p>
+<ul>
+<li class="fragment"><p>The sampling distribution of a statistic is always centered around:</p></li>
+<li class="fragment"><p>The CLT also provides formula estimates of the standard error.</p>
+<ul>
+<li class="fragment">The formula varies based on the statistic.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-the-sampling-distribution-of-a-sample-proportion">Approximating the Sampling Distribution of a Sample Proportion</h3>
+<p>CLT says: For large <span class="math inline">\(n\)</span> (At least 10 successes and 10 failures),</p>
+<p><span class="math display">\[
+\hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+\]</span></p>
+<p><strong>Example</strong>: Maples at Harvard</p>
+<ul>
+<li class="fragment"><p>Parameter: <span class="math inline">\(p\)</span> = proportion of Maples at Harvard = 0.138</p></li>
+<li class="fragment"><p>Statistic: <span class="math inline">\(\hat{p}\)</span> = proportion of Maples in a sample of 50 trees</p></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+\hat{p} \sim N \left(00.138, \sqrt{\frac{00.138(1-00.138)}{50}} \right)
+\]</span></p>
+<p><strong>NOTE</strong>: Can plug in the true parameter here because we had data on the whole population.</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-the-sampling-distribution-of-a-sample-proportion-1">Approximating the Sampling Distribution of a Sample Proportion</h3>
+<p><strong>Question</strong>: What do we do when we don’t have access to the whole population?</p>
+<p>Have:</p>
+<p><span class="math display">\[
+\hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+\]</span></p>
+<div class="fragment">
+<p><strong>Answer</strong>: We will have to estimate the SE.</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="approximating-the-sampling-distribution-of-a-sample-mean">Approximating the Sampling Distribution of a Sample Mean</h3>
+<p>There is a version of the CLT for many of our sample statistics.</p>
+<p>For the sample mean, the CLT says: For large <span class="math inline">\(n\)</span> (At least 30 observations),</p>
+<p><span class="math display">\[
+\bar{x} \sim N \left(\mu, \frac{\sigma}{\sqrt{n}} \right)
+\]</span></p>
+</section></section>
+<section>
+<section id="next-time-use-the-approximate-distribution-of-the-sample-statistic-given-by-the-clt-to-construct-confidence-intervals-and-to-conduct-hypothesis-tests" class="title-slide slide level1 center">
+<h1>Next time: Use the approximate distribution of the sample statistic (given by the CLT) to construct confidence intervals and to conduct hypothesis tests!</h1>
 
 </section>
 <section id="reminders" class="slide level2">
