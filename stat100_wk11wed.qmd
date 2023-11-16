@@ -74,21 +74,16 @@ theme_update(text = element_text(size = 13))
 -   Learn about conditional probabilities
 
 -   Cover continuous random variables
-
-
 :::
 
 ::: column
-
 -   Learn important **named** random variables
 
 -   Discuss the **Central Limit Theorem**
-
 :::
 :::
 
-
----
+------------------------------------------------------------------------
 
 ### Conditional Probabilities
 
@@ -122,10 +117,8 @@ theme_update(text = element_text(size = 13))
 Testing for COVID-19 was an important part of the *Keep Harvard Healthy* Program. There are a variety of COVID-19 tests out there but for this problem let's assume the following:
 
 ::: nonincremental
-
 -   The test gives a **false negative** result 13% of the time where a false negative case is a person with COVID-19 but the test says they don't have it.
 -   The test gives a **false positive** result 5% of the time where a false positive case is a person who doesn't have COVID-19 but the test says they do.
-
 :::
 
 Let's assume the true prevalence is 1%. During the 2021-2022 school year, each week they tested about 30,000 Harvard affiliates. Use the assumed percentages to fill in the following table of potential outcomes:
@@ -229,17 +222,13 @@ but if $p(4) > p(2)$ that still means that X is more likely to take on values ar
 
 Change $\sum$ to $\int$:
 
-
-
 $\int p(x) dx = 1$.
 
 Center -- Mean/Expected value:
 
-
 $$
 \mu = \int x p(x) dx
 $$
-
 
 ------------------------------------------------------------------------
 
@@ -248,7 +237,6 @@ $$
 Change $\sum$ to $\int$:
 
 Spread -- Standard deviation:
-
 
 $$
 \sigma = \sqrt{ \int (x - \mu)^2 p(x) dx}
@@ -493,18 +481,14 @@ $X \sim$ Normal $(\mu, \sigma)$
 **Notes:**
 
 ::: nonincremental
-
 (a) Area under the curve = 1.
 
 (b) Height $\approx$ how likely values are to occur
 
 (c) Super special Normal RV:
-
 :::
 
 $Z \sim$ Normal $(\mu = 0, \sigma = 1)$.
-
-
 :::
 
 ::: column
@@ -572,11 +556,7 @@ $X \sim$ t(df)
 
 ::: columns
 ::: column
-
-
-
 Distribution:
-
 
 $$
 p(x) = \frac{\Gamma(\mbox{df} + 1)}{\sqrt{\mbox{df}\pi} \Gamma(2^{-1}\mbox{df})}\left(1 + \frac{x^2}{\mbox{df}} \right)^{-\frac{df + 1}{2}}
@@ -612,48 +592,37 @@ ggplot(dat, aes(x = x, y = value, color = variable)) +
 
 # It is time to recast some of the sample statistics we have been exploring as random variables!
 
----
+------------------------------------------------------------------------
 
 ### Sample Statistics as Random Variables
 
 Here are some of the sample statistics we've seen lately:
 
 ::: nonincremental
+-   $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
 
-* $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
+-   $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
 
-* $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
-
-* $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did yoga
-
+-   $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did not
 :::
-
 
 Why are these all random variables?
 
-
-* But they aren't **Bernoulli** random variables, nor **Normal** random variables, nor **t** random variables.
+-   But they aren't **Bernoulli** random variables, nor **Normal** random variables, nor **t** random variables.
 
 ::: fragment
-
-> *"All models are wrong but some are useful."*  -- George Box
-
+> *"All models are wrong but some are useful."* -- George Box
 :::
 
----
+------------------------------------------------------------------------
 
 ### Approximating These Distributions
 
-
-* $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
-
+-   $\hat{p}$ = sample proportion of correct receiver guesses out of 329 trials
 
 ::: columns
-
 ::: column
-
 ::: fragment
-
 We generated its Null Distribution:
 
 ```{r, echo = FALSE}
@@ -677,15 +646,11 @@ ggplot(null_dist, aes(x = stat, y = ..density..)) +
   geom_histogram(bins = 23) +
   xlim(.16, .36) + ylim(0, 17)
 ```
-
 :::
-
 :::
 
 ::: column
-
 ::: fragment
-
 Which is well approximated by the distribution of a N(0.25, 0.024).
 
 ```{r, echo = FALSE}
@@ -694,28 +659,19 @@ ggplot(null_dist, aes(x = stat, y = ..density..)) +
   geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2) +
   xlim(.16, .36) + ylim(0, 17)
 ```
-
-
 :::
-
 :::
 :::
 
-
----
+------------------------------------------------------------------------
 
 ### Approximating These Distributions
 
-
-* $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
-
+-   $\bar{x}_I - \bar{x}_N$ = difference in sample mean tuition between Ivies and non-Ivies
 
 ::: columns
-
 ::: column
-
 ::: fragment
-
 We generated its Null Distribution:
 
 ```{r, echo = FALSE}
@@ -745,17 +701,12 @@ ggplot(null_dist, aes(x = stat, y = ..density..)) +
   geom_histogram(bins = 21) +
   xlim(-6000, 6000) + ylim(0, .00024)
 ```
-
 :::
-
 :::
 
 ::: column
-
 ::: fragment
-
-Which is somewhat approximated by the distribution of a N(0.25, 0.024).
-
+Which is somewhat approximated by the distribution of a N(0, 1036).
 
 ```{r, echo = FALSE}
 ggplot(null_dist, aes(x = stat, y = ..density..)) +
@@ -763,33 +714,23 @@ ggplot(null_dist, aes(x = stat, y = ..density..)) +
   xlim(-6000, 6000) + ylim(0, .0004)  +
   geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2)
 ```
-
-
-
 :::
-
 :::
 :::
 
 ::: fragment
-
 We will learn that a **standardized** version of the difference in sample means is **better** approximated by the distribution of a t(df = 7).
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### Approximating These Distributions
 
-
-* $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did yoga
+-   $\hat{p}_D - \hat{p}_Y$ = difference in sample improvement proportions between those who swam with dolphins and those who did not
 
 ::: columns
-
 ::: column
-
 ::: fragment
-
 We generated its Null Distribution:
 
 ```{r, echo = FALSE}
@@ -810,17 +751,12 @@ ggplot(null_dist, aes(x = stat, y = ..density..)) +
   geom_histogram(bins = 23) +
   xlim(-.5, .5) + ylim(0, 7)
 ```
-
 :::
-
 :::
 
 ::: column
-
 ::: fragment
-
 Which is **kinda somewhat** approximated by the probability function of a N(0, 0.16).
-
 
 ```{r, echo = FALSE}
 ggplot(null_dist, aes(x = stat, y = ..density..)) +
@@ -828,36 +764,25 @@ ggplot(null_dist, aes(x = stat, y = ..density..)) +
   geom_line(data = dat, mapping = aes(x, y), color = "deeppink", size = 2) +
   xlim(-.5, .5) + ylim(0, 7)
 ```
-
-
 :::
-
 :::
 :::
 
-
----
+------------------------------------------------------------------------
 
 ### Approximating These Distributions
 
-* How do I know **which** probability function is a good approximation for my sample statistic's distribution?
+-   How do I know **which** probability function is a good approximation for my sample statistic's distribution?
 
+-   Once I have figured out a probability function that approximates the distribution of my sample statistic, how do I **use it** to do statistical inference?
 
-* Once I have figured out a probability function that approximates the distribution of my sample statistic, how do I **use it** to do statistical inference?
-
-
-
----
+------------------------------------------------------------------------
 
 ### Central Limit Theorem
 
-
 **Central Limit Theorem (CLT):** For random samples and a large sample size $(n)$, the sampling distribution of many sample statistics is approximately normal.
 
-
-
 **Example**: Harvard Trees
-
 
 ```{r, echo = FALSE, fig.asp = 0.3 }
 library(tidyverse)
@@ -893,19 +818,13 @@ library(cowplot)
 plot_grid(p1, p2)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ### Approximating Sampling Distributions
 
-
-
 **Central Limit Theorem (CLT):** For random samples and a large sample size $(n)$, the sampling distribution of many sample statistics is approximately normal.
 
-
-
 **Example**: Harvard Trees
-
 
 ```{r, echo = FALSE, fig.asp = 0.3 }
 # Graph the sampling distribution
@@ -917,25 +836,21 @@ library(cowplot)
 plot_grid(p1, p2)
 ```
 
+-   But **which** Normal? (What is the value of $\mu$ and $\sigma$?)
 
-* But **which** Normal?  (What is the value of $\mu$ and $\sigma$?)
-
-
----
+------------------------------------------------------------------------
 
 ### Approximating Sampling Distributions
 
-**Question**: But **which** normal?  (What is the value of $\mu$ and $\sigma$?)
+**Question**: But **which** normal? (What is the value of $\mu$ and $\sigma$?)
 
+-   The sampling distribution of a statistic is always centered around:
 
-* The sampling distribution of a statistic is always centered around: 
+-   The CLT also provides formula estimates of the standard error.
 
+    -   The formula varies based on the statistic.
 
-* The CLT also provides formula estimates of the standard error.
-    + The formula varies based on the statistic.
-    
-    
----
+------------------------------------------------------------------------
 
 ### Approximating the Sampling Distribution of a Sample Proportion
 
@@ -945,32 +860,25 @@ $$
 \hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
 $$
 
-
-
 **Example**: Maples at Harvard
 
+-   Parameter: $p$ = proportion of Maples at Harvard = 0.138
 
-* Parameter: $p$ = proportion of Maples at Harvard = 0.138
-
-
-* Statistic: $\hat{p}$ = proportion of Maples in a sample of 50 trees
+-   Statistic: $\hat{p}$ = proportion of Maples in a sample of 50 trees
 
 ::: fragment
-
 $$
-\hat{p} \sim N \left(00.138, \sqrt{\frac{00.138(1-00.138)}{50}} \right)
+\hat{p} \sim N \left(0.138, \sqrt{\frac{0.138(1-0.138)}{50}} \right)
 $$
 
 **NOTE**: Can plug in the true parameter here because we had data on the whole population.
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### Approximating the Sampling Distribution of a Sample Proportion
 
 **Question**: What do we do when we don't have access to the whole population?
-
 
 Have:
 
@@ -979,27 +887,22 @@ $$
 $$
 
 ::: fragment
-
 **Answer**: We will have to estimate the SE.
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### Approximating the Sampling Distribution of a Sample Mean
 
-
-There is a version of the CLT for many of our sample statistics.  
-
+There is a version of the CLT for many of our sample statistics.
 
 For the sample mean, the CLT says: For large $n$ (At least 30 observations),
-
 
 $$
 \bar{x} \sim N \left(\mu, \frac{\sigma}{\sqrt{n}} \right)
 $$
-    
-# Next time: Use the approximate distribution of the sample statistic (given by the CLT) to construct confidence intervals and to conduct hypothesis tests! 
+
+# Next time: Use the approximate distribution of the sample statistic (given by the CLT) to construct confidence intervals and to conduct hypothesis tests!
 
 ------------------------------------------------------------------------
 
