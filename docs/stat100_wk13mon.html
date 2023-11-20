@@ -10,7 +10,7 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <title>Theory-Based Inference</title>
+  <title>More Theory-Based Inference</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -397,36 +397,28 @@
 <div class="column center" style="width:45%;">
 <p><img data-src="img/DAW.png" style="width:90.0%"></p>
 </div><div class="column center" style="width:55%;">
-<p><span class="custom-title">Theory-Based Inference</span></p>
+<p><span class="custom-title">More Theory-Based Inference</span></p>
 <p><br> <br> <br></p>
 <p><span class="custom-subtitle">Kelly McConville</span></p>
-<p><span class="custom-subtitle">Stat 100 <br> Week 12 | Fall 2023</span></p>
+<p><span class="custom-subtitle">Stat 100 <br> Week 13 | Fall 2023</span></p>
 </div>
 </div>
 </section>
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li class="fragment">No sections or wrap-ups this week.</li>
-<li class="fragment">P-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!</li>
-<li class="fragment">No new p-set or lecture quiz this week.</li>
-<li class="fragment">OH schedule for Thanksgiving Week:
-<ul>
-<li class="fragment">Sun, Nov 19th - Tues, Nov 21st: <a href="https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing">Happening with some modifications</a></li>
-<li class="fragment">No OHs Wed, Nov 22nd - Sun, Nov 26th!</li>
-</ul></li>
+<li class="fragment">Regular OH schedule ends on Tues, Dec 5th (last day of classes).</li>
+<li class="fragment">Will have lots of office hours during Reading Period but not at the standard times.</li>
 </ul>
 <h3 id="goals-for-today">Goals for Today</h3>
 <div class="columns">
 <div class="column">
 <ul>
-<li class="fragment"><p>A bit of thanks.</p></li>
-<li class="fragment"><p>Learn theory-based statistical inference methods.</p></li>
+<li class="fragment">Discuss more theory-based inference.</li>
 </ul>
 </div><div class="column">
 <ul>
-<li class="fragment"><p>Introduce a new group of test statistics based on <strong>z-scores</strong>.</p></li>
-<li class="fragment"><p>Generalize the SE method confidence interval formula.</p></li>
+<li class="fragment">Sample size calculations.</li>
 </ul>
 </div>
 </div>
@@ -449,530 +441,528 @@
 </figure>
 </div>
 </section>
-<section id="sample-statistics-as-random-variables" class="slide level2">
-<h2>Sample Statistics as Random Variables</h2>
-<ul>
-<li class="fragment"><p><strong>Sample statistics</strong> can be recast as <strong>random variables</strong>.</p></li>
-<li class="fragment"><p>Need to figure out <strong>what</strong> random variable is a good approximation for our sample statistic.</p>
-<ul>
-<li class="fragment">Then use the properties of that random variable to do inference.</li>
-</ul></li>
-<li class="fragment"><p>Sometimes it is easier to find a good random variable approximation if we <strong>standardize</strong> our sample statistic first.</p></li>
-</ul>
-</section>
 <section class="slide level2">
 
-<h3 id="z-scores">Z-scores</h3>
-<ul>
-<li class="fragment"><p>All of our <strong>test statistics</strong> so far have been <strong>sample statistics</strong>.</p></li>
-<li class="fragment"><p>Another commonly used test statistic takes the form of a <strong>z-score</strong>:</p></li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
-\mbox{Z-score} = \frac{X - \mu}{\sigma}
-\]</span></p>
-</div>
-<ul>
-<li class="fragment"><p>Standardized version of the sample statistic.</p></li>
-<li class="fragment"><p>Z-score measures how many <strong>standard deviations</strong> the sample statistic is away from its <strong>mean</strong>.</p></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="z-score-example">Z-score Example</h3>
-<ul>
-<li class="fragment"><span class="math inline">\(\hat{p}\)</span> = proportion of Maples in a sample of 50 trees</li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
-\hat{p} \sim N \left(0.138, 0.049 \right)
-\]</span></p>
-</div>
-<ul>
-<li class="fragment">Suppose we have a sample where <span class="math inline">\(\hat{p} = 0.05\)</span>. Then the z-score would be:</li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
-\mbox{Z-score} = \frac{0.05 - 0.138}{0.049} = -1.8
-\]</span></p>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="z-score-test-statistics">Z-score Test Statistics</h3>
-<ul>
-<li class="fragment">A Z-score test statistic is one where we take our original sample statistic and convert it to a Z-score:</li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
-\mbox{Z-score test statistic} = \frac{\mbox{statistic} - \mu}{\sigma}
-\]</span></p>
-</div>
-<ul>
-<li class="fragment">Allows us to quickly (but roughly) classify results as unusual or not.
-<ul>
-<li class="fragment"><span class="math inline">\(|\)</span> Z-score <span class="math inline">\(|\)</span> &gt; 2 → results are unusual/p-value will be smallish</li>
-</ul></li>
-<li class="fragment">Commonly used because if the sample statistic <span class="math inline">\(\sim N(\mu, \sigma)\)</span>, then</li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
-\mbox{Z-score test statistic} = \frac{\mbox{statistic} - \mu}{\sigma} \sim N(0, 1)
-\]</span></p>
-</div>
-</section>
-<section>
-<section id="lets-consider-theory-based-inference-for-a-population-proportion." class="title-slide slide level1 center">
-<h1>Let’s consider theory-based inference for a population proportion.</h1>
-
-</section>
-<section class="slide level2">
-
-<h3 id="statistical-inference-zoom-out-estimation-1">Statistical Inference Zoom Out – Estimation</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/ci_diagram.png" style="width:60.0%"></p>
-</figure>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="statistical-inference-zoom-out-testing-1">Statistical Inference Zoom Out – Testing</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/hyp_testing_diagram.png" style="width:70.0%"></p>
-</figure>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-proportion-testing">Inference for a Single Proportion – Testing</h3>
-<p>Let’s consider conducting a hypothesis test for a single proportion: <span class="math inline">\(p\)</span></p>
-<p>Need:</p>
-<ul>
-<li class="fragment">Hypotheses
-<ul>
-<li class="fragment">Same as with the simulation-based methods</li>
-</ul></li>
-<li class="fragment">Test statistic and its null distribution
-<ul>
-<li class="fragment">Use a z-score test statistic and a standard normal distribution</li>
-</ul></li>
-<li class="fragment">P-value
-<ul>
-<li class="fragment">Compute from the standard normal distribution directly</li>
-</ul></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-proportion-testing-1">Inference for a Single Proportion – Testing</h3>
-<p>Let’s consider conducting a hypothesis test for a single proportion: <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(H_o: p = p_o\)</span> where <span class="math inline">\(p_o\)</span> = null value and <span class="math inline">\(H_a: p &gt; p_o\)</span> or <span class="math inline">\(H_a: p &lt; p_o\)</span> or <span class="math inline">\(H_a: p \neq p_o\)</span></p>
-<p>By the CLT, under <span class="math inline">\(H_o\)</span>:</p>
-<p><span class="math display">\[
-\hat{p} \sim N \left(p_o, \sqrt{\frac{p_o(1-p_o)}{n}} \right)
-\]</span></p>
-<p>Z-score test statistic:</p>
-<p><span class="math display">\[
-Z = \frac{\hat{p} - p_o}{\sqrt{\frac{p_o(1-p_o)}{n}}}
-\]</span></p>
-<p>Use <span class="math inline">\(N(0, 1)\)</span> to find the p-value once you have computed the test statistic.</p>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-proportion-testing-2">Inference for a Single Proportion – Testing</h3>
-<p>Let’s consider conducting a hypothesis test for a single proportion: <span class="math inline">\(p\)</span></p>
-<p><strong>Example</strong>: Bern and Honorton’s (1994) extrasensory perception (ESP) studies</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Construct data frame of sample results</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>esp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">guess =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"correct"</span>, <span class="dv">106</span>),</span>
-<span id="cb1-3"><a href="#cb1-3"></a>                            <span class="fu">rep</span>(<span class="st">"incorrect"</span>, <span class="dv">329</span> <span class="sc">-</span> <span class="dv">106</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-proportion-testing-3">Inference for a Single Proportion – Testing</h3>
-<p>Let’s consider conducting a hypothesis test for a single proportion: <span class="math inline">\(p\)</span></p>
-<p><strong>Example</strong>: Bern and Honorton’s (1994) extrasensory perception (ESP) studies</p>
-<div class="columns">
-<div class="column">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># Compute observed test statistic</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>test_stat <span class="ot">&lt;-</span> esp <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">specify</span>(<span class="at">response =</span> guess,</span>
-<span id="cb2-5"><a href="#cb2-5"></a>          <span class="at">success =</span> <span class="st">"correct"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">p =</span> <span class="fl">0.25</span>) <span class="sc">%&gt;%</span>  </span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"z"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Response: guess (factor)
-Null Hypothesis: point
-# A tibble: 1 × 1
-   stat
-  &lt;dbl&gt;
-1  3.02</code></pre>
-</div>
-</div>
-</div><div class="column">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Use N(0,1) to find p-value</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">pnorm</span>(<span class="at">q =</span> test_stat<span class="sc">$</span>stat, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>,</span>
-<span id="cb4-3"><a href="#cb4-3"></a>      <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.001247763</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Or </span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="at">q =</span> test_stat<span class="sc">$</span>stat,</span>
-<span id="cb6-3"><a href="#cb6-3"></a>          <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.001247763</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">prop_test</span>(esp, <span class="at">response =</span> guess, <span class="at">success =</span> <span class="st">"correct"</span>, <span class="at">p =</span> <span class="fl">0.25</span>,</span>
-<span id="cb8-2"><a href="#cb8-2"></a>          <span class="at">z =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  statistic p_value alternative
-      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;      
-1      3.02 0.00125 greater    </code></pre>
-</div>
-</div>
-<p>Note: There is also a base <code>R</code> function called <code>prop.test()</code> but its arguments are different.</p>
-</section>
-<section class="slide level2">
-
-<h3 id="theory-based-confidence-intervals">Theory-Based Confidence Intervals</h3>
-<p>Suppose statistic <span class="math inline">\(\sim N(\mu = \mbox{parameter}, \sigma = SE)\)</span>.</p>
-<p>95% CI for parameter:</p>
-<p><span class="math display">\[
-\mbox{statistic} \pm 2 SE
-\]</span></p>
-<div class="fragment">
-<p>Can generalize this formula!</p>
-<p>P% CI for parameter:</p>
-<p><span class="math display">\[
-\mbox{statistic} \pm z^* SE
-\]</span></p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Find z-star</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">qnorm</span>(<span class="at">p =</span> <span class="fl">0.975</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.959964</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">qnorm</span>(<span class="at">p =</span> <span class="fl">0.95</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.644854</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="theory-based-cis-in-action">Theory-Based CIs in Action</h3>
-<p>Let’s consider constructing a confidence interval for a single proportion: <span class="math inline">\(p\)</span></p>
-<p>By the CLT,</p>
+<h3 id="recap">Recap:</h3>
+<p><strong>Central Limit Theorem (CLT):</strong> For random samples and a large sample size <span class="math inline">\((n)\)</span>, the sampling distribution of many sample statistics is approximately normal.</p>
+<p>–</p>
+<p>.pull-left[</p>
+<p><strong>Sample Proportion Version:</strong></p>
+<p>When <span class="math inline">\(n\)</span> is large (at least 10 successes and 10 failures):</p>
 <p><span class="math display">\[
 \hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
 \]</span></p>
-<p>P% CI for parameter:</p>
-<span class="math display">\[\begin{align*}
-\mbox{statistic} \pm z^* SE
-\end{align*}\]</span>
+<p>]</p>
+<p>–</p>
+<p>.pull-right[</p>
+<p><strong>Sample Mean Version:</strong></p>
+<p>When <span class="math inline">\(n\)</span> is large (at least 30):</p>
+<p><span class="math display">\[
+\bar{x} \sim N \left(\mu, \frac{\sigma}{\sqrt{n}} \right)
+\]</span></p>
 </section>
 <section class="slide level2">
 
-<h3 id="theory-based-cis-in-action-1">Theory-Based CIs in Action</h3>
-<p><strong>Example</strong>: Bern and Honorton’s (1994) extrasensory perception (ESP) studies</p>
+<h3 id="but-there-are-several-versions-of-the-clt">But There Are <a href="https://mcconvil.github.io/stat100f23/inference_procedures.html">Several Versions</a> of the CLT!</h3>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Use probability model to approximate null distribution</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">prop_test</span>(esp, <span class="at">response =</span> guess, <span class="at">success =</span> <span class="st">"correct"</span>, </span>
-<span id="cb14-3"><a href="#cb14-3"></a>          <span class="at">z =</span> <span class="cn">TRUE</span>, <span class="at">conf_int =</span> <span class="cn">TRUE</span>, <span class="at">conf_level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 28%">
+<col style="width: 17%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Response</th>
+<th style="text-align: left;">Explanatory</th>
+<th style="text-align: left;">Numerical_Quantity</th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">quantitative</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">mean</td>
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\bar{x}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">categorical</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">proportion</td>
+<td style="text-align: left;"><span class="math inline">\(p\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\hat{p}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">quantitative</td>
+<td style="text-align: left;">categorical</td>
+<td style="text-align: left;">difference in means</td>
+<td style="text-align: left;"><span class="math inline">\(\mu_1 - \mu_2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">categorical</td>
+<td style="text-align: left;">categorical</td>
+<td style="text-align: left;">difference in proportions</td>
+<td style="text-align: left;"><span class="math inline">\(p_1 - p_2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">quantitative</td>
+<td style="text-align: left;">quantitative</td>
+<td style="text-align: left;">correlation</td>
+<td style="text-align: left;"><span class="math inline">\(\rho\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(r\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="recap-1">Recap:</h3>
+<p><strong>Z-score test statistics</strong>:</p>
+<p><span class="math display">\[
+\mbox{Z-score} = \frac{\mbox{statistic} - \mu}{\sigma}
+\]</span></p>
+<ul>
+<li class="fragment"><p>Usually follows a <strong>standard normal</strong> or a <strong>t</strong> distribution.</p></li>
+<li class="fragment"><p>Use the approximate distribution to find the p-value.</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="recap-2">Recap:</h3>
+<p><strong>Formula-Based</strong> P*100% Confidence Intervals</p>
+<p><span class="math display">\[
+\mbox{statistic} \pm z^* SE
+\]</span></p>
+<p>where <span class="math inline">\(P(-z^* \leq Z \leq z^*) = P\)</span></p>
+<p>Or we will see that sometimes we use a <strong>t</strong> critical value:</p>
+<p><span class="math display">\[
+\mbox{statistic} \pm t^* SE
+\]</span></p>
+<p>where <span class="math inline">\(P(-t^* \leq t \leq t^*) = P\)</span></p>
+</section>
+<section>
+<section id="how-do-we-perform-probability-model-calculations-in-r" class="title-slide slide level1 center">
+<h1>How do we perform probability model calculations in <code>R</code>?</h1>
+
+</section>
+<section class="slide level2">
+
+<h3 id="probability-calculations-in-r">Probability Calculations in R</h3>
+<p><strong>Question</strong>: How do I compute <strong>probabilities</strong> in R?</p>
+<div class="columns">
+<div class="column">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-3-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">pnorm</span>(<span class="at">q =</span> <span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8413447</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">pt</span>(<span class="at">q =</span> <span class="dv">1</span>, <span class="at">df =</span> <span class="dv">52</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8390293</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Doesn’t seem quite right</strong>…</p>
+</section>
+<section class="slide level2">
+
+<h3 id="probability-calculations-in-r-1">Probability Calculations in R</h3>
+<p><strong>Question</strong>: How do I compute <strong>probabilities</strong> in R?</p>
+<div class="columns">
+<div class="column">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-5-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">pnorm</span>(<span class="at">q =</span> <span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>,</span>
+<span id="cb5-2"><a href="#cb5-2"></a>      <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1586553</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">pt</span>(<span class="at">q =</span> <span class="dv">1</span>, <span class="at">df =</span> <span class="dv">52</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1609707</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="p100-ci-for-parameter">P*100% CI for parameter:</h3>
+<p><span class="math display">\[
+\mbox{statistic} \pm z^* SE
+\]</span></p>
+<div class="columns">
+<div class="column">
+<p><strong>Question</strong>: How do I find the correct critical values <span class="math inline">\((z^* \mbox{ or } t^*)\)</span> for the confidence interval?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-7-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">qnorm</span>(<span class="at">p =</span> <span class="fl">0.975</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">qt</span>(<span class="at">p =</span> <span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">52</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.006647</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="p100-ci-for-parameter-1">P*100% CI for parameter:</h3>
+<p><span class="math display">\[
+\mbox{statistic} \pm z^* SE
+\]</span></p>
+<div class="columns">
+<div class="column">
+<p><strong>Question</strong>: What percentile/quantile do I need for a 90% CI?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-9-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">qnorm</span>(<span class="at">p =</span> <span class="fl">0.95</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.644854</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">qt</span>(<span class="at">p =</span> <span class="fl">0.95</span>, <span class="at">df =</span> <span class="dv">52</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.674689</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="probability-calculations-in-r-2">Probability Calculations in R</h3>
+<p><strong>To help you remember</strong>:</p>
+<div class="fragment">
+<p>Want a <strong>P</strong>robability?</p>
+<p>→ use <code>pnorm()</code>, <code>pt()</code>, …</p>
+</div>
+<div class="fragment">
+<p>Want a <strong>Q</strong>uantile (i.e.&nbsp;percentile)?</p>
+<p>→ use <code>qnorm()</code>, <code>qt()</code>, …</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="probability-calculations-in-r-3">Probability Calculations in R</h3>
+<p><strong>Question</strong>: When might I want to do probability calculations in R?</p>
+<ul>
+<li class="fragment"><p>Computed a test statistic that is approximated by a named random variable. Want to compute the p-value with <code>p---()</code></p></li>
+<li class="fragment"><p>Compute a confidence interval. Want to find the critical value with <code>q---()</code>.</p></li>
+<li class="fragment"><p>To do a <strong>Sample Size Calculation</strong>.</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="sample-size-calculations">Sample Size Calculations</h3>
+<ul>
+<li class="fragment"><p>Very important part of the data analysis process!</p></li>
+<li class="fragment"><p>Happens BEFORE you collect data.</p></li>
+<li class="fragment"><p>You determine how large your sample size needs for a desired precision in your CI.</p>
+<ul>
+<li class="fragment">The power calculations from hypothesis testing relate to this idea.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="sample-size-calculations-1">Sample Size Calculations</h3>
+<p><strong>Question</strong>: Why do we need sample size calculations?</p>
+<p><strong>Example</strong>: Let’s return to the dolphins for treating depression example.</p>
+<ul>
+<li class="fragment"><p>With a sample size of 30 and 95% confidence, we estimate that the improvement rate for depression is between 14.5 percentage points and 75 percentage points higher if you swim with a dolphin instead of swimming without a dolphin.</p></li>
+<li class="fragment"><p>With a width of 60.5 percentage points, this 95% CI is a <strong>wide</strong>/very imprecise interval.</p></li>
+</ul>
+<div class="fragment">
+<p><strong>Question</strong>: How could we make it narrower? How could we decrease the Margin of Error (ME)?</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="sample-size-calculations-single-proportion">Sample Size Calculations – Single Proportion</h3>
+<p>Let’s focus on estimating a single proportion. Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02. <strong>How large does our sample size need to be?</strong></p>
+<p>Want</p>
+<p><span class="math display">\[
+z^* \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}} \leq B
+\]</span></p>
+<div class="fragment">
+<p>Need to derive a formula that looks like</p>
+<p><span class="math display">\[
+n \geq \quad ...
+\]</span></p>
+<p><strong>Question</strong>: How can we isolate <span class="math inline">\(n\)</span> to be on a side by itself?</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="sample-size-calculations-single-proportion-1">Sample Size Calculations – Single Proportion</h3>
+<p>Let’s focus on estimating a single proportion. Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02. <strong>How large does our sample size need to be?</strong></p>
+<p><strong>Sample size calculation:</strong></p>
+<p><span class="math display">\[
+n \geq \frac{\hat{p}(1 - \hat{p})z^{*2}}{B^2}
+\]</span></p>
+<ul>
+<li class="fragment"><p>What do we plug in for, <span class="math inline">\(\hat{p}\)</span>, <span class="math inline">\(z^{*}\)</span>, <span class="math inline">\(B\)</span>?</p></li>
+<li class="fragment"><p>Consider sample size calculations when estimating a <strong>mean</strong> on this week’s p-set!</p></li>
+</ul>
+</section></section>
+<section>
+<section id="lets-briefly-at-theory-based-inference-for-two-variables." class="title-slide slide level1 center">
+<h1>Let’s (briefly) at theory-based inference for two variables.</h1>
+
+</section>
+<section id="data-example" class="slide level2">
+<h2>Data Example</h2>
+<p>We have data on a random sub-sample of the 2010 American Community Survey. The American Community Survey is given every year to a random sample of US residents.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Libraries</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">library</span>(Lock5Data)</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="co"># Data</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="fu">data</span>(ACS)</span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="co"># Focus on adults</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>ACS_adults <span class="ot">&lt;-</span> <span class="fu">filter</span>(ACS, Age <span class="sc">&gt;=</span> <span class="dv">18</span>)</span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="fu">glimpse</span>(ACS_adults)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,936
+Columns: 9
+$ Sex             &lt;int&gt; 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, …
+$ Age             &lt;int&gt; 38, 18, 21, 55, 51, 28, 46, 80, 62, 41, 37, 42, 69, 48…
+$ Married         &lt;int&gt; 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, …
+$ Income          &lt;dbl&gt; 64.0, 0.0, 4.0, 34.0, 30.0, 13.7, 114.0, 0.0, 0.0, 0.0…
+$ HoursWk         &lt;int&gt; 40, 0, 20, 40, 40, 40, 60, 0, 0, 0, 40, 42, 0, 60, 0, …
+$ Race            &lt;fct&gt; white, black, white, other, black, white, white, white…
+$ USCitizen       &lt;int&gt; 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …
+$ HealthInsurance &lt;int&gt; 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, …
+$ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="difference-in-proportions">Difference in Proportions</h3>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<p><strong>Response variable:</strong></p>
+<p><strong>Explanatory variable:</strong></p>
+<p><strong>Parameter of interest:</strong></p>
+<p><strong>Sample size requirement for theory-based inference</strong>:</p>
+</section>
+<section class="slide level2">
+
+<h3 id="difference-in-proportions-1">Difference in Proportions</h3>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Exploratory data analysis</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ACS_adults, </span>
+<span id="cb19-3"><a href="#cb19-3"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(USCitizen),</span>
+<span id="cb19-4"><a href="#cb19-4"></a>                     <span class="at">fill  =</span> <span class="fu">factor</span>(Married))) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-12-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Sample size</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>ACS_adults <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">count</span>(Married, USCitizen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Married USCitizen   n
+1       0         0  64
+2       0         1 832
+3       1         0  79
+4       1         1 961</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="difference-in-proportions-2">Difference in Proportions</h3>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<p>Why is<code>prop_test()</code> failing?</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>ACS_adults <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="fu">prop_test</span>(Married <span class="sc">~</span> USCitizen, </span>
+<span id="cb22-4"><a href="#cb22-4"></a>          <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"0"</span>), <span class="at">z =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-5"><a href="#cb22-5"></a>          <span class="at">success =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `prop_test()`:
+! The response variable of `Married` is not appropriate since the response variable is expected to be categorical.</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="difference-in-proportions-3">Difference in Proportions</h3>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>ACS_adults <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">mutate</span>(<span class="at">MarriedCat =</span> <span class="fu">case_when</span>(Married <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"No"</span>,</span>
+<span id="cb24-3"><a href="#cb24-3"></a>                                Married <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>),</span>
+<span id="cb24-4"><a href="#cb24-4"></a>         <span class="at">USCitizenCat =</span> <span class="fu">case_when</span>(USCitizen <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Not citizen"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5"></a>                                  USCitizen <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Citizen"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="fu">prop_test</span>(MarriedCat <span class="sc">~</span> USCitizenCat, </span>
+<span id="cb24-7"><a href="#cb24-7"></a>          <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"Citizen"</span>, <span class="st">"Not citizen"</span>), <span class="at">z =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-8"><a href="#cb24-8"></a>          <span class="at">success =</span> <span class="st">"Yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
-  statistic  p_value alternative lower_ci upper_ci
-      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
-1     -6.45 1.12e-10 two.sided      0.274    0.374</code></pre>
+  statistic p_value alternative lower_ci upper_ci
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+1    -0.380   0.704 two.sided     -0.101   0.0682</code></pre>
 </div>
 </div>
-<ul>
-<li class="fragment">Don’t use the reported test statistic and p-value!</li>
-</ul>
 </section>
 <section class="slide level2">
 
-<h3 id="theory-based-cis">Theory-Based CIs</h3>
-<p>P% CI for parameter:</p>
-<p><span class="math display">\[
-\mbox{statistic} \pm z^* SE
-\]</span></p>
-<p>Notes:</p>
-<ul>
-<li class="fragment"><p>Didn’t construct the bootstrap distribution.</p></li>
-<li class="fragment"><p>Need to check that <span class="math inline">\(n\)</span> is large and that the sample is random/representative.</p>
-<ul>
-<li class="fragment">Condition depends on what parameter you are conducting inference for.</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">count</span>(esp, guess)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      guess   n
-1   correct 106
-2 incorrect 223</code></pre>
-</div>
-</div>
-</div>
-<ul>
-<li class="fragment"><p>Interpretation of the CI doesn’t change.</p></li>
-<li class="fragment"><p>For some parameters, the critical value comes from a <span class="math inline">\(t\)</span> distribution.</p></li>
-<li class="fragment"><p>Now we have a formula for the Margin of Error.</p>
-<ul>
-<li class="fragment">That will prove useful for <strong>sample size calculations</strong>.</li>
-</ul></li>
-</ul>
-</section></section>
-<section>
-<section id="now-lets-explore-how-to-do-inference-for-a-single-mean." class="title-slide slide level1 center">
-<h1>Now let’s explore how to do inference for a single mean.</h1>
-
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-mean">Inference for a Single Mean</h3>
-<p><strong>Example:</strong> <em>Are lakes in Florida more acidic or alkaline?</em> The pH of a liquid is the measure of its acidity or alkalinity where pure water has a pH of 7, a pH greater than 7 is alkaline and a pH less than 7 is acidic. The following dataset contains observations on a sample of 53 lakes in Florida.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb18-2"><a href="#cb18-2"></a>FloridaLakes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://www.lock5stat.com/datasets1e/FloridaLakes.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Cases</strong>:</p>
-<p><strong>Variable of interest</strong>:</p>
-<p><br></p>
+<h3 id="difference-in-means">Difference in Means</h3>
+<p>Let’s estimate the average hours worked per week between married and unmarried US residents.</p>
+<p><strong>Response variable:</strong></p>
+<p><strong>Explanatory variable:</strong></p>
 <p><strong>Parameter of interest:</strong></p>
-<p><strong>Hypotheses:</strong></p>
-<p><br></p>
+<p><strong>Sample size requirement for theory-based inference</strong>:</p>
 </section>
 <section class="slide level2">
 
-<h3 id="inference-for-a-single-mean-1">Inference for a Single Mean</h3>
-<p>Let’s consider conducting a hypothesis test for a single mean: <span class="math inline">\(\mu\)</span></p>
-<p>Need:</p>
-<ul>
-<li class="fragment">Hypotheses
-<ul>
-<li class="fragment">Same as with the simulation-based methods</li>
-</ul></li>
-<li class="fragment">Test statistic and its null distribution
-<ul>
-<li class="fragment">Use a z-score test statistic and a t distribution</li>
-</ul></li>
-<li class="fragment">P-value
-<ul>
-<li class="fragment">Compute from the t distribution directly</li>
-</ul></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-mean-2">Inference for a Single Mean</h3>
-<p>Let’s consider conducting a hypothesis test for a single mean: <span class="math inline">\(\mu\)</span></p>
-<p><span class="math inline">\(H_o: \mu = \mu_o\)</span> where <span class="math inline">\(\mu_o\)</span> = null value</p>
-<p><span class="math inline">\(H_a: \mu &gt; \mu_o\)</span> or <span class="math inline">\(H_a: \mu &lt; \mu_o\)</span> or <span class="math inline">\(H_a: \mu \neq \mu_o\)</span></p>
-<p>By the CLT, under <span class="math inline">\(H_o\)</span>:</p>
-<p><span class="math display">\[
-\bar{x} \sim N \left(\mu_o, \frac{\sigma}{\sqrt{n}} \right)
-\]</span></p>
-<p>Z-score test statistic:</p>
-<div class="fragment">
-<p><span class="math display">\[
-Z = \frac{\bar{x} - \mu_o}{\frac{\sigma}{\sqrt{n}}}
-\]</span></p>
-</div>
-<ul>
-<li class="fragment"><strong>Problem:</strong> Don’t know <span class="math inline">\(\sigma\)</span>: the population standard deviation of our response variable!</li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-mean-3">Inference for a Single Mean</h3>
-<p>Z-score test statistic:</p>
-<p><span class="math display">\[
-t = \frac{\bar{x} - \mu_o}{\frac{s}{\sqrt{n}}}
-\]</span></p>
-<ul>
-<li class="fragment"><strong>Problem:</strong> Don’t know <span class="math inline">\(\sigma\)</span>: the population standard deviation of our response variable!
-<ul>
-<li class="fragment">For our example, <span class="math inline">\(\sigma\)</span> would be the standard deviation of the Ph level for all lakes in Florida.</li>
-</ul></li>
-<li class="fragment"><strong>Solution:</strong> Plug in <span class="math inline">\(s\)</span>: the sample standard deviation of our response variable!
-<ul>
-<li class="fragment">For our example, <span class="math inline">\(s\)</span> would be the standard deviation of the Ph level for the sampled lakes in Florida.</li>
-</ul></li>
-<li class="fragment">Use <span class="math inline">\(t(\mbox{df} = n - 1)\)</span> to find the p-value</li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-mean-4">Inference for a Single Mean</h3>
-<div class="columns">
-<div class="column">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb19-2"><a href="#cb19-2"></a></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="co">#Compute obs stat</span></span>
-<span id="cb19-4"><a href="#cb19-4"></a>t_obs <span class="ot">&lt;-</span> FloridaLakes <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">specify</span>(<span class="at">response =</span> pH) <span class="sc">%&gt;%</span></span>
-<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span>  </span>
-<span id="cb19-7"><a href="#cb19-7"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"t"</span>)</span>
-<span id="cb19-8"><a href="#cb19-8"></a>t_obs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Response: pH (numeric)
-Null Hypothesis: point
-# A tibble: 1 × 1
-   stat
-  &lt;dbl&gt;
-1 -2.31</code></pre>
-</div>
-</div>
-</div><div class="column">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Generate null distribution</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>null_dist <span class="ot">&lt;-</span> FloridaLakes <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a> <span class="fu">specify</span>(<span class="at">response =</span> pH) <span class="sc">%&gt;%</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a> <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a> <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a> <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"t"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-<p><strong>Why are we using <code>type = "bootstrap"</code> when constructing a null distribution?!</strong></p>
-</section>
-<section class="slide level2">
-
-<h3 id="inference-for-a-single-mean-5">Inference for a Single Mean</h3>
-<p>What probability function is a good approximation to the null distribution?</p>
+<h3 id="difference-in-means-1">Difference in Means</h3>
+<p>Let’s estimate the average hours worked per week between married and unmarried US residents.</p>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">visualize</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> t_obs<span class="sc">$</span>stat,</span>
-<span id="cb22-4"><a href="#cb22-4"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>,</span>
-<span id="cb22-5"><a href="#cb22-5"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">abs</span>(t_obs<span class="sc">$</span>stat),</span>
-<span id="cb22-7"><a href="#cb22-7"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, </span>
-<span id="cb22-8"><a href="#cb22-8"></a>             <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Exploratory data analysis</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ACS_adults, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> HoursWk)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Married, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="stat100_wk12mon_files/figure-revealjs/unnamed-chunk-12-1.png" width="4000"></p>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-16-1.png" width="4000"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Sample size</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>ACS_adults <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">drop_na</span>(HoursWk) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">count</span>(Married)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Married    n
+1       0  896
+2       1 1040</code></pre>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
-<h3 id="inference-for-a-single-mean-6">Inference for a Single Mean</h3>
-<p>What probability function is a good approximation to the null distribution?</p>
-<div class="cell columns column-output-location" data-layout-align="center">
-<div class="column">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">visualize</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">method =</span> <span class="st">"both"</span>,</span>
-<span id="cb23-3"><a href="#cb23-3"></a>            <span class="at">dens_color =</span> <span class="st">"orange"</span>) <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> t_obs<span class="sc">$</span>stat,</span>
-<span id="cb23-5"><a href="#cb23-5"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>,</span>
-<span id="cb23-6"><a href="#cb23-6"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb23-7"><a href="#cb23-7"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">abs</span>(t_obs<span class="sc">$</span>stat),</span>
-<span id="cb23-8"><a href="#cb23-8"></a>             <span class="at">color =</span> <span class="st">"deeppink"</span>, </span>
-<span id="cb23-9"><a href="#cb23-9"></a>             <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="stat100_wk12mon_files/figure-revealjs/unnamed-chunk-13-1.png" width="4000"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="p-value-options" class="slide level2">
-<h2>P-value options</h2>
+<h3 id="difference-in-means-2">Difference in Means</h3>
+<p>Let’s estimate the average hours worked per week between married and unmarried US residents.</p>
+<p>Which arguments for <code>t_test()</code> reflect my research question?</p>
 <div class="columns">
 <div class="column">
-<p>P-value using the generated null distribution:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>pvalue <span class="ot">&lt;-</span> null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> t_obs,</span>
-<span id="cb24-3"><a href="#cb24-3"></a>              <span class="at">direction =</span> <span class="st">"both"</span>)</span>
-<span id="cb24-4"><a href="#cb24-4"></a>pvalue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  p_value
-    &lt;dbl&gt;
-1   0.012</code></pre>
-</div>
-</div>
-</div><div class="column">
-<p>P-value using an approximate probability function:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Using t distribution</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">pt</span>(<span class="at">q =</span> t_obs<span class="sc">$</span>stat, <span class="at">df =</span> <span class="dv">52</span>)<span class="sc">*</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         t 
-0.02468707 </code></pre>
-</div>
-</div>
-</div>
-</div>
-<p>Do-it-all function:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">t_test</span>(FloridaLakes, <span class="at">response =</span> pH, <span class="at">mu =</span> <span class="dv">7</span>,</span>
-<span id="cb28-2"><a href="#cb28-2"></a>       <span class="at">alternative =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb29-2"><a href="#cb29-2"></a>ACS_adults <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="fu">t_test</span>(HoursWk <span class="sc">~</span> Married, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
-  statistic  t_df p_value alternative estimate lower_ci upper_ci
-      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1     -2.31    52  0.0247 two.sided       6.59     6.24     6.95</code></pre>
+  statistic  t_df    p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1      4.81 1902. 0.00000160 two.sided       4.55     2.69     6.40</code></pre>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>ACS_adults <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="fu">t_test</span>(HoursWk <span class="sc">~</span> Married, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"0"</span>),</span>
+<span id="cb31-4"><a href="#cb31-4"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df     p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1      4.81 1902. 0.000000800 greater         4.55     2.99      Inf</code></pre>
+</div>
+</div>
 </div>
 </div>
 </section>
 <section class="slide level2">
 
-<h3 id="statistical-inference-using-probability-models">Statistical Inference using Probability Models</h3>
-<ul>
-<li class="fragment"><p>We went through theory-based inference for <span class="math inline">\(p\)</span> and for <span class="math inline">\(\mu\)</span>.</p></li>
-<li class="fragment"><p>There are similar results for other parameters. But the specific named random variable may change!</p>
-<ul>
-<li class="fragment">Will extend beyond inference for 1 variable next time.</li>
-</ul></li>
-</ul>
-</section></section>
-<section>
-<section id="have-a-lovely-thanksgiving-break-everyone" class="title-slide slide level1 center">
-<h1>Have a lovely Thanksgiving Break everyone!</h1>
-
+<p>XXX Difference in props</p>
+<p>XXX Difference in means</p>
+<p>XXX Correlation</p>
+<p>Need to move beyond 1 or 2 variables – return to linear regression.</p>
 </section>
 <section id="reminders" class="slide level2">
 <h2>Reminders:</h2>
 <div>
-<ul>
-<li>No sections or wrap-ups this week.</li>
-<li>P-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!</li>
-<li>No new p-set or lecture quiz this week.</li>
-<li>OH schedule for Thanksgiving Week:
-<ul>
-<li>Sun, Nov 19th - Tues, Nov 21st: <a href="https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing">Happening with some modifications</a></li>
-<li>No OHs Wed, Nov 22nd - Sun, Nov 26th!</li>
-</ul></li>
-</ul>
+
 </div>
 
 <div class="footer footer-default">
@@ -1015,7 +1005,7 @@ Null Hypothesis: point
 'autoAnimateUnmatched': true,
 'menu': {"side":"right","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":null,"id":"e6461951a17f5db6","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":null,"id":"3e742cb80db3d0b3","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner

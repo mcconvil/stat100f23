@@ -62,7 +62,7 @@ theme_update(text = element_text(size = 13))
 ## Announcements
 
 -   No sections or wrap-ups this week.
--   P-Set 8 is due at the usual time (Tues 5pm).
+-   P-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!
 -   No new p-set or lecture quiz this week.
 -   OH schedule for Thanksgiving Week:
     -   Sun, Nov 19th - Tues, Nov 21st: [Happening with some modifications](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing)
@@ -75,132 +75,114 @@ theme_update(text = element_text(size = 13))
 -   A bit of thanks.
 
 -   Learn theory-based statistical inference methods.
-
-
 :::
 
 ::: column
+-   Introduce a new group of test statistics based on **z-scores**.
 
-* Introduce a new group of test statistics based on **z-scores**.
-
-* Generalize the SE method confidence interval formula.
-
+-   Generalize the SE method confidence interval formula.
 :::
 :::
 
-
----
+------------------------------------------------------------------------
 
 ### Statistical Inference Zoom Out -- Estimation
 
 ![](img/ci_diagram.png){width="60%" fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ### Statistical Inference Zoom Out -- Testing
 
 ![](img/hyp_testing_diagram.png){width="70%" fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ## Sample Statistics as Random Variables
 
-* **Sample statistics** can be recast as **random variables**.
+-   **Sample statistics** can be recast as **random variables**.
 
-* Need to figure out **what** random variable is a good approximation for our sample statistic.
-    + Then use the properties of that random variable to do inference.
-    
-* Sometimes it is easier to find a good random variable approximation if we **standardize** our sample statistic first.
+-   Need to figure out **what** random variable is a good approximation for our sample statistic.
 
----
+    -   Then use the properties of that random variable to do inference.
+
+-   Sometimes it is easier to find a good random variable approximation if we **standardize** our sample statistic first.
+
+------------------------------------------------------------------------
 
 ### Z-scores
 
-* All of our **test statistics** so far have been **sample statistics**.
+-   All of our **test statistics** so far have been **sample statistics**.
 
-
-* Another commonly used test statistic takes the form of a **z-score**:
+-   Another commonly used test statistic takes the form of a **z-score**:
 
 ::: fragment
-
 $$
 \mbox{Z-score} = \frac{X - \mu}{\sigma}
 $$
-
 :::
 
-* Standardized version of the sample statistic.
+-   Standardized version of the sample statistic.
 
-* Z-score measures how many **standard deviations** the sample statistic is away from its **mean**.
+-   Z-score measures how many **standard deviations** the sample statistic is away from its **mean**.
 
-
----
+------------------------------------------------------------------------
 
 ### Z-score Example
 
-* $\hat{p}$ = proportion of Maples in a sample of 50 trees
+-   $\hat{p}$ = proportion of Maples in a sample of 50 trees
 
 ::: fragment
-
 $$
 \hat{p} \sim N \left(0.138, 0.049 \right)
 $$
-
 :::
 
-* Suppose we have a sample where $\hat{p} = 0.05$. Then the z-score would be:
+-   Suppose we have a sample where $\hat{p} = 0.05$. Then the z-score would be:
 
 ::: fragment
-
 $$
 \mbox{Z-score} = \frac{0.05 - 0.138}{0.049} = -1.8
 $$
 :::
 
----
+------------------------------------------------------------------------
 
 ### Z-score Test Statistics
 
-* A Z-score test statistic is one where we take our original sample statistic and convert it to a Z-score:
+-   A Z-score test statistic is one where we take our original sample statistic and convert it to a Z-score:
 
 ::: fragment
-
 $$
 \mbox{Z-score test statistic} = \frac{\mbox{statistic} - \mu}{\sigma}
 $$
-
 :::
 
-* Allows us to quickly (but roughly) classify results as unusual or not.
-    + $|$ Z-score $|$ > 2 &rarr; results are unusual/p-value will be smallish
-
-
-* Commonly used because if the sample statistic $\sim N(\mu, \sigma)$, then  
+-   Allows us to quickly (but roughly) classify results as unusual or not.
+    -   $|$ Z-score $|$ \> 2 → results are unusual/p-value will be smallish
+-   Commonly used because if the sample statistic $\sim N(\mu, \sigma)$, then
 
 ::: fragment
-
 $$
 \mbox{Z-score test statistic} = \frac{\mbox{statistic} - \mu}{\sigma} \sim N(0, 1)
 $$
 :::
 
-
 # Let's consider theory-based inference for a population proportion.
 
-
----
+------------------------------------------------------------------------
 
 ### Statistical Inference Zoom Out -- Estimation
 
 ![](img/ci_diagram.png){width="60%" fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ### Statistical Inference Zoom Out -- Testing
 
 ![](img/hyp_testing_diagram.png){width="70%" fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Proportion -- Testing
 
@@ -208,19 +190,14 @@ Let's consider conducting a hypothesis test for a single proportion: $p$
 
 Need:
 
-* Hypotheses
-    + Same as with the simulation-based methods
+-   Hypotheses
+    -   Same as with the simulation-based methods
+-   Test statistic and its null distribution
+    -   Use a z-score test statistic and a standard normal distribution
+-   P-value
+    -   Compute from the standard normal distribution directly
 
-
-* Test statistic and its null distribution
-    + Use a z-score test statistic and a standard normal distribution
-
-* P-value 
-    + Compute from the standard normal distribution directly
-
-
-
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Proportion -- Testing
 
@@ -228,14 +205,11 @@ Let's consider conducting a hypothesis test for a single proportion: $p$
 
 $H_o: p = p_o$ where $p_o$ = null value and $H_a: p > p_o$ or $H_a: p < p_o$ or $H_a: p \neq p_o$
 
-
 By the CLT, under $H_o$:
-
 
 $$
 \hat{p} \sim N \left(p_o, \sqrt{\frac{p_o(1-p_o)}{n}} \right)
 $$
-
 
 Z-score test statistic:
 
@@ -243,20 +217,15 @@ $$
 Z = \frac{\hat{p} - p_o}{\sqrt{\frac{p_o(1-p_o)}{n}}}
 $$
 
-
 Use $N(0, 1)$ to find the p-value once you have computed the test statistic.
 
-
----
-
+------------------------------------------------------------------------
 
 ### Inference for a Single Proportion -- Testing
-
 
 Let's consider conducting a hypothesis test for a single proportion: $p$
 
 **Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
-
 
 ```{r}
 # Construct data frame of sample results
@@ -264,21 +233,16 @@ esp <- data.frame(guess = c(rep("correct", 106),
                             rep("incorrect", 329 - 106)))
 ```
 
-
----
-
+------------------------------------------------------------------------
 
 ### Inference for a Single Proportion -- Testing
-
 
 Let's consider conducting a hypothesis test for a single proportion: $p$
 
 **Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
 
 ::: columns
-
 ::: column
-
 ```{r}
 library(infer)
 # Compute observed test statistic
@@ -289,11 +253,9 @@ test_stat <- esp %>%
   calculate(stat = "z")
 test_stat
 ```
-
 :::
 
 ::: column
-
 ```{r}
 # Use N(0,1) to find p-value
 pnorm(q = test_stat$stat, mean = 0, sd = 1,
@@ -303,10 +265,8 @@ pnorm(q = test_stat$stat, mean = 0, sd = 1,
 1 - pnorm(q = test_stat$stat,
           mean = 0, sd = 1)
 ```
-
 :::
 :::
-
 
 ```{r}
 prop_test(esp, response = guess, success = "correct", p = 0.25,
@@ -315,21 +275,20 @@ prop_test(esp, response = guess, success = "correct", p = 0.25,
 
 Note: There is also a base `R` function called `prop.test()` but its arguments are different.
 
----
+------------------------------------------------------------------------
 
 ### Theory-Based Confidence Intervals
 
 Suppose statistic $\sim N(\mu = \mbox{parameter}, \sigma = SE)$.
 
-95% CI for parameter: 
+95% CI for parameter:
 
 $$
 \mbox{statistic} \pm 2 SE
 $$
 
 ::: fragment
-Can generalize this formula!  
-
+Can generalize this formula!
 
 P% CI for parameter:
 
@@ -337,24 +296,20 @@ $$
 \mbox{statistic} \pm z^* SE
 $$
 
-
 ```{r}
 # Find z-star
 qnorm(p = 0.975, mean = 0, sd = 1)
 qnorm(p = 0.95, mean = 0, sd = 1)
 ```
-
 :::
 
----
+------------------------------------------------------------------------
 
-
-###  Theory-Based CIs in Action
+### Theory-Based CIs in Action
 
 Let's consider constructing a confidence interval for a single proportion: $p$
 
 By the CLT,
-
 
 $$
 \hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
@@ -362,17 +317,17 @@ $$
 
 P% CI for parameter:
 
+```{=tex}
 \begin{align*}
 \mbox{statistic} \pm z^* SE
 \end{align*}
+```
 
----
+------------------------------------------------------------------------
 
-
-###  Theory-Based CIs in Action
+### Theory-Based CIs in Action
 
 **Example**: Bern and Honorton's (1994) extrasensory perception (ESP) studies
-
 
 ```{r}
 # Use probability model to approximate null distribution
@@ -380,9 +335,9 @@ prop_test(esp, response = guess, success = "correct",
           z = TRUE, conf_int = TRUE, conf_level = 0.95)
 ```
 
-* Don't use the reported test statistic and p-value!
+-   Don't use the reported test statistic and p-value!
 
----
+------------------------------------------------------------------------
 
 ### Theory-Based CIs
 
@@ -394,35 +349,33 @@ $$
 
 Notes:
 
-* Didn't construct the bootstrap distribution.
+-   Didn't construct the bootstrap distribution.
 
-* Need to check that $n$ is large and that the sample is random/representative.
-    + Condition depends on what parameter you are conducting inference for.
+-   Need to check that $n$ is large and that the sample is random/representative.
+
+    -   Condition depends on what parameter you are conducting inference for.
 
 ::: fragment
-
 ```{r}
 count(esp, guess)
 ```
-
 :::
 
-* Interpretation of the CI doesn't change.
+-   Interpretation of the CI doesn't change.
 
-* For some parameters, the critical value comes from a $t$ distribution.
+-   For some parameters, the critical value comes from a $t$ distribution.
 
-* Now we have a formula for the Margin of Error.
-    + That will prove useful for **sample size calculations**.
+-   Now we have a formula for the Margin of Error.
 
-
+    -   That will prove useful for **sample size calculations**.
 
 # Now let's explore how to do inference for a single mean.
 
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Mean
 
-**Example:** *Are lakes in Florida more acidic or alkaline?* The pH of a liquid is the measure of its acidity or alkalinity where pure water has a pH of 7, a pH greater than 7 is alkaline and a pH less than 7 is acidic. The following dataset contains observations on a sample of 53 lakes in Florida. 
+**Example:** *Are lakes in Florida more acidic or alkaline?* The pH of a liquid is the measure of its acidity or alkalinity where pure water has a pH of 7, a pH greater than 7 is alkaline and a pH less than 7 is acidic. The following dataset contains observations on a sample of 53 lakes in Florida.
 
 ```{r}
 library(tidyverse)
@@ -431,19 +384,17 @@ FloridaLakes <- read_csv("https://www.lock5stat.com/datasets1e/FloridaLakes.csv"
 
 **Cases**:
 
-
 **Variable of interest**:
 
 <br>
 
 **Parameter of interest:**
 
-
 **Hypotheses:**
 
 <br>
 
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Mean
 
@@ -451,17 +402,14 @@ Let's consider conducting a hypothesis test for a single mean: $\mu$
 
 Need:
 
-* Hypotheses
-    + Same as with the simulation-based methods
+-   Hypotheses
+    -   Same as with the simulation-based methods
+-   Test statistic and its null distribution
+    -   Use a z-score test statistic and a t distribution
+-   P-value
+    -   Compute from the t distribution directly
 
-* Test statistic and its null distribution
-    + Use a z-score test statistic and a t distribution
-
-* P-value 
-    + Compute from the t distribution directly
-
-
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Mean
 
@@ -469,31 +417,25 @@ Let's consider conducting a hypothesis test for a single mean: $\mu$
 
 $H_o: \mu = \mu_o$ where $\mu_o$ = null value
 
-
 $H_a: \mu > \mu_o$ or $H_a: \mu < \mu_o$ or $H_a: \mu \neq \mu_o$
 
-
 By the CLT, under $H_o$:
-
 
 $$
 \bar{x} \sim N \left(\mu_o, \frac{\sigma}{\sqrt{n}} \right)
 $$
 
-
 Z-score test statistic:
 
 ::: fragment
-
 $$
 Z = \frac{\bar{x} - \mu_o}{\frac{\sigma}{\sqrt{n}}}
 $$
-
 :::
 
-* **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
+-   **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
 
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Mean
 
@@ -503,27 +445,18 @@ $$
 t = \frac{\bar{x} - \mu_o}{\frac{s}{\sqrt{n}}}
 $$
 
+-   **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
+    -   For our example, $\sigma$ would be the standard deviation of the Ph level for all lakes in Florida.
+-   **Solution:** Plug in $s$: the sample standard deviation of our response variable!
+    -   For our example, $s$ would be the standard deviation of the Ph level for the sampled lakes in Florida.
+-   Use $t(\mbox{df} = n - 1)$ to find the p-value
 
-* **Problem:** Don't know $\sigma$: the population standard deviation of our response variable!
-    + For our example, $\sigma$ would be the standard deviation of the Ph level for all lakes in Florida.
-
-* **Solution:** Plug in $s$: the sample standard deviation of our response variable!
-    + For our example, $s$ would be the standard deviation of the Ph level for the sampled lakes in Florida.
-
-* Use $t(\mbox{df} = n - 1)$ to find the p-value
-
-
-
-
-
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Mean
 
 ::: columns
-
 ::: column
-
 ```{r}
 library(infer)
 
@@ -534,11 +467,9 @@ t_obs <- FloridaLakes %>%
   calculate(stat = "t")
 t_obs
 ```
-
 :::
 
 ::: column
-
 ```{r}
 # Generate null distribution
 null_dist <- FloridaLakes %>%
@@ -548,13 +479,12 @@ null_dist <- FloridaLakes %>%
  calculate(stat = "t")
 
 ```
-
 :::
 :::
 
 **Why are we using `type = "bootstrap"` when constructing a null distribution?!**
 
----
+------------------------------------------------------------------------
 
 ### Inference for a Single Mean
 
@@ -574,13 +504,11 @@ null_dist %>%
              size = 2)
 ```
 
----
-
+------------------------------------------------------------------------
 
 ### Inference for a Single Mean
 
 What probability function is a good approximation to the null distribution?
-
 
 ```{r}
 #| output-location: column
@@ -596,16 +524,12 @@ null_dist %>%
              size = 2)
 ```
 
-
----
+------------------------------------------------------------------------
 
 ## P-value options
 
 ::: columns
-
 ::: column
-
-
 P-value using the generated null distribution:
 
 ```{r}
@@ -615,47 +539,36 @@ pvalue <- null_dist %>%
 pvalue
 
 ```
-
 :::
 
 ::: column
-
 P-value using an approximate probability function:
 
 ```{r}
 # Using t distribution
 pt(q = t_obs$stat, df = 52)*2
 ```
-
 :::
 :::
-
-
 
 Do-it-all function:
-
 
 ```{r}
 t_test(FloridaLakes, response = pH, mu = 7,
        alternative = "two-sided")
 ```
 
-
-
----
-
+------------------------------------------------------------------------
 
 ### Statistical Inference using Probability Models
 
-* We went through theory-based inference for $p$ and for $\mu$. 
+-   We went through theory-based inference for $p$ and for $\mu$.
 
+-   There are similar results for other parameters. But the specific named random variable may change!
 
-* There are similar results for other parameters.  But the specific named random variable may change!
-    * Will extend beyond inference for 1 variable next time.
-
+    -   Will extend beyond inference for 1 variable next time.
 
 # Have a lovely Thanksgiving Break everyone!
-
 
 ------------------------------------------------------------------------
 
@@ -663,7 +576,7 @@ t_test(FloridaLakes, response = pH, mu = 7,
 
 ::: nonincremental
 -   No sections or wrap-ups this week.
--   P-Set 8 is due at the usual time (Tues 5pm).
+-   P-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!
 -   No new p-set or lecture quiz this week.
 -   OH schedule for Thanksgiving Week:
     -   Sun, Nov 19th - Tues, Nov 21st: [Happening with some modifications](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing)

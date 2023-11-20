@@ -2,7 +2,7 @@
 title: "Stat 100: Introduction to Statistics and Data Science"
 ---
 
-The lecture slides (both in HTML and PDF) will be posted here.
+The lecture slides (both in HTML and PDF) will be posted here.  Additionally, [this page](https://mcconvil.github.io/stat100f23/inference_procedures.html) contains summary information on various inference procedures.
 
 ::: column-screen-inset-right
 | Class Period | HTML Slides                                                                      | PDF Slides                                                                            |

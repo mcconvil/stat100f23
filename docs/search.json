@@ -2097,7 +2097,7 @@
     "href": "stat100_wk12mon.html#announcements",
     "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nNo sections or wrap-ups this week.\nP-Set 8 is due at the usual time (Tues 5pm).\nNo new p-set or lecture quiz this week.\nOH schedule for Thanksgiving Week:\n\nSun, Nov 19th - Tues, Nov 21st: Happening with some modifications\nNo OHs Wed, Nov 22nd - Sun, Nov 26th!\n\n\nGoals for Today\n\n\n\nA bit of thanks.\nLearn theory-based statistical inference methods.\n\n\n\nIntroduce a new group of test statistics based on z-scores.\nGeneralize the SE method confidence interval formula."
+    "text": "Announcements\n\nNo sections or wrap-ups this week.\nP-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!\nNo new p-set or lecture quiz this week.\nOH schedule for Thanksgiving Week:\n\nSun, Nov 19th - Tues, Nov 21st: Happening with some modifications\nNo OHs Wed, Nov 22nd - Sun, Nov 26th!\n\n\nGoals for Today\n\n\n\nA bit of thanks.\nLearn theory-based statistical inference methods.\n\n\n\nIntroduce a new group of test statistics based on z-scores.\nGeneralize the SE method confidence interval formula."
   },
   {
     "objectID": "stat100_wk12mon.html#sample-statistics-as-random-variables",
@@ -2111,14 +2111,14 @@
     "href": "stat100_wk12mon.html#p-value-options",
     "title": "Stat 100",
     "section": "P-value options",
-    "text": "P-value options\n\n\nP-value using the generated null distribution:\n\npvalue &lt;- null_dist %&gt;%\n  get_p_value(obs_stat = t_obs,\n              direction = \"both\")\npvalue\n\n# A tibble: 1 × 1\n  p_value\n    &lt;dbl&gt;\n1   0.018\n\n\n\nP-value using an approximate probability function:\n\n# Using t distribution\npt(q = t_obs$stat, df = 52)*2\n\n         t \n0.02468707 \n\n\n\n\nDo-it-all function:\n\nt_test(FloridaLakes, response = pH, mu = 7,\n       alternative = \"two-sided\")\n\n# A tibble: 1 × 7\n  statistic  t_df p_value alternative estimate lower_ci upper_ci\n      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1     -2.31    52  0.0247 two.sided       6.59     6.24     6.95"
+    "text": "P-value options\n\n\nP-value using the generated null distribution:\n\npvalue &lt;- null_dist %&gt;%\n  get_p_value(obs_stat = t_obs,\n              direction = \"both\")\npvalue\n\n# A tibble: 1 × 1\n  p_value\n    &lt;dbl&gt;\n1   0.012\n\n\n\nP-value using an approximate probability function:\n\n# Using t distribution\npt(q = t_obs$stat, df = 52)*2\n\n         t \n0.02468707 \n\n\n\n\nDo-it-all function:\n\nt_test(FloridaLakes, response = pH, mu = 7,\n       alternative = \"two-sided\")\n\n# A tibble: 1 × 7\n  statistic  t_df p_value alternative estimate lower_ci upper_ci\n      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1     -2.31    52  0.0247 two.sided       6.59     6.24     6.95"
   },
   {
     "objectID": "stat100_wk12mon.html#reminders",
     "href": "stat100_wk12mon.html#reminders",
     "title": "Stat 100",
     "section": "Reminders:",
-    "text": "Reminders:\n\n\nNo sections or wrap-ups this week.\nP-Set 8 is due at the usual time (Tues 5pm).\nNo new p-set or lecture quiz this week.\nOH schedule for Thanksgiving Week:\n\nSun, Nov 19th - Tues, Nov 21st: Happening with some modifications\nNo OHs Wed, Nov 22nd - Sun, Nov 26th!"
+    "text": "Reminders:\n\n\nNo sections or wrap-ups this week.\nP-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!\nNo new p-set or lecture quiz this week.\nOH schedule for Thanksgiving Week:\n\nSun, Nov 19th - Tues, Nov 21st: Happening with some modifications\nNo OHs Wed, Nov 22nd - Sun, Nov 26th!"
   },
   {
     "objectID": "stat100_wk09mon.html#announcements",
@@ -2224,5 +2224,33 @@
     "title": "Stat 100",
     "section": "Reminders:",
     "text": "Reminders:\n\nOct 30th Today: Hex or Treat Day in Stat 100\n\nIf you are wearing a Halloween costume, come to the front before or after class for your hex sticker or treat!"
+  },
+  {
+    "objectID": "inference_procedures.html",
+    "href": "inference_procedures.html",
+    "title": "Useful Summary Tables",
+    "section": "",
+    "text": "Symbols and R Functions\n\n\n\n\n\n\nResponse\nExplanatory\nNumerical_Quantity\nParameter\nStatistic\nFunction\n\n\n\n\nquantitative\n-\nmean\n$\\mu$\n$\\bar{x}$\nt.test()\n\n\ncategorical\n-\nproportion\n$p$\n$\\hat{p}$\nprop.test()\n\n\nquantitative\ncategorical\ndifference in means\n$\\mu_1 - \\mu_2$\n$\\bar{x}_1 - \\bar{x}_2$\nt.test()\n\n\ncategorical\ncategorical\ndifference in proportions\n$p_1 - p_2$\n$\\hat{p}_1 - \\hat{p}_2$\nprop.test()\n\n\nquantitative\nquantitative\ncorrelation\n$\\rho$\n$r$\ncor.test()\n\n\n\n\n\n\n\n\n\n\nCommon Test Statistics and Approximate Distributions\n\n\n\n\n\n\nResponse\nExplanatory\nNumerical_Quantity\nTest_Statistic\nDistribution\nAssumptions\n\n\n\n\nquantitative\n-\nmean\n$\\frac{\\bar{x} - \\mu_o}{s/\\sqrt{n}}$\n$t(df = n - 1)$\n$n \\geq 30$ or data are normal\n\n\ncategorical\n-\nproportion\n$\\frac{\\hat{p} - p_o}{\\sqrt{\\frac{\\hat{p}(1 - \\hat{p})}{n}}}$\n$N(0, 1)$\nTen successes, Ten failures\n\n\nquantitative\ncategorical\ndifference in means\n$\\frac{\\bar{x}_1 - \\bar{x}_2 - 0}{\\sqrt{\\frac{s^2_1}{n_1} + \\frac{s^2_2}{n_2}}}$\n$t(df = \\min(n_1, n_2) - 1)$\n$n_1, n_2 \\geq 30$ or data are normal\n\n\ncategorical\ncategorical\ndifference in proportions\n$\\frac{\\hat{p}_1 - \\hat{p}_2 - 0}{\\sqrt{\\frac{\\hat{p}(1 - \\hat{p})}{n_1} + \\frac{\\hat{p}(1 - \\hat{p})}{n_2}}}$\n$N(0, 1)$\nTen successes, Ten failures in each category\n\n\nquantitative\nquantitative\ncorrelation\n$\\frac{r - 0}{\\sqrt{\\frac{1 - r^2}{n - 2}}}$\n$t(df = n - 2)$\n$n \\geq 30$\n\n\n\n\n\n\n\n\n\n\nCommon Distribution-Based Confidence Interval Formulae\n\n\n\n\n\n\nResponse\nExplanatory\nNumerical_Quantity\nConfidence_Interval\nDistribution\nAssumptions\n\n\n\n\nquantitative\n-\nmean\n$\\bar{x} \\pm t^*s/\\sqrt{n}$\n$t(df = n - 1)$\n$n \\geq 30$ or data are normal\n\n\ncategorical\n-\nproportion\n$\\hat{p} \\pm z^* \\sqrt{\\frac{\\hat{p}(1 - \\hat{p})}{n}}$\n$N(0, 1)$\nTen successes, Ten failures\n\n\nquantitative\ncategorical\ndifference in means\n$\\bar{x}_1 - \\bar{x}_2 \\pm t^* \\sqrt{\\frac{s^2_1}{n_1} + \\frac{s^2_2}{n_2}}$\n$t(df = \\min(n_1, n_2) - 1)$\n$n_1, n_2 \\geq 30$ or data are normal\n\n\ncategorical\ncategorical\ndifference in proportions\n$\\hat{p}_1 - \\hat{p}_2 \\pm z^* \\sqrt{\\frac{\\hat{p}_1(1 - \\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1 - \\hat{p}_2)}{n_2}}$\n$N(0, 1)$\nTen successes, Ten failures in each category\n\n\nquantitative\nquantitative\ncorrelation\n$r \\pm t^* \\sqrt{\\frac{1 - r^2}{n - 2}}$\n$t(df = n - 2)$\n$n \\geq 30$"
+  },
+  {
+    "objectID": "stat100_wk13mon.html#announcements",
+    "href": "stat100_wk13mon.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nRegular OH schedule ends on Tues, Dec 5th (last day of classes).\nWill have lots of office hours during Reading Period but not at the standard times.\n\nGoals for Today\n\n\n\nDiscuss more theory-based inference.\n\n\n\nSample size calculations."
+  },
+  {
+    "objectID": "stat100_wk13mon.html#reminders",
+    "href": "stat100_wk13mon.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders:",
+    "text": "Reminders:"
+  },
+  {
+    "objectID": "stat100_wk13mon.html#data-example",
+    "href": "stat100_wk13mon.html#data-example",
+    "title": "Stat 100",
+    "section": "Data Example",
+    "text": "Data Example\nWe have data on a random sub-sample of the 2010 American Community Survey. The American Community Survey is given every year to a random sample of US residents.\n\n# Libraries\nlibrary(tidyverse)\nlibrary(Lock5Data)\n\n# Data\ndata(ACS)\n# Focus on adults\nACS_adults &lt;- filter(ACS, Age &gt;= 18)\n\nglimpse(ACS_adults)\n\nRows: 1,936\nColumns: 9\n$ Sex             &lt;int&gt; 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, …\n$ Age             &lt;int&gt; 38, 18, 21, 55, 51, 28, 46, 80, 62, 41, 37, 42, 69, 48…\n$ Married         &lt;int&gt; 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, …\n$ Income          &lt;dbl&gt; 64.0, 0.0, 4.0, 34.0, 30.0, 13.7, 114.0, 0.0, 0.0, 0.0…\n$ HoursWk         &lt;int&gt; 40, 0, 20, 40, 40, 40, 60, 0, 0, 0, 40, 42, 0, 60, 0, …\n$ Race            &lt;fct&gt; white, black, white, other, black, white, white, white…\n$ USCitizen       &lt;int&gt; 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …\n$ HealthInsurance &lt;int&gt; 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, …\n$ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …"
   }
 ]
