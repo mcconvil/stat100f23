@@ -1,0 +1,37 @@
+---
+title: "test"
+---
+
+```{r, message=FALSE, warning=FALSE, echo = FALSE}
+
+library(knitr)
+library(kableExtra)
+symbols <- data.frame(Response = c("quantitative", "categorical",
+                                   "quantitative", "categorical",
+                                   "quantitative"),
+                         Explanatory = c("-", "-",
+                                         "categorical",
+                                         "categorical",
+                                         "quantitative"),
+                         Numerical_Quantity = c("mean", 
+                                                "proportion",
+                                                "difference in means",
+                                                "difference in proportions",
+                                                "correlation"),
+                         Parameter = c("$\\mu$", "$p$", 
+                                       "$\\mu_1 - \\mu_2$",
+                                       "$p_1 - p_2$",
+                                       "$\\rho$"),
+                                       Statistic = c("$\\bar{x}$",
+                                                     "$\\hat{p}$",
+                                                     "$\\bar{x}_1 - \\bar{x}_2$",
+                                                     "$\\hat{p}_1 - \\hat{p}_2$",
+                                                     "$r$"),
+                      Function = c("t_test()", "prop_test()",
+                                   "t_test()", 
+                                   "prop_test()", "cor.test()"))
+
+symbols %>% 
+  kableExtra::kbl(format="markdown")
+```
+
