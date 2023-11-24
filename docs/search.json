@@ -2235,23 +2235,23 @@
   {
     "objectID": "stat100_wk13mon.html#announcements",
     "href": "stat100_wk13mon.html#announcements",
-    "title": "How do we perform probability model calculations in R?",
+    "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nRegular OH schedule ends on Tues, Dec 5th (last day of classes).\nWill have lots of office hours during Reading Period but not at the standard times.\n\n\nGoals for Today\n\n\n\nDiscuss more theory-based inference.\n\n\n\nSample size calculations.\n\n\n\n\n\n\nStatistical Inference Zoom Out – Estimation\n\n\n\n\n\n\n\n\nStatistical Inference Zoom Out – Testing\n\n\n\n\n\n\n\n\nRecap:\nCentral Limit Theorem (CLT): For random samples and a large sample size \\((n)\\), the sampling distribution of many sample statistics is approximately normal.\n–\n.pull-left[\nSample Proportion Version:\nWhen \\(n\\) is large (at least 10 successes and 10 failures):\n\\[\n\\hat{p} \\sim N \\left(p, \\sqrt{\\frac{p(1-p)}{n}} \\right)\n\\]\n]\n–\n.pull-right[\nSample Mean Version:\nWhen \\(n\\) is large (at least 30):\n\\[\n\\bar{x} \\sim N \\left(\\mu, \\frac{\\sigma}{\\sqrt{n}} \\right)\n\\]\n\n\n\nBut There Are Several Versions of the CLT!\n\n\n\n\n\n\n\n\n\n\n\n\nResponse\nExplanatory\nNumerical_Quantity\nParameter\nStatistic\n\n\n\n\nquantitative\n-\nmean\n\\(\\mu\\)\n\\(\\bar{x}\\)\n\n\ncategorical\n-\nproportion\n\\(p\\)\n\\(\\hat{p}\\)\n\n\nquantitative\ncategorical\ndifference in means\n\\(\\mu_1 - \\mu_2\\)\n\\(\\bar{x}_1 - \\bar{x}_2\\)\n\n\ncategorical\ncategorical\ndifference in proportions\n\\(p_1 - p_2\\)\n\\(\\hat{p}_1 - \\hat{p}_2\\)\n\n\nquantitative\nquantitative\ncorrelation\n\\(\\rho\\)\n\\(r\\)\n\n\n\n\n\n\n\n\nRecap:\nZ-score test statistics:\n\\[\n\\mbox{Z-score} = \\frac{\\mbox{statistic} - \\mu}{\\sigma}\n\\]\n\nUsually follows a standard normal or a t distribution.\nUse the approximate distribution to find the p-value.\n\n\n\n\nRecap:\nFormula-Based P*100% Confidence Intervals\n\\[\n\\mbox{statistic} \\pm z^* SE\n\\]\nwhere \\(P(-z^* \\leq Z \\leq z^*) = P\\)\nOr we will see that sometimes we use a t critical value:\n\\[\n\\mbox{statistic} \\pm t^* SE\n\\]\nwhere \\(P(-t^* \\leq t \\leq t^*) = P\\)"
+    "text": "Announcements\n\nRegular OH schedule ends on Tues, Dec 5th (last day of classes).\nWill have lots of office hours during Reading Period but not at the standard times.\n\nWill update the OH spreadsheet once finalized.\n\n\nGoals for Today\n\n\n\nDiscuss more theory-based inference.\n\n\n\nSample size calculations."
   },
   {
     "objectID": "stat100_wk13mon.html#reminders",
     "href": "stat100_wk13mon.html#reminders",
-    "title": "How do we perform probability model calculations in R?",
+    "title": "Stat 100",
     "section": "Reminders:",
-    "text": "Reminders:"
+    "text": "Reminders:\n\n\nIf you are able to attend the ggparty, RSVP: bit.ly/ggpartyf23\nRegular OH schedule ends on Tues, Dec 5th (last day of classes).\nWill have lots of office hours during Reading Period but not at the standard times.\n\nWill update the OH spreadsheet once finalized."
   },
   {
     "objectID": "stat100_wk13mon.html#data-example",
     "href": "stat100_wk13mon.html#data-example",
-    "title": "How do we perform probability model calculations in R?",
+    "title": "Stat 100",
     "section": "Data Example",
-    "text": "Data Example\nWe have data on a random sub-sample of the 2010 American Community Survey. The American Community Survey is given every year to a random sample of US residents.\n\n# Libraries\nlibrary(tidyverse)\nlibrary(Lock5Data)\n\n# Data\ndata(ACS)\n# Focus on adults\nACS_adults &lt;- filter(ACS, Age &gt;= 18)\n\nglimpse(ACS_adults)\n\nRows: 1,936\nColumns: 9\n$ Sex             &lt;int&gt; 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, …\n$ Age             &lt;int&gt; 38, 18, 21, 55, 51, 28, 46, 80, 62, 41, 37, 42, 69, 48…\n$ Married         &lt;int&gt; 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, …\n$ Income          &lt;dbl&gt; 64.0, 0.0, 4.0, 34.0, 30.0, 13.7, 114.0, 0.0, 0.0, 0.0…\n$ HoursWk         &lt;int&gt; 40, 0, 20, 40, 40, 40, 60, 0, 0, 0, 40, 42, 0, 60, 0, …\n$ Race            &lt;fct&gt; white, black, white, other, black, white, white, white…\n$ USCitizen       &lt;int&gt; 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …\n$ HealthInsurance &lt;int&gt; 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, …\n$ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …\n\n\n\n\nDifference in Proportions\nLet’s try to determine if there’s a relationship between US citizenship and marriage.\nResponse variable:\nExplanatory variable:\nParameter of interest:\nSample size requirement for theory-based inference:\n\n\n\nDifference in Proportions\nLet’s try to determine if there’s a relationship between US citizenship and marriage.\n\n# Exploratory data analysis\nggplot(data = ACS_adults, \n       mapping = aes(x = factor(USCitizen),\n                     fill  = factor(Married))) +\n  geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\n\n# Sample size\nACS_adults %&gt;%\n  count(Married, USCitizen)\n\n  Married USCitizen   n\n1       0         0  64\n2       0         1 832\n3       1         0  79\n4       1         1 961\n\n\n\n\n\nDifference in Proportions\nLet’s try to determine if there’s a relationship between US citizenship and marriage.\nWhy isprop_test() failing?\n\nlibrary(infer)\nACS_adults %&gt;%\nprop_test(Married ~ USCitizen, \n          order = c(\"1\", \"0\"), z = TRUE,\n          success = \"1\")\n\nError in `prop_test()`:\n! The response variable of `Married` is not appropriate since the response variable is expected to be categorical.\n\n\n\n\n\nDifference in Proportions\nLet’s try to determine if there’s a relationship between US citizenship and marriage.\n\nACS_adults %&gt;%\n  mutate(MarriedCat = case_when(Married == 0 ~ \"No\",\n                                Married == 1 ~ \"Yes\"),\n         USCitizenCat = case_when(USCitizen == 0 ~ \"Not citizen\",\n                                  USCitizen == 1 ~ \"Citizen\")) %&gt;%\nprop_test(MarriedCat ~ USCitizenCat, \n          order = c(\"Citizen\", \"Not citizen\"), z = TRUE,\n          success = \"Yes\")\n\n# A tibble: 1 × 5\n  statistic p_value alternative lower_ci upper_ci\n      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;\n1    -0.380   0.704 two.sided     -0.101   0.0682\n\n\n\n\n\nDifference in Means\nLet’s estimate the average hours worked per week between married and unmarried US residents.\nResponse variable:\nExplanatory variable:\nParameter of interest:\nSample size requirement for theory-based inference:\n\n\n\nDifference in Means\nLet’s estimate the average hours worked per week between married and unmarried US residents.\n\n# Exploratory data analysis\nggplot(data = ACS_adults, mapping = aes(x = HoursWk)) +\n  geom_histogram() +\n  facet_wrap(~Married, ncol = 1)\n\n\n\n\n\n\n\n\n\n# Sample size\nACS_adults %&gt;%\n  drop_na(HoursWk) %&gt;%\n  count(Married)\n\n  Married    n\n1       0  896\n2       1 1040\n\n\n\n\n\nDifference in Means\nLet’s estimate the average hours worked per week between married and unmarried US residents.\nWhich arguments for t_test() reflect my research question?\n\n\n\nlibrary(infer)\nACS_adults %&gt;%\nt_test(HoursWk ~ Married, order = c(\"1\", \"0\"))\n\n# A tibble: 1 × 7\n  statistic  t_df    p_value alternative estimate lower_ci upper_ci\n      &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1      4.81 1902. 0.00000160 two.sided       4.55     2.69     6.40\n\n\n\n\nlibrary(infer)\nACS_adults %&gt;%\nt_test(HoursWk ~ Married, order = c(\"1\", \"0\"),\n       alternative = \"greater\")\n\n# A tibble: 1 × 7\n  statistic  t_df     p_value alternative estimate lower_ci upper_ci\n      &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1      4.81 1902. 0.000000800 greater         4.55     2.99      Inf\n\n\n\n\n\nXXX Correlation\nNeed to move beyond 1 or 2 variables – return to linear regression."
+    "text": "Data Example\nWe have data on a random sub-sample of the 2010 American Community Survey. The American Community Survey is given every year to a random sample of US residents.\n\n# Libraries\nlibrary(tidyverse)\nlibrary(Lock5Data)\n\n# Data\ndata(ACS)\n# Focus on adults\nACS_adults &lt;- filter(ACS, Age &gt;= 18)\n\nglimpse(ACS_adults)\n\nRows: 1,936\nColumns: 9\n$ Sex             &lt;int&gt; 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, …\n$ Age             &lt;int&gt; 38, 18, 21, 55, 51, 28, 46, 80, 62, 41, 37, 42, 69, 48…\n$ Married         &lt;int&gt; 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, …\n$ Income          &lt;dbl&gt; 64.0, 0.0, 4.0, 34.0, 30.0, 13.7, 114.0, 0.0, 0.0, 0.0…\n$ HoursWk         &lt;int&gt; 40, 0, 20, 40, 40, 40, 60, 0, 0, 0, 40, 42, 0, 60, 0, …\n$ Race            &lt;fct&gt; white, black, white, other, black, white, white, white…\n$ USCitizen       &lt;int&gt; 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …\n$ HealthInsurance &lt;int&gt; 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, …\n$ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, …"
   },
   {
     "objectID": "test.html",
@@ -2273,5 +2273,124 @@
     "title": "Useful Summary Tables",
     "section": "",
     "text": "Symbols and R Functions\n\n\n\n\n\n\n\n\n\n\n\n\n\nResponse\nExplanatory\nNumerical_Quantity\nParameter\nStatistic\nFunction\n\n\n\n\nquantitative\n-\nmean\n\\(\\mu\\)\n\\(\\bar{x}\\)\nt_test()\n\n\ncategorical\n-\nproportion\n\\(p\\)\n\\(\\hat{p}\\)\nprop_test()\n\n\nquantitative\ncategorical\ndifference in means\n\\(\\mu_1 - \\mu_2\\)\n\\(\\bar{x}_1 - \\bar{x}_2\\)\nt_test()\n\n\ncategorical\ncategorical\ndifference in proportions\n\\(p_1 - p_2\\)\n\\(\\hat{p}_1 - \\hat{p}_2\\)\nprop_test()\n\n\nquantitative\nquantitative\ncorrelation\n\\(\\rho\\)\n\\(r\\)\ncor.test()\n\n\n\n\n\n\n\nCommon Test Statistics and Approximate Distributions\n\n\n\n\n\n\n\n\n\n\n\n\n\nResponse\nExplanatory\nNumerical_Quantity\nTest_Statistic\nDistribution\nAssumptions\n\n\n\n\nquantitative\n-\nmean\n\\(\\frac{\\bar{x} - \\mu_o}{s/\\sqrt{n}}\\)\n\\(t(df = n - 1)\\)\n\\(n \\geq 30\\) or data are normal\n\n\ncategorical\n-\nproportion\n\\(\\frac{\\hat{p} - p_o}{\\sqrt{\\frac{\\hat{p}(1 - \\hat{p})}{n}}}\\)\n\\(N(0, 1)\\)\nTen successes, Ten failures\n\n\nquantitative\ncategorical\ndifference in means\n\\(\\frac{\\bar{x}_1 - \\bar{x}_2 - 0}{\\sqrt{\\frac{s^2_1}{n_1} + \\frac{s^2_2}{n_2}}}\\)\n\\(t(df = \\min(n_1, n_2) - 1)\\)\n\\(n_1, n_2 \\geq 30\\) or data are normal\n\n\ncategorical\ncategorical\ndifference in proportions\n\\(\\frac{\\hat{p}_1 - \\hat{p}_2 - 0}{\\sqrt{\\frac{\\hat{p}(1 - \\hat{p})}{n_1} + \\frac{\\hat{p}(1 - \\hat{p})}{n_2}}}\\)\n\\(N(0, 1)\\)\nTen successes, Ten failures in each category\n\n\nquantitative\nquantitative\ncorrelation\n\\(\\frac{r - 0}{\\sqrt{\\frac{1 - r^2}{n - 2}}}\\)\n\\(t(df = n - 2)\\)\n\\(n \\geq 30\\)\n\n\n\n\n\n\n\nCommon Distribution-Based Confidence Interval Formulae\n\n\n\n\n\n\n\n\n\n\n\n\n\nResponse\nExplanatory\nNumerical_Quantity\nConfidence_Interval\nDistribution\nAssumptions\n\n\n\n\nquantitative\n-\nmean\n\\(\\bar{x} \\pm t^*s/\\sqrt{n}\\)\n\\(t(df = n - 1)\\)\n\\(n \\geq 30\\) or data are normal\n\n\ncategorical\n-\nproportion\n\\(\\hat{p} \\pm z^* \\sqrt{\\frac{\\hat{p}(1 - \\hat{p})}{n}}\\)\n\\(N(0, 1)\\)\nTen successes, Ten failures\n\n\nquantitative\ncategorical\ndifference in means\n\\(\\bar{x}_1 - \\bar{x}_2 \\pm t^* \\sqrt{\\frac{s^2_1}{n_1} + \\frac{s^2_2}{n_2}}\\)\n\\(t(df = \\min(n_1, n_2) - 1)\\)\n\\(n_1, n_2 \\geq 30\\) or data are normal\n\n\ncategorical\ncategorical\ndifference in proportions\n\\(\\hat{p}_1 - \\hat{p}_2 \\pm z^* \\sqrt{\\frac{\\hat{p}_1(1 - \\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1 - \\hat{p}_2)}{n_2}}\\)\n\\(N(0, 1)\\)\nTen successes, Ten failures in each category\n\n\nquantitative\nquantitative\ncorrelation\n\\(r \\pm t^* \\sqrt{\\frac{1 - r^2}{n - 2}}\\)\n\\(t(df = n - 2)\\)\n\\(n \\geq 30\\)"
+  },
+  {
+    "objectID": "stat100_wk13mon.html#ggparty",
+    "href": "stat100_wk13mon.html#ggparty",
+    "title": "Stat 100",
+    "section": "ggparty",
+    "text": "ggparty\n🎉 You are all invited to the Stat 100 ggparty! 🎉\n\nQuestion: What is a ggparty?\n\n\n\n“ggparty”: An end-of-semester party filled with Stat 100-themed games, prizes, and food!"
+  },
+  {
+    "objectID": "stat100_wk13mon.html#you-are-all-invited-to-the-stat-100-ggparty",
+    "href": "stat100_wk13mon.html#you-are-all-invited-to-the-stat-100-ggparty",
+    "title": "Stat 100",
+    "section": "🎉 You are all invited to the Stat 100 ggparty! 🎉",
+    "text": "🎉 You are all invited to the Stat 100 ggparty! 🎉\n\nQuestion: What is a ggparty?\n\n\n\n“ggparty”: An end-of-semester party filled with Stat 100-themed games, prizes, and food!"
+  },
+  {
+    "objectID": "stat100_wk13mon.html#is-simulation-based-inference-or-theory-based-inference-better",
+    "href": "stat100_wk13mon.html#is-simulation-based-inference-or-theory-based-inference-better",
+    "title": "Stat 100",
+    "section": "Is Simulation-Based Inference or Theory-Based Inference better?",
+    "text": "Is Simulation-Based Inference or Theory-Based Inference better?\nDepends on how you define better.\n\n\n\nIf better = Leads to better understanding:\n\n\n\n→ Research tends to show students have a better understanding of p-values and confidence from learning simulation-based methods.\n\n\n\n\n\n\nIf better = More flexible/robust to assumptions:\n\n\n\n→ The simulation-based methods tend to be more flexible but that generally requires learning extensions beyond what we’ve seen in Stat 100.\n\n\n\n\n\n\nIf better = More commonly used:\n\n\n\n→ Definitely the theory-based methods but the simulation-based methods are becoming more **common.\n\n\n\nGood to be comfortable with both as you will find both approaches used in journal and news articles!"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#announcements",
+    "href": "stat100_wk13wed.html#announcements",
+    "title": "Stat 100",
+    "section": "Announcements",
+    "text": "Announcements\n\nLecture Quizzes\n\nLast one this week.\nPlus Extra Credit Lecture Quiz: Due Tues, Dec 5th at 5pm\n\nLast section this week!\n\nReceive the last p-set.\n\nThe material from next Monday’s lecture will be on the final and so we will include relevant practice problems on the review sheet.\n\nGoals for Today\n\n\n\nRecap multiple linear regression\nCheck assumptions for linear regression inference\n\n\n\nHypothesis testing for linear regression\nEstimation and prediction inference for linear regression"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#reminders",
+    "href": "stat100_wk13wed.html#reminders",
+    "title": "Stat 100",
+    "section": "Reminders:",
+    "text": "Reminders:\n\n\nLecture Quizzes\n\nLast one this week.\nPlus Extra Credit Lecture Quiz: Due Tues, Dec 5th at 5pm\n\nLast section this week!\n\nReceive the last p-set.\n\nThe material from next Monday’s lecture will be on the final and so we will include relevant practice problems on the review sheet."
+  },
+  {
+    "objectID": "stat100_wk13wed.html#multiple-linear-regression",
+    "href": "stat100_wk13wed.html#multiple-linear-regression",
+    "title": "Stat 100",
+    "section": "Multiple Linear Regression",
+    "text": "Multiple Linear Regression\nLinear regression is a flexible class of models that allow for:\n\n\nBoth quantitative and categorical explanatory variables.\nMultiple explanatory variables.\nCurved relationships between the response variable and the explanatory variable.\nBUT the response variable is quantitative.\n\n\n\nIn this week’s p-set you will explore the importance of controlling for key explanatory variables when making inferences about relationships."
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumption-checking-in-r",
+    "href": "stat100_wk13wed.html#assumption-checking-in-r",
+    "title": "Stat 100",
+    "section": "Assumption Checking in R",
+    "text": "Assumption Checking in R\nThe R package we will use to check model assumptions is called gglm and was written by one of my former Reed students, Grayson White.\n\n\n\n\n\n\n\n\n\n\n\n\n\nlibrary(gglm)\n\n\n\nFirst need to fit the model:\n\nglimpse(all)\n\nRows: 612\nColumns: 3\n$ Date   &lt;date&gt; 2020-01-20, 2020-01-21, 2020-01-22, 2020-01-23, 2020-01-24, 20…\n$ Rating &lt;dbl&gt; 4.500000, 4.500000, 3.909091, 4.857143, 4.461538, 4.800000, 4.4…\n$ Type   &lt;chr&gt; \"scented\", \"scented\", \"scented\", \"scented\", \"scented\", \"scented…\n\nmod &lt;- lm(Rating ~ Date * Type, data = all)"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#now-lets-shift-our-focus-to-estimation-and-prediction",
+    "href": "stat100_wk13wed.html#now-lets-shift-our-focus-to-estimation-and-prediction",
+    "title": "Stat 100",
+    "section": "Now let’s shift our focus to estimation and prediction!",
+    "text": "Now let’s shift our focus to estimation and prediction!"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumptions-1",
+    "href": "stat100_wk13wed.html#assumptions-1",
+    "title": "Stat 100",
+    "section": "Assumptions",
+    "text": "Assumptions\n\\[\\begin{align*}\ny = \\beta_o + \\beta_1 x_1 + \\epsilon \\quad \\mbox{   where   } \\quad \\epsilon \\overset{\\mbox{ind}}{\\sim}N\\left(\\color{orange}{0}, \\sigma_{\\epsilon} \\right)\n\\end{align*}\\]\nAssumption: The points will, on average, fall on the line.\nQuestion: How do we check this assumption?\n\nIf you use the Method of Least Squares, then you don’t have to check.\nIt will be true by construction:\n\\[\n\\sum e = 0\n\\]"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumptions-independence",
+    "href": "stat100_wk13wed.html#assumptions-independence",
+    "title": "Stat 100",
+    "section": "Assumptions – Independence",
+    "text": "Assumptions – Independence\nFor ease of visualization, let’s assume a simple linear regression model:\n\\[\\begin{align*}\ny = \\beta_o + \\beta_1 x_1 + \\epsilon \\quad \\mbox{   where   } \\quad \\epsilon \\overset{\\color{black}{\\mbox{ind}}}{\\sim}N\\left(0, \\sigma_{\\epsilon} \\right)\n\\end{align*}\\]\nAssumption: The cases are independent of each other.\nQuestion: How do we check this assumption?\n\nConsider how the data were collected."
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumptions",
+    "href": "stat100_wk13wed.html#assumptions",
+    "title": "Stat 100",
+    "section": "Assumptions",
+    "text": "Assumptions\n\\[\\begin{align*}\ny = \\beta_o + \\beta_1 x_1 + \\epsilon \\quad \\mbox{   where   } \\quad \\epsilon \\overset{\\mbox{ind}}{\\sim}\\color{orange}{N}\\left(0, \\sigma_{\\epsilon} \\right)\n\\end{align*}\\]\nAssumption: The errors are normally distributed.\n\n\nQuestion: How do we check this assumption?\n\nRecall the residual: \\(e = y - \\hat{y}\\)\n\n\n\nQQ-plot: Plot the residuals against the quantiles of a normal distribution!"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumptions-normality",
+    "href": "stat100_wk13wed.html#assumptions-normality",
+    "title": "Stat 100",
+    "section": "Assumptions – Normality",
+    "text": "Assumptions – Normality\n\\[\n\\begin{align*}\ny = \\beta_o + \\beta_1 x_1 + \\epsilon \\quad \\mbox{   where   } \\quad \\epsilon \\overset{\\mbox{ind}}{\\sim}\\color{black}{N} \\left(0, \\sigma_{\\epsilon} \\right)\n\\end{align*}\n\\]\nAssumption: The errors are normally distributed.\n\n\nQuestion: How do we check this assumption?\n\nRecall the residual: \\(e = y - \\hat{y}\\)\n\n\n\nQQ-plot: Plot the residuals against the quantiles of a normal distribution!"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumptions-mean-of-errors",
+    "href": "stat100_wk13wed.html#assumptions-mean-of-errors",
+    "title": "Stat 100",
+    "section": "Assumptions – Mean of Errors",
+    "text": "Assumptions – Mean of Errors\n\\[\\begin{align*}\ny = \\beta_o + \\beta_1 x_1 + \\epsilon \\quad \\mbox{   where   } \\quad \\epsilon \\overset{\\mbox{ind}}{\\sim}N\\left(\\color{black}{0}, \\sigma_{\\epsilon} \\right)\n\\end{align*}\\]\nAssumption: The points will, on average, fall on the line.\nQuestion: How do we check this assumption?\n\nIf you use the Method of Least Squares, then you don’t have to check.\nIt will be true by construction:\n\\[\n\\sum e = 0\n\\]"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumptions-constant-variance",
+    "href": "stat100_wk13wed.html#assumptions-constant-variance",
+    "title": "Stat 100",
+    "section": "Assumptions – Constant Variance",
+    "text": "Assumptions – Constant Variance\n\\[\\begin{align*}\ny = \\beta_o + \\beta_1 x_1 + \\epsilon \\quad \\mbox{   where   } \\quad \\epsilon \\overset{\\mbox{ind}}{\\sim}N\\left(0, \\color{black}{\\sigma_{\\epsilon}} \\right)\n\\end{align*}\\]\nAssumption: The variability in the errors is constant.\nQuestion: How do we check this assumption?\n\nOne option: Scatterplot"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#assumptions-constant-variance-1",
+    "href": "stat100_wk13wed.html#assumptions-constant-variance-1",
+    "title": "Stat 100",
+    "section": "Assumptions – Constant Variance",
+    "text": "Assumptions – Constant Variance\n\\[\\begin{align*}\ny = \\beta_o + \\beta_1 x_1 + \\epsilon \\quad \\mbox{   where   } \\quad \\epsilon \\overset{\\mbox{ind}}{\\sim}N\\left(0, \\color{black}{\\sigma_{\\epsilon}} \\right)\n\\end{align*}\\]\nAssumption: The variability in the errors is constant.\nQuestion: How do we check this assumption?\nBetter option (especially when have more than 1 explanatory variable): Residual Plot"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#covid-and-candle-ratings",
+    "href": "stat100_wk13wed.html#covid-and-candle-ratings",
+    "title": "Stat 100",
+    "section": "COVID and Candle Ratings",
+    "text": "COVID and Candle Ratings\nShe posted all her data and code to GitHub and I did some light wrangling so that we could answer the question:\n\nDo we have evidence that early in the pandemic the association between time and Amazon rating varies by whether or not a candle is scented and in particular, that scented candles have a steeper decline in ratings over time?\n\nIn other words, do we have evidence that we should allow the slopes to vary?\n\n\nggplot(data = all,\n       mapping = aes(x = Date,\n                     y = Rating,\n                     color = Type)) +\n  geom_point(alpha = 0.4) +\n  geom_smooth(method = lm) +\n  theme(legend.position = \"bottom\")"
+  },
+  {
+    "objectID": "stat100_wk13wed.html#our-example",
+    "href": "stat100_wk13wed.html#our-example",
+    "title": "Stat 100",
+    "section": "Our Example",
+    "text": "Our Example\n\nget_regression_table(mod)\n\n# A tibble: 3 × 7\n  term            estimate std_error statistic p_value lower_ci upper_ci\n  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1 intercept         36.2       6.50       5.58       0   23.5     49.0  \n2 Date              -0.002     0         -5.00       0   -0.002   -0.001\n3 Type: unscented    0.831     0.063     13.2        0    0.707    0.955\n\n\nRow 3:\n\\[\nH_o: \\beta_2 = 0 \\quad \\mbox{given Date is already in the model}\n\\] \\[\nH_a: \\beta_2 \\neq 0 \\quad \\mbox{given Date is already in the model}\n\\]\nTest Statistic:\n\\[\nt = \\frac{\\hat{\\beta}_2 - 0}{SE(\\hat{\\beta}_2)} = \\frac{0.831 - 0}{0.063} = 13.2\n\\]\n\nwith p-value \\(= P(t \\leq -13.2) + P(t \\geq 13.2) \\approx 0.\\)\nThere is evidence that including whether or not the candle is scented adds useful information to the linear regression model for Amazon ratings that already controls for date."
   }
 ]

@@ -61,48 +61,66 @@ theme_update(text = element_text(size = 13))
 
 ## Announcements
 
-- Regular OH schedule ends on Tues, Dec 5th (last day of classes).
-- Will have lots of office hours during Reading Period but not at the standard times.
+-   Regular OH schedule ends on Tues, Dec 5th (last day of classes).
+-   Will have lots of office hours during Reading Period but not at the standard times.
+    -   Will update the OH spreadsheet once finalized.
 
 ### Goals for Today
 
 ::: columns
 ::: column
-
-- Discuss more theory-based inference.
-
+-   Discuss more theory-based inference.
 :::
 
 ::: column
-
-* Sample size calculations.
-
+-   Sample size calculations.
 :::
 :::
 
+------------------------------------------------------------------------
 
----
+## `r emo::ji("tada")` You are all invited to the Stat 100 `ggparty`! `r emo::ji("tada")`
+
+::: fragment
+**Question**: What is a `ggparty`?
+:::
+
+::: fragment
+> "`ggparty`": An end-of-semester party filled with Stat 100-themed games, prizes, and food!
+:::
+
+------------------------------------------------------------------------
+
+![](img/ggpartyf23.jpeg){width="45%" fig-align="center"}
+
+[If you are able to attend, please RSVP: [bit.ly/ggpartyf23](https://bit.ly/ggpartyf23)]{.custom-subtitle}
+
+------------------------------------------------------------------------
+
+![](img/prizes.jpeg){width="80%" fig-align="center"}
+
+[If you are able to attend, please RSVP: [bit.ly/ggpartyf23](https://bit.ly/ggpartyf23)]{.custom-subtitle}
+
+------------------------------------------------------------------------
 
 ### Statistical Inference Zoom Out -- Estimation
 
 ![](img/ci_diagram.png){width="60%" fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ### Statistical Inference Zoom Out -- Testing
 
 ![](img/hyp_testing_diagram.png){width="70%" fig-align="center"}
 
----
+------------------------------------------------------------------------
 
 ### Recap:
 
 **Central Limit Theorem (CLT):** For random samples and a large sample size $(n)$, the sampling distribution of many sample statistics is approximately normal.
 
---
-
-.pull-left[
-
+::: columns
+::: column
 **Sample Proportion Version:**
 
 When $n$ is large (at least 10 successes and 10 failures):
@@ -110,13 +128,9 @@ When $n$ is large (at least 10 successes and 10 failures):
 $$
 \hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
 $$
+:::
 
-]
-
---
-
-.pull-right[
-
+::: column
 **Sample Mean Version:**
 
 When $n$ is large (at least 30):
@@ -124,10 +138,12 @@ When $n$ is large (at least 30):
 $$
 \bar{x} \sim N \left(\mu, \frac{\sigma}{\sqrt{n}} \right)
 $$
+:::
+:::
 
----
+------------------------------------------------------------------------
 
-### But There Are [Several Versions](https://mcconvil.github.io/stat100f23/inference_procedures.html) of the CLT!
+### There Are [Several Versions](https://mcconvil.github.io/stat100f23/inference_summary.html) of the CLT!
 
 ```{r, echo = FALSE}
 symbols <- data.frame(Response = c("quantitative", "categorical",
@@ -153,39 +169,39 @@ symbols <- data.frame(Response = c("quantitative", "categorical",
                                                      "$r$"))
 
 symbols %>% 
-  kable()
+  kableExtra::kbl(format="markdown")
 ```
 
+-   Refer to [these tables](https://mcconvil.github.io/stat100f23/inference_summary.html) for:
+    -   CLT's "large sample" assumption
+    -   Equation for the test statistic
+    -   Equation for the confidence interval
 
-
-
----
+------------------------------------------------------------------------
 
 ### Recap:
 
-**Z-score test statistics**: 
+**Z-score test statistics**:
 
 $$
 \mbox{Z-score} = \frac{\mbox{statistic} - \mu}{\sigma}
 $$
 
+-   Usually follows a **standard normal** or a **t** distribution.
 
-* Usually follows a **standard normal** or a **t** distribution.
+-   Use the approximate distribution to find the p-value.
 
-* Use the approximate distribution to find the p-value.
-
----
+------------------------------------------------------------------------
 
 ### Recap:
 
-**Formula-Based** P*100% Confidence Intervals
+**Formula-Based** P\*100% Confidence Intervals
 
 $$
 \mbox{statistic} \pm z^* SE
 $$
 
 where $P(-z^* \leq Z \leq z^*) = P$
-
 
 Or we will see that sometimes we use a **t** critical value:
 
@@ -195,21 +211,16 @@ $$
 
 where $P(-t^* \leq t \leq t^*) = P$
 
-
 # How do we perform probability model calculations in `R`?
 
-
----
+------------------------------------------------------------------------
 
 ### Probability Calculations in R
-
 
 **Question**: How do I compute **probabilities** in R?
 
 ::: columns
-
 ::: column
-
 ```{r, echo = FALSE}
 library(tidyverse)
 dat <- data.frame(x = seq(-3, 3, length.out = 1000)) %>%
@@ -224,32 +235,26 @@ ggplot(data = dat, mapping = aes(x, y)) +
   geom_line(size = 2) +
   scale_fill_manual(values = "deeppink")
 ```
-
 :::
 
 ::: column
-
 ```{r}
 pnorm(q = 1, mean = 0, sd = 1)
 pt(q = 1, df = 52)
 ```
-
 :::
 :::
 
 **Doesn't seem quite right**...
 
----
+------------------------------------------------------------------------
 
 ### Probability Calculations in R
-
 
 **Question**: How do I compute **probabilities** in R?
 
 ::: columns
-
 ::: column
-
 ```{r, echo = FALSE}
 library(tidyverse)
 dat <- data.frame(x = seq(-3, 3, length.out = 1000)) %>%
@@ -264,34 +269,27 @@ ggplot(data = dat, mapping = aes(x, y)) +
   geom_line(size = 2) +
   scale_fill_manual(values = "deeppink")
 ```
-
 :::
 
 ::: column
-
 ```{r}
 pnorm(q = 1, mean = 0, sd = 1,
       lower.tail = FALSE)
 pt(q = 1, df = 52, lower.tail = FALSE)
 ```
-
+:::
 :::
 
-:::
+------------------------------------------------------------------------
 
-
----
-
-### P*100% CI for parameter:
+### P\*100% CI for parameter:
 
 $$
 \mbox{statistic} \pm z^* SE
 $$
 
 ::: columns
-
 ::: column
-
 **Question**: How do I find the correct critical values $(z^* \mbox{ or } t^*)$ for the confidence interval?
 
 ```{r, echo = FALSE}
@@ -303,32 +301,26 @@ ggplot(data = dat, mapping = aes(x, y)) +
   geom_vline(xintercept = -1.96, color = "deeppink", size = 2) +
   geom_vline(xintercept = 1.96, color = "deeppink", size = 2)
 ```
-
 :::
 
 ::: column
-
 ```{r}
 qnorm(p = 0.975, mean = 0, sd = 1)
 qt(p = 0.975, df = 52)
 ```
-
+:::
 :::
 
-:::
+------------------------------------------------------------------------
 
----
-
-### P*100% CI for parameter:
+### P\*100% CI for parameter:
 
 $$
 \mbox{statistic} \pm z^* SE
 $$
 
 ::: columns
-
 ::: column
-
 **Question**: What percentile/quantile do I need for a 90% CI?
 
 ```{r, echo = FALSE}
@@ -340,126 +332,101 @@ ggplot(data = dat, mapping = aes(x, y)) +
   geom_vline(xintercept = -1.645, color = "deeppink", size = 2) +
   geom_vline(xintercept = 1.645, color = "deeppink", size = 2)
 ```
-
 :::
 
 ::: column
-
 ```{r}
 qnorm(p = 0.95, mean = 0, sd = 1)
 qt(p = 0.95, df = 52)
 ```
-
+:::
 :::
 
-:::
-
----
+------------------------------------------------------------------------
 
 ### Probability Calculations in R
 
 **To help you remember**:
 
 ::: fragment
+Want a **P**robability?
 
-Want a **P**robability? 
-
-&rarr; use `pnorm()`, `pt()`, ...
-
+→ use `pnorm()`, `pt()`, ...
 :::
 
 ::: fragment
-
 Want a **Q**uantile (i.e. percentile)?
 
-&rarr; use `qnorm()`, `qt()`, ...
-
+→ use `qnorm()`, `qt()`, ...
 :::
 
-
----
+------------------------------------------------------------------------
 
 ### Probability Calculations in R
 
 **Question**: When might I want to do probability calculations in R?
 
+-   Computed a test statistic that is approximated by a named random variable. Want to compute the p-value with `p---()`
 
-    
-* Computed a test statistic that is approximated by a named random variable.  Want to compute the p-value with `p---()`
+-   Compute a confidence interval. Want to find the critical value with `q---()`.
 
+-   To do a **Sample Size Calculation**.
 
-
-* Compute a confidence interval.  Want to find the critical value with `q---()`.
-
-
-
-* To do a **Sample Size Calculation**. 
-
----
+------------------------------------------------------------------------
 
 ### Sample Size Calculations
 
-* Very important part of the data analysis process!
+-   Very important part of the data analysis process!
 
+-   Happens BEFORE you collect data.
 
-* Happens BEFORE you collect data.
+-   You determine how large your sample size needs for a desired precision in your CI.
 
+    -   The power calculations from hypothesis testing relate to this idea.
 
-* You determine how large your sample size needs for a desired precision in your CI.
-    + The power calculations from hypothesis testing relate to this idea.
-    
----
+------------------------------------------------------------------------
 
 ### Sample Size Calculations
 
 **Question**: Why do we need sample size calculations?
 
-**Example**: Let's return to the dolphins for treating depression example.  
+**Example**: Let's return to the dolphins for treating depression example.
 
-* With a sample size of 30 and 95% confidence, we estimate that the improvement rate for depression is between 14.5 percentage points and 75 percentage points higher if you swim with a dolphin instead of swimming without a dolphin.
+-   With a sample size of 30 and 95% confidence, we estimate that the improvement rate for depression is between 14.5 percentage points and 75 percentage points higher if you swim with a dolphin instead of swimming without a dolphin.
 
-* With a width of 60.5 percentage points, this 95% CI is a **wide**/very imprecise interval.  
-
+-   With a width of 60.5 percentage points, this 95% CI is a **wide**/very imprecise interval.
 
 ::: fragment
-
-**Question**: How could we make it narrower?  How could we decrease the Margin of Error (ME)?
-
+**Question**: How could we make it narrower? How could we decrease the Margin of Error (ME)?
 :::
 
----
+------------------------------------------------------------------------
 
 ### Sample Size Calculations -- Single Proportion
 
-Let's focus on estimating a single proportion.  Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02.  **How large does our sample size need to be?**
+Let's focus on estimating a single proportion. Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02. **How large does our sample size need to be?**
 
-
-Want 
+Want
 
 $$ 
 z^* \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}} \leq B
 $$
 
-
 ::: fragment
-
-Need to derive a formula that looks like 
+Need to derive a formula that looks like
 
 $$ 
 n \geq \quad ...
 $$
 
-
 **Question**: How can we isolate $n$ to be on a side by itself?
-
-
 :::
 
----
+------------------------------------------------------------------------
 
 ### Sample Size Calculations -- Single Proportion
 
-Let's focus on estimating a single proportion.  Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02. **How large does our sample size need to be?**
+Let's focus on estimating a single proportion. Suppose we want to estimate the current proportion of Harvard undergraduates with COVID with 95% confidence and we want the margin of error on our interval to be less than or equal to 0.02. **How large does our sample size need to be?**
 
 **Sample size calculation:**
 
@@ -467,21 +434,17 @@ $$
 n \geq \frac{\hat{p}(1 - \hat{p})z^{*2}}{B^2}
 $$
 
+-   What do we plug in for, $\hat{p}$, $z^{*}$, $B$?
 
-* What do we plug in for, $\hat{p}$, $z^{*}$, $B$?
+-   Consider sample size calculations when estimating a **mean** on this week's p-set!
 
+# Let's cover examples of theory-based inference for two variables.
 
-* Consider sample size calculations when estimating a **mean** on this week's p-set!
-
-
-# Let's (briefly) at theory-based inference for two variables.
-
-
----
+------------------------------------------------------------------------
 
 ## Data Example
 
-We have data on a random sub-sample of the 2010 American Community Survey. The American Community Survey is given every year to a random sample of US residents.  
+We have data on a random sub-sample of the 2010 American Community Survey. The American Community Survey is given every year to a random sample of US residents.
 
 ```{r}
 # Libraries
@@ -496,7 +459,7 @@ ACS_adults <- filter(ACS, Age >= 18)
 glimpse(ACS_adults)
 ```
 
----
+------------------------------------------------------------------------
 
 ### Difference in Proportions
 
@@ -508,9 +471,9 @@ Let's try to determine if there's a relationship between US citizenship and marr
 
 **Parameter of interest:**
 
-**Sample size requirement for theory-based inference**: 
+**Sample size requirement for theory-based inference**:
 
----
+------------------------------------------------------------------------
 
 ### Difference in Proportions
 
@@ -533,15 +496,13 @@ ACS_adults %>%
   count(Married, USCitizen)
 ```
 
----
+------------------------------------------------------------------------
 
 ### Difference in Proportions
 
 Let's try to determine if there's a relationship between US citizenship and marriage.
 
-
 Why is`prop_test()` failing?
-
 
 ```{r}
 #| error: true
@@ -553,8 +514,7 @@ prop_test(Married ~ USCitizen,
           success = "1")
 ```
 
-
----
+------------------------------------------------------------------------
 
 ### Difference in Proportions
 
@@ -571,16 +531,11 @@ prop_test(MarriedCat ~ USCitizenCat,
           success = "Yes")
 ```
 
-
-
-
----
+------------------------------------------------------------------------
 
 ### Difference in Means
 
-Let's estimate the average hours worked per week between married and unmarried US residents. 
-
-
+Let's estimate the average hours worked per week between married and unmarried US residents.
 
 **Response variable:**
 
@@ -588,13 +543,13 @@ Let's estimate the average hours worked per week between married and unmarried U
 
 **Parameter of interest:**
 
-**Sample size requirement for theory-based inference**: 
+**Sample size requirement for theory-based inference**:
 
----
+------------------------------------------------------------------------
 
 ### Difference in Means
 
-Let's estimate the average hours worked per week between married and unmarried US residents. 
+Let's estimate the average hours worked per week between married and unmarried US residents.
 
 ```{r}
 #| output-location: column
@@ -613,51 +568,148 @@ ACS_adults %>%
   count(Married)
 ```
 
----
+------------------------------------------------------------------------
 
 ### Difference in Means
 
-Let's estimate the average hours worked per week between married and unmarried US residents. 
+Let's estimate the average hours worked per week between married and unmarried US residents.
 
 Which arguments for `t_test()` reflect my research question?
 
 ::: columns
-
 ::: column
-
 ```{r}
 library(infer)
 ACS_adults %>%
 t_test(HoursWk ~ Married, order = c("1", "0"))
 ```
-
 :::
 
 ::: column
-
 ```{r}
 library(infer)
 ACS_adults %>%
 t_test(HoursWk ~ Married, order = c("1", "0"),
        alternative = "greater")
 ```
-
 :::
 :::
 
+------------------------------------------------------------------------
 
+### Correlation
 
----
+We want to determine if age and hours worked per week have a positive linear relationship.
 
+**Response variable:**
 
-XXX Correlation
+**Explanatory variable:**
 
-Need to move beyond 1 or 2 variables -- return to linear regression.
+**Parameter of interest:**
+
+**Sample size requirement for theory-based inference**:
+
+------------------------------------------------------------------------
+
+### Correlation
+
+We want to determine if age and hours worked per week have a positive linear relationship.
+
+```{r}
+#| output-location: column
+
+# Exploratory data analysis
+ggplot(data = ACS_adults, 
+       mapping = aes(x = Age,
+                     y  = HoursWk)) +
+  geom_jitter(alpha = 0.5) +
+  geom_smooth()
+```
+
+------------------------------------------------------------------------
+
+### Correlation
+
+We want to determine if age and hours worked per week have a positive linear relationship.
+
+```{r}
+cor.test(~ HoursWk + Age, data = ACS_adults, alternative = "greater")
+```
+
+------------------------------------------------------------------------
+
+### Correlation
+
+We want to determine if age and hours worked per week have a positive linear relationship.
+
+```{r}
+#| output-location: column
+
+# Exploratory data analysis
+ggplot(data = ACS_adults, 
+       mapping = aes(x = Age,
+                     y  = HoursWk)) +
+  geom_jitter(alpha = 0.5) +
+  geom_smooth()
+```
+
+# Have Learned Two Routes to Statistical Inference
+
+[Which is **better**?]{.custom-subtitle .fragment}
+
+------------------------------------------------------------------------
+
+#### Is Simulation-Based Inference or Theory-Based Inference better?
+
+Depends on how you define **better**.
+
+::: columns
+::: column
+-   If **better** = Leads to better understanding:
+:::
+
+::: column
+::: fragment
+→ Research tends to show students have a better understanding of **p-values** and **confidence** from learning simulation-based methods.
+:::
+:::
+:::
+
+::: columns
+::: column
+-   If **better** = More flexible/robust to assumptions:
+:::
+
+::: column
+::: fragment
+→ The simulation-based methods tend to be more flexible but that generally requires learning extensions beyond what we've seen in Stat 100.
+:::
+:::
+:::
+
+::: columns
+::: column
+-   If **better** = More commonly used:
+:::
+
+::: column
+::: fragment
+→ Definitely the theory-based methods but the simulation-based methods are becoming more **common**.
+:::
+:::
+:::
+
+-   Good to be comfortable with both as you will find both approaches used in journal and news articles!
+
+# What does statistical inference (estimation and hypothesis testing) look like when I have more than 0 or 1 explanatory variables?
 
 ------------------------------------------------------------------------
 
 ## Reminders:
 
 ::: nonincremental
-
+-   If you are able to attend the `ggparty`, RSVP: [bit.ly/ggpartyf23](https://bit.ly/ggpartyf23)
+-   Regular OH schedule ends on Tues, Dec 5th (last day of classes).
+-   Will have lots of office hours during Reading Period but not at the standard times.
+    -   Will update the OH spreadsheet once finalized.
 :::

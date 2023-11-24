@@ -408,7 +408,10 @@
 <h2>Announcements</h2>
 <ul>
 <li class="fragment">Regular OH schedule ends on Tues, Dec 5th (last day of classes).</li>
-<li class="fragment">Will have lots of office hours during Reading Period but not at the standard times.</li>
+<li class="fragment">Will have lots of office hours during Reading Period but not at the standard times.
+<ul>
+<li class="fragment">Will update the OH spreadsheet once finalized.</li>
+</ul></li>
 </ul>
 <h3 id="goals-for-today">Goals for Today</h3>
 <div class="columns">
@@ -422,6 +425,35 @@
 </ul>
 </div>
 </div>
+</section>
+<section id="you-are-all-invited-to-the-stat-100-ggparty" class="slide level2">
+<h2>🎉 You are all invited to the Stat 100 <code>ggparty</code>! 🎉</h2>
+<div class="fragment">
+<p><strong>Question</strong>: What is a <code>ggparty</code>?</p>
+</div>
+<div class="fragment">
+<blockquote>
+<p>“<code>ggparty</code>”: An end-of-semester party filled with Stat 100-themed games, prizes, and food!</p>
+</blockquote>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ggpartyf23.jpeg" style="width:45.0%"></p>
+</figure>
+</div>
+<p><span class="custom-subtitle">If you are able to attend, please RSVP: <a href="https://bit.ly/ggpartyf23">bit.ly/ggpartyf23</a></span></p>
+</section>
+<section class="slide level2">
+
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/prizes.jpeg" style="width:80.0%"></p>
+</figure>
+</div>
+<p><span class="custom-subtitle">If you are able to attend, please RSVP: <a href="https://bit.ly/ggpartyf23">bit.ly/ggpartyf23</a></span></p>
 </section>
 <section class="slide level2">
 
@@ -445,25 +477,25 @@
 
 <h3 id="recap">Recap:</h3>
 <p><strong>Central Limit Theorem (CLT):</strong> For random samples and a large sample size <span class="math inline">\((n)\)</span>, the sampling distribution of many sample statistics is approximately normal.</p>
-<p>–</p>
-<p>.pull-left[</p>
+<div class="columns">
+<div class="column">
 <p><strong>Sample Proportion Version:</strong></p>
 <p>When <span class="math inline">\(n\)</span> is large (at least 10 successes and 10 failures):</p>
 <p><span class="math display">\[
 \hat{p} \sim N \left(p, \sqrt{\frac{p(1-p)}{n}} \right)
 \]</span></p>
-<p>]</p>
-<p>–</p>
-<p>.pull-right[</p>
+</div><div class="column">
 <p><strong>Sample Mean Version:</strong></p>
 <p>When <span class="math inline">\(n\)</span> is large (at least 30):</p>
 <p><span class="math display">\[
 \bar{x} \sim N \left(\mu, \frac{\sigma}{\sqrt{n}} \right)
 \]</span></p>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
-<h3 id="but-there-are-several-versions-of-the-clt">But There Are <a href="https://mcconvil.github.io/stat100f23/inference_procedures.html">Several Versions</a> of the CLT!</h3>
+<h3 id="there-are-several-versions-of-the-clt">There Are <a href="https://mcconvil.github.io/stat100f23/inference_summary.html">Several Versions</a> of the CLT!</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table>
@@ -523,6 +555,14 @@
 </table>
 </div>
 </div>
+<ul>
+<li class="fragment">Refer to <a href="https://mcconvil.github.io/stat100f23/inference_summary.html">these tables</a> for:
+<ul>
+<li class="fragment">CLT’s “large sample” assumption</li>
+<li class="fragment">Equation for the test statistic</li>
+<li class="fragment">Equation for the confidence interval</li>
+</ul></li>
+</ul>
 </section>
 <section class="slide level2">
 
@@ -757,8 +797,8 @@ n \geq \frac{\hat{p}(1 - \hat{p})z^{*2}}{B^2}
 </ul>
 </section></section>
 <section>
-<section id="lets-briefly-at-theory-based-inference-for-two-variables." class="title-slide slide level1 center">
-<h1>Let’s (briefly) at theory-based inference for two variables.</h1>
+<section id="lets-cover-examples-of-theory-based-inference-for-two-variables." class="title-slide slide level1 center">
+<h1>Let’s cover examples of theory-based inference for two variables.</h1>
 
 </section>
 <section id="data-example" class="slide level2">
@@ -954,15 +994,142 @@ $ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </section>
 <section class="slide level2">
 
-<p>XXX Difference in props</p>
-<p>XXX Difference in means</p>
-<p>XXX Correlation</p>
-<p>Need to move beyond 1 or 2 variables – return to linear regression.</p>
+<h3 id="correlation">Correlation</h3>
+<p>We want to determine if age and hours worked per week have a positive linear relationship.</p>
+<p><strong>Response variable:</strong></p>
+<p><strong>Explanatory variable:</strong></p>
+<p><strong>Parameter of interest:</strong></p>
+<p><strong>Sample size requirement for theory-based inference</strong>:</p>
+</section>
+<section class="slide level2">
+
+<h3 id="correlation-1">Correlation</h3>
+<p>We want to determine if age and hours worked per week have a positive linear relationship.</p>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># Exploratory data analysis</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ACS_adults, </span>
+<span id="cb33-3"><a href="#cb33-3"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age,</span>
+<span id="cb33-4"><a href="#cb33-4"></a>                     <span class="at">y  =</span> HoursWk)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-20-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="correlation-2">Correlation</h3>
+<p>We want to determine if age and hours worked per week have a positive linear relationship.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">cor.test</span>(<span class="sc">~</span> HoursWk <span class="sc">+</span> Age, <span class="at">data =</span> ACS_adults, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  HoursWk and Age
+t = -17.007, df = 1934, p-value = 1
+alternative hypothesis: true correlation is greater than 0
+95 percent confidence interval:
+ -0.3927809  1.0000000
+sample estimates:
+      cor 
+-0.360684 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="correlation-3">Correlation</h3>
+<p>We want to determine if age and hours worked per week have a positive linear relationship.</p>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># Exploratory data analysis</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ACS_adults, </span>
+<span id="cb36-3"><a href="#cb36-3"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age,</span>
+<span id="cb36-4"><a href="#cb36-4"></a>                     <span class="at">y  =</span> HoursWk)) <span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="stat100_wk13mon_files/figure-revealjs/unnamed-chunk-22-1.png" width="4000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="have-learned-two-routes-to-statistical-inference" class="title-slide slide level1 center">
+<h1>Have Learned Two Routes to Statistical Inference</h1>
+<p><span class="custom-subtitle fragment">Which is <strong>better</strong>?</span></p>
+</section>
+<section class="slide level2">
+
+<h4 id="is-simulation-based-inference-or-theory-based-inference-better">Is Simulation-Based Inference or Theory-Based Inference better?</h4>
+<p>Depends on how you define <strong>better</strong>.</p>
+<div class="columns">
+<div class="column">
+<ul>
+<li class="fragment">If <strong>better</strong> = Leads to better understanding:</li>
+</ul>
+</div><div class="column">
+<div class="fragment">
+<p>→ Research tends to show students have a better understanding of <strong>p-values</strong> and <strong>confidence</strong> from learning simulation-based methods.</p>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column">
+<ul>
+<li class="fragment">If <strong>better</strong> = More flexible/robust to assumptions:</li>
+</ul>
+</div><div class="column">
+<div class="fragment">
+<p>→ The simulation-based methods tend to be more flexible but that generally requires learning extensions beyond what we’ve seen in Stat 100.</p>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column">
+<ul>
+<li class="fragment">If <strong>better</strong> = More commonly used:</li>
+</ul>
+</div><div class="column">
+<div class="fragment">
+<p>→ Definitely the theory-based methods but the simulation-based methods are becoming more <strong>common</strong>.</p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Good to be comfortable with both as you will find both approaches used in journal and news articles!</li>
+</ul>
+</section></section>
+<section>
+<section id="what-does-statistical-inference-estimation-and-hypothesis-testing-look-like-when-i-have-more-than-0-or-1-explanatory-variables" class="title-slide slide level1 center">
+<h1>What does statistical inference (estimation and hypothesis testing) look like when I have more than 0 or 1 explanatory variables?</h1>
+
 </section>
 <section id="reminders" class="slide level2">
 <h2>Reminders:</h2>
 <div>
-
+<ul>
+<li>If you are able to attend the <code>ggparty</code>, RSVP: <a href="https://bit.ly/ggpartyf23">bit.ly/ggpartyf23</a></li>
+<li>Regular OH schedule ends on Tues, Dec 5th (last day of classes).</li>
+<li>Will have lots of office hours during Reading Period but not at the standard times.
+<ul>
+<li>Will update the OH spreadsheet once finalized.</li>
+</ul></li>
+</ul>
 </div>
 
 <div class="footer footer-default">
