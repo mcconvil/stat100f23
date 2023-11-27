@@ -473,7 +473,7 @@
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here. Additionally, this page contains summary information on various inference procedures.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed\n\n\n\n\nWeek 7, Mon\n\n\n\n\nWeek 7, Wed\n\n\n\n\nWeek 8, Mon\n\n\n\n\nWeek 8, Wed\n\n\n\n\nWeek 9, Mon\n\n\n\n\nWeek 9, Wed\n\n\n\n\nWeek 10, Mon\n\n\n\n\nWeek 10, Wed\n\n\n\n\nWeek 11, Mon\n\n\n\n\nWeek 11, Wed\n\n\n\n\nWeek 12, Mon"
+    "text": "The lecture slides (both in HTML and PDF) will be posted here. Additionally, this page contains summary information on various inference procedures.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed\n\n\n\n\nWeek 7, Mon\n\n\n\n\nWeek 7, Wed\n\n\n\n\nWeek 8, Mon\n\n\n\n\nWeek 8, Wed\n\n\n\n\nWeek 9, Mon\n\n\n\n\nWeek 9, Wed\n\n\n\n\nWeek 10, Mon\n\n\n\n\nWeek 10, Wed\n\n\n\n\nWeek 11, Mon\n\n\n\n\nWeek 11, Wed\n\n\n\n\nWeek 12, Mon\n\n\n\n\nWeek 13, Mon"
   },
   {
     "objectID": "stat100_wk04mon.html#announcements",
@@ -2095,28 +2095,28 @@
   {
     "objectID": "stat100_wk12mon.html#announcements",
     "href": "stat100_wk12mon.html#announcements",
-    "title": "Let’s consider theory-based inference for a population proportion.",
+    "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nNo sections or wrap-ups this week.\nP-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!\nNo new p-set or lecture quiz this week.\nOH schedule for Thanksgiving Week:\n\nSun, Nov 19th - Tues, Nov 21st: Happening with some modifications\nNo OHs Wed, Nov 22nd - Sun, Nov 26th!\n\n\n\nGoals for Today\n\n\n\nA bit of thanks.\nLearn theory-based statistical inference methods.\n\n\n\nIntroduce a new group of test statistics based on z-scores.\nGeneralize the SE method confidence interval formula.\n\n\n\n\n\n\nStatistical Inference Zoom Out – Estimation\n\n\n\n\n\n\n\n\nStatistical Inference Zoom Out – Testing"
+    "text": "Announcements\n\nNo sections or wrap-ups this week.\nP-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!\nNo new p-set or lecture quiz this week.\nOH schedule for Thanksgiving Week:\n\nSun, Nov 19th - Tues, Nov 21st: Happening with some modifications\nNo OHs Wed, Nov 22nd - Sun, Nov 26th!\n\n\nGoals for Today\n\n\n\nA bit of thanks.\nLearn theory-based statistical inference methods.\n\n\n\nIntroduce a new group of test statistics based on z-scores.\nGeneralize the SE method confidence interval formula."
   },
   {
     "objectID": "stat100_wk12mon.html#sample-statistics-as-random-variables",
     "href": "stat100_wk12mon.html#sample-statistics-as-random-variables",
-    "title": "Let’s consider theory-based inference for a population proportion.",
+    "title": "Stat 100",
     "section": "Sample Statistics as Random Variables",
-    "text": "Sample Statistics as Random Variables\n\nSample statistics can be recast as random variables.\nNeed to figure out what random variable is a good approximation for our sample statistic.\n\nThen use the properties of that random variable to do inference.\n\nSometimes it is easier to find a good random variable approximation if we standardize our sample statistic first.\n\n\n\nZ-scores\n\nAll of our test statistics so far have been sample statistics.\nAnother commonly used test statistic takes the form of a z-score:\n\n\n\\[\n\\mbox{Z-score} = \\frac{X - \\mu}{\\sigma}\n\\]\n\n\nStandardized version of the sample statistic.\nZ-score measures how many standard deviations the sample statistic is away from its mean.\n\n\n\n\nZ-score Example\n\n\\(\\hat{p}\\) = proportion of Maples in a sample of 50 trees\n\n\n\\[\n\\hat{p} \\sim N \\left(0.138, 0.049 \\right)\n\\]\n\n\nSuppose we have a sample where \\(\\hat{p} = 0.05\\). Then the z-score would be:\n\n\n\\[\n\\mbox{Z-score} = \\frac{0.05 - 0.138}{0.049} = -1.8\n\\]\n\n\n\n\nZ-score Test Statistics\n\nA Z-score test statistic is one where we take our original sample statistic and convert it to a Z-score:\n\n\n\\[\n\\mbox{Z-score test statistic} = \\frac{\\mbox{statistic} - \\mu}{\\sigma}\n\\]\n\n\nAllows us to quickly (but roughly) classify results as unusual or not.\n\n\\(|\\) Z-score \\(|\\) &gt; 2 → results are unusual/p-value will be smallish\n\nCommonly used because if the sample statistic \\(\\sim N(\\mu, \\sigma)\\), then\n\n\n\\[\n\\mbox{Z-score test statistic} = \\frac{\\mbox{statistic} - \\mu}{\\sigma} \\sim N(0, 1)\n\\]"
+    "text": "Sample Statistics as Random Variables\n\nSample statistics can be recast as random variables.\nNeed to figure out what random variable is a good approximation for our sample statistic.\n\nThen use the properties of that random variable to do inference.\n\nSometimes it is easier to find a good random variable approximation if we standardize our sample statistic first."
   },
   {
     "objectID": "stat100_wk12mon.html#p-value-options",
     "href": "stat100_wk12mon.html#p-value-options",
-    "title": "Let’s consider theory-based inference for a population proportion.",
+    "title": "Stat 100",
     "section": "P-value options",
-    "text": "P-value options\n\n\nP-value using the generated null distribution:\n\npvalue &lt;- null_dist %&gt;%\n  get_p_value(obs_stat = t_obs,\n              direction = \"both\")\npvalue\n\n# A tibble: 1 × 1\n  p_value\n    &lt;dbl&gt;\n1   0.012\n\n\n\nP-value using an approximate probability function:\n\n# Using t distribution\npt(q = t_obs$stat, df = 52)*2\n\n         t \n0.02468707 \n\n\n\n\nDo-it-all function:\n\nt_test(FloridaLakes, response = pH, mu = 7,\n       alternative = \"two-sided\")\n\n# A tibble: 1 × 7\n  statistic  t_df p_value alternative estimate lower_ci upper_ci\n      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1     -2.31    52  0.0247 two.sided       6.59     6.24     6.95\n\n\n\n\nStatistical Inference using Probability Models\n\nWe went through theory-based inference for \\(p\\) and for \\(\\mu\\).\nThere are similar results for other parameters. But the specific named random variable may change!\n\nWill extend beyond inference for 1 variable next time."
+    "text": "P-value options\n\n\nP-value using the generated null distribution:\n\npvalue &lt;- null_dist %&gt;%\n  get_p_value(obs_stat = t_obs,\n              direction = \"both\")\npvalue\n\n# A tibble: 1 × 1\n  p_value\n    &lt;dbl&gt;\n1   0.022\n\n\n\nP-value using an approximate probability function:\n\n# Using t distribution\npt(q = t_obs$stat, df = 52)*2\n\n         t \n0.02468707 \n\n\n\n\nDo-it-all function:\n\nt_test(FloridaLakes, response = pH, mu = 7,\n       alternative = \"two-sided\")\n\n# A tibble: 1 × 7\n  statistic  t_df p_value alternative estimate lower_ci upper_ci\n      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1     -2.31    52  0.0247 two.sided       6.59     6.24     6.95"
   },
   {
     "objectID": "stat100_wk12mon.html#reminders",
     "href": "stat100_wk12mon.html#reminders",
-    "title": "Let’s consider theory-based inference for a population proportion.",
+    "title": "Stat 100",
     "section": "Reminders:",
     "text": "Reminders:\n\n\nNo sections or wrap-ups this week.\nP-Set 8 is due next Tues (5pm) but try to get most of your questions answered before Thanksgiving Break!\nNo new p-set or lecture quiz this week.\nOH schedule for Thanksgiving Week:\n\nSun, Nov 19th - Tues, Nov 21st: Happening with some modifications\nNo OHs Wed, Nov 22nd - Sun, Nov 26th!"
   },
