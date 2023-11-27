@@ -473,7 +473,7 @@
     "href": "index.html",
     "title": "Stat 100: Introduction to Statistics and Data Science",
     "section": "",
-    "text": "The lecture slides (both in HTML and PDF) will be posted here. Additionally, this page contains summary information on various inference procedures.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed\n\n\n\n\nWeek 7, Mon\n\n\n\n\nWeek 7, Wed\n\n\n\n\nWeek 8, Mon\n\n\n\n\nWeek 8, Wed\n\n\n\n\nWeek 9, Mon\n\n\n\n\nWeek 9, Wed\n\n\n\n\nWeek 10, Mon\n\n\n\n\nWeek 10, Wed\n\n\n\n\nWeek 11, Mon\n\n\n\n\nWeek 11, Wed\n\n\n\n\nWeek 12, Mon\n\n\n\n\nWeek 13, Mon"
+    "text": "The lecture slides (both in HTML and PDF) will be posted here. Additionally, this page contains summary information on various inference procedures.\n\n\n\n\nClass Period\nHTML Slides\nPDF Slides\n\n\n\n\nWeek 1, Wed\n\n\n\n\nWeek 2, Mon\n\n\n\n\nWeek 2, Wed\n\n\n\n\nWeek 3, Mon\n\n\n\n\nWeek 3, Wed\n\n\n\n\nWeek 4, Mon\n\n\n\n\nWeek 4, Wed\n\n\n\n\nWeek 5, Mon\n\n\n\n\nWeek 5, Wed\n\n\n\n\nWeek 7, Mon\n\n\n\n\nWeek 7, Wed\n\n\n\n\nWeek 8, Mon\n\n\n\n\nWeek 8, Wed\n\n\n\n\nWeek 9, Mon\n\n\n\n\nWeek 9, Wed\n\n\n\n\nWeek 10, Mon\n\n\n\n\nWeek 10, Wed\n\n\n\n\nWeek 11, Mon\n\n\n\n\nWeek 11, Wed\n\n\n\n\nWeek 12, Mon\n\n\n\n\nWeek 13, Mon\n\n\n\n\nWeek 13, Wed"
   },
   {
     "objectID": "stat100_wk04mon.html#announcements",
@@ -2300,7 +2300,7 @@
     "href": "stat100_wk13wed.html#announcements",
     "title": "Stat 100",
     "section": "Announcements",
-    "text": "Announcements\n\nLecture Quizzes\n\nLast one this week.\nPlus Extra Credit Lecture Quiz: Due Tues, Dec 5th at 5pm\n\nLast section this week!\n\nReceive the last p-set.\n\nThe material from next Monday’s lecture will be on the final and so we will include relevant practice problems on the review sheet.\n\nGoals for Today\n\n\n\nRecap multiple linear regression\nCheck assumptions for linear regression inference\n\n\n\nHypothesis testing for linear regression\nEstimation and prediction inference for linear regression"
+    "text": "Announcements\n\nLecture Quizzes\n\nLast one this week.\nPlus Extra Credit Lecture Quiz: Due Tues, Dec 5th at 5pm\n\nLast section this week!\n\nReceive the last p-set.\n\nThe material from next Monday’s lecture may appear on the final and so we have included relevant practice problems on the review sheet.\n\nGoals for Today\n\n\n\nRecap multiple linear regression\nCheck assumptions for linear regression inference\n\n\n\nHypothesis testing for linear regression\nEstimation and prediction inference for linear regression"
   },
   {
     "objectID": "stat100_wk13wed.html#reminders",
@@ -2392,5 +2392,12 @@
     "title": "Stat 100",
     "section": "Our Example",
     "text": "Our Example\n\nget_regression_table(mod)\n\n# A tibble: 3 × 7\n  term            estimate std_error statistic p_value lower_ci upper_ci\n  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;\n1 intercept         36.2       6.50       5.58       0   23.5     49.0  \n2 Date              -0.002     0         -5.00       0   -0.002   -0.001\n3 Type: unscented    0.831     0.063     13.2        0    0.707    0.955\n\n\nRow 3:\n\\[\nH_o: \\beta_2 = 0 \\quad \\mbox{given Date is already in the model}\n\\] \\[\nH_a: \\beta_2 \\neq 0 \\quad \\mbox{given Date is already in the model}\n\\]\nTest Statistic:\n\\[\nt = \\frac{\\hat{\\beta}_2 - 0}{SE(\\hat{\\beta}_2)} = \\frac{0.831 - 0}{0.063} = 13.2\n\\]\n\nwith p-value \\(= P(t \\leq -13.2) + P(t \\geq 13.2) \\approx 0.\\)\nThere is evidence that including whether or not the candle is scented adds useful information to the linear regression model for Amazon ratings that already controls for date."
+  },
+  {
+    "objectID": "stat100_wk13wed.html#two-types-of-predictions",
+    "href": "stat100_wk13wed.html#two-types-of-predictions",
+    "title": "Stat 100",
+    "section": "Two Types of Predictions",
+    "text": "Two Types of Predictions\n\n\nConfidence Interval for the Mean Response\n→ Defined at given values of the explanatory variables\n→ Estimates the average response\n→ Centered at \\(\\hat{y}\\)\n→ Smaller SE\n\nPrediction Interval for an Individual Response\n→ Defined at given values of the explanatory variables\n→ Predicts the response of a single, new observation\n→ Centered at \\(\\hat{y}\\)\n→ Larger SE"
   }
 ]

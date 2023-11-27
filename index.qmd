@@ -2,7 +2,7 @@
 title: "Stat 100: Introduction to Statistics and Data Science"
 ---
 
-The lecture slides (both in HTML and PDF) will be posted here.  Additionally, [this page](https://mcconvil.github.io/stat100f23/inference_summary.html) contains summary information on various inference procedures.
+The lecture slides (both in HTML and PDF) will be posted here. Additionally, [this page](https://mcconvil.github.io/stat100f23/inference_summary.html) contains summary information on various inference procedures.
 
 ::: column-screen-inset-right
 | Class Period | HTML Slides                                                                      | PDF Slides                                                                            |
@@ -28,4 +28,5 @@ The lecture slides (both in HTML and PDF) will be posted here.  Additionally, [t
 | Week 11, Wed | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk11wed.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk11wed.pdf) |
 | Week 12, Mon | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk12mon.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk12mon.pdf) |
 | Week 13, Mon | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk13mon.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk13mon.pdf) |
+| Week 13, Wed | [{{< fa display >}}](https://mcconvil.github.io/stat100f23/stat100_wk13wed.html) | [{{< fa file-pdf >}}](https://mcconvil.github.io/stat100f23/pdfs/stat100_wk13wed.pdf) |
 :::
