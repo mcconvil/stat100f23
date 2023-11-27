@@ -90,11 +90,6 @@ theme_update(text = element_text(size = 13))
 
 [If you are able to attend, please RSVP: [bit.ly/ggpartyf23](https://bit.ly/ggpartyf23)]{.custom-subtitle}
 
-# Please make sure to fill out the Stat 100 Course Evaluations.
-
-[We appreciate constructive feedback.]{.custom-subtitle}
-
-[For all of your course evaluations be mindful of [unconscious and unintentional biases](https://benschmidt.org/profGender).]{.custom-subtitle}
 
 
 # What does statistical inference (estimation and hypothesis testing) look like when I have more than 0 or 1 explanatory variables?

@@ -77,6 +77,13 @@ theme_update(text = element_text(size = 13))
 :::
 :::
 
+# Please make sure to fill out the Stat 100 Course Evaluations.
+
+[We appreciate constructive feedback.]{.custom-subtitle}
+
+[For all of your course evaluations be mindful of [unconscious and unintentional biases](https://benschmidt.org/profGender).]{.custom-subtitle}
+
+
 ------------------------------------------------------------------------
 
 ## `r emo::ji("tada")` You are all invited to the Stat 100 `ggparty`! `r emo::ji("tada")`
@@ -463,7 +470,7 @@ glimpse(ACS_adults)
 
 ### Difference in Proportions
 
-Let's try to determine if there's a relationship between US citizenship and marriage.
+Let's try to determine if there's a relationship between US citizenship and marriage status.
 
 **Response variable:**
 
@@ -477,7 +484,7 @@ Let's try to determine if there's a relationship between US citizenship and marr
 
 ### Difference in Proportions
 
-Let's try to determine if there's a relationship between US citizenship and marriage.
+Let's try to determine if there's a relationship between US citizenship and marriage status.
 
 ```{r}
 #| output-location: column
@@ -500,7 +507,7 @@ ACS_adults %>%
 
 ### Difference in Proportions
 
-Let's try to determine if there's a relationship between US citizenship and marriage.
+Let's try to determine if there's a relationship between US citizenship and marriage status.
 
 Why is`prop_test()` failing?
 
@@ -518,7 +525,7 @@ prop_test(Married ~ USCitizen,
 
 ### Difference in Proportions
 
-Let's try to determine if there's a relationship between US citizenship and marriage.
+Let's try to determine if there's a relationship between US citizenship and marriage status.
 
 ```{r}
 ACS_adults %>%

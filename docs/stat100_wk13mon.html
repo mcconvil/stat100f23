@@ -426,6 +426,12 @@
 </div>
 </div>
 </section>
+<section>
+<section id="please-make-sure-to-fill-out-the-stat-100-course-evaluations." class="title-slide slide level1 center">
+<h1>Please make sure to fill out the Stat 100 Course Evaluations.</h1>
+<p><span class="custom-subtitle">We appreciate constructive feedback.</span></p>
+<p><span class="custom-subtitle">For all of your course evaluations be mindful of <a href="https://benschmidt.org/profGender">unconscious and unintentional biases</a>.</span></p>
+</section>
 <section id="you-are-all-invited-to-the-stat-100-ggparty" class="slide level2">
 <h2>🎉 You are all invited to the Stat 100 <code>ggparty</code>! 🎉</h2>
 <div class="fragment">
@@ -589,7 +595,7 @@
 \mbox{statistic} \pm t^* SE
 \]</span></p>
 <p>where <span class="math inline">\(P(-t^* \leq t \leq t^*) = P\)</span></p>
-</section>
+</section></section>
 <section>
 <section id="how-do-we-perform-probability-model-calculations-in-r" class="title-slide slide level1 center">
 <h1>How do we perform probability model calculations in <code>R</code>?</h1>
@@ -833,7 +839,7 @@ $ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 <section class="slide level2">
 
 <h3 id="difference-in-proportions">Difference in Proportions</h3>
-<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage status.</p>
 <p><strong>Response variable:</strong></p>
 <p><strong>Explanatory variable:</strong></p>
 <p><strong>Parameter of interest:</strong></p>
@@ -842,7 +848,7 @@ $ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 <section class="slide level2">
 
 <h3 id="difference-in-proportions-1">Difference in Proportions</h3>
-<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage status.</p>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Exploratory data analysis</span></span>
@@ -879,7 +885,7 @@ $ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 <section class="slide level2">
 
 <h3 id="difference-in-proportions-2">Difference in Proportions</h3>
-<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage status.</p>
 <p>Why is<code>prop_test()</code> failing?</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(infer)</span>
@@ -896,7 +902,7 @@ $ Language        &lt;int&gt; 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 <section class="slide level2">
 
 <h3 id="difference-in-proportions-3">Difference in Proportions</h3>
-<p>Let’s try to determine if there’s a relationship between US citizenship and marriage.</p>
+<p>Let’s try to determine if there’s a relationship between US citizenship and marriage status.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>ACS_adults <span class="sc">%&gt;%</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">mutate</span>(<span class="at">MarriedCat =</span> <span class="fu">case_when</span>(Married <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"No"</span>,</span>
