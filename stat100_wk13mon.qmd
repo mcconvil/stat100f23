@@ -83,7 +83,6 @@ theme_update(text = element_text(size = 13))
 
 [For all of your course evaluations be mindful of [unconscious and unintentional biases](https://benschmidt.org/profGender).]{.custom-subtitle}
 
-
 ------------------------------------------------------------------------
 
 ## `r emo::ji("tada")` You are all invited to the Stat 100 `ggparty`! `r emo::ji("tada")`
