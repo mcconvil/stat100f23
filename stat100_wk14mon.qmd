@@ -62,9 +62,8 @@ theme_update(text = element_text(size = 13))
 ## Announcements
 
 -  Make sure to sign up for an oral exam
--   Due Tues, Dec 5th at 5pm:
-    -  **Extra Credit Lecture Quiz**
-    - P-Set 9
+-   Due Tues, Dec 5th at 5pm: P-Set 9
+-   Due Thurs, Dec 7th at 5pm:  **Extra Credit Lecture Quiz**
 -   RSVP for the `ggparty` by end of today: [bit.ly/ggpartyf23](https://bit.ly/ggpartyf23)
 
 ### Goals for Today
@@ -875,7 +874,7 @@ chisq.test(table(eye_data$Eye, eye_data$Lighting))
 
 `r emo::ji("white heavy check mark")` Finish P-Set 9 by 5pm on Tuesday.
 
-`r emo::ji("star")` Complete the Extra Credit Lecture Quiz by 5pm on Tuesday.
+`r emo::ji("star")` Complete the Extra Credit Lecture Quiz by 5pm on Thursday.
 
 `r emo::ji("question")` Come by [office hours](https://docs.google.com/spreadsheets/d/1eGlvDVPFceat2xck-y0r_rhrXPZBxjkW-rmIWFqg68w/edit?usp=sharing) with any questions while studying for the final exam.
 
